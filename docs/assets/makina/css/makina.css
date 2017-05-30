@@ -1,0 +1,525 @@
+/* ROBOTO */
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-Light.eot');
+  src: url('../fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Light.woff') format('woff'),
+    url('../fonts/Roboto-Light.ttf') format('truetype'),
+    url('../fonts/Roboto-Light.svg#roboto_Light') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-LightItalic.eot');
+  src: url('../fonts/Roboto-LightItalic.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-LightItalic.woff') format('woff'),
+    url('../fonts/Roboto-LightItalic.ttf') format('truetype'),
+    url('../fonts/Roboto-LightItalic.svg#Roboto-LightItalic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-Medium.eot');
+  src: url('../fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-Medium.woff') format('woff'),
+    url('../fonts/Roboto-Medium.ttf') format('truetype'),
+    url('../fonts/Roboto-Medium.svg#Roboto-Medium') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-MediumItalic.eot');
+  src: url('../fonts/Roboto-MediumItalic.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Roboto-MediumItalic.woff') format('woff'),
+    url('../fonts/Roboto-MediumItalic.ttf') format('truetype'),
+    url('../fonts/Roboto-MediumItalic.svg#Roboto-MediumItalic') format('svg');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* ROBOTO SLAB */
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('../fonts/RobotoSlab-Light.eot');
+  src: url('../fonts/RobotoSlab-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoSlab-Light.woff') format('woff'),
+    url('../fonts/RobotoSlab-Light.ttf') format('truetype'),
+    url('../fonts/RobotoSlab-Light.svg#RobotoSlab-Light') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('../fonts/RobotoSlab-Regular.eot');
+  src: url('../fonts/RobotoSlab-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoSlab-Regular.woff') format('woff'),
+    url('../fonts/RobotoSlab-Regular.ttf') format('truetype'),
+    url('../fonts/RobotoSlab-Regular.svg#rRobotoSlab-Regular') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* ROBOTO MONO */
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/RobotoMono-Regular.eot');
+  src: url('../fonts/RobotoMono-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoMono-Regular.woff') format('woff'),
+    url('../fonts/RobotoMono-Regular.ttf') format('truetype'),
+    url('../fonts/RobotoMono-Regular.svg#roboto_monoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/RobotoMono-Italic.eot');
+  src: url('../fonts/RobotoMono-Italic.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoMono-Italic.woff') format('woff'),
+    url('../fonts/RobotoMono-Italic.ttf') format('truetype'),
+    url('../fonts/RobotoMono-Italic.svg#roboto_monoitalic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/RobotoMono-Bold.eot.eot');
+  src: url('../fonts/RobotoMono-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoMono-Bold.woff') format('woff'),
+    url('../fonts/RobotoMono-Bold.ttf') format('truetype'),
+    url('../fonts/RobotoMono-Bold.svg#roboto_monobold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/RobotoMono-BoldItalic.eot.eot');
+  src: url('../fonts/RobotoMono-BoldItalic.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/RobotoMono-BoldItalic.woff') format('woff'),
+    url('../fonts/RobotoMono-BoldItalic.ttf') format('truetype'),
+    url('../fonts/RobotoMono-BoldItalic.svg#roboto_monobolditalic') format('svg');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* colors:
+green       #b5b42c
+gray        #241f1e
+dark gray   #1e1817 > fond perdu
+white       #fff
+*/
+
+/* borders:
+accueil >                   140px
+chapitre & présentation >   80px
+sous-chapitre >             40px
+pages >                     20px
+*/
+
+body {
+  font-size: 24px;
+  font-family: "Roboto", Helvetica, Verdana, sans-serif;
+  color: #241f1e;
+  background-color: #1e1817;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  display: table; /* The perfect mix between block and inline-block ;-) */
+  margin: 0.5em 0;
+  padding: 0 10px;
+}
+/*
+h1:after,
+h2:after,
+h3:after,
+h4:after,
+h5:after,
+h6:after {
+  content: " ";
+  display: block;
+  clear: both;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+}
+*/
+h1 {
+  font-size : 30pt;
+  font-family: "Roboto Slab", Helvetica, Verdana, sans-serif;
+  font-weight: bold;
+}
+h2 {
+  font-size : 30pt;
+  font-family: "Roboto Slab", Helvetica, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+p {
+  margin: 0 0 0.5em 0;
+  font-family: "Roboto", Helvetica, Verdana, sans-serif;
+}
+
+ul, ol {
+  margin: 0 0 ;
+}
+li > p {
+  margin: 0;
+}
+
+a, a:hover, a:focus, a:visited {
+  color: #b5b42c;
+}
+
+pre, tt, code, kbd, samp {
+  font-family: "Roboto Mono", monospace;
+  font-size: 80%; /* monospace is bigger than yanone_kaffeesatzlight */
+  letter-spacing: 0;
+}
+
+blockquote {
+  text-indent: 0
+}
+blockquote p {
+  font-style: italic;
+}
+
+img.single-image {
+  max-height: 690px;
+  max-width: 100%;
+  margin-top: -25px;
+}
+
+/* ------------------------------------------------------------ */
+/* DEFAULT SLIDES
+/* ------------------------------------------------------------ */
+
+.slide {
+  border-color: #b5b42c;
+  background-color: #fff;
+}
+.slide h1,
+.slide h2 {
+  color: #fff;
+  background-color: #b5b42c;
+}
+.slide h3,
+.slide h4,
+.slide h5,
+.slide h6 {
+  font-weight: normal;
+  font-style: italic;
+  color: #fff;
+  background-color: #241f1e;
+}
+.slide .inner {
+  height: 558px;
+  margin: 90px 90px 50px 90px;
+  overflow: hidden;
+}
+.slide .inner > *:first-child {
+  margin-top: 0;
+}
+.slide footer {
+  position: relative;
+  height: 40px;
+  margin: 0 10px 10px 10px;
+}
+.slide footer > * {
+  position: relative;
+  bottom: 0;
+}
+
+/* ------------------------------------------------------------ */
+/* ALTERNATIVE SLIDES
+/* ------------------------------------------------------------ */
+
+.slide.alternate {
+  color: #fff;
+  background-color: #241f1e;
+}
+.slide.alternate h1,
+.slide.alternate h2 {
+  color: #241f1e;
+}
+.slide.alternate h3,
+.slide.alternate h4,
+.slide.alternate h5,
+.slide.alternate h6 {
+  font-weight: normal;
+  font-style: italic;
+  color: #241f1e;
+  background-color: #fff;
+}
+.slide.alternate .inner {
+  background-color: #241f1e;
+}
+.slide.alternate .highlight {
+  background-color: #241f1e;
+}
+
+/* ------------------------------------------------------------ */
+/* FIRST & LAST SLIDES
+/* ------------------------------------------------------------ */
+
+.slide-wrapper:first-child .inner {
+  display: table;
+  width: 744px;
+  height: 488px;
+  margin: 130px 130px 80px 130px;
+  background-color: #b5b42c;
+  overflow: hidden;
+}
+.slide-wrapper:first-child .inner > * {
+  display: none;
+}
+.slide-wrapper:first-child .inner > h1 {
+  display: table-cell;
+  height: 488px;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", Helvetica, Verdana, sans-serif;
+  font-size: 70pt;
+  font-weight: bold;
+  text-align: center;
+  line-height: 70pt;
+  vertical-align: middle;
+  background-image: url(../fsbg.jpg);
+  background-repeat: no-repeat;
+}
+.slide-wrapper:first-child h1 small {
+  padding: 0 10px;
+  font-family: "Roboto", Helvetica, Verdana, sans-serif;
+  font-size: 30pt;
+  font-weight: normal;
+  color: #000;
+  line-height: 30pt;
+  background-color: #fff;
+}
+.slide-wrapper:first-child footer .logo {
+  position: relative;
+  top: -40px;
+}
+
+
+/* ------------------------------------------------------------ */
+/* WIDE SLIDES
+/* ------------------------------------------------------------ */
+
+
+.slide.wide .inner {
+  margin: 40px 40px 0px 40px;
+  height: 658px;
+}
+
+/* ------------------------------------------------------------ */
+/* TITLE SLIDES
+/* ------------------------------------------------------------ */
+
+.slide.title1 {
+  border-width: 40px;
+  border-color: #fff;
+  text-align: center;
+  background-color: #b5b42c;
+  background-image: url(../images/bgt1.jpg);
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+.slide.title1-2 {
+  background-image: url(../images/bgt2.jpg);
+}
+.slide.title1-3 {
+  background-image: url(../images/bgt3.jpg);
+}
+.slide.title1-4 {
+  background-image: url(../images/bgt4.jpg);
+}
+.slide.title1 .inner {
+  height: 538px;
+  margin: 0;
+  padding: 100px 40px 0 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.slide.title1 h1 {
+  display: block;
+  font-family: "Roboto Slab", Helvetica, Verdana, sans-serif;
+  font-size: 50pt;
+  font-weight: normal;
+  text-transform: none;
+  line-height: 1.1;
+}
+.slide.title1 footer {
+  color: #fff;
+}
+.slide.title1 .inner > *,
+.slide.title1 footer {
+  position: relative;
+  z-index: 1;
+}
+.slide.title1 p:last-child {
+  position: static;
+}
+.slide.title1 p:last-child img {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.slide.title2 {
+  border-width: 20px;
+  border-color: #fff;
+  text-align: center;
+  background-color: #b5b42c;
+}
+.slide.title2 .inner-wrapper {
+  display: table;
+  width: 100%;
+  height: 678px;
+  vertical-align: middle;
+}
+.slide.title2 .inner {
+  display: table-cell;
+  padding: 50px 40px 0 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.slide.title2 h2 {
+  display: block;
+  font-family: "Roboto Slab", Helvetica, Verdana, sans-serif;
+  font-size: 50pt;
+  font-weight: normal;
+  text-transform: none;
+  line-height: 1.1;
+}
+.slide.title2 footer {
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ */
+/* SLIDE BACKGROUND
+/* ------------------------------------------------------------ */
+
+.slide.bg-image .inner > *,
+.slide.bg-image footer {
+  position: relative;
+  z-index: 1;
+}
+.slide.bg-image p:last-child {
+  position: static;
+}
+.slide.bg-image p:last-child img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+/*
+.slide.bg-image.bg-top-right p:last-child img {
+  top: 0;
+  right: 0;
+}
+.slide.bg-image.bg-bottom-right p:last-child img {
+  right: 0;
+  bottom: 0;
+}
+.slide.bg-image.bg-bottom-left p:last-child img {
+  bottom: 0;
+  left: 0;
+}
+*/
+
+/* ------------------------------------------------------------ */
+/* QUOTE SLIDES
+/* ------------------------------------------------------------ */
+
+.slide.quote blockquote,
+.slide.quoteslide blockquote {
+  display: table-cell;
+  width: 800px;
+  height: 600px;
+  vertical-align: middle;
+  text-align: center;
+}
+.slide.quote blockquote p,
+.slide.quoteslide blockquote p {
+  font-size: 170%;
+  line-height: 170%;
+  font-style: italic;
+}
+.slide.quote cite,
+.slide.quoteslide cite {
+  float: right;
+  font-style: normal;
+}
+
+/* ------------------------------------------------------------ */
+/* GLOBAL PYGMENTS OVERRIDES
+/* ------------------------------------------------------------ */
+
+/*.highlight {
+  background-color: transparent;
+}*/
+
+
+/* Extras for PostgreSQL -----------------*/
+/* Image alignement based on last character of alt
+ https://stackoverflow.com/a/39614958
+ */
+img[alt$=">"] {
+  float:right;
+  margin-left: 15px;
+}
+
+img[alt$="<"] {
+  float:left;
+  margin-right: 15px;
+}
+
+img[alt$="<>"] {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    float: none!important;
+}
+/* div.warning */
+div.warning input {
+  display: block;
+  margin-left: -40px;
+  margin-bottom: -25px;
+}
+div.warning {
+  border: 1px solid #8A2BE2;
+  background-color: #eee;
+  padding: 15px 50px 15px 100px;
+  margin-top: 10px;
+}
+div.action:before {
+  color: #ccc;
+  content: "\2192";
+  font-size: 2em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.1em;
+}
+div.action {
+  background: #f9f9f9;
+  border-left: 10px solid #00ff00;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-style: italic;
+  margin-top: 10px;
+}
+div.action p{
+    display: inline;
+}

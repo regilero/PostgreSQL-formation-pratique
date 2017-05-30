@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular-webfont.eot');
+    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('../fonts/robotomono-regular.eot');
+  src: url('../fonts/robotomono-regular.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/robotomono-regular.woff') format('woff'),
+  url('../fonts/robotomono-regular.ttf') format('truetype'),
+  url('../fonts/robotomono-regular.svg#roboto_monomedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    font-size: 24px;
+    font-family: 'Roboto', Verdana, sans-serif;
+    color: #fff;
+    background-color: #2c2c2c; /* Colour outside of slide */
+    letter-spacing: 1px;
+}
+
+p, ul, ol {
+  margin: 0 0 .5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: .5em 0 0;
+}
+
+div.presentation, div.slide {
+  background-color: #000; /* colour of the slide */
+}
+
+div.slide h1 {
+  color: #bece12;
+  font-weight: normal;
+  letter-spacing: 0;
+  margin-top: 0;
+}
+
+div.slide h2, div.slide h3, div.slide h4, div.slide h5, div.slide h6 {
+  color: #fff; /* #ef4e70 */
+  letter-spacing: 0;
+}
+div.slide header h1,
+div.slide header h2 {
+  color: #bece12;
+}
+
+div.presentation, div.slide {
+  border-radius: 20px;
+}
+
+pre, tt, code, kbd, samp {
+  font-family: "Roboto Mono", monospace;
+  font-size: 80%; /* monospace is bigger than yanone_kaffeesatzlight */
+  letter-spacing: 0;
+}
+
+/* A title slide is a single header */
+.slide section h1:only-child,
+.slide header:only-child h1 {
+  font-weight: normal;
+  font-size: 72px;
+}
+
+blockquote {
+  text-indent: 0
+}
+
+blockquote p {
+  font-style: italic;
+}
+
+/* Override pygments */
+
+.highlight {
+  border-radius: 5px;
+}
+
+/* ----- Alternate color for only H1 slides ----- */
+
+.slide.alternate header:only-child h1 {
+  color: #c9015a;
+}
+
+/* ----- First slide and last slide ----- */
+
+.slides .slide-wrapper:last-child .slide,
+.slides .slide-wrapper:first-child .slide {
+  background: url(../logo.png) 283px 375px no-repeat;
+}
+
+.slides .slide-wrapper:last-child .slide header:only-child h1,
+.slides .slide-wrapper:first-child .slide header:only-child h1 {
+  height: 550px;
+}
+
+/* ----- Slide with only a quote ----- */
+
+div.slide.quoteslide blockquote {
+    display: table-cell;
+    width: 800px;
+    height: 600px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div.slide.quoteslide blockquote p {
+  font-size: 170%;
+  line-height: 170%;
+  font-style: italic;
+}
+
+div.slide.quoteslide cite {
+  float: right;
+  font-style: normal;
+}
+
+li > p {
+  margin: 0;
+}
+
+img.single-image {
+  max-height: 690px;
+  max-width: 100%;
+  margin-top: -25px;
+}

@@ -1,0 +1,189 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
+body {
+    margin: 0px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto;
+    min-height: calc(100vh - 125px);
+}
+
+.card {
+    width: 330px;
+    height: 600px;
+    max-width: 330px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+h2 {
+    padding: 20px;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    font-size: 18px;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+}
+
+.detail {
+    color: #777;
+    padding: 20px;
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.img-wrapper {
+    padding: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.img-wrapper:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /*background: rgba(62, 79, 178, .25);*/
+    width: 100%;
+}
+
+.img-wrapper img {
+    height: 200px;
+    margin: 0;
+    display: block;
+    position: relative;
+}
+
+#python h2 {
+    background: #FFC107;
+}
+
+#angularjs h2 {
+    background: #F44336;
+}
+
+#drupal h2 {
+    background: #3F51B5;
+}
+
+#autres h2 {
+    background: #4CAF50;
+}
+
+#python .detail:hover {
+    background-color: #FFC107;
+    opacity: 0.50;
+    color: white;
+}
+
+#angularjs .detail:hover {
+    background-color: #F44336;
+    opacity: 0.50;
+    color: white;
+}
+
+#drupal .detail:hover {
+    background-color: #3F51B5;
+    opacity: 0.50;
+    color: white;
+}
+
+#autres .detail:hover {
+    background-color: #4CAF50;
+    opacity: 0.50;
+    color: white;
+}
+
+header {
+    width: 100%;
+    color: white;
+    height: 75px;
+    background-color: #37474F;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+footer {
+    width: 100%;
+    min-height: 40px;
+    height: auto;
+    background-color: #37474F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    color: white;
+    text-align: center;
+}
+
+#logo {
+    margin-left: 25px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+#title {
+    display: inline-block;
+    margin-left: 25px;
+}
+
+#subtitle {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+#subtitle a {
+    color: white;
+    text-decoration: underline;
+}
+
+.paddingText{
+    padding:8px;
+}
+
+/*some responsive rules*/
+
+@media screen and (min-width: 640px) and (max-width: 1004px) {
+    header {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+    }
+    .card {
+        margin-top: 8px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    header {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+    }
+    .card {
+        margin-top: 8px;
+    }
+}

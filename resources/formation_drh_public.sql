@@ -1,7 +1,7 @@
 -- LICENCE CREATIVE COMMONS - CC - BY - SA
 -- =======================================
--- Cette oeuvre est mise à disposition sous licence Paternité – Partage dans les mêmes conditions 
--- Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-sa/3.0/ 
+-- Cette oeuvre est mise à disposition sous licence Paternité – Partage dans les mêmes conditions
+-- Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-sa/3.0/
 -- ou écrivez à Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 --
 -- PostgreSQL database dump
@@ -58,7 +58,7 @@ CREATE FUNCTION handle_employe_code() RETURNS trigger
         TG_OP,
         TG_TABLE_SCHEMA,
         TG_TABLE_NAME;
-    -- this function can be called from services in UPDATE (only if id or ser_id altered) 
+    -- this function can be called from services in UPDATE (only if id or ser_id altered)
     -- or INSERT mode
     -- or from an updated ser_code on services
     -- deleted service will be handled by CASCADE SET ser_id=1 launching an employes update
@@ -70,8 +70,8 @@ CREATE FUNCTION handle_employe_code() RETURNS trigger
           RETURN NEW;
       ELSIF (TG_TABLE_NAME = 'services') THEN
           service_code = NEW.ser_code;
-          UPDATE drh.employes 
-            SET emp_code=service_code || '-' || trim(to_char(per_id,'0000')) 
+          UPDATE drh.employes
+            SET emp_code=service_code || '-' || trim(to_char(per_id,'0000'))
             WHERE ser_id=NEW.ser_id;
           RETURN NEW;
       END IF;
@@ -118,7 +118,7 @@ SET default_with_oids = false;
 --
 -- TOC entry 1571 (class 1259 OID 18006)
 -- Dependencies: 1915 1916 7
--- Name: agences; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: agences; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE agences (
@@ -144,7 +144,7 @@ COMMENT ON TABLE agences IS 'Agences d''intérim';
 --
 -- TOC entry 1564 (class 1259 OID 17719)
 -- Dependencies: 1875 1876 1877 1878 1879 1880 7
--- Name: personnel; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: personnel; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE personnel (
@@ -164,7 +164,7 @@ ALTER TABLE drh.personnel OWNER TO formation_admin;
 --
 -- TOC entry 1566 (class 1259 OID 17743)
 -- Dependencies: 1882 1883 1884 1885 1886 7
--- Name: services; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: services; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE services (
@@ -218,7 +218,7 @@ SELECT pg_catalog.setval('employes_emp_id_seq', 49, true);
 --
 -- TOC entry 1569 (class 1259 OID 17937)
 -- Dependencies: 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912 1913 1564 7
--- Name: employes; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: employes; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE employes (
@@ -242,7 +242,7 @@ ALTER TABLE drh.employes OWNER TO formation_admin;
 --
 -- TOC entry 1567 (class 1259 OID 17915)
 -- Dependencies: 1887 1888 1889 1890 1891 1892 1893 1895 1896 1897 1564 7
--- Name: interimaires; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: interimaires; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE interimaires (
@@ -306,7 +306,7 @@ SELECT pg_catalog.setval('agences_age_id_seq', 4, true);
 --
 -- TOC entry 1583 (class 1259 OID 18367)
 -- Dependencies: 7
--- Name: employes_projet; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: employes_projet; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE employes_projet (
@@ -355,7 +355,7 @@ SELECT pg_catalog.setval('interimaires_int_id_seq', 8, true);
 --
 -- TOC entry 1582 (class 1259 OID 18361)
 -- Dependencies: 7
--- Name: projet; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: projet; Type: TABLE; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE TABLE projet (
@@ -635,7 +635,7 @@ INSERT INTO services (ser_id, ser_nom, ser_code, ser_parent, date_creation, date
 --
 -- TOC entry 1932 (class 2606 OID 18027)
 -- Dependencies: 1571 1571
--- Name: agence_code_UNIQUE; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: agence_code_UNIQUE; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY agences
@@ -645,7 +645,7 @@ ALTER TABLE ONLY agences
 --
 -- TOC entry 1934 (class 2606 OID 18014)
 -- Dependencies: 1571 1571
--- Name: agences_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: agences_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY agences
@@ -655,7 +655,7 @@ ALTER TABLE ONLY agences
 --
 -- TOC entry 1919 (class 2606 OID 17724)
 -- Dependencies: 1564 1564
--- Name: employes_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: employes_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY personnel
@@ -665,7 +665,7 @@ ALTER TABLE ONLY personnel
 --
 -- TOC entry 1940 (class 2606 OID 18400)
 -- Dependencies: 1583 1583 1583
--- Name: employes_projet_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: employes_projet_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY employes_projet
@@ -675,7 +675,7 @@ ALTER TABLE ONLY employes_projet
 --
 -- TOC entry 1929 (class 2606 OID 17948)
 -- Dependencies: 1569 1569
--- Name: emplyes_personnel_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: emplyes_personnel_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY employes
@@ -685,7 +685,7 @@ ALTER TABLE ONLY employes
 --
 -- TOC entry 1925 (class 2606 OID 17934)
 -- Dependencies: 1567 1567
--- Name: interim_employes_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: interim_employes_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY interimaires
@@ -695,7 +695,7 @@ ALTER TABLE ONLY interimaires
 --
 -- TOC entry 1927 (class 2606 OID 17936)
 -- Dependencies: 1567 1567
--- Name: interim_unique_int_id; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: interim_unique_int_id; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY interimaires
@@ -705,7 +705,7 @@ ALTER TABLE ONLY interimaires
 --
 -- TOC entry 1936 (class 2606 OID 18366)
 -- Dependencies: 1582 1582
--- Name: projet_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: projet_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY projet
@@ -715,7 +715,7 @@ ALTER TABLE ONLY projet
 --
 -- TOC entry 1938 (class 2606 OID 18411)
 -- Dependencies: 1582 1582
--- Name: projet_nom_UNIQUE; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: projet_nom_UNIQUE; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY projet
@@ -725,7 +725,7 @@ ALTER TABLE ONLY projet
 --
 -- TOC entry 1922 (class 2606 OID 17748)
 -- Dependencies: 1566 1566
--- Name: service_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: service_PRIMARY_KEY; Type: CONSTRAINT; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 ALTER TABLE ONLY services
@@ -735,7 +735,7 @@ ALTER TABLE ONLY services
 --
 -- TOC entry 1930 (class 1259 OID 17970)
 -- Dependencies: 1569
--- Name: fki_EMPLOYE_POUR_UN_SERVICE_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: fki_EMPLOYE_POUR_UN_SERVICE_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE INDEX "fki_EMPLOYE_POUR_UN_SERVICE_FK" ON employes USING btree (ser_id);
@@ -744,7 +744,7 @@ CREATE INDEX "fki_EMPLOYE_POUR_UN_SERVICE_FK" ON employes USING btree (ser_id);
 --
 -- TOC entry 1941 (class 1259 OID 18392)
 -- Dependencies: 1583
--- Name: fki_employes_projet_EMPLOYES_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: fki_employes_projet_EMPLOYES_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE INDEX "fki_employes_projet_EMPLOYES_FK" ON employes_projet USING btree (emp_id);
@@ -753,7 +753,7 @@ CREATE INDEX "fki_employes_projet_EMPLOYES_FK" ON employes_projet USING btree (e
 --
 -- TOC entry 1942 (class 1259 OID 18398)
 -- Dependencies: 1583
--- Name: fki_employes_projet_PROJET_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: fki_employes_projet_PROJET_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE INDEX "fki_employes_projet_PROJET_FK" ON employes_projet USING btree (pro_id);
@@ -762,7 +762,7 @@ CREATE INDEX "fki_employes_projet_PROJET_FK" ON employes_projet USING btree (pro
 --
 -- TOC entry 1923 (class 1259 OID 18020)
 -- Dependencies: 1567
--- Name: fki_interimaires_agence_interim_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: fki_interimaires_agence_interim_FK; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE INDEX "fki_interimaires_agence_interim_FK" ON interimaires USING btree (age_id);
@@ -771,7 +771,7 @@ CREATE INDEX "fki_interimaires_agence_interim_FK" ON interimaires USING btree (a
 --
 -- TOC entry 1920 (class 1259 OID 18047)
 -- Dependencies: 1564 1564 1564
--- Name: personnel_Actif_nom_prenom_IDX; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace: 
+-- Name: personnel_Actif_nom_prenom_IDX; Type: INDEX; Schema: drh; Owner: formation_admin; Tablespace:
 --
 
 CREATE INDEX "personnel_Actif_nom_prenom_IDX" ON personnel USING btree (per_actif, per_nom, per_prenom);
@@ -1005,8 +1005,8 @@ GRANT SELECT ON TABLE interimaires TO formation_lecture;
 --
 
 REVOKE ALL ON TABLE vue_tableau_personnel FROM PUBLIC;
-REVOKE ALL ON TABLE vue_tableau_personnel FROM aicha;
-GRANT ALL ON TABLE vue_tableau_personnel TO aicha;
+REVOKE ALL ON TABLE vue_tableau_personnel FROM ultrogothe;
+GRANT ALL ON TABLE vue_tableau_personnel TO ultrogothe;
 GRANT ALL ON TABLE vue_tableau_personnel TO postgres;
 GRANT SELECT,INSERT,DELETE,TRUNCATE,UPDATE ON TABLE vue_tableau_personnel TO formation_ecriture;
 GRANT SELECT ON TABLE vue_tableau_personnel TO formation_lecture;

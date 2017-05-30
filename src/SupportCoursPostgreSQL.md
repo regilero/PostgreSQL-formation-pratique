@@ -1,0 +1,1150 @@
+# Formation Pratique PostgreSQL
+
+--------------------------------------------------------------------------------
+
+copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
+
+.fx: alternate
+
+--------------------------------------------------------------------------------
+
+# 3. Licence
+
+<small>Creative Commons by-sa</small>
+
+.fx: title1 title1-2
+
+--------------------------------------------------------------------------------
+## Licence
+
+Cette oeuvre est mise à disposition sous licence **Creative Commons - Paternité – Partage dans les mêmes conditions 3.0 non transposé**. Pour voir une copie de cette licence, visitez [http://creativecommons.org/licenses/by-sa/3.0/](http://creativecommons.org/licenses/by-sa/3.0/) ou écrivez à Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
+Vous pouvez contribuer à ce document nous signalant les erreurs, en apportant vos remarques, ajouts et commentaires. Ceux—ci pourront être intégrés au documents, avec leur paternité.Il vous est permis d'effectuer quelques adaptations détaillées au chapitre «4. Réutilisation du contenu de ce support de formation ».
+
+Les captures d'écran, les codes sources SQL et PHP sont normalement disponibles avec les sources.
+
+.fx: larger
+
+--------------------------------------------------------------------------------
+## Licence
+
+La licence couvre les documents pdf, bureautique (odt), les captures d'écrans, les sources SQL et les dumps de bases dans divers formats fournis avec ce présent document. Les sources PHP et bsh sont quand à elles diffusées sous licence BSD modifié (Simplified BSD licence ou BSD-2).
+
+
+Les fichiers sources sont disponibles sur [https://github.com/regilero/PostgreSQL-formation-pratique](https://github.com/regilero/PostgreSQL-formation-pratique)
+
+© Makina Corpus
+Retrouvez les livres blancs Makina Corpus et les contributions diverses sur [http://makina-corpus.com](http://makina-corpus.com) et [http://makina-corpus.org]([http://makina-corpus.org).
+
+
+.fx: larger
+
+--------------------------------------------------------------------------------
+
+# 4. Usages
+<small>Réutilisation du contenu de ce support de formation.</small>
+
+.fx: title1 title1-4
+
+--------------------------------------------------------------------------------
+
+## Réutilisation du contenu de ce support de formation
+
+
+Ce support de formation est soumis à la licence détaillée dans le chapitre 3.Licence.
+Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants , nous autorisons sans republication des modifications :
+
+ - la suppression du chapitre 2.Makina Corpus et du chapitre 4.Usages
+ - l'intégration de l'intégralité du support de formation (hormis le chapitre 2.Makina Corpus et 4.Usages) dans un modèle de document différent de celui de Makina Corpus.
+ - La suppression de chapitres complets (comme les derniers chapitres dédiés aux aspects administration PostgreSQL). Il est par contre nécessaire d'indiquer le retrait de ces chapitres en listant dans ce support les titres des chapitres retirés du support original.
+
+.fx: larger
+
+
+--------------------------------------------------------------------------------
+
+## Réutilisation du contenu de ce support de formation
+
+ - Toute autre modification substantielle ou contribution à ce support devrait être accompagnée d'une publication de ces modifications ou de l'intégralité du support sur un support librement disponible à tous (dépôt de sources publiques type github par exemple). Afin de mutualiser les efforts nous vous invitons bien sûr à contribuer à l'oeuvre originale dans la mesure du possible.
+
+**Il est interdit de retirer les références aux auteurs et à Makina Corpus du chapitre  3.Licence.**
+
+.fx: larger
+
+--------------------------------------------------------------------------------
+
+# 5. Auteur
+
+Régis Leroy (aka **regilero**)<regis.leroy@makina-corpus.com>
+
+Administrateur Système, développeur web, architecte web, formateur sur des sujets divers (supervision libre, bases de données libres, architectures web complexes, sécurité Web) depuis plusieurs années. Guidé par le besoin de disposer d'un support de formation complet sur PostgreSQL il s'est naturellement dirigé vers l'écriture et la publication d'un tel support, afin que d'autres puisse en profiter et contribuer ensemble à améliorer la qualité des supports de formation PostgreSQL.
+
+--------------------------------------------------------------------------------
+
+# 6. Organisation de ce support de formation
+<small>Et quelques liens vers la doc officielle.</small>
+
+.fx: title1
+
+--------------------------------------------------------------------------------
+
+## Organisation de ce support de formation
+
+Ce support de formation est **très orienté sur les aspects pratiques**.
+
+Dans le monde PostgreSQL les aspects théoriques sont très bien documentés.
+
+La documentation en ligne de PostgreSQL est sans doute un modèle du genre.
+
+Chaque version de PostgreSQL possède sa propre version de la documentation, dans plusieurs langues, et quand Google vous amène sur une page de cette documentation il suffit le plus souvent de changer le numéro de version dans l'url pour obtenir la même page mais adaptée à votre version. Par exemple:
+
+ * [http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource)
+ * [http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource)
+ * [http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html](http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html)
+ * [http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html](http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html)
+
+--------------------------------------------------------------------------------
+
+## Organisation de ce support de formation
+
+Le point d'entrée en français pour la documentation est: [http://docs.postgresqlfr.org/](http://docs.postgresqlfr.org/)
+
+Il est possible de télécharger des versions PDF de la documentation ou de la consulter en ligne.
+
+Cette documentation couvre des aspects très larges et très détaillé, mais aussi des procédures et des articles généraux.
+
+On trouvera aussi des articles intéressants sur le wiki PostgreSQL, comme
+
+* [http://wiki.postgresql.org/wiki/Working_with_Dates_and_Times_in_PostgreSQL](http://wiki.postgresql.org/wiki/Working_with_Dates_and_Times_in_PostgreSQL)
+* [https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.0](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.0)
+* [https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5)
+* [https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.4](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.4)
+
+--------------------------------------------------------------------------------
+
+## Organisation de ce support de formation
+
+Les possibilités techniques et fonctionnelles de PostgreSQL sont très étendues, il serait donc **inutile d'essayer de toutes les lister et de toutes les expérimenter**.
+Les documents d'explication en français existent et sont très complets. Nous choisissons donc d'orienter la formation sur des retours d'expériences réelles, sur de l'expérimentation, afin d'ouvrir les débats et de poser les principales questions.
+
+Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande `psql` mais nous utiliserons principalement le client d'administration graphique **pgAdmin**.
+
+Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être fournis avec le support de formation.
+
+--------------------------------------------------------------------------------
+
+# 7. Installer PostgreSQL
+<small>Parce qu'il faut commencer quelque part.</small>
+
+.fx: title1
+
+--------------------------------------------------------------------------------
+
+## Installer PostgreSQL
+
+Pour installer PostgreSQL, le point de départ est [http://www.postgresql.org/download/](http://www.postgresql.org/download/), il y a principalement 3 solutions:
+
+- **1)** **compiler** sois-même un serveur PostgreSQL. Les sources sont disponibles sur le site [http://www.postgresql.org/ftp/source/](http://www.postgresql.org/ftp/source/). De nombreuses documentations sont disponibles sur Internet. Il s'agit d'une **méthode ardue** mais qui peut permettre d'obtenir des performances meilleures pour un matériel spécifique, à condition cependant d'être un expert en matière de compilation, ce qui ne peut pas raisonnablement être présenté dans le cadre d'une formation.
+- **2)** Utiliser les **assistants d'installation** fournis par EnterpriseDB, nommés « Postgres Plus » [http://www.enterprisedb.com/products-services-training/postgres-plus/download](http://www.enterprisedb.com/products-services-training/postgres-plus/download). Il s'agit sans doute de la meilleure option pour une installation su un serveur Windows. On obtient un serveur PostgreSQL en 32 ou 64 bits, fournit avec des modules de contributions utiles et le client lourd d'administration pgAdmin III.
+
+--------------------------------------------------------------------------------
+## Installer PostgreSQL
+
+- **3*)* Sur une **distribution Linux** la meilleure solution est d'utiliser les **packages de la distribution**. Les Distribution de type Debian (comme Ubuntu) possèdent des packages très bien organisés qui permettent de faire tourner plusieurs instances de PostgreSQL en fonction des versions. On pourra trouver des « *ppa* », sites de maintient de versions plus avancées des packages PostgreSQL si la distribution utilisée ne contient pas la version voulue de PostgreSQL.
+
+Dans le cadre de cette formation nous utiliserons une distribution Linux capable d'installer un serveur PostgreSQL de version 9.0 ou supérieure. La dernière distribution Ubuntu par exemple.
+
+Première étape passons root sur le système:
+
+    > sudo su -
+
+
+---------------------------------------------------------------------
+## Installer PostgreSQL
+
+Pour trouver les packages disponibles d'une distribution en dehors des outils graphiques de type synaptic ou semi-graphiques comme aptitude, il est possible de taper cette commande:
+
+    # apt-cache search --names-only postgresql
+
+Puis une fois qu'on a reperé le package voulu il suffit de taper la commande apt-get install et d'installer les dépendances affichées. On pourra y ajouter les paquets suggérés.
+
+    # apt-get install postgresql-9.0
+
+ou
+
+    # apt-get install postgresql-9.5
+    # apt-get install postgresql-9.6
+
+
+---------------------------------------------------------------------
+## 7.1. Arrêt démarrage et initialisation
+
+.fx: title2
+
+--------------------------------------------------------------------------------
+## Arrêt démarrage et initialisation
+
+Le serveur est alors installé. Il tourne peut-être déjà. Pour contrôler l'arrêt et le démarrage du démon des scripts ont été normalement installés dans le système.
+
+Ces scripts sont une abstraction des vraies commandes d'arrêt et démarrage qui utilisent le programme `pg_ctl` ou `pg_ctlcluster` (comme « *PostgreSQL control* »).
+
+Ils permettent de ne pas avoir à taper de longues lignes de commandes indiquant les répertoires et fichiers de configuration. Ces scripts sont normalement inclus dans les « niveaux de démarrage » de l'OS ce qui fait qu'un arrêt ou un démarrage du serveur est capable d'ordonner l'arrêt et le démarrage du démon PostgreSQL.
+
+Il est bien sûr possible de le faire sois-même à la main, soit en étant l'utilisateur root, soit en étant l'utilisateur postgres.
+
+Un utilisateur **postgres** a en effet été créé, que ce soit sur Linux ou Windows, c'est l'utilisateur 'système' chargé de faire tourner le service.
+
+--------------------------------------------------------------------------------
+## Arrêt démarrage et initialisation
+
+La commande de démarrage d'un démon sous Linux est classiquement :
+
+    /etc/init.d/nom-du-service start
+
+Et la commande d'arrêt :
+
+    /etc/init.d/nom-du-service stop
+
+Ou sur les systèmes basés sur systemd et non plus sysV:
+
+    service nom-du-service start
+    service nom-du-service stop
+
+
+--------------------------------------------------------------------------------
+## Arrêt démarrage et initialisation
+
+Sur une distribution de type Debian si vous commencez à taper `/etc/init.d/` ou `service ` puis vous tapez la touche `tabulation` plusieurs fois, des propositions d'auto-complétion vous seront proposées.
+
+Vous pouvez-voir que **le service PostgreSQL est suffixé avec son numéro de version majeur**, ce qui permet de piloter indépendamment plusieurs versions majeures sur le système. Essayez alors ces diverses commandes:
+
+    /etc/init.d/postgresql-9.5
+    /etc/init.d/postgresql-9.5 stop
+    /etc/init.d/postgresql-9.5 start
+ou:
+
+    service postgresql
+    service postgresql stop 9.5
+    service postgresql start 9.5
+    service postgresql stop
+    service postgresql start
+
+--------------------------------------------------------------------------------
+## Initialisation
+
+Suivant les distributions il est possible que le service refuse de démarrer dans un premier temps (sur les distributions de type **Red Hat** par exemple) en indiquant que l'**initdb** doit être effectué. Cette phase d'initialisation se fait ainsi:
+
+    /etc/init.d/postgresql-9.5 initdb
+    ## ou
+    service postgresql-9.5 initdb
+
+**L'initdb constitue le processus initial d'un serveur PostgreSQL**.
+
+Lors de ce processus le répertoire de stockage du cluster est créé, avec ses principaux dossiers et ses fichiers requis.
+Il n'est pas nécessaire par définition d'effectuer cette commande plusieurs fois, et c'est pourquoi certaines distributions incluent cette phase dans l'installation du package.
+
+
+--------------------------------------------------------------------------------
+## Initialisation
+
+Si vous changez le répertoire dans le lequel PostgreSQL doit travailler vous devrez initialiser ce répertoire avec la commande initdb.
+Pour vérifier que le démon tourne nous allons regarder si les processus PostgreSQL existent.
+
+Sur Windows cela se ferait avec le gestionnaire des tâches. Sur Linux nous pouvons utiliser cette commande:
+
+    ps auxf
+
+Que nous allons filtrer pour ne conserver que les lignes contenant le mot « postgres »
+
+    ps auxf|grep postgres
+
+
+--------------------------------------------------------------------------------
+## Processus postgreSQL
+
+Sur une installation à partir d'un package extérieur à la distribution j'obtiens ceci (vous devriez obtenir quasiment la même chose):
+
+    postgres  1995  0.0  0.1  44300  4160 ?  S    09:12   0:00 /opt/PostgreSQL/9.5/bin/postgres -D /opt/PostgreSQL/9.5/data
+    postgres  2086  0.0  0.0  12328   872 ?  Ss   09:12   0:00  \_ postgres: checkpointer process
+    postgres  2091  0.0  0.0  44300  1280 ?  Ss   09:12   0:00  \_ postgres: writer process
+    postgres  2092  0.0  0.0  44300  1064 ?  Ss   09:12   0:00  \_ postgres: wal writer process
+    postgres  2093  0.0  0.0  45108  2168 ?  Ss   09:12   0:00  \_ postgres: autovacuum launcher process
+    postgres  2094  0.0  0.0  12812  1340 ?  Ss   09:12   0:00  \_ postgres: stats collector process
+
+Nous voyons donc un processus principal: ici le PID (Processus ID) 1995 tournant avec l'utilisateur postgres.
+Puis nous avons déjà **5 processus fils par défaut**, chacun avec un métier qui lui est propre, et sur lesquels nous reviendrons.
+
+Si des utilisateurs avaient des connexions ouvertes vers le service PostgreSQL nous aurions un nouveau processus fils par connexion, c'est le système des forks de processus souvent utilisé dans le monde Unix.
+
+--------------------------------------------------------------------------------
+## Remarques sur les process PostgreSQL
+
+
+Il ne s'agit donc pas ici d'une gestion multithreadée et ceci est la principale raison pour laquelle vous obtiendrez toujours des performances inférieures de PostgreSQL sur un système Windows.
+
+PostgreSQL est pensé comme un démon Unix et le portage sur Windows souffre de la mauvaise gestion des forks sur Windows.
+
+Il ne s'agit pas de limitations du système Windows, les services Windows utilisent beaucoup plus souvent la gestion multithreadé qui est très performante sur ce système, il s'agit simplement d'une différence de concepts.
+
+Il n'existe pas de version multi-threadé pour Windows car la gestion « fork » de PostgreSQL va plus loin qu'un simple système de fork, elle fonctionne en parallèle avec une gestion de la mémoire partagée entre ces forks.
+En faire une version multi-threadée imposerait d'écrire en fait un nouveau programme, qui ne serait plus PostgreSQL.
+
+Nous reviendrons sur ces sujets dans les parties sur le tunning de configuration.
+
+
+---------------------------------------------------------------------
+## Gestion des versions de PostgreSQL
+<small>fichiers de configurations et mises à jour</small>
+
+.fx: title1 title1-4
+
+---------------------------------------------------------------------
+## 8.1. Emplacement des fichiers de configuration
+
+.fx: title2
+
+---------------------------------------------------------------------
+## 8.1. Emplacement des fichiers de configuration
+
+Pour réussir à vous connecter à votre serveur PostgreSQl vous devrez peut-être modifier sa configuration. Il faut donc déjà dans un premier temps retrouver ces fichiers.
+
+Pour PostgreSQl les fichiers de configuration doivent se trouver **au niveau du répertoire de stockage des données du cluster**.
+
+Ce répertoire se nomme « **data dir** ». Son emplacement dépend des méthodes d'installation.
+
+Vérifier que vous avez toujours un terminal avec une session root.
+
+Puis devenez l'utilisateur Postgres, celui qui est chargé de faire tourner le service/démon PostgreSQL.
+L'utilisateur root à le droit de devenir l'utilisateur qu'il veut sans mot de passe. L'utilisation du « - » dans la commande permet de bien charger les variables d'environnement de l'utilisateur.
+
+---------------------------------------------------------------------
+## 8.1. Emplacement des fichiers de configuration
+
+    # su – postgres
+
+Si nous tapons « pwd » pour voir dans quel répertoire nous nous trouvons:
+
+    > pwd
+    /var/lib/postgresql
+
+Nous obtenons un répertoire qui a de fortes chances d'être proche du data directory. Sur une distribution Linux les data directory sont en fait **`/var/lib/postgresql/<version>`** ou **`/usr/lib/postgresql/<version>`** ce qui permet d'avoir plusieurs versions de PostgreSQL qui tournent.
+L'assistant d'installation sur un serveur Windows propose lui aussi de préfixer le data directory avec le **numéro de version majeur**.
+
+---------------------------------------------------------------------
+## 8.1. Emplacement des fichiers de configuration
+
+Les fichiers de configuration sont donc normalement présents dans `/usr/lib/postgresql/9.5`. Mais il pourraient aussi être installés dans `/opt/PostgreSQL/9.5/data` si j'avais utilisé un autre type de package que ceux fournis par la distribution officielle.
+
+La commande `ps` vous montrant les processus qui tournent peut vous aider à identifier le répertoire utiliser par le démon PostgreSQL, ce répertoire étant passé en option au processus PostgreSQL principal.
+Sur les distributions de type Debian les packages ont installés des raccourcis forts utiles dans les répertoires classique de configuration:
+**`/etc/postgresql/<version>`**
+
+Sur Windows des raccourcis dans le Menu démarrer sont présents. Et nous pourrons aussi retrouver des raccourcis vers ces fichiers dans le client d'administration pgAdmin.
+
+
+---------------------------------------------------------------------
+## 8.2. Compatibilité binaire, version majeure et mineure
+
+.fx: title2
+
+---------------------------------------------------------------------
+## Compatibilité binaire, version majeure et mineure
+
+Nous avons vu plusieurs fois qu'il est utile de préfixer les répertoires de stockage des données avec le numéro double de version, par exemple **8.4** ou **9.0** ou **9.1**. Ce numéro est le **numéro de version majeur**.
+
+ - Passer d'une version **8** à une version **9** est un changement de version **majeur**
+ - Passer d'une **8.3** à une **8.4** ou bien d'une **9.0** à une **9.2** est **aussi une changement de version majeur**.
+ - Passer de **9.2.1** à **9.2.3** est par contre un changement de version **mineur**
+
+---------------------------------------------------------------------
+## Compatibilité binaire, version majeure et mineure
+
+Si nous regardons à cette adresse: [http://developer.postgresql.org/pgdocs/postgres/release.html](http://developer.postgresql.org/pgdocs/postgres/release.html) nous voyons que ces changements de version mineurs existent, par exemple la **9.0.4** [http://developer.postgresql.org/pgdocs/postgres/release-9-0-4.html](http://developer.postgresql.org/pgdocs/postgres/release-9-0-4.html) qui suit les version **9.0.3**, **9.0.2** et **9.0.1**.
+
+Ces versions corrigent des bugs (sur la **9.0.4** on peut notamment voir un bug important de `pg_upgrade` avec les Blobs) et il est **important de les appliquer**.
+
+---------------------------------------------------------------------
+## Compatibilité binaire, version majeure et mineure
+
+PostgreSQL **assure la compatibilité binaire sur ces changements de versions mineurs**.
+
+Cela signifie que vous pouvez remplacer les binaires PostgreSQL de la version **9.0.2** avec ceux de la **9.0.5** sans aucun processus de migration de vos données (à priori, lisez quand même les Changelog au cas où vous seriez impactés par un bug qui nécessite des traitements annexes).
+
+
+Passer d'une version **9.0** à une version **9.2** sera par contre un changement majeur.
+
+Comme le passage d'une **8.3** à une **9.1**.
+
+Il faudra effectuer **un processus de migration et de transformation de vos données**.
+
+Un utilitaire est prévu à cet effet: **`pg_upgrade`**.
+
+
+---------------------------------------------------------------------
+## Compatibilité binaire, version majeure et mineure
+
+En terme de **développement** cela signifie qu'il faut à priori utiliser une **version cible** de PostgreSQL, dans laquelle vous pourrez identifier les outils que vous avez à votre disposition.
+
+A cet effet une page très importante de la documentation est **la matrice des fonctionnalités**: [http://www.postgresql.org/about/featurematrix](http://www.postgresql.org/about/featurematrix).
+
+Si vous trouvez une solution à un problème sur Internet et qu'elle ne marche pas sur votre base données n'hésitez jamais à aller vérifier qu'il ne s'agit pas d'une fonctionnalité apparue dans une version ultérieure.
+
+De manière plus générale parcourir cette matrice vous permettra de découvrir des fonctionnalités que vous n'auriez peut-être jamais devinées.
+
+---------------------------------------------------------------------
+# 9. Se connecter à PostgreSQL
+<small>Pas aussi simple qu'il n'y parait.</small>
+
+.fx: title1 title1-3
+
+---------------------------------------------------------------------
+## 9.1. pg_hba.conf : autoriser les connexions
+<small>Le firewall de PostgreSQL.</small>
+
+.fx: title2
+
+---------------------------------------------------------------------
+## pg_hba.conf
+
+PostgreSQL va gérer les autorisations de connexion aux bases à plusieurs niveaux.
+
+Nous verrons plus loin des moyens de contrôler les droits d'accès des login utilisateurs **à l'intérieur de PostgreSQL**.
+
+Mais ce qu'il faut bien garder à l'esprit c'est que toute la politique de gestion des droits que l'on pourrait appeler « politique des GRANT » ne s'applique **qu'après un premier niveau de contrôle d'accès extérieur à PostgreSQL**.
+
+Le fichier `pg_hba.conf` est un fichier qui permet de contrôler de façon très simple ou très complexe *quels sont les logins utilisateurs autorisés à se connecter à PostgreSQL, sur quelles bases, depuis quelles machines et avec quelles politiques de mot de passe*.
+
+---------------------------------------------------------------------
+## pg_hba.conf
+
+A partir de ce fichier on peut :
+
+- restreindre l'accès à PostgreSQL depuis le localhost uniquement,
+- ou bien à partir de certaines machines,
+- forcer un login à n'être utilisé que par un utilisateur système portant le même nom
+- appliquer un mapping entre les noms d'utilisateurs de l'OS et les logins de connexions
+- on peut utiliser des annuaires
+-  etc.
+
+L'étendue des possibilités est très grande, les deux références en la matière sont:
+
+- les commentaires du fichier pg_hba.conf
+- la documentation en ligne : [http://www.postgresql.org/docs/9.0/static/auth-pg-hba-conf.html](http://www.postgresql.org/docs/9.0/static/auth-pg-hba-conf.html)
+
+.fx: wide
+
+---------------------------------------------------------------------
+## pg_hba.conf
+
+    # TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+    # "local" is for Unix domain socket connections only
+    local   all         all                               ident
+    # IPv4 local connections:
+    host    all         postgres    127.0.0.1/32          ident
+    host    all         all         127.0.0.1/32          md5
+    # IPv6 local connections:
+    host    all         all         ::1/128               md5
+
+Soit en français, en utilisant la socket Unix chaque utilisateur du système peut se connecter à une base qui porterait son propre nom (sans mot de passe).
+
+L'utilisateur postgres (superutilisateur) est autorisé à se connecter en TCP/IP local (loopback) sur la base postgres, sans aucun mot de passe mais uniquement depuis une session utilisateur postgres.
+
+Ensuite PostgreSQL autorise n'importe quel login de connexion en TCP/IP local à destination de n'importe quelle base, sans considération sur l'identité réelle de celui qui se connecte, à partir du moment ou il peut donner le md5 du mot de passe.
+
+On constate que par défaut aucune machine distante n'est autorisée.
+
+.fx: wide
+
+---------------------------------------------------------------------
+## pg_hba.conf
+
+Dans l'immédiat nous allons étendre les valeurs par défaut afin de **rendre ce contrôle d'accès inopérant**.
+
+En développement, et pour cette formation on éditera ce fichier pour remplacer chaque fin de ligne (les `ident`/`md5`/etc) par « **trust** ».
+
+Cela veut dire « confiance ».
+
+Vous demandez donc à PostgreSQL de faire une **confiance aveugle**, tous les utilisateurs peuvent se connecter sur toutes les bases, avec le login de leur choix, **sans même avoir besoin d'indiquer le bon mot de passe**.
+
+
+**Le trust ne doit surtout pas être utilisé en production**. Cela permet d'abstraire cette première couche de sécurité, cela n’exclue pas des contrôles d'accès supplémentaires au sein de PostgreSQL en fonction du login utilisé. C'est un peu comme si vous aviez un Windows avec des comptes utilisateurs différents, y compris un compte administrateur (ici postgres), sans mots de passe. Il faut cependant bien se connecter avec le compte administrateur pour avoir les accès administrateur.
+
+
+---------------------------------------------------------------------
+## pg_hba.conf
+
+**N'oubliez pas de redémarrer PostgreSQL quand vous modifiez le pg_hba.conf !**
+
+    service postgresql restart 9.6
+
+---------------------------------------------------------------------
+## 9.2. psql : ligne de commande
+<small>Le principal client PostgreSQL.</small>
+
+
+.fx: title2
+
+---------------------------------------------------------------------
+## psql
+
+La ligne de commande psql, disponible aussi sous Windows, est l'outil principal de communication avec le serveur.
+
+Ce client de connexion à un serveur est le plus simple (un simple écran de ligne de commande interactive) mais il est toujours disponible, y compris à distance sur une session SSH sur un serveur qui n'autorise pas les connexions extérieures.
+
+Vous devriez toujours apprendre à vous en servir, pour exécuter des scripts SQL, pour taper quelques commandes simples, ou pour devenir votre principal moyen de communication avec le serveur PostgreSQL.
+
+Il faut *de préférence* disposer d'un client psql d'une version au moins supérieure à la version du serveur (un client 8.4 ne saurait pas parler avec un serveur 9.0).
+
+Cette commande est l'équivalent de la commande `mysql` avec MySQL ou `sqlplus` avec Oracle.
+
+---------------------------------------------------------------------
+## psql
+Comme toute ligne de commande cette commande accepte un grand nombre d'options à commencer par un «--help»
+
+
+    $ sudo su -
+    # su - postgres
+    $ psql --help
+    psql est l'interface interactive de PostgreSQL.
+
+    Usage :
+    psql [OPTIONS]... [NOM_BASE [NOM_UTILISATEUR]]
+
+    Options générales :
+    -c, --command=COMMANDE
+                    exécute une commande unique (SQL ou interne), puis quitte
+    -d, --dbname=NOM_BASE
+                    indique le nom de la base de données à laquelle se
+                    connecter (par défaut : « postgres »)
+
+---------------------------------------------------------------------
+## psql
+
+    -f, --file=FICHIER
+                    exécute les commandes du fichier, puis quitte
+    -l, --list      affiche les bases de données disponibles, puis quitte
+    -v, --set, --variable NOM=VALEUR
+                    initialise la variable psql NOM à VALEUR
+    -X, --no-psqlrc ne lit pas le fichier de démarrage (~/.psqlrc)
+    -1 (« un »), --single-transaction
+                    exécute un fichier de commande dans une transaction unique
+    --help          affiche cette aide, puis quitte
+    --version       affiche la version, puis quitte
+
+    Options d'entrée/sortie :
+    -a, --echo-all  affiche les lignes du script
+    -e, --echo-queries
+                    affiche les commandes envoyées au serveur
+    -E, --echo-hidden
+                    affiche les requêtes engendrées par les commandes internes
+
+---------------------------------------------------------------------
+## psql
+
+    -L, --log-file=FICHIER
+                    envoie les traces dans le fichier
+    -n, --no-readline
+                    désactive l'édition avancée de la ligne de commande
+                    (readline)
+    -o, --output=FICHIER
+                    écrit les résultats des requêtes dans un fichier (ou
+                    |tube)
+    -q, --quiet     s'exécute silencieusement (pas de messages, uniquement le
+                    résultat des requêtes)
+    -s, --single-step
+                    active le mode étape par étape (confirmation pour chaque
+                    requête)
+    -S, --single-line
+                    active le mode ligne par ligne (EOL termine la commande
+                    SQL)
+
+---------------------------------------------------------------------
+## psql
+
+    Options de formattage de la sortie :
+    -A, --no-align  active le mode d'affichage non aligné des tables (-P
+                    format=unaligned)
+    -F, --field-separator=CHAINE
+                    initialise le séparateur de champs (par défaut : « | »)
+                    (-P fieldsep=)
+    -H, --html      active le mode d'affichage HTML des tables (-P format=html)
+    -P, --pset=VAR[=ARG]
+                    initialise l'option d'impression VAR à ARG (voir la
+                    commande \pset)
+    -R, --record-separator=CHAINE
+                    initialise le séparateur d'enregistrements (par défaut :
+                    saut de ligne) (-P recordsep=)
+    -t, --tuples-only
+                    affiche seulement les lignes (-P tuples_only)
+    -T, --table-attr=TEXTE
+                    initialise les attributs des balises HTML de tableau
+                    (largeur, bordure) (-P tableattr=)
+
+---------------------------------------------------------------------
+## psql
+
+    -x, --expanded  active l'affichage étendu des tables (-P expanded)
+
+    Options de connexion :
+    -h, --host=HOTE nom d'hôte du serveur de la base de données ou répertoire
+                    de la socket (par défaut : /var/run/postgresql/)
+    -p, --port=PORT port du serveur de la base de données (par défaut :
+                    « 5432 »)
+    -U, --username=NOM
+                    nom d'utilisateur de la base de données (par défaut :
+                    « postgres »)
+    -w, --no-password
+                    ne demande jamais un mot de passe
+    -W, --password  force la demande du mot de passe (devrait survenir
+                    automatiquement)
+
+    Pour en savoir davantage, saisissez « \? » (pour les commandes internes) ou
+    « \help » (pour les commandes SQL) dans psql, ou consultez la section psql
+    de la documentation de PostgreSQL.
+    base
+    Rapportez les bogues à <pgsql-bugs@postgresql.org>.
+
+---------------------------------------------------------------------
+## psql
+
+Pour nous connecter à notre serveur local avec l'utilisateur postgres nous taperons donc:
+
+    $ psql -h localhost -p 5432 -U postgres
+    postgres=#
+
+la ligne `postgres=#` signifie que nous sommes dans la session interactive de psql. Les commandes les lus utiles dans un premier temps seront:
+
+    \h
+
+Qui donne une aide sur le SQL. Vous pouvez en effet requêter en SQL depuis cette ligne de commande pour créer des objets ou les interroger.
+
+    \?
+
+Qui donne tous les raccourcis de psql. Ces raccourcis permettent de lister les base (`\l`) les tables, les utilisateurs, les droits, etc.
+
+---------------------------------------------------------------------
+## psql
+
+Toutes ces commandes sont en fait des raccourcis correspondant à des requêtes très complexes effectuées sur le **catalogue**.
+Le catalogue est une base de données spéciale utilisée en interne par PostgreSQL et donnant accès à toutes les informations (`information_schema`).
+
+Le catalogue dans PostgreSQL se somme `pg_catalog` et peut varier dans sa structure d'une version à l'autre de PostgreSQL, c'est pourquoi le client ligne de commande doit avoir une version supérieure au serveur, il doit savoir comment interroger le `pg_catalog`.
+
+Au passage nous allons voir une commande fort utile de psql. Tout d'abord sortons de cette invite de commande avec:
+
+    \q
+
+Notez que vous pouvez aussi utiliser le CONTROL+D général qui veut dire « sortir » à peu près partout et sur tous les systèmes d'exploitation (mais pas dans vi, ceci est un autre problème...)
+
+---------------------------------------------------------------------
+## psql
+
+Nous allons nous reconnecter en utilisant l'option -E qui permet de faire un echo des commandes utilisées par psql.
+
+    $ psql -h localhost -p 5432 -U postgres -E
+
+Puis nous tapons
+
+    \d
+
+Cette commande signifie :  « affiche la liste des tables et vues de la base courante »
+
+Nous n'obtenons à priori aucun résultat, nous n'avons pas créé de tables. Mais nous avons en echo la requête effectuée sur le catalogue.
+
+---------------------------------------------------------------------
+## psql
+
+Pour un serveur 8.4 cela donne:
+
+    SELECT n.nspname as "Schema",
+    c.relname as "Name",
+    CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' END as "Type",
+    pg_catalog.pg_get_userbyid(c.relowner) as "Owner"
+    FROM pg_catalog.pg_class c
+        LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+    WHERE c.relkind IN ('r','v','S','')
+        AND n.nspname <> 'pg_catalog'
+        AND n.nspname <> 'information_schema'
+        AND n.nspname !~ '^pg_toast'
+    AND pg_catalog.pg_table_is_visible(c.oid)
+    ORDER BY 1,2;
+
+Ainsi si vous voulez un jour faire des requêtes dans le catalogue pour obtenir des informations utiles (quel est le code de mon trigger? Quelles sont les tables sur lesquelles l'utilisateur toto à les droits d'écriture?) vous pourrez demander à votre psql de vous montrer comment lui interroge le catalogue et vous en inspirer.
+
+.fx: wide
+
+---------------------------------------------------------------------
+## psql
+
+En regardant l'aide nous voyons que la commande `\d` peut s'écrire avec un grand `S` pour obtenir la liste des **tables et vues du système**, il s'agirait alors des tables et vues de la 'base' `pg_catalog`. Tapez:
+
+    \dS
+
+Vous obtenez un résultat qui est paginé par le programme car le contenu est trop long pour tenir à l'écran (utilisez les flèches haut et bas pour naviguer).
+Pour sortir de ce programme de pagination du résultat il faut taper « `q` ».
+
+Certaines autres commandes permettent de changer de base de données courante (`\use`) ou d'effectuer des commandes en dehors de la ligne de commande (commandes système) ou de changer les options d'affichage, etc.
+
+---------------------------------------------------------------------
+## psql
+
+Sortons de l'invite de commande et utilisons maintenant psql pour effectuer une simple requête SQL et stocker le résultat dans un fichier (dans le dossier tmp):
+
+    psql -h localhost -p 5432 -U postgres\
+     -c "SELECT * from pg_catalog.pg_database"\
+     -o /tmp/resultat.txt
+
+Vous pouvez visualiser le résultat avec un simple
+
+    cat /tmp/resultat.txt
+
+Ou bien utiliser un éditeur de texte comme nano ou ... vim. (pour quitter vi faites `ECHAP:q` ou `ECHAP:x` pour sauver, **évitez le reboot serveur pour quitter vi**).
+
+---------------------------------------------------------------------
+## psql
+
+Pour formater le résultat différemment vous pouvez tenter des combinaisons avec `--html`, `--tuples-only`, sans l'option `-o`, etc.
+
+Si vous regardez en détail l'aide fournie avec `\?` dans la session interactive vous pourrez retrouver de nombreux moyens d'effectuer des traitements similaires (exporter des résultats formatés) dans un session interactive.
+
+L'utilisation la plus courante de psql est **l'intégration de fichier SQL**.
+
+Ceci se fait avec l'option `-f` qui permet de faire jouer un fichier contenant de multiples commandes.
+Ce fichier d'entrée pourrait alors contenir des commandes `\*`, elles seraient comprises par **psql** comme des **commandes différentes du SQL**, spécifiquement destinées à psql, et pourraient alors servir à changer de base de donnée, construire des exports formatés, etc.
+
+
+Notez aussi l'option `-1` qui permet de forcer l'intégralité d'un script pouvant contenir plusieurs commandes sous la forme d'une transaction unique (nous reviendrons sur les transactions plus tard).
+
+---------------------------------------------------------------------
+## psql - connexion socket
+
+Dernier petit détail avec `psql`. Nous avons jusqu'ici utilisé la connexion en TCP/IP (`-h localhost`).
+
+Nous avons vu dans le fichier `pg_hba.conf` qu'il existait aussi un mode de connexion par **socket Unix**.
+
+Le serveur PostgreSQL écoute sur une socket réseau mais il écoute aussi sur un socket fichier.
+
+Le passage par une socket ficher n'est possible qui si l'on est situé sur la même machine (accès au système de fichiers) mais évite toutes les lenteurs dues au passage des informations à travers le protocole TCP/IP.
+
+Pour des traitements importants comme des migrations ou des importations (voir des backups) on devrait donc **privilégier l'accès par socket**. Il suffit donc de connaître le chemin vers cette socket pour réussir cette connexion...
+
+---------------------------------------------------------------------
+## psql - connexion socket
+
+    psql -h /var/run/postgresql -U postgres
+
+Cela fonctionne si votre fichier pg_hba.conf l'autorise. Si vous regardez dans le répertoire `/var/run/postgresql` vous retrouvez bien un fichier spécial (la socket):
+`/var/run/postgresql/.s.PGSQL.5432`, et peut-être d'autres sockets si vous avez d'autres postgreSQL qui écoutent sur d'autres ports. Auquel cas le numéro de port utilisé dans al ligne de commande permet à `psql` de choisir la bonne socket fichier.
+
+
+---------------------------------------------------------------------
+## psql - connexion socket
+
+
+`/var/run/postgresql` est la valeur par défaut pour l'option `-h` et `-U postgres` est la valeur par défaut pour `-U (nom de l'utilisateur courant)`.
+
+Un simple
+
+    psql
+
+suffit donc à vous connecter en tant qu'utilisateur postgres via la socket locale.
+
+Mais si vous n'êtes pas l'utilisateur postgres vous aurez certainement besoin de spécifier le rôle utilisateur que vous voulez utiliser (postgres) et le moyen de connexion (TCP/IP+port ou socket+port), sachant que le fichier `pg_hba.conf` par défaut n'autorise que l'utilisateur postgres sur la socket.
+
+
+---------------------------------------------------------------------
+## 9.3. PgAdmin III : le client graphique
+<small>Notre principal outil dans cette formation.</small>
+
+
+.fx: title2
+
+---------------------------------------------------------------------
+## pgadmin3
+
+L'administration en ligne de commande a ses fans. Mais un outil graphique s'il est bien fait est certainement un atout indispensable pour le développeur de base de données comme pour l'administrateur.
+
+Cet outil existe pour PostgreSQL, il s'agit de **pgAdmin III**, souvent nommé **pgadmin**.
+
+Nous utiliserons principalement cet outil dans cette formation. Nous n'allons donc pas faire très long dans un premier temps. Signalons simplement qu'il est possible à partir de cet outil de se connecter à plusieurs serveurs, sous des identités différentes. Mais comme pour le client psql il faut disposer d'un client ayant la connaissance du schéma du pg_catalog du serveur, donc avec un client d'une version supérieure ou égale à celle du serveur.
+
+pgAdmin effectue un grand nombre de requêtes sur le catalogue afin de nous présenter tous ces objets de façon graphique; Il n'y a pas de protocole de communication magique entre les clients et le serveur, tout se passe avec le langage SQL.
+
+---------------------------------------------------------------------
+## pgadmin4
+
+**pgadmin4** est arrivé en 2016, il s'agit d'une refonte de pgadmin3 (qui était en C++ Qt) en python et javascript/jQuery dans une version web mais avec aussi toujours un client lourd en C++/Qt.
+
+On retrouve les mêmes éléments que dans pgadmin3, avec des nouvelles fonctionnalités et des bugs liés à la jeunesse du produit.
+
+Libre à vous de tester pgadmin4, pour l'instant il n'est pas encore présent dans les distributions et pgadmin3 nous servira de base, tout ce que vous y ferez sera bien sûr aussi faisable avec pgadmin4.
+
+
+---------------------------------------------------------------------
+## 9.4. PhpPgAdmin: un client web
+<small>sachant que la version web de pgadmin4 devrait concurrencer ce produit.</small>
+
+
+.fx: title2
+
+---------------------------------------------------------------------
+## PhpPgAdmin
+
+De la même façon qu'il existe un client d'administration web de MySQL bien connu (**phpMyAdmin**) Il existe **phpPgAdmin**, que l'on peut facilement installer sous forme de package.
+
+    sudo apt-get install phppgadmin
+
+Le fichier de configuration apache (phppgadmin) installé se trouve dans `/etc/apache2/conf.d`. Il serait certainement plus utile sous la forme d'un VirtualHost dédié sur une installation de production, il faudrait alors le déplacer dans
+
+    /etc/apache2/sites-available/100-phppgadmin
+
+Puis l'éditer un peu afin de la transformer en VirtualHost.
+
+Avec l'installation par défaut tous les VirtualHost disposent de l'application sous l'URL **/phppgadmin/**. Nous n'en ferons rien pour ce tutoriel, on laisse ce fichier intact.
+
+
+---------------------------------------------------------------------
+## PhpPgAdmin
+
+En tapant [http://localhost/pĥppgadmin/](http://localhost/pĥppgadmin/) dans un navigateur on obtient donc cette page (la version de phppgadmin pouvant varier):
+
+![écran d'accueil phppgadmin](captures/phppgadmin.png)
+![écran phppgadmin](captures/phppgadmin2.png)
+
+---------------------------------------------------------------------
+## PhpPgAdmin
+
+En listant les fichiers installés depuis le package :
+
+    dpkg -L phppgadmin
+
+On trouve un fichier
+
+    /etc/phppgadmin/config.inc.php
+
+C'est dans ce fichier que l'on va pouvoir définir des connexions au serveur PostgreSQL en combinant des adresses de serveurs, des logins utilisateur et des mots de passe. Si vous voulez autoriser une connexion super-utilisateur via cette interface vous devrez changer la valeur d'une des options:
+
+    $conf['extra_login_security'] = false;
+
+En tant qu'administrateur principal de la base il est préférable d'utiliser un client lourd. Mais l'utilisation de ce logiciel pour donner des accès via le web à certains utilisateurs peut se justifier.
+
+---------------------------------------------------------------------
+# 10. Créer une base de donnée
+<small>Parce que travailler dans la base "postgres" n'est pas du tout conseillé.</small>
+
+.fx: title1 title1-1
+
+---------------------------------------------------------------------
+## 10.1. Le cas d'exemple de la formation
+<small>Your trombones belong to us!.</small>
+
+.fx: title2
+
+---------------------------------------------------------------------
+## Le cas d'exemple de la formation
+
+Pour avoir un cas d'espèce à étudier nous imaginerons que nous sommes dans un société.
+
+Dans cette société un **service de Relation humaine** possède des données qui sont stockées dans une base PostgreSQL.
+
+Une partie de ces données est **sensible** (comme les **salaires**) et seuls quelques utilisateurs devraient pouvoir y accéder.
+
+Cette société fabrique des fournitures du types **trombones** et **punaises** et propose en interne à ses employés et employés de passage (des intérimaires) de passer des commandes de fournitures.
+
+---------------------------------------------------------------------
+## Le cas d'exemple de la formation
+
+Dernièrement il a été décidé qu'un système de **points de fidélité** serait mis en place afin de récompenser les employés et intérimaires qui passent des commandes de fournitures en interne.
+
+- un nombre **variable** de points seront attribués à **la personne** en fonction du montant de la commande
+- un nombre **fixe** de points sera attribué au **service ou à l'agence d'intérim** de l'employé.
+
+L'usage final de ces points n'est pas dans notre exemple.
+
+La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de donnée PostgreSQL pour leur application, qui sera appelée sous le code projet **APP**.
+
+Ces employés devront donc accéder aux données, mais pas aux données interdites, et ils devront mettre en place un système de d'enregistrement des commandes et d'attribution des points.
+
+---------------------------------------------------------------------
+## 10.2. Utilitaires en ligne de commande
+
+<small>Très utile pour les scripts de déploiement.</small>
+
+.fx: title2
+
+---------------------------------------------------------------------
+
+Pour créer des bases de données ou pour créer des utilisateurs dans les bases données il existe des utilitaires en ligne de commande installés avec PostgreSQL.
+
+    createdb
+    creatuser
+    createlang
+
+Ces lignes de commandes acceptent l'option `--help` ainsi que bien d'autres options.
+
+Leur maniement est simple et nécessite soit d'être l'utilisateur root soit d'être l'utilisateur postgres.
+
+Cependant pour cette formation nous utiliserons les outils graphiques mis à disposition par pgadmin. Ceux-ci présentent le même nombre d'options, avec cependant l'énorme avantage d'être graphiques.
+
+Signalons que l'utilitaire `createlang` permet d'ajouter le support de langages différents dans une base de donnée ; notamment pour ce qui concerne les triggers et les procédures stockées.
+
+---------------------------------------------------------------------
+## 10.3. Cluster, Encodage des caractères, Locales, langages et templates
+<small>Il faut y penser dès le départ.</small>
+
+.fx: title2
+
+---------------------------------------------------------------------
+### Cluster
+
+Pour bien comprendre la création d'une base de donnée il faut revenir sur quelques concepts.
+
+Tout d'abord le serveur de bases de données postgreSQL est **un cluster**.
+
+Cela signifie que pour un même démon (ou service sous Windows) nous pouvons installer **plusieurs bases de données** différentes.
+
+Ces bases seront très fortement séparées.
+
+**Il n'existe pas à priori de moyens pour effectuer des requêtes utilisant des tables situées dans des bases séparées.** Cette distinction tend à disparaître depuis PostgreSQL 9 avec l'arrivée des connecteurs spéciaux de type dblink.
+
+---------------------------------------------------------------------
+### Locale
+
+Avant PostgreSQL 9 toutes ces bases devaient partager une même locale (collation), qui était installée sur le cluster lui-même, il est dorénavant possible de spécifier des locales différentes pour chacune de ces bases.
+
+La **locale** va indiquer des réglages dépendants d'une langue et d'une culture:
+
+- l'ordre de **tri alphabétique**
+- les **séparateurs** de milliers et de décimales
+- le symbole **monétaire**
+- l'ordre des éléments dans une **date**
+
+Les locales se nomment par exemple **fr_FR.UTF_EUR** ou **fr_FR_ISO8859-1_EUR**, ou encore **C** (la locale de l'ASCII7) ou **en_US**.
+
+---------------------------------------------------------------------
+### Encodage
+Enfin l'encodage des caractères va déterminer la taille minimale d'un caractère et l'encodage utilisé pour le transformer d'une série de bits à un caractère reconnu.
+
+C'est ici que l'on indique si on utilise de l'**ASCII7** (pas d'accents), de l'**ISO8859-1** (latin1), ou de l'**UTF8**.
+Ces paramètres sont propres à chacune des bases de données hébergées sur le cluster. Rappel sur les encodages:
+
+    +--------------+-------------+--------------+---------------------+----------+
+    |  CARACTERE   |  ASCII 7    |  ISO 8859-1  |        UTF-8        |  BASE64  |
+    +--------------+-------------+--------------+---------------------+----------+
+    |    "e"       |  0110 0101  |   0110 0101  |           01100101  |  ZQ==    |
+    |    "é"       |    --       |   1110 1001  |  11000011 10101001  |  w6k=    |
+
+    +------------------------------+--------------+----------+
+    |   OCTETS                     |  ISO 8859-1  |  UTF-8   |
+    +------------------------------+--------------+----------+
+    |           11000011 10101001  |      "Ã©"    |    "é"   |
+    |  11100011 10100111 10100110  |     "ã§¦"    |    "㧦"  |
+
+
+---------------------------------------------------------------------
+### Langage
+
+Enfin on trouvera aussi des langages.
+
+PostgreSQL supporte le langage **SQL**, le **C** et le **pl/PgSQL** nativement
+pour toutes les bases de données.
+
+Avant la version 9 le **pl/pgSQL** devait être ajouté sur une base pour qu'il
+soit supporté (d'où la présence de la commande « `createlang plpgsql` » dans de nombreuses documentations).
+
+D'autres langages peuvent être ajoutés, comme le `pl/Perl`, ou le `pl/Python`.
+
+---------------------------------------------------------------------
+### Templates
+
+Un cluster nouvellement instancié contient **3 bases**:
+
+- **postgres**: la base qui contient toutes les informations système permettant de gérer et d'interroger le cluster. C'est ici que sont stockés les utilisateurs et groupes de connexion ainsi que les tables du catalogue
+- **template1**: quand vous aller créer un base de données elle sera en fait une copie de cette base. Toutes les tables, tous les types, langages, et toutes les données déjà installés dans cette base seront donc recopiés dans la nouvelle.
+- **template0**: est une copie de template1 faite à l'initialisation, il s'agit donc du modèle « propre et intact », ne modifiez jamais ce modèle, c'est une sauvegarde au cas où vous endommagez template1.
+
+---------------------------------------------------------------------
+## 10.4. Créer une connexion administrateur avec pgAdminIII
+<small>Avec un code couleur.</small>
+
+.fx: title2
+
+---------------------------------------------------------------------
+
+Au niveau théorique nous sommes quasi prêts.
+
+![Création d'une connexion <](./captures/Creation_connexion_postgres.png)
+
+Nous allons créer une nouvelle base en utilisant **pgadmin**.
+
+Pour cela il faut que nous commencions par nous créer une connexion super utilisateur dans cet outil.
+
+Cela se fait depuis le menu « Fichier > Ajouter un serveur ». Nous allons entrer des paramètres jusqu'à ce que nous arrivions à nous connecter à PostgreSQL en tant qu'utilisateur postgres. Il peut être nécessaire de corriger le fichier `pg_hba.conf` si cette connexion nous est refusée.
+
+Cette connexion est assez dangereuse, nous sommes super-utilisateur et nous pouvons tout casser.
+On ajoute donc une couleur **rouge** à la connexion.
+---------------------------------------------------------------------
+## 10.5. Créer une base de donnée formation
+
+.fx: title2
+
+---------------------------------------------------------------------
+
+![Création dde base de données >](./captures/creation_bdd.png)
+
+En double cliquant sur la connexion nous l'ouvrons. Dans l'arbre des menus qui apparaît nous avons quatre premiers menus, rôles de connexion, groupes de connexion, tablespaces et bases de données. Nous voulons créer une base de données donc:
+
+clic droit base de données > Ajouter une base de données...
+
+Ceci ouvre un assistant que nous remplissons en suivant la copie d'écran (nom formation, en UTF8, collation et type de caractère fr_FR.utf8).
+Si vous naviguez parmi les onglets présents vous pourrez voir que le dernier onglet, comme sur presque tous les assistants, vous indique la commande SQL que l'assistant génère.
+
+---------------------------------------------------------------------
+
+    CREATE DATABASE formation
+    WITH ENCODING='UTF8'
+        OWNER=postgres
+        TEMPLATE=template1
+        LC_COLLATE='fr_FR.utf8'
+        LC_CTYPE='fr_FR.utf8'
+        CONNECTION LIMIT=-1;
+    COMMENT ON DATABASE formation IS 'Base de données test pour formation';
+
+<div class="warning"><input type="checkbox" checked="checked">
+Remarquez la case <strong>lecture seule</strong> sur l'assistant, si vous décochez cette case vous pouvez alors ajouter vous-même du code SQL que pgAdmin <strong>ne saurait pas
+intégrer à la requête</strong>. Les écrans de l'assistant ne peuvent du coup plus fonctionner.<br/>
+Ceci vous permet d'avoir un train d'avance sur pgadmin (une nouvelle option qui n'est pas encore intégrée dans l'outil), ne l'oubliez pas.<br/>
+En l'occurrence nous n'avons pas besoin de modifier ce code SQL.
+</div>
+
+---------------------------------------------------------------------
+
+![Création dde base de données <](./captures/post_creation_bdd.png)
+
+Une fois la base créée vous pouvez naviguer dans pgadmin et voir que de nombreux objets pourraient exister au sein de cette base :
+
+- **des catalogues**: il y en a deux, le pg_catalog et le catalogue information_schema qui est une obligation de toutes les bases de données se conformant à la norme SQL ANSI. Si vous naviguez dans le catalogue vous y trouverez un grand nombre d'objets qui sont disponibles pour tous en permanence.
+- **des schémas**: un seul au départ, nommé public. Dépliez le pour y retrouver les objets de la base
+- **des domaines**: (il s'agit de définitions de types propres à cette base, avec des contraintes associées (comme une chaîne de caractère devant se conformer à une expression régulière)
+- plusieurs objets comportant le mot **FTS**, signifiant Full Text Search. Il s'agit des différents éléments devant être mis en place pour ajouter des fonctionnalités de recherche plein texte
+
+.fx: wide
+
+---------------------------------------------------------------------
+
+- **des fonctions**: si vous regardez l'équivalent dans le `pg_catalog` vous retrouverez toutes les fonctions que vous pouvez utiliser dans les requêtes (comme substring par exemple)
+- **des séquences**: il s'agit d'objets permettant de générer des auto-incréments (pour faire simple)
+- **des tables** bien sûr
+- **des vues**, nous verrons ce que cela signifie
+- **des fonctions trigger**, là encore nous verrons plus tard ce que cela recouvre.
+
+---------------------------------------------------------------------
+# 11. Tablespaces
+<small>Liaison avec le disque.</small>
+
+.fx: title1 title1-1
+
+
+---------------------------------------------------------------------
+## Tablespaces
+
+Nous venons de créer une base. Nous aurions pu avant cela créer un tablespace.
+
+Heureusement pour nous **un tablespace par défaut existe** et a été choisi pour nous.
+
+Le tablespace est la **représentation interne pour le serveur d'un espace de stockage** sur le disque.
+
+Le tablespace par défaut (`pg_default`) représente donc l'espace de stockage qui a été créé dans le « data dir ».
+
+Nous voyons dès lors qu'il est en fait possible de créer plusieurs répertoires de données.
+
+Sur un serveur qui ne possède qu'un seul contrôleur de disques cela n'est le plus souvent pas du tout utile.
+
+Créer des tablespaces différents permet de forcer la répartition physique des données sur des **disques physiques différents**.
+
+---------------------------------------------------------------------
+## Tablespaces
+
+Il est tout à fait possible de créer plusieurs tablespaces sur un même disque mais c'est en fait inutile.
+
+Le vrai intérêt du tablespace est de forcer l'usage de disques différents. Tous les objets créés dans la base de donnée auront un tablespace affecté.
+
+Une des techniques d'optimisation courante avec les tablespaces consiste par exemple à forcer le stockage des index d'une table sur un disque et les données de la table sur un autre (en utilisant deux tablespaces différents).
+
+Lorsque le serveur fera des requêtes intensives sur cette table il pourra ainsi paralléliser les lectures d'index et les lectures de données, au niveau du système d'exploitation et de l'électronique des contrôleurs de disques les traitements seront parallélisés.
+
+La gestion des tablespaces est donc un élément de tunning assez avancé que nous pouvons ignorer pour le moment (il est possible de modifier les tablespaces des objets après leur création, mais cette opération aura des impacts si les données sont importantes en taille).
+
+-----------------------------------------------------------------
+# 12. Définitions des rôles et droits
+<small>gros sujet</small>
+
+.fx: title1 title1-2
+
+---------------------------------------------------------------------
+## Définitions des rôles et droits
+
+Pour le moment nous avons une nouvelle base mais elle appartient à l'utilisateur **postgres**.
+
+Afin de nous placer dans un cas plus réaliste il nous commencer à créer des **logins**, des **rôles**.
+
+Ceci pourrait se faire à l'aide de la commande `createuser`, mais là encore nous allons plutôt utiliser les assistants de pgadmin.
+
+<div class="warning"><input type="checkbox" checked="checked">
+Dans le futur retenez que <strong>seul le super utilisateur est capable de gérer les utilisateurs dans pgadmin</strong>, avec des connexions de moindre niveau vous n'aurez plus la possibilité de créer ou modifier les utilisateurs et groupes.
+</div>
+
+-----------------------------------------------------------------
+## 12.1. Les rôles de connexions
+<small>logins et groupes</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+## Des utilisateurs et des rôles
+
+Classiquement les bases de données s'utilisent avec un seul login qui possède tous les droits sur la base. C'est le cas par exemple quand on déploie une application LAMP chez un hébergeur mutualisé.
+Celui-ci met à disposition une base de données avec un login utilisateur unique pour l'application. Il est cependant **possible de gérer plusieurs logins par base de données**.
+
+Une application qui **au minimum serait capable d'utiliser deux connexions**, une en **lecture-écriture** et une en **lecture** pourrait ainsi beaucoup plus facilement passer à une gestion distribuée sur plusieurs serveurs 'esclaves' des opérations de lecture tout en se concentrant sur le serveur maître pour les parties applicatives nécessitant des lectures et écritures (pour toutes les transactions par exemple).
+
+-----------------------------------------------------------------
+## Des utilisateurs et des rôles
+
+Dans notre cas nous avons plusieurs utilisateurs :
+
+ - **Ultrogothe**: DBA (Administrateur de base de données) responsable de cette application. Nous lui créons un rôle pour éviter d'utiliser l'utilisateur **postgres**. Nous pourrions aussi créer un rôle portant le nom de la base, histoire de bien séparer les droits d'administrations par base. **Ultrogothe à tous les droits**.
+ - **Thibaut**, **Gondioque** et **Bertrude** sont des utilisateurs de la base de données. Ils sont responsable de la mise en place d'une application que nous nommerons **'app'**. Bertrude travaille au service DRH, elle a le droit de voir le contenu complet des tables de la DRH. Ce n'est pas le cas pour les autres, qui ne devraient voir qu'un sous ensemble des données de la partie DRH.
+ - **Childeric** et **Nantilde** : deux personnes ayant le droit d'alimenter les données de la base, mais aussi de supprimer ces données. Childeric est de plus **DRH** et est le seul à pouvoir alimenter les données en rapport avec la gestion du personnel, par contre Nantilde n'a rien à voir avec l'application 'app'.
+
+<div class="action"><p>
+Créez les utilisateurs <b>ultrogothe</b>, <b>bertrude</b>, <b>thibaut</b>, <b>gondioque</b>, <b>childeric</b> et <b>nantilde</b>
+</p></div>
+
+.fx: wide
+
+-----------------------------------------------------------------
+## Des utilisateurs et des rôles
+
+PostgreSQL peut même gérer un grand nombre d'identifiants de connexion, basés par exemple sur les utilisateurs du système d'exploitation ou les utilisateurs d'un annuaire.
+
+En terme de gestion des droits associés il faut donc aussi gérer des profils que l'on retrouvera sous la notion de **groupes** dans PostgreSQL.
+
+Depuis plusieurs versions de ce SGBD la distinction entre rôle de connexion et groupes de rôles de connexions est **abstraite**, car en fait tout rôle peut contenir d'autres rôles, dit autrement, tout rôle peut hériter d'un autre.
+
+Nous créerons autant de rôles que d'utilisateurs et nous y associerons des « rôles groupes » qui marqueront **les différentes politiques de droits** que nous aurons à gérer ( ces politiques dépendent de choix fonctionnels, il n'y a aucune obligation à créer ces rôles à chaque fois que vous créez une base avec PostgreSQL):
+
+ - **formation_admin** : rôle des administrateurs de cette base de donnée au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
+ - **formation_ecriture**: rôle permettant d'ajouter des données dans la base (childeric et nantilde)
+ - **formation_lecture**: rôle permettant de requêter la base (bertrude, thibaut et gondioque)
+ - **formation_app**: rôle des utilisateurs gérant l'application « app » (bertrude, thibaut,gondioque et nantilde)
+ - **formation_drh**: rôle des utilisateurs du service DRH (childeric et bertrude)
+
+Ce qui donne par rôle:
+
+ - **ultrogothe**: formation_admin
+ - **childeric**: formation_ecriture & formation_drh
+ - **nantilde**: formation_ecriture & formation_app
+ - **bertrude**: formation_lecture & formation_app & formation_drh
+ - **thibaut**:  formation_lecture & formation_app
+ - **gondioque**: formation_lecture & formation_app
