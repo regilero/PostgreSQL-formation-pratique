@@ -1,7 +1,7 @@
 -- LICENCE CREATIVE COMMONS - CC - BY - SA
 -- =======================================
--- Cette oeuvre est mise à disposition sous licence Paternité – Partage dans les mêmes conditions 
--- Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-sa/3.0/ 
+-- Cette oeuvre est mise à disposition sous licence Paternité – Partage dans les mêmes conditions
+-- Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-sa/3.0/
 -- ou écrivez à Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 --
 -- PostgreSQL database dump
@@ -99,7 +99,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON SEQUENCES  TO formation_
 
 --
 -- TOC entry 1222 (class 826 OID 17711)
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: -; Owner: aicha
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: -; Owner: ultrogothe
 --
 
 ALTER DEFAULT PRIVILEGES FOR ROLE formation_admin REVOKE ALL ON SEQUENCES  FROM PUBLIC;
@@ -126,7 +126,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON FUNCTIONS  TO formation_
 
 --
 -- TOC entry 1224 (class 826 OID 17712)
--- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: -; Owner: aicha
+-- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: -; Owner: ultrogothe
 --
 
 ALTER DEFAULT PRIVILEGES FOR ROLE formation_admin REVOKE ALL ON FUNCTIONS  FROM PUBLIC;
@@ -153,7 +153,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TABLES  TO formation_adm
 
 --
 -- TOC entry 1226 (class 826 OID 17713)
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: -; Owner: aicha
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: -; Owner: ultrogothe
 --
 
 ALTER DEFAULT PRIVILEGES FOR ROLE formation_admin REVOKE ALL ON TABLES  FROM PUBLIC;

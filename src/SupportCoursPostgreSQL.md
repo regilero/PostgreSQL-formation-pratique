@@ -473,7 +473,9 @@ Vous demandez donc à PostgreSQL de faire une **confiance aveugle**, tous les ut
 ---------------------------------------------------------------------
 ## pg_hba.conf
 
-**N'oubliez pas de redémarrer PostgreSQL quand vous modifiez le pg_hba.conf !**
+<div class="warning"><p>
+<strong>N'oubliez pas de redémarrer PostgreSQL quand vous modifiez le pg_hba.conf !</strong>
+</p></div>
 
     service postgresql restart 9.6
 
@@ -516,16 +518,16 @@ Comme toute ligne de commande cette commande accepte un grand nombre d'options �
     -d, --dbname=NOM_BASE
                     indique le nom de la base de données à laquelle se
                     connecter (par défaut : « postgres »)
-
----------------------------------------------------------------------
-## psql
-
     -f, --file=FICHIER
                     exécute les commandes du fichier, puis quitte
     -l, --list      affiche les bases de données disponibles, puis quitte
     -v, --set, --variable NOM=VALEUR
                     initialise la variable psql NOM à VALEUR
     -X, --no-psqlrc ne lit pas le fichier de démarrage (~/.psqlrc)
+
+---------------------------------------------------------------------
+## psql
+
     -1 (« un »), --single-transaction
                     exécute un fichier de commande dans une transaction unique
     --help          affiche cette aide, puis quitte
@@ -537,10 +539,6 @@ Comme toute ligne de commande cette commande accepte un grand nombre d'options �
                     affiche les commandes envoyées au serveur
     -E, --echo-hidden
                     affiche les requêtes engendrées par les commandes internes
-
----------------------------------------------------------------------
-## psql
-
     -L, --log-file=FICHIER
                     envoie les traces dans le fichier
     -n, --no-readline
@@ -554,12 +552,13 @@ Comme toute ligne de commande cette commande accepte un grand nombre d'options �
     -s, --single-step
                     active le mode étape par étape (confirmation pour chaque
                     requête)
-    -S, --single-line
-                    active le mode ligne par ligne (EOL termine la commande
-                    SQL)
 
 ---------------------------------------------------------------------
 ## psql
+
+    -S, --single-line
+                    active le mode ligne par ligne (EOL termine la commande
+                    SQL)
 
     Options de formattage de la sortie :
     -A, --no-align  active le mode d'affichage non aligné des tables (-P
@@ -579,11 +578,11 @@ Comme toute ligne de commande cette commande accepte un grand nombre d'options �
     -T, --table-attr=TEXTE
                     initialise les attributs des balises HTML de tableau
                     (largeur, bordure) (-P tableattr=)
+    -x, --expanded  active l'affichage étendu des tables (-P expanded)
+
 
 ---------------------------------------------------------------------
 ## psql
-
-    -x, --expanded  active l'affichage étendu des tables (-P expanded)
 
     Options de connexion :
     -h, --host=HOTE nom d'hôte du serveur de la base de données ou répertoire
@@ -622,6 +621,8 @@ Qui donne une aide sur le SQL. Vous pouvez en effet requêter en SQL depuis cett
 
 Qui donne tous les raccourcis de psql. Ces raccourcis permettent de lister les base (`\l`) les tables, les utilisateurs, les droits, etc.
 
+.fx: wide
+
 ---------------------------------------------------------------------
 ## psql
 
@@ -636,6 +637,8 @@ Au passage nous allons voir une commande fort utile de psql. Tout d'abord sorton
 
 Notez que vous pouvez aussi utiliser le CONTROL+D général qui veut dire « sortir » à peu près partout et sur tous les systèmes d'exploitation (mais pas dans vi, ceci est un autre problème...)
 
+.fx: wide
+
 ---------------------------------------------------------------------
 ## psql
 
@@ -649,7 +652,9 @@ Puis nous tapons
 
 Cette commande signifie :  « affiche la liste des tables et vues de la base courante »
 
-Nous n'obtenons à priori aucun résultat, nous n'avons pas créé de tables. Mais nous avons en echo la requête effectuée sur le catalogue.
+Nous n'obtenons à priori aucun résultat, nous n'avons pas créé de tables.
+
+Mais nous avons en echo la requête effectuée sur le catalogue...
 
 ---------------------------------------------------------------------
 ## psql
@@ -802,6 +807,7 @@ Puis l'éditer un peu afin de la transformer en VirtualHost.
 
 Avec l'installation par défaut tous les VirtualHost disposent de l'application sous l'URL **/phppgadmin/**. Nous n'en ferons rien pour ce tutoriel, on laisse ce fichier intact.
 
+.fx: wide
 
 ---------------------------------------------------------------------
 ## PhpPgAdmin
@@ -810,6 +816,8 @@ En tapant [http://localhost/pĥppgadmin/](http://localhost/pĥppgadmin/) dans un
 
 ![écran d'accueil phppgadmin](captures/phppgadmin.png)
 ![écran phppgadmin](captures/phppgadmin2.png)
+
+.fx: wide
 
 ---------------------------------------------------------------------
 ## PhpPgAdmin
@@ -827,6 +835,8 @@ C'est dans ce fichier que l'on va pouvoir définir des connexions au serveur Pos
     $conf['extra_login_security'] = false;
 
 En tant qu'administrateur principal de la base il est préférable d'utiliser un client lourd. Mais l'utilisation de ce logiciel pour donner des accès via le web à certains utilisateurs peut se justifier.
+
+.fx: wide
 
 ---------------------------------------------------------------------
 # 10. Créer une base de donnée
@@ -933,12 +943,14 @@ Ces paramètres sont propres à chacune des bases de données hébergées sur le
     +--------------+-------------+--------------+---------------------+----------+
     |    "e"       |  0110 0101  |   0110 0101  |           01100101  |  ZQ==    |
     |    "é"       |    --       |   1110 1001  |  11000011 10101001  |  w6k=    |
+    +--------------+-------------+--------------+---------------------+----------+
 
     +------------------------------+--------------+----------+
     |   OCTETS                     |  ISO 8859-1  |  UTF-8   |
     +------------------------------+--------------+----------+
     |           11000011 10101001  |      "Ã©"    |    "é"   |
     |  11100011 10100111 10100110  |     "ã§¦"    |    "㧦"  |
+    +------------------------------+--------------+----------+
 
 
 ---------------------------------------------------------------------
@@ -1010,7 +1022,7 @@ Si vous naviguez parmi les onglets présents vous pourrez voir que le dernier on
         CONNECTION LIMIT=-1;
     COMMENT ON DATABASE formation IS 'Base de données test pour formation';
 
-<div class="warning"><input type="checkbox" checked="checked">
+<div class="warning">
 Remarquez la case <strong>lecture seule</strong> sur l'assistant, si vous décochez cette case vous pouvez alors ajouter vous-même du code SQL que pgAdmin <strong>ne saurait pas
 intégrer à la requête</strong>. Les écrans de l'assistant ne peuvent du coup plus fonctionner.<br/>
 Ceci vous permet d'avoir un train d'avance sur pgadmin (une nouvelle option qui n'est pas encore intégrée dans l'outil), ne l'oubliez pas.<br/>
@@ -1090,7 +1102,7 @@ Afin de nous placer dans un cas plus réaliste il nous commencer à créer des *
 
 Ceci pourrait se faire à l'aide de la commande `createuser`, mais là encore nous allons plutôt utiliser les assistants de pgadmin.
 
-<div class="warning"><input type="checkbox" checked="checked">
+<div class="warning">
 Dans le futur retenez que <strong>seul le super utilisateur est capable de gérer les utilisateurs dans pgadmin</strong>, avec des connexions de moindre niveau vous n'aurez plus la possibilité de créer ou modifier les utilisateurs et groupes.
 </div>
 
@@ -1132,7 +1144,9 @@ En terme de gestion des droits associés il faut donc aussi gérer des profils q
 
 Depuis plusieurs versions de ce SGBD la distinction entre rôle de connexion et groupes de rôles de connexions est **abstraite**, car en fait tout rôle peut contenir d'autres rôles, dit autrement, tout rôle peut hériter d'un autre.
 
-Nous créerons autant de rôles que d'utilisateurs et nous y associerons des « rôles groupes » qui marqueront **les différentes politiques de droits** que nous aurons à gérer ( ces politiques dépendent de choix fonctionnels, il n'y a aucune obligation à créer ces rôles à chaque fois que vous créez une base avec PostgreSQL):
+Nous créerons autant de rôles que d'utilisateurs et nous y associerons des « rôles groupes » qui marqueront **les différentes politiques de droits** que nous aurons à gérer ( ces politiques dépendent de choix fonctionnels, il n'y a aucune obligation à créer ces rôles à chaque fois que vous créez une base avec PostgreSQL)
+
+-----------------------------------------------------------------
 
  - **formation_admin** : rôle des administrateurs de cette base de donnée au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
  - **formation_ecriture**: rôle permettant d'ajouter des données dans la base (childeric et nantilde)
@@ -1148,3 +1162,587 @@ Ce qui donne par rôle:
  - **bertrude**: formation_lecture & formation_app & formation_drh
  - **thibaut**:  formation_lecture & formation_app
  - **gondioque**: formation_lecture & formation_app
+
+.fx: wide
+
+-----------------------------------------------------------------
+## 12.2. Créer des connexions utilisateur avec PgAdminIII
+<small>Avec plein de couleurs</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+
+Nous allons créer cinq nouvelles connexions, une pour chaque groupe (**formation_admin**,
+**formation_ecriture**, **formation_lecture** et **formation_drh**), en prenant à chaque fois
+l'un des utilisateurs de ces groupes comme login de connexion, pour le dernier groupe
+ nous créons deux connexions, une avec childeric, une avec bertrude.
+
+En effet childeric appartient au groupes formation_ecriture et formation_drh
+alors que bertrude appartient à formation_lecture, formation_app et
+formation_drh; il est donc intéressant d'étudier la différence entre ces deux profils.
+
+Plus tard nous appliquerons les droits afférants à chacun des groupes, nos cinq connexions
+ (six en comptant celle de postgres) se font sur la même base de données
+mais avec des utilisateurs différents, elles devraient donc posséder des limitations différentes.
+
+-----------------------------------------------------------------
+
+Nous choisirons des couleurs
+
+- **orange** pour la connexion avec les droits d'administration
+de la base (**formation_admin**).
+- **vert** pour la connexion limitée en lecture
+- **aucune couleur** pour la connexion avec droits en écriture.
+
+Ainsi nous visualiserons mieux dans pgadmin le niveau de **danger** de chacune des ces connexions.
+
+Pour les deux dernières nous choisissons **gris** pour **childeric** et encore **vert** pour **bertrude**.
+
+-----------------------------------------------------------------
+
+Ces connexions se nomment **Serveurs** dans pgadmin.
+
+Il faut donc créer cinq 'serveurs', qui sont en fait à chaque fois
+le même serveur PostgreSQL, sur le même port, mais avec
+un utilisateur de connexion différent:
+
+– postges9-­formation­-admin­: login ultrogothe : couleur orange
+– postges9­-formation­-ecriture: login nantilde : pas de couleur
+– postges9­-formation­-lecture: login thibaut : couleur verte
+– postges9­-formation­-drh-­childeric: login childeric : couleur grise
+– postges9­-formation­-drh-­bertrude: login bertrude : couleur verte
+
+<div class="warning"><p>
+Attention: après avoir créé les connexions il est <strong>très fortement recommandé de quitter
+pgadmin puis d'y revenir</strong>. Les connexions sont sauvegardées lors de la sortie du
+programme, qui malheureusement est parfois instable et ne quitte pas toujours proprement.
+</p></div>
+
+-----------------------------------------------------------------
+### Retour au pg_hba.conf
+
+<div class="action"><p>
+Maintenant que nous disposons de plusieurs connections sur la base formation,
+les utilisateurs les plus en avance pourront aller modifier leur pg_hba.conf pour
+appliquer des droits ou des restrictions en fonction des logins, ou pour autoriser
+des connexions depuis des machines extérieures et observer les blocages
+produits dans les connexions de pgAdmin.
+</p></div>
+
+
+-----------------------------------------------------------------
+## 12.3. Les schémas
+<small>Séparer la base.</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+## Les schémas
+
+[http://docs.postgresql.fr/9.5/ddl-schemas.html](http://docs.postgresql.fr/9.5/ddl-schemas.html)
+
+On peut voir de façon simplifiée les schémas comme **des bases de données à
+l'intérieur d'une base de données**.
+
+Par défaut un seul schéma existe dans une base de données, le schéma **public**.
+
+Mais une base peut contenir plusieurs schémas qui seront autant de sous-bases
+dans la base.
+
+Une des principales application des schémas est **l'application de politiques de droits par schémas**.
+Mais ils permettent aussi de mieux scinder des aspects purement fonctionnels de la base.
+
+<div class="warning"><p>
+L'avantage de l'utilisation des schémas par rapport à l'utilisation de plusieurs
+bases est <strong>qu'il est possible d'effectuer des requêtes impactant plusieurs
+schémas d'une base, ce n'est pas le cas entre plusieurs bases</strong>
+(pas sans outils plus abtraits et moins performants comme dblink).
+</p></div>
+
+.fx: wide
+
+-----------------------------------------------------------------
+12.4. Les droits d'accès dans PostgreSQL et les schémas
+http://www.postgresql.org/docs/9.0/static/sql-grant.html
+Plusieurs niveaux de droits existent dans PostgreSQL:
+les droits d'accès à la base, une couche qui peut faire redondance avec les restrictions situées dans ph_hba.conf (mais la redondance n'est pas un mal en terme de sécurité)
+droits sur les créations d'objets dans la base (tables, tables temporaires)
+droits par défaut sur des éléments du langage SQL. Ainsi le SELECT donne le droit de visualiser les données, mais pour les commandes permettant d'éditer les données on va retrouver un ensemble de droits distincts. Les classiques INSERT, UPDATE, DELETE et TRUNCATE (qui est une variation du DELETE). Mais aussi REFERENCES (le droit de créer des clefs étrangères) et TRIGGER (le droit de créer des triggers).
+Au niveau des schémas on va pouvoir redéfinir les droits par défaut des instructions SQL. Mais aussi directement un droit d'accès ou non aux objets de ce schéma (USAGE)
+ces droits du langage SQL (SELECT, etc) peuvent ensuite être modifiés au niveau de chaque table.
+Avec PostgreSQL 9 ces droits vont même aujourd'hui jusqu'aux colonnes des tables
+Il est donc possible de mettre en place des politiques assez complexes. Dans la pratique les objets principaux sur lesquels vous devriez appliquer des droits sont les schémas.
+PostgreSQL ne permet pas les requêtes entre plusieurs bases, si vous voulez utiliser plusieurs applications avec des droits très différents vous devriez donc, plutôt que de mettre en place plusieurs bases de données dans le cluster, mettre en place plusieurs schémas dans la base.
+Vous pouvez voir un schéma comme des « sous-bases ». ces sous-bases ayant la possibilité d'être poreuses, vous allez pouvoir faire transiter ou pas des informations entre les schémas. Chose que vous ne pourrez pas faire entre les bases de données à moins d'utiliser des programmes externes ou des connecteurs particuliers (comme dblink).
+12.5. Création des schémas drh et app
+Nous allons utiliser la connexion rouge de postgres. Car c'est pour l'instant le propriétaire de la base.
+Dans pgadmin nous allons sur l'objet schémas dans l'arborescence et ajoutons un nouveau schéma avec l'assistant de pgadmin. Nous allons créer le schéma « drh » avec « formation_drh » comme propriétaire.
+
+On constate que le SQL généré est:
+CREATE SCHEMA drh
+       AUTHORIZATION formation_admin;
+COMMENT ON SCHEMA drh IS 'Schémas des données de la DRH.';
+On peut donc utiliser une commande SQL pour générer le second schéma (app) sur lequel on garde formation_admin en propriétaire (remarquez la double apostrophe dans le commentaire):
+CREATE SCHEMA app
+       AUTHORIZATION formation_admin;
+COMMENT ON SCHEMA app IS 'Schémas des données de l''application app.';
+Pour taper du SQL utilisez le bouton SQL de pgadmin dans la barre d'outil, la connexion en cours sera utilisée.
+Rafraichissez les données de pgadmin avec la touche F5 ou le bouton rafraîchir.
+On change ensuite les propriétaires des schémas afin qu'il s'agisse bien de formation_admin et non de ultrogothe ou postgres.
+12.6. Création des droits
+Nous allons changer le propriétaire de la base formation. La commande SQL qui nous permettrait d'effectuer cette opération est :
+ALTER DATABASE formation OWNER TO formation_admin;
+Retrouvez le moyen de le faire graphiquement dans pgadmin.
+Est-il possible de modifier le nom d'une base de données après sa création?
+Nous allons maintenant appliquer une politique de droits en deux étapes qui correspondent aux deux onglets de droits présentés par pgadmin sur les objets:
+les droits généraux d'accès aux objets
+les droits sur les éléments du langage SQL
+L'écriture des droits d'accès se fait en choisissant propriétés sur un clic droit sur la base formation.
+L'ergonomie de cet écran n'est pas évidente au premier abord. Il faut choisir un groupe en bas, cocher ses droits puis l'ajouter. Essayez d'obtenir exactement le même état que dans cette copie d'écran puis validez.
+Quand vous sélectionnez l'objet 'formation' dans la liste des bases de données vous pouvez remarquer que le panneau SQL (en bas à droite) dans pgadmin vous liste les commandes SQL qui permettent de reconstruire cet objet dans l'état où il se situe actuellement. Une fois que vous aurez appliqué les droits sur la base vous devriez retrouver cette liste de commandes SQL sous la commande CREATE DATABASE:
+GRANT CONNECT, TEMPORARY ON DATABASE formation TO public;
+GRANT ALL ON DATABASE formation TO formation_admin WITH GRANT OPTION;
+GRANT CONNECT, TEMPORARY ON DATABASE formation TO formation_ecriture;
+GRANT CONNECT ON DATABASE formation TO formation_lecture;
+Ré-ouvrez les propriétés de la base et allez dans l'onglet Droits par défaut.
+Attention: cet onglet est constitué de trois sous onglets.
+Essayez d'obtenir l'équivalent de ces trois copies d'écrans
+
+
+Le résultat en terme de SQL devrait être:
+ALTER DEFAULT PRIVILEGES
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON TABLES
+    TO postgres;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLES
+    TO formation_ecriture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT SELECT ON TABLES
+    TO formation_lecture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON TABLES
+    TO formation_admin WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT SELECT, UPDATE, USAGE ON SEQUENCES
+    TO postgres;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT SELECT, UPDATE, USAGE ON SEQUENCES
+    TO formation_ecriture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT SELECT, USAGE ON SEQUENCES
+    TO formation_lecture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT SELECT, UPDATE, USAGE ON SEQUENCES
+    TO formation_admin WITH GRANT OPTION;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT EXECUTE ON FUNCTIONS
+    TO public;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT EXECUTE ON FUNCTIONS
+    TO postgres;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT EXECUTE ON FUNCTIONS
+    TO formation_ecriture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT EXECUTE ON FUNCTIONS
+    TO formation_lecture;
+
+ALTER DEFAULT PRIVILEGES
+    GRANT EXECUTE ON FUNCTIONS
+    TO formation_admin WITH GRANT OPTION;
+
+Il nous faut ensuite appliquer certains droits d'accès au niveau des schémas:
+L'équivalent en SQL est:
+GRANT USAGE ON SCHEMA drh TO GROUP formation_drh;
+GRANT USAGE ON SCHEMA app TO GROUP formation_app;
+12.7. La variable search_path
+Plusieurs variables sont associées à la session de connexion à la base. Certaines sont définies lors de l'ouverture de la session (instruction SET mavariable='foo';), certaines sont définies au niveau du rôle, ou au niveau de la base. Une des variables les plus importantes à partir du moment où l'on travaille avec les schémas est search_path. On peut voir cette variable comme un équivalent des variables d'environnement PATH sur les divers système d'exploitation.
+La valeur par défaut de search_path est "$user",public
+Cela signifie que lorsque une instruction SQL recherchera un objet qui n'a pas été préfixé par un nom de schéma il recherchera par défaut cet objet dans un schéma portant le nom de l'utilisateur puis dans le schéma public.
+Ainsi si l'utilisateur postgres écrit:
+SELECT * FROM matable;
+Le moteur SQL va tenter: de trouver une table matable dans le schéma postgres, et si elle n'existe pas il recherchera cette table dans le schéma public. Toutes les bases de données ont au moins un schéma public.
+Si cette même requête est lancée par l'utilisateur bob matable sera recherchée dans le schéma bob puis dans le schéma public. Le fait que le schéma bob n'existe pas ne va pas générer d'alerte.
+Pour être certain de manipuler le bon objet, ou pour trouver un objet qui est dans un schéma qui n'est pas listé dans search_path il faut préfixer le nom de l'objet par le nom du schéma, comme dans cette requête:
+SELECT sylvie.calcul_differentiel(foo.field1,foo.field2)
+FROM marco.tablefoo foo;
+Dans cet exemple on voit que l'objet recherché peut-être une table mais aussi une fonction ou tout autre objet appartenant à un schéma.
+On peut aussi modifier la valeur de search_path afin que la recherche puisse tester les bons schémas dans le bon ordre de priorité. Un examen du code SQL généré par un pg_dump de type PLAIN montre par exemple une utilisation intensive des instructions SET search_path pour fixer en fait les schéma de travail en cours.
+12.8. Tester les droits et schémas
+Muni de nos différentes connexions et de nos schémas nous allons pouvoir tester nos droits d'accès Il nous manque cependant encore deux éléments, des tables et des données afin de vérifier que nous pouvons lire et/ou écrire dans ces tables.
+Dans un premier temps, avant d'importer des bases réelles nous allons apprendre à créer très vite des jeux de test.
+12.8.1. Création table test1 en SQL dans le schéma public
+Nous utiliserons la connexion rouge de postgres. Nous cliquons sur le schéma public puis sur le bouton SQL:
+CREATE TABLE test1 (
+ id serial,
+ val character varying,
+ PRIMARY KEY(id)
+);
+Nous obtenons quelques notices:
+NOTICE:  CREATE TABLE will create implicit sequence "test1_id_seq" for serial column "test1.id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "test1_pkey" for table "test1"
+La requête a été exécutée avec succès en 111 ms, mais ne renvoie aucun résultat.
+Un F5 dans pgadmin nous montre cette table dans la liste des tables du schéma public. Nous voyons aussi la séquence qui a été créée.
+Le mot clef serial ici est en fait une macro. Il représente un type integer (ou big si on utilise bigserial). Il impose la création automatique d'une séquence, que nous aurions pu créer manuellement, et impose la valeur par défaut de notre integer à être nextval(la-sequence). Une séquence est un objet que nous pouvons examiner dans pgadmin, son but est de fournir des incréments de façon transactionnelle (pas de doublon) et la fonction nextval() sur une séquence fournit cette nouvelle valeur. Serial et bigserial sont donc les mots clefs de PostgreSQL pour les auto incréments.
+Nous pourrions définir nous-même notre auto-incrément en créant la séquence, un champ de type integer avec une valeur par défaut prenant nextval() de notre séquence. Mais pourquoi se fatiguer? Ne faites cela vous-même que si vous voulez partager une séquence entre plusieurs tables
+Pour alimenter cette table test1 nous allons utiliser une requête de type INSERT. Mais tout d'abord nous pouvons remarquer qu'il n'y a pas besoin d'une table pour faire une requête SELECT:
+SELECT 42;
+Nous renvoie le résultat 42.
+Plus utile, regardons une fonction PostgreSQL nommée generate_series:
+SELECT generate_series(1,999);
+Qui nous renvoie 999 lignes de résultat, avec une série de nombre allant de 1 à 999. Si nous voulons générer 999 chaînes de caractères différentes nous pouvons utiliser l'opérateur de concaténation de chaînes: « || »:
+SELECT 'test' || generate_series(1,999);
+Voilà qui nous donne 999 valeurs intéressantes à insérer dans notre table de test.
+Nous venons de concaténer une chaîne et un nombre, PostgreSQL s'en est sortit poliment sans nous réprimander. Ce ne sera pas toujours le cas, il faut souvent penser à faire des cast, des conversion de types. Si PostgreSQL nous avait demandé de manipuler des objets de même type nous aurions pu forcer la valeur avec des fonctions de conversion ou avec le raccourci « ::<nom du type ». Ce qui aurait donné :
+'test' || generate_series(1,999)::text
+Il faudrait aussi créer les valeurs de la colonne « id » mais il s'agit d'un auto-incrément qui va donc se remplir tout seul si nous ne mettons rien (ou si nous mettons NULL):
+INSERT INTO test1(val) VALUES ('test' || generate_series(1,999));
+Vous pouvez vérifier avec SELECT * from test1; que les valeurs sont bien saisies. Vous pouvez aussi utiliser un double clic ou l'icône de visualisation des tables depuis la liste des tables.
+Remarquez que depuis la fenêtre de visualisation des tables de pgadmin vous pouvez effectuer des saisies/modifications de données SI la table contient une clef primaire. La clef primaire permet en effet à pgadmin l'écriture de requêtes de mises à jour ou d'insertions.
+12.8.2. Vérification de l'application des droits par défaut
+Si nous regardons le code SQL qui permet de recréer l'objet test1 dans l'écran pgadmin nous voyons:
+-- DROP TABLE test1;
+
+CREATE TABLE test1
+(
+  id serial NOT NULL,
+  val character varying,
+  CONSTRAINT test1_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE test1 OWNER TO postgres;
+GRANT ALL ON TABLE test1 TO postgres;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE test1 TO formation_ecriture;
+GRANT SELECT ON TABLE test1 TO formation_lecture;
+GRANT ALL ON TABLE test1 TO formation_admin WITH GRANT OPTION;
+Nous pouvons remarquer que la première ligne est en vert, en effet « --  » est la marque du commentaire en SQL.
+Nous voyons aussi que les privilèges par défaut définis au niveau de la base de données ont été redescendus au niveau de la table nouvellement créée.
+Si nous utilisons la connexion orange de ultrogothe, que nous choisissions la base de donnée et que nous créons une deuxième table de test:
+CREATE TABLE public.test2 (
+ id serial,
+ val character varying,
+ PRIMARY KEY(id)
+ );
+Nous pouvons aller regarder cette table sur pgadmin, nous voyons alors que seule une ligne de GRANT a été ajoutée:
+ALTER TABLE test2 OWNER TO ultrogothe;
+Les privilèges par défaut n'ont pas été redescendus. Si vous essayez d'aller sur cette table avec une autre connexion (comme celle de thibaut) vous ne pourrez pas y accéder.
+Les privilèges par défaut sont en fait enregistrés sur le rôle postgres!
+Si vous relisez le code produit par pgadmin après l'écriture des droits par défaut, il ne s'agit pas de droits par défauts appliqués à la base mais de droits par défaut appliqués à un rôle, il y a une valeur par défaut FOR rôle xxx qui n'est pas montrée, cette commande s'applique aux nouveaux objets créés par ce rôle et pas globalement à la base elle-même.
+ALTER DEFAULT PRIVILEGES
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLES
+    TO formation_ecriture;
+Signifie en fait:
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLES
+    TO formation_ecriture;
+Pour que ces privilèges par défaut s'appliquent avec notre utilisateur ultrogothe, qui est pourtant dans le groupe propriétaire de la base, nous devrons corriger le SQL de définition de la base. Pour cela nous utiliserons un script SQL, mais dans l'immédiat nous allons continuer à créer nos objets avec le compte postgres (rouge). Pour le moment nous allons donc supprimer cette table créé par ultrogothe. Soit avec un clic droit sur l'objet soit en tapant directement la commande SQL:
+DROP table test2;
+12.8.3. Création table test2 dans le schéma drh avec pgadmin
+Toujours avec la connexion de l'utilisateur postgres nous allons créer une deuxième table mais en utilisant l'assistant de création de table. Choisissez le schéma drh, faites un clic droit, Ajouter un objet > Ajouter une table...
+Il faut créer une table test2, avec une colonne id en type serial (tout en bas dans la liste des types), une colonne val en type character varying et une primary key sur la colonne id. Vérifiez avec l'onglet SQL que vous obtenez:
+CREATE TABLE drh.test2
+(
+   id serial,
+   val character varying,
+   CONSTRAINT "PRIMARY KEY" PRIMARY KEY (id)
+)
+WITH (
+  OIDS = FALSE
+);
+Le nom du schéma a été préfixé au nom de la table, ce qui n'était pas fait sur la table test1 puisqu'elle était dans le schéma par défaut (public).
+Remplissons cette table avec 10000 valeurs, commençons par:
+INSERT INTO test2(val) VALUES ('foo' || generate_series(1,10000));
+nous obtenons:
+ERROR: relation "test2" does not exist
+La table test2 n'est pas retrouvée car le schéma drh n'appartient pas au search_path, il nous faut donc le forcer:
+INSERT INTO drh.test2(val) VALUES ('foo' || generate_series(1,10000));
+
+
+-----------------------------------------------------------------
+## 12.8.4. Création table test1 dans le schéma app en SQL
+<small>avec le search_path</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+
+Revenons à l'éditeur de SQL et tapons:
+
+    SET search_path=app,public,drh;
+    CREATE TABLE test1 (id integer, val character varying, PRIMARY KEY (id));
+
+On constate que la table **est créée dans le premier schéma défini dans
+`search_path`**, donc dans le schéma « app ». Vérifiez que le propriétaire de la
+table est bien `formation_admin` et pas un user.
+
+Maintenant que la variable `search_path` contient notre schéma `app` et le
+schéma `drh`, si nous tapons :
+
+    INSERT INTO test2(val) VALUES ('bar' || generate_series(10001,20000));
+
+Nous devrions réussir à ajouter 10 000 enregistrements supplémentaires dans la
+table `test2` du schéma `drh`, elle n'a pas été trouvée dans `app` mais elle
+existe bien dans le deuxième schéma listé.
+
+
+-----------------------------------------------------------------
+
+Essayons de remplir la table `test1` du schéma `app`. Si nous ne préfixons pas
+la table nous devrions tomber sur la `test1` du schéma `app` qui est
+**prioritaire** sur le schéma public dans notre search path:
+
+    INSERT INTO test1(val) VALUES ('nii' || generate_series(1,10));
+
+Si « tout va bien » nous obtenons alors une erreur: `ERROR: null value in
+column "id" violates not-null constraint`
+
+Si vous regardez bien la définition de la table `test1` du schéma app, nous
+n'avons pas utilisé le type serial mais un simple integer pour la clef primaire.
+Il n'y a donc **pas d'auto-incrément**. Il nous faut remplir la colonne id lors
+des insertions. Essayons d'utiliser generate_series:
+
+    SELECT generate_series(1,10), 'nii' || generate_series(1,10);
+
+Nous donne 110 lignes de résultats avec postgreSQL 9.0
+(apparemment PostgreSQL >= 9.1 supporte cette syntaxe par contre).
+
+Ce n'est pas le bon chemin. Essayez d'utiliser la série de donnée automatique
+comme une table sur laquelle on fait une requête...
+
+.fx: wide
+
+-----------------------------------------------------------------
+
+    SELECT serie
+    FROM generate_series(1,10) serie;
+
+Cela fonctionne. On va donc faire une requête un petit peu plus complexe:
+
+    SELECT serie, 'nii' || serie
+    FROM generate_series(1,10) serie;
+
+On obtient un résultat de deux colonnes qui ressemble à ce que l'on voudrait
+insérer dans test1. Il est tout à fait possible d'utiliser le résultat d'une
+requête comme valeurs à insérer avec `INSERT`, la syntaxe est `INSERT INTO table
+ (col1,col2...) SELECT ….;` et non `INSERT INTO table (col1,col2...) VALUES ( SELECT ….);`
+
+.fx: wide
+
+    INSERT INTO test1(id,val)
+      SELECT serie, 'nii' || serie
+        FROM generate_series(1,10) serie;
+
+Testons que cela a fonctionné:
+
+    select count(*) from test1;
+    => devrait renvoyer 10
+    select count(*) from public.test1;
+    => devrait renvoyer 9999 car public.test1 est la table test1
+    dans le schéma public.
+
+-----------------------------------------------------------------
+
+## 12.8.5. Régler search_path, les variables
+
+.fx: title2
+
+-----------------------------------------------------------------
+### variable search_path
+
+Les différents utilisateurs auront des besoins différents en terme d'accès aux
+schémas. On va donc régler leur **search_path** au niveau des **«rôles»** de
+cette façon:
+
+- **ultrogothe** : search_path=**public,app,drh**
+- **childeric** : search_path=**drh,public**
+- **bertrude** : search_path=**app,drh,public**
+- **thibaut** : search_path=**app,public**
+- **gondioque** : search_path=**app,public**
+- **nantilde** : search_path=**app,public**
+
+Pour cela nous utiliserons pgadmin en cliquant (droit) sur les rôles et en
+allant dans l'onglet variables:
+
+
+On voit que le SQL généré est du type:
+
+    ALTER ROLE gondioque SET search_path=app, public;
+
+-----------------------------------------------------------------
+
+Pour vérifier la valeur de cette variable pour chacune des connexions on peut ouvrir une fenêtre SQL et y taper:
+
+    SHOW search_path;
+
+<div class="warning"><p>
+A noter: il n'est pas possible de définir cette valeur au niveau d'un
+« groupe rôle », <strong>seuls les GRANT</strong> (droits) sont hérités d'un groupe,
+<strong>pas les variables</strong>.
+</p></div>
+
+Remarquez aussi qu'il existe de nombreuses variables, comme celles définissant les types utilisables pour la saisie des dates (`date_style`).
+
+Les variables peuvent se définir au niveau des rôles, mais elles peuvent aussi
+être définies au niveau des connexions à la base de données, au sein de la
+session SQL avec les commandes **`SET variable=value`**.
+
+On retrouvera ce type de commandes dans les programmes objet pour initialiser
+la communication entre le serveur et l'application.
+
+-----------------------------------------------------------------
+### variable application_name
+
+Depuis PostgreSQL 9 une variable nouvelle est apparue: **`application_name`**,
+vous devriez utiliser cette variable dans votre application, ceci permet
+d'identifier les connexions de votre application parmi les centaines de
+connexions ouvertes, elle est par exemple utilisée par pgadmin, cliquez sur
+`Outils>Etat du serveur` et regardez la liste des connexions ouvertes, certaines
+ont un nom. On peut aussi s'en servir pour différencier des statistiques d'usage
+de la base.
+
+-----------------------------------------------------------------
+## 12.8.6. Tests d'accès
+<small>ça marche?</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+
+Si vous aviez des connexions serveurs ouvertes dans pgAdmin il faut les fermer et les rouvrir pour que les variables sont bien initialisées (attention, pas simplement les replier et déplier, il faut choisir « se déconnecter »).
+
+<div class="warning"><p>
+Parfois postgreSQL refus de dropper un base parce qu'il reste une connexion ouverte
+sur cette base, pensez à déconnecter vos sessions pgadmin.
+</p></div>
+
+ Nous allons taper une série de requêtes simples sur les tables `test1` et `test2`
+afin de vérifier pour chaque utilisateur:
+
+- les accès en lecture et les priorités de schémas
+- les accès en écritures
+
+Pour tester les requêtes ouvrez une des connexions, choisissez la base formation puis le bouton `SQL`.
+
+<div class="action"><p>
+Essayez de deviner les raisons des comportements observés avant que le formateur
+ne les expliquent:
+</p></div>
+
+-----------------------------------------------------------------
+
+    SELECT COUNT(*) FROM test1;
+    ultrogothe : 999
+    childeric: 999
+    bertrude: 10
+    nantilde: 10
+    thibaut: 10
+
+
+    SELECT COUNT(*) FROM test2;
+    ultrogothe : 20000
+    childeric: 20000
+    bertrude: 20000
+    nantilde: ERROR: permission denied for relation test2
+    thibaut: ERROR: permission denied for relation test2
+
+
+    INSERT INTO test1 (val) VALUES ('ins1');
+    ultrogothe : OK
+    childeric: OK
+    bertrude: ERROR: permission denied for relation test1
+    nantilde: ERROR: null value in column "id" violates not-null constraint
+    thibaut: ERROR: permission denied for relation test1
+
+-----------------------------------------------------------------
+
+**Nantilde** travaille sur `app.test1` qui n'a pas de clef primaire
+`INSERT INTO test1 (id,val) VALUES (11,'ins1');` devrait fonctionner par contre.
+
+Exécuter cette deuxième instruction deux fois devrait lever une nouvelle erreur:
+`ERROR: duplicate key value violates unique constraint "test1_pkey"`
+
+Certains utilisateurs comme **nantilde** et **childeric** ont donc le droit
+d'insérer des données dans des tables. Vérifions cependant que seul childeric est
+autorisé à insérer des données dans le schéma drh:
+
+    INSERT INTO drh.test2 (val) VALUES ('ins2');
+    nantilde :ERROR: permission denied for schema drh
+
+Vous pouvez tester des instructions `DELETE`, `UPDATE`, `TRUNCATE`, les droits
+sont normalement bien appliqués.
+De même si nous tentons de modifier la structure d'une table:
+
+    ALTER TABLE public.test1 ADD COLUMN foo integer;
+    Tout le monde, en dehors d'ultrogothe, aura ce message d'erreur:
+    ERROR: must be owner of relation test1
+
+-----------------------------------------------------------------
+## 12.9. DDL DML et DCL : et gestion avancée des droits
+<small>langages de définitions, manipulation et contrôle de données</small>
+
+.fx: title2
+
+-----------------------------------------------------------------
+## DDL DML et DCL : et gestion avancée des droits
+
+Dans le language SQL on distingue en fait trois grandes familles de commandes. Quand vous pensez à régler les droits d'accès il s'agit le plus souvent de gérer qui à accès à ces grandes familles.
+
+- **DDL Data Definition Language** : Tout ce qui permet de définir et de modifier
+ (voir de supprimer) la structure des objets de votre base de donnée. Il s'agit
+ clairement d'un niveau administrateur (`CREATE`,  `ALTER`, `DROP`,
+ `TRUNCATE`, `COMMENT`, etc.)
+- **DML : Data Manipulation Language** : les commandes de manipulation des
+ données au sein de cette structure (`SELECT`, `INSERT`, `UPDATE`,
+  `DELETE`, `MERGE`, `EXPLAIN`, `LOCK`, etc.).
+
+**Attention** dans cette dernière famille il y a des commandes en **écriture** (beaucoup),
+et **une seule** commande nécessaire pour un accès en **lecture** (`SELECT`)
+
+Il existe en fait théoriquement d'autres familles comme:
+
+ - **DCL** : **Data Control Language** : La gestion des droits (`GRANT`, `REVOKE`)
+ - **TCL**: **Transaction Control** : les commandes de gestion des transaction(
+ `BEGIN`, `COMMIT`, `ROLLBACK`, etc.)
+
+.fx: wide
+
+-----------------------------------------------------------------
+### finesse des droits
+
+Dans la réalité d'une politique de droits on retrouvera très souvent:
+
+- **un niveau administrateur**, responsable des créations et de l'application des droits.
+- **Un niveau avec tous les droits en écriture** (DML+TCL) mais aucun accès au DDL ou au DCL
+- **un niveau en lecture seule** (uniquement SELECT dans le DML)
+
+Mais on peut vouloir aller plus loin, la politique de droits disponibles dans postgreSQL permet d'aller assez loin dans le niveau de finesse.
+
+Si vous ouvrez la définition d'un table dans pgadmin, que vous sélectionnez une colonne et cliquez sur  « Modifier » vous pouvez voir un onglet droits, dans lequel vous pouvez **restreindre les droits d'accès à cette colonne** (`INSERT`, `UPDATE`, `REFERENCES`,
+`SELECT`) par rôle (ou groupe).
+
+-----------------------------------------------------------------
+### Droits niveau ligne
+
+Il existe aussi un niveau de droit que l'on retrouve par exemple sous
+l'appellation « Virtual Private Database » et qui consiste à avoir des
+**politiques d'accès au niveau des lignes** des tables. Avant PostgreSQL 9.5 il
+fallait utiliser le projet [Veil](http://veil.projects.postgresql.org/curdocs/main.html).
+
+Depuis la version 9.5 on peut utiliser une **POLICY** pour cet accès par ligne:
+[http://docs.postgresqlfr.org/9.5/ddl-rowsecurity.html](http://docs.postgresqlfr.org/9.5/ddl-rowsecurity.html).
+
+Voir aussi au niveau du wiki pour des exemples utiles: [https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5#Row-Level_Security_Policies](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5#Row-Level_Security_Policies)

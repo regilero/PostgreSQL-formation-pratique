@@ -472,6 +472,15 @@ img.single-image {
 
 
 /* Extras for PostgreSQL -----------------*/
+/* pre box */
+pre {
+  background: #f9f9f9;
+  border-left: 5px solid #aaaaaa;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  line-height: 0.9em;
+  margin-top: 5 px;
+}
 /* Image alignement based on last character of alt
  https://stackoverflow.com/a/39614958
  */
@@ -493,17 +502,28 @@ img[alt$="<>"] {
     float: none!important;
 }
 /* div.warning */
-div.warning input {
-  display: block;
-  margin-left: -40px;
-  margin-bottom: -25px;
+
+div.warning:before {
+  color: #ccc;
+  content: "\2611";
+  font-size: 2em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.1em;
 }
 div.warning {
-  border: 1px solid #8A2BE2;
-  background-color: #eee;
-  padding: 15px 50px 15px 100px;
+  background: #f9f9f9;
+  border-left: 10px solid #8A2BE2;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-style: italic;
   margin-top: 10px;
 }
+div.warning p{
+    display: inline;
+}
+
+
 div.action:before {
   color: #ccc;
   content: "\2192";
