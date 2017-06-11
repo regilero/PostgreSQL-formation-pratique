@@ -27,7 +27,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-define('PG_CONNECT_STRING','host=localhost dbname=formation port=5432 user=aicha password=aicha');
+define('PG_CONNECT_STRING','host=localhost dbname=formation port=5432 user=ultrogothe password=ultrogothe');
 define('NUMBER_OF_COMMANDES',5000);
 define('SHOW_STEP',50);
 define('DROP_ALL_COMMANDS_BEFORE',TRUE);
@@ -112,7 +112,7 @@ function populate_create_commande($dbconn,$per_id) {
     pg_free_result($result);
     $statut = 'en attente';
     $statutfact = 'non facturée';
-    
+
     if ($expedition) {
         $statut = 'expédiée';
     } else {
@@ -143,7 +143,7 @@ function populate_create_commande($dbconn,$per_id) {
     // we have an insert RETURNING, so we have the command id in the result
     $line = pg_fetch_array($result, null, PGSQL_ASSOC);
     $com_id = $line['com_id'];
-    
+
     // first add products lines
     $nb_lignes = rand(0,15);
     $products = populate_choose_products($dbconn,$nb_lignes);
@@ -197,7 +197,7 @@ function populate_create_ligne_commande($dbconn,$com_id,$pro_id,$quantite,$lic_p
         ($is_reduction)? 'TRUE':'FALSE',
         $lic_prix_unitaire,
     ));
-    
+
 }
 
 function sowsummary($dbconn) {
@@ -209,7 +209,7 @@ function sowsummary($dbconn) {
     echo $line['nb']."\n";
     // Libère le résultat
     pg_free_result($result);
-    
+
     $query = 'SELECT COUNT(*) as nb FROM app.lignes_commande';
     $result = pg_query($query) or die('Échec de la requête : ' . pg_last_error());
     echo "Lignes de commandes:";

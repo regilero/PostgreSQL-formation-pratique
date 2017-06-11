@@ -27,7 +27,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-define('PG_CONNECT_STRING','host=localhost dbname=formation port=5432 user=aicha password=aicha');
+define('PG_CONNECT_STRING','host=localhost dbname=formation port=5432 user=ultrogothe password=ultrogothe');
 define('NUMBER_OF_COMMANDES',50);
 define('SHOW_STEP',10);
 
