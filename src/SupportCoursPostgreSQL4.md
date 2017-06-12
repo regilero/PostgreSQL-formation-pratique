@@ -2059,7 +2059,7 @@ une base *'spéciale'* nommée **replication**. Nous ajoutons donc en fin de
 fichier **pg_hba.conf** cette ligne (adaptez l'adresse IP à votre cas):
 
     # TYPE  DATABASE        USER            CIDR-ADDRESS            METHOD
-    host    replication     aicha        192.168.1.13/24            trust
+    host    replication     ultrogothe        192.168.1.13/24            trust
 
 On ajoute ensuite le 1er processus d'envoi des WAL en flux dans le
 **postgresql.conf** du maître (qui est déjà configuré pour du hot_standby):
@@ -2094,7 +2094,7 @@ On modifie donc le **recovery.conf** (pas le **postgresql.conf*) de cette façon
 
     standby_mode = 'on'
     restore_command = 'cp /mnt/serveur/archive/%f %p'
-    primary_conninfo = 'host=192.168.1.10 port=5432 user=aicha'
+    primary_conninfo = 'host=192.168.1.10 port=5432 user=ultrogothe'
     trigger_file = '/tmp/trigger_stanby_end'
 
 .fx: wide

@@ -10,6 +10,8 @@
 
 ### Partie 4 : <a href="SupportCoursPostgreSQL4.html">Administration</a>
 
+### Ressources : <a href="resources/">resources</a>
+
 --------------------------------------------------------------------------------
 
 copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)

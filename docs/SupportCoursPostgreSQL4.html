@@ -4832,7 +4832,7 @@ avec cet utilisateur depuis l'adresse IP de l'esclave.</p>
 une base <em>'spéciale'</em> nommée <strong>replication</strong>. Nous ajoutons donc en fin de
 fichier <strong>pg_hba.conf</strong> cette ligne (adaptez l'adresse IP à votre cas):</p>
 <pre><code># TYPE  DATABASE        USER            CIDR-ADDRESS            METHOD
-host    replication     aicha        192.168.1.13/24            trust
+host    replication     ultrogothe        192.168.1.13/24            trust
 </code></pre>
 <p>On ajoute ensuite le 1er processus d'envoi des WAL en flux dans le
 <strong>postgresql.conf</strong> du maître (qui est déjà configuré pour du hot_standby):</p>
@@ -4891,7 +4891,7 @@ d'archive:</p>
 (ici 192.168.1.10 est l'IP du maître):</p>
 <pre><code>standby_mode = 'on'
 restore_command = 'cp /mnt/serveur/archive/%f %p'
-primary_conninfo = 'host=192.168.1.10 port=5432 user=aicha'
+primary_conninfo = 'host=192.168.1.10 port=5432 user=ultrogothe'
 trigger_file = '/tmp/trigger_stanby_end'
 </code></pre>
 
