@@ -11,7 +11,7 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
 # 13. Premières sauvegardes et restaurations
 <small>Pour avoir un peu de contenu</small>
 
-.fx: title1 title1-4
+.fx: title1 title1-3
 
 --------------------------------------------------------------------------------
 
@@ -747,7 +747,7 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
 ## 14. Requêtes
 <small>Nous allons faire des requêtes sur le schéma drh et essayer de faire un tour d'horizon de l'étendue des possibilités offertes par la commande SELECT.</small>
 
-.fx: title1 title1-3
+.fx: title1 title1-5
 
 --------------------------------------------------------------------------------
 
@@ -1174,7 +1174,7 @@ OFFSET 50 signifie que la première ligne de résultat sera la 51ème.
 
 --------------------------------------------------------------------------------
 
-14.8. Sous Requêtes
+## 14.8. Sous Requêtes
 
 <small>Une sous-requête est une requête à l'intérieur de notre requête principale.</small>
 

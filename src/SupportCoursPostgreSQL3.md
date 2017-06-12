@@ -878,7 +878,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
 
 # 16. Fonctions et Déclencheurs (triggers)
 
-.fx: title1 title1-2
+.fx: title1 title1-4
 
 --------------------------------------------------------------------------------
 
@@ -1284,7 +1284,7 @@ Tests:
 # 17 Indexation
 <small>Use the index, Luke</small>
 
-.fx: title1 title1-2
+.fx: title1 title1-7
 
 --------------------------------------------------------------------------------
 
@@ -1727,6 +1727,9 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
  sans l'enregistrer? **Do** permet de **définir à la volée** une fonction pour
  l'utiliser immédiatement.
  * **Create Aggregate** : [http://docs.postgresqlfr.org/9.5/sql-createaggregate.html](http://docs.postgresqlfr.org/9.5/sql-createaggregate.html)
+ * **Vues materialisées** (> 9.3): la vue est cachée comme une table réèlle,
+ elle peut être recalculée à la volée `REFRESH MATERIALIZED VIEW nom;`. Gain de
+ temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).
  * etc.
 
 .fx: wide
@@ -1735,7 +1738,7 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
 
 # 19. Questions subsidiaires?
 
-.fx: title1 title1-3
+.fx: title1 title1-4
 
 --------------------------------------------------------------------------------
 

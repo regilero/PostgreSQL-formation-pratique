@@ -472,6 +472,29 @@ img.single-image {
 
 
 /* Extras for PostgreSQL -----------------*/
+
+.slide.title1-2 {
+  background-image: url(../images/bgt5.jpg);
+}
+.slide.title1-3 {
+  background-image: url(../images/bgt6.jpg);
+}
+.slide.title1-4 {
+  background-image: url(../images/bgt7.jpg);
+}
+.slide.title1-5 {
+  background-image: url(../images/bgt8.jpg);
+}
+.slide.title1-6 {
+  background-image: url(../images/bgt2.jpg);
+}
+.slide.title1-7 {
+  background-image: url(../images/bgt2.jpg);
+}
+.slide.title1-8 {
+  background-image: url(../images/bgt4.jpg);
+}
+
 /* pre box */
 pre {
   background: #f9f9f9;

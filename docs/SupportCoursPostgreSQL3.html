@@ -2014,7 +2014,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
       
       <!-- slide source: src/SupportCoursPostgreSQL3.md -->
       <div class="slide-wrapper">
-        <div class="slide title1 title1-2">
+        <div class="slide title1 title1-4">
           <div class="inner-wrapper">
             <div class="inner">
               
@@ -2993,7 +2993,7 @@ $BODY$
       
       <!-- slide source: src/SupportCoursPostgreSQL3.md -->
       <div class="slide-wrapper">
-        <div class="slide title1 title1-2">
+        <div class="slide title1 title1-7">
           <div class="inner-wrapper">
             <div class="inner">
               
@@ -4044,6 +4044,9 @@ utilisés, etc. Supprimer ces indexs est important.
  sans l'enregistrer? <strong>Do</strong> permet de <strong>définir à la volée</strong> une fonction pour
  l'utiliser immédiatement.</li>
 <li><strong>Create Aggregate</strong> : <a href="http://docs.postgresqlfr.org/9.5/sql-createaggregate.html">http://docs.postgresqlfr.org/9.5/sql-createaggregate.html</a></li>
+<li><strong>Vues materialisées</strong> (&gt; 9.3): la vue est cachée comme une table réèlle,
+ elle peut être recalculée à la volée <code>REFRESH MATERIALIZED VIEW nom;</code>. Gain de
+ temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).</li>
 <li>etc.</li>
 </ul>
 
@@ -4076,7 +4079,7 @@ utilisés, etc. Supprimer ces indexs est important.
       
       <!-- slide source: src/SupportCoursPostgreSQL3.md -->
       <div class="slide-wrapper">
-        <div class="slide title1 title1-3">
+        <div class="slide title1 title1-4">
           <div class="inner-wrapper">
             <div class="inner">
               

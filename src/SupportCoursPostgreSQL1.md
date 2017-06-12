@@ -8,11 +8,135 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
 
 --------------------------------------------------------------------------------
 
+# 1. Plan
+
+.fx: title1
+
+--------------------------------------------------------------------------------
+
+    1.Plan
+    2.Makina Corpus
+    3.Licence
+    4.Réutilisation du contenu de ce support de formation
+    5.Auteur
+    6.Organisation de ce support de formation
+    7.Installer PostgreSQL
+    7.1.Arrêt démarrage et initialisation
+    8.Gestion des versions de PostgreSQL
+    8.1.Emplacement des fichiers de configuration
+    8.2.Compatibilité binaire, version majeure et mineure
+    9.Se connecter à PostgreSQL
+    9.1.pg_hba.conf : autoriser les connexions
+    9.2.psql : ligne de commande
+    9.3.PgAdmin III : le client graphique
+    9.4.PhpPgAdmin: le client web
+    10.Créer une base de donnée
+    10.1.Le cas d'exemple de la formation
+    10.2.Utilitaires en ligne de commande
+    10.3.Cluster, Encodage des caractères, Locales, langages et templates
+    10.4.Créer une connexion administrateur avec pgAdminIII
+    10.5.Créer une base de donnée formation
+    11.Tablespaces
+    12.Définitions des rôles et droits
+    12.1.Les rôles de connexions
+    12.2.Créer des connexions utilisateur avec PgAdminIII
+    12.3.Les schémas
+    12.4.Les droits d'accès dans PostgreSQL et les schémas
+    12.5.Création des schémas drh et app
+    12.6.Création des droits
+    12.7.La variable search_path
+    12.8.Tester les droits et schémas
+    12.8.6.Tests d'accès
+    12.9.DDL DML et DCL : et gestion avancée des droits
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+
+    13.Premières sauvegardes et restaurations
+    13.1.pg_dump : obtenir un script SQL de recréation de la base
+    13.2.Problèmes avec la gestion des droits, élévation de privilèges
+    13.3.importation de la base de formation
+    13.4.Examen la base drh
+    14.Requêtes
+    14.1.Sélection de colonnes, SELECT *, Distinct
+    14.2.ORDER BY
+    14.3.Dédoublonner: distinct on + order by
+    14.4.Le problème du NULL
+    14.5.Fonctions et opérateurs utiles
+    14.6.Filtrage avec WHERE
+    14.7.LIMIT et OFFSET
+    14.8.Sous Requêtes
+    14.9.Les Jointures
+    14.10.Requêtes avancées
+
+
+--------------------------------------------------------------------------------
+
+    15.Opérations en écriture
+    15.1.Importation de la base de développement app
+    15.2.Règles avancées sur les vues
+    15.3.Modifier les objets affichés par pgadmin
+    15.4.Les Transactions
+    16.Fonctions et Déclencheurs (triggers)
+    16.1.Importer les fonctions et déclencheurs pour app
+    17.Indexation
+    17.1.Pourquoi indexer?
+    18.Éléments Complémentaires
+    19.Questions subsidiaires?
+
+--------------------------------------------------------------------------------
+
+    20.Administration PostgreSQL
+    20.1.Pré-requis
+    20.2.32bits vs 64bits
+    20.3.Analysez l'usage de la base
+    20.4.Autovacuum, vacuum et analyze
+    20.5.Paramètres de configuration principaux
+    20.6.Considérations matérielles pour la performance
+    20.7.Backup et Restaurations liés à l'archivage WAL
+    20.8.Tests de restauration de dump
+    20.9.Intégrité des données
+    20.10.Exemple de Politique de backups
+    20.11.Utiliser les WAL pour la réplication
+    20.12.Autres systèmes de réplication
+    20.13.Autres outils
+
+--------------------------------------------------------------------------------
+
+# 2. Makina Corpus
+
+.fx: title1 title1-4
+
+--------------------------------------------------------------------------------
+
+Ce document de formation a été sponsorisé par makina Corpus.
+
+Makina Corpus conçoit, développe et intègre des solutions innovantes s'appuyant
+exclusivement sur des logiciels libres.
+
+La société a développé une expertise particulière en applications web complexes,
+dans le domaine des **portails**, le **traitement de données géographiques** (SIG)
+et **l'analyse décisionnelle** (Business Intelligence).
+
+Makina Corpus intervient sur :
+
+ * une expertise technologique de haut niveau ;
+ * l'intégration d'applications hétérogènes ;
+ * une offre sur mesure, conçue et développée en interne pour répondre
+  spécifiquement à vos besoins ;
+ * une réduction du coût d'acquisition logiciel, grâce à l'utilisation de
+  logiciels du monde libre ;
+ * un service complet clés en main.
+ * des formations sur les technologies Open Source
+
+--------------------------------------------------------------------------------
+
 # 3. Licence
 
 <small>Creative Commons by-sa</small>
 
-.fx: title1 title1-2
+.fx: title1 title1-8
 
 --------------------------------------------------------------------------------
 ## Licence
@@ -23,18 +147,24 @@ Vous pouvez contribuer à ce document nous signalant les erreurs, en apportant v
 
 Les captures d'écran, les codes sources SQL et PHP sont normalement disponibles avec les sources.
 
+
 .fx: larger
 
 --------------------------------------------------------------------------------
 ## Licence
 
-La licence couvre les documents pdf, bureautique (odt), les captures d'écrans, les sources SQL et les dumps de bases dans divers formats fournis avec ce présent document. Les sources PHP et bsh sont quand à elles diffusées sous licence BSD modifié (Simplified BSD licence ou BSD-2).
 
+La licence couvre les documents **markdown**, **html**, **pdf**, bureautique
+(**odt**), les captures d'écrans, les sources **SQL** et les **dumps** de bases
+dans divers formats fournis avec ce présent document.
+
+Les sources **PHP** et **bash** sont quand à elles diffusées sous
+licence BSD modifié (Simplified BSD licence ou BSD-2).
 
 Les fichiers sources sont disponibles sur [https://github.com/regilero/PostgreSQL-formation-pratique](https://github.com/regilero/PostgreSQL-formation-pratique)
 
-© Makina Corpus
-Retrouvez les livres blancs Makina Corpus et les contributions diverses sur [http://makina-corpus.com](http://makina-corpus.com) et [http://makina-corpus.org]([http://makina-corpus.org).
+Retrouvez les livres blancs **Makina Corpus** et les contributions diverses sur
+[http://makina-corpus.com](http://makina-corpus.com) et [http://makina-corpus.org](http://makina-corpus.org).
 
 
 .fx: larger
@@ -84,7 +214,7 @@ Administrateur Système, développeur web, architecte web, formateur sur des suj
 # 6. Organisation de ce support de formation
 <small>Et quelques liens vers la doc officielle.</small>
 
-.fx: title1
+.fx: title1 title1-5
 
 --------------------------------------------------------------------------------
 
@@ -136,7 +266,7 @@ Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être 
 # 7. Installer PostgreSQL
 <small>Parce qu'il faut commencer quelque part.</small>
 
-.fx: title1
+.fx: title1  title1-3
 
 --------------------------------------------------------------------------------
 
@@ -1054,7 +1184,7 @@ Une fois la base créée vous pouvez naviguer dans pgadmin et voir que de nombre
 # 11. Tablespaces
 <small>Liaison avec le disque.</small>
 
-.fx: title1 title1-1
+.fx: title1 title1-2
 
 
 ---------------------------------------------------------------------
@@ -1091,7 +1221,7 @@ La gestion des tablespaces est donc un élément de tunning assez avancé que no
 # 12. Définitions des rôles et droits
 <small>gros sujet</small>
 
-.fx: title1 title1-2
+.fx: title1 title1-3
 
 ---------------------------------------------------------------------
 ## Définitions des rôles et droits
