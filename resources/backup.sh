@@ -32,8 +32,8 @@ DATADIR=/opt/PostgreSQL/9.0/data
 ARCHIVEDIR=/mnt/serveur/archive
 BACKUPDIR=/mnt/serveur/backup
 # demarrage du backup
-psql --username=postgres -d postgres -h localhost -p 5439 -c "select pg_start_backup('hot_backup');"
+psql --username=postgres -d postgres -h localhost -c "select pg_start_backup('hot_backup');"
 # backup binaire
 tar -cf ${BACKUPDIR}/backup.tar ${DATADIR}
 # fin du backup
-psql --username=postgres -d postgres -h localhost -p 5439 -c "select pg_stop_backup();"
+psql --username=postgres -d postgres -h localhost -c "select pg_stop_backup();"

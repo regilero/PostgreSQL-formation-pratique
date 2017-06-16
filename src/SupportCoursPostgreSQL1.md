@@ -1655,6 +1655,8 @@ L'équivalent en SQL est:
 <pre><code>
 GRANT USAGE ON SCHEMA <b>drh</b> TO GROUP <b>formation_drh</b>;
 GRANT USAGE ON SCHEMA <b>app</b> TO GROUP <b>formation_app</b>;
+GRANT ALL ON SCHEMA <b>drh</b> TO GROUP <b>formation_admin</b>;
+GRANT ALL ON SCHEMA <b>app</b> TO GROUP <b>formation_admin</b>;
 </code></pre>
 
 -----------------------------------------------------------------

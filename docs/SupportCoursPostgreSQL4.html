@@ -2872,7 +2872,7 @@ ces fichiers là ne sont pas dans le tar que nous avons fait initialement.</p>
               
                 <p>Modifiez <strong>pg_hba.conf pour n'autoriser que les accès locaux</strong>. Par exemple en
 indiquant uniquement:</p>
-<pre><code>local   all             postgres        127.0.0.1/32        trust
+<pre><code>local   all             postgres                             trust
 </code></pre>
 <p>Ceci afin qu'aucune connexion cliente ne vienne troubler vos opérations.</p>
 <p>Recopiez le dernier snaphot binaire effectué dans <code>/var/lib/pgsql/data</code> à la

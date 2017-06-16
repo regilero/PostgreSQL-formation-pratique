@@ -461,14 +461,17 @@ Dans un premier temps nous n'allons étudier que le schéma **drh**. Il nous fau
 donc:
 
 <div class="action"><p>
-Utiliser une connexion administrateur, par <b>ultrogothe</b> (qui pourrait avoir des
+Utiliser une connexion administrateur, pas <b>ultrogothe</b> (qui pourrait avoir des
 problèmes de droit à la création de la base, au départ) ou <b>postgres</b>
 </p></div>
 <div class="action"><p>
 Supprimer notre base formation actuelle (clic droit dans pgAdmin pour faire un DROP DATABASE)
 </p></div>
 <div class="action"><p>
-Ouvrir la fenêtre SQL en cliquant d'abord sur la base Postgres (assurez-vous que la base formation est <b>déconnectée</b>). Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre. Si on tente de l'executer on obtient: <b>ERROR:  CREATE
+Ouvrir la fenêtre SQL en cliquant d'abord sur la base Postgres (assurez-vous que la base formation est <b>déconnectée</b>).
+</p></div>
+<div class="action"><p>
+Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre. Si on tente de l'executer on obtient: <b>ERROR:  CREATE
  DATABASE cannot be executed from a function or multi-command string</b>, pour
  exécuter de telles commandes dans l'interpréteur SQL il y a une petite subtilité,
  il faut cliquer sur le Menu <b>Requêtes>Exécuter pgScript</b>. Remarquez aussi
@@ -567,7 +570,7 @@ La table personnel sert de table modèle à la table `employes` et la table
 `interimaires`.
 
 Il y a de **l'héritage de tables**. Cela veut dire que les tables `employes` et
-`interimaires` **héritent des toutes les colonnes de `employes`**.
+`interimaires` **héritent des toutes les colonnes de `personnel`**.
 Testez ces commandes SQL:
 
     SELECT * from drh.personnel;
@@ -1857,10 +1860,10 @@ des deux résultats, **EXCEPT** pour la soustraction d'ensembles...
 ### 14.10.4. Quelques exercices
 
 <div class="action"><p>
-Q1: Affichez la moyenne des salaires des participants aux séminaires, listez le résultat par séminaire.
+Q1: Affichez la moyenne des salaires par service.
 </p></div>
 <div class="action"><p>
-Q2: Affichez la moyenne des salaires mensuels des intérimaires (en basant un mois à 30 jours), par agence d'intérim, ajoutez le nombre d'intérimaires recensés pour ces agences
+Q2: Affichez la moyenne des salaires mensuels des intérimaires (en basant un mois à 20 jours), par agence d'intérim, ajoutez le nombre d'intérimaires recensés pour ces agences
 </p></div>
 <div class="action"><p>
 Q3: Affichez le nom, prénom et code employé du ou des employés ayant le salaire minimum
@@ -1882,7 +1885,7 @@ Q2:
 
     SELECT
         age_nom,
-        round(30*coalesce(avg(int_salaire_quotidien),0),2) as "moyenne salaire mensuel",
+        round(20*coalesce(avg(int_salaire_quotidien),0),2) as "moyenne salaire mensuel",
         count(int.int_id) as "nb intérimaires"
     FROM drh.agences ag
       LEFT JOIN drh.interimaires int ON ag.age_id = int.age_id

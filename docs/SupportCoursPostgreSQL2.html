@@ -1316,7 +1316,7 @@ tels qu'ils pourraient être gérés dans un vrai projet.</p>
                 <p>Dans un premier temps nous n'allons étudier que le schéma <strong>drh</strong>. Il nous faut
 donc:</p>
 <div class="action"><p>
-Utiliser une connexion administrateur, par <b>ultrogothe</b> (qui pourrait avoir des
+Utiliser une connexion administrateur, pas <b>ultrogothe</b> (qui pourrait avoir des
 problèmes de droit à la création de la base, au départ) ou <b>postgres</b>
 </p></div>
 
@@ -1325,7 +1325,11 @@ Supprimer notre base formation actuelle (clic droit dans pgAdmin pour faire un D
 </p></div>
 
 <div class="action"><p>
-Ouvrir la fenêtre SQL en cliquant d'abord sur la base Postgres (assurez-vous que la base formation est <b>déconnectée</b>). Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre. Si on tente de l'executer on obtient: <b>ERROR:  CREATE
+Ouvrir la fenêtre SQL en cliquant d'abord sur la base Postgres (assurez-vous que la base formation est <b>déconnectée</b>).
+</p></div>
+
+<div class="action"><p>
+Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre. Si on tente de l'executer on obtient: <b>ERROR:  CREATE
  DATABASE cannot be executed from a function or multi-command string</b>, pour
  exécuter de telles commandes dans l'interpréteur SQL il y a une petite subtilité,
  il faut cliquer sur le Menu <b>Requêtes>Exécuter pgScript</b>. Remarquez aussi
@@ -1643,7 +1647,7 @@ en C), de gérer des <b>arrays</b>.
                 <p>La table personnel sert de table modèle à la table <code>employes</code> et la table
 <code>interimaires</code>.</p>
 <p>Il y a de <strong>l'héritage de tables</strong>. Cela veut dire que les tables <code>employes</code> et
-<code>interimaires</code> <strong>héritent des toutes les colonnes de <code>employes</code></strong>.
+<code>interimaires</code> <strong>héritent des toutes les colonnes de <code>personnel</code></strong>.
 Testez ces commandes SQL:</p>
 <pre><code>SELECT * from drh.personnel;
 SELECT * from ONLY drh.personnel ;
@@ -4949,7 +4953,7 @@ des deux résultats, <strong>EXCEPT</strong> pour la soustraction d'ensembles...
               
               
                 <div class="action"><p>
-Q1: Affichez la moyenne des salaires des participants aux séminaires, listez le résultat par séminaire.
+Q1: Affichez la moyenne des salaires par service.
 </p></div>
 
 <div class="action"><p>

@@ -857,7 +857,9 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # un cache disque
     # "fsync" apelle fsync() à chaque commit,"fsync_writethrough" aussi
     # en forcant les « write-through »des caches internes aux disques
+    # testez le support sur votre serveur
     wal_sync_method = 'fsync_writethrough'
+    # wal_sync_method = 'fsync'
 
     # checkpoint_completion_target indique que PostgreSQL peut utiliser
     # ce % de checkpoint intervall time (5min par défaut)
@@ -870,7 +872,7 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # toutes les 5 minutes (à cause du checkpoint enregistré dans le WAL)
     # Donc comme un fichier WAL ne peut être plus vieuw que 5 minutes
     # cela génèrerait un fichier WAL toutes les 5 minutes au moins.
-    # Nous le poussaons à 15 minutes.
+    # Nous le poussons à 15 minutes.
     # Cela signifie que les écritures de pages ne se feront sur le disque
     # que toutes les 15 minutes si l'activité est faible
     # Mais les fichiers WAL sont écrits sur disque à chaque fois eux,
@@ -878,7 +880,8 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # Note: 15 minutes est uniquement un maximum,
     # si 3 (checkpoint_segments) sont près un checkpoint sera effectué
     checkpoint_timeout = 15min
-    checkpoint_segments = 3
+    # @deprecated in v9.5, cf min_wal_size and max_wal_size
+    # checkpoint_segments = 3
 
 .fx: wide
 
@@ -1139,7 +1142,10 @@ intégrité des données physiques.
     checkpoint_timeout = 30min
     # repousser le checkpoint pour qu'il n'intervienne qu'après
     # un nombre très grands d'écritures de fichiers WAL
-    checkpoint_segments = 5000
+    # @deprecated in v9.5 cf min_wal_size and max_wal_size
+    # checkpoint_segments = 5000
+    max_wal_size = 2GB
+    min_wal_size = 1GB
 
     # ici nous utilisons 0.00001, car 0.0001*30min est un chiffre très bas
     # (180ms je crois) et que cela prendra de toute façon plus de
@@ -1237,7 +1243,7 @@ ces fichiers là ne sont pas dans le tar que nous avons fait initialement.
 Modifiez **pg_hba.conf pour n'autoriser que les accès locaux**. Par exemple en
 indiquant uniquement:
 
-    local   all             postgres        127.0.0.1/32        trust
+    local   all             postgres                             trust
 
 Ceci afin qu'aucune connexion cliente ne vienne troubler vos opérations.
 

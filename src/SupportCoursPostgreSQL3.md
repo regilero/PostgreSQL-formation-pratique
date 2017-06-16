@@ -102,7 +102,7 @@ La manipulation des <b>règles</b> n'est pas toujours aisée, beaucoup de dével
 
 Observez ce qui se passe quand vous tapez
 
-      UPDATE vue_drh_points
+      UPDATE app.vue_drh_points
         SET points=0
       WHERE entity='agences';
 
@@ -361,7 +361,7 @@ Le **principal problème est donc l'isolation des transactions**.
 La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: [http://docs.postgresqlfr.org/9.5/mvcc.html](http://docs.postgresqlfr.org/9.5/mvcc.html),
  **MVCC** signifie **MutliVersion Concurrency Control**.
 
-Cette page explique bien le problème et les différents « *anomalies* » que l'on
+Cette page explique bien le problème et les différente s « *anomalies* » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.
 
 Le problème de l'isolation concerne **les transactions concurrentes**, il s'agit
@@ -388,7 +388,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
  * La transaction **t1** n'a pas de problème d'isolation, elle est seule.
  * Au moment ou **t3** se termine **t2** et **t4** pourraient avoir des problèmes.
  * Au moment ou **t4** fait un Rollback cela ne pose de problèmes à personne.
- * Au moment où **t1** se termine **t5** qui a déjà commencée pourrait avoir un problème.
+ * Au moment où **t2** se termine **t5** qui a déjà commencée pourrait avoir un problème.
 
 .fx: wide
 
