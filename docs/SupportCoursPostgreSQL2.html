@@ -4957,7 +4957,7 @@ Q1: Affichez la moyenne des salaires par service.
 </p></div>
 
 <div class="action"><p>
-Q2: Affichez la moyenne des salaires mensuels des intérimaires (en basant un mois à 30 jours), par agence d'intérim, ajoutez le nombre d'intérimaires recensés pour ces agences
+Q2: Affichez la moyenne des salaires mensuels des intérimaires (en basant un mois à 20 jours), par agence d'intérim, ajoutez le nombre d'intérimaires recensés pour ces agences
 </p></div>
 
 <div class="action"><p>
@@ -5010,7 +5010,7 @@ ORDER BY 2 DESC;
 <p>Q2:</p>
 <pre><code>SELECT
     age_nom,
-    round(30*coalesce(avg(int_salaire_quotidien),0),2) as "moyenne salaire mensuel",
+    round(20*coalesce(avg(int_salaire_quotidien),0),2) as "moyenne salaire mensuel",
     count(int.int_id) as "nb intérimaires"
 FROM drh.agences ag
   LEFT JOIN drh.interimaires int ON ag.age_id = int.age_id

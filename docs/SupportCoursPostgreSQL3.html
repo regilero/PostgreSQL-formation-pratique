@@ -411,7 +411,7 @@ La manipulation des <b>règles</b> n'est pas toujours aisée, beaucoup de dével
 </p></div>
 
 <p>Observez ce qui se passe quand vous tapez</p>
-<pre><code>  UPDATE vue_drh_points
+<pre><code>  UPDATE app.vue_drh_points
     SET points=0
   WHERE entity='agences';
 </code></pre>
@@ -1083,7 +1083,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
                 <p>Le <strong>principal problème est donc l'isolation des transactions</strong>.</p>
 <p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="http://docs.postgresqlfr.org/9.5/mvcc.html">http://docs.postgresqlfr.org/9.5/mvcc.html</a>,
  <strong>MVCC</strong> signifie <strong>MutliVersion Concurrency Control</strong>.</p>
-<p>Cette page explique bien le problème et les différents « <em>anomalies</em> » que l'on
+<p>Cette page explique bien le problème et les différente s « <em>anomalies</em> » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.</p>
 <p>Le problème de l'isolation concerne <strong>les transactions concurrentes</strong>, il s'agit
 de transactions qui <strong>tournent en parallèle</strong>, en même temps. La première
@@ -1138,7 +1138,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
 <li>La transaction <strong>t1</strong> n'a pas de problème d'isolation, elle est seule.</li>
 <li>Au moment ou <strong>t3</strong> se termine <strong>t2</strong> et <strong>t4</strong> pourraient avoir des problèmes.</li>
 <li>Au moment ou <strong>t4</strong> fait un Rollback cela ne pose de problèmes à personne.</li>
-<li>Au moment où <strong>t1</strong> se termine <strong>t5</strong> qui a déjà commencée pourrait avoir un problème.</li>
+<li>Au moment où <strong>t2</strong> se termine <strong>t5</strong> qui a déjà commencée pourrait avoir un problème.</li>
 </ul>
 
               

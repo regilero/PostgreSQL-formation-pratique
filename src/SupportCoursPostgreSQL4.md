@@ -687,7 +687,8 @@ Les checkpoints peuvent se produire à plusieurs moments:
 
  * **'checkpoint_timeout' minutes** (par défaut 5) se sont passées depuis le
  dernier checkpoint
- * il y a eu **plus de 'checkpoint_segments' fichier WAL créés** (par défaut 3)
+ * avant 9.5 il y a eu **plus de 'checkpoint_segments' fichier WAL créés** (par défaut 3)
+ * apres 9.5 il y a eu **plus de 'max_wal_size' données créées dans les WAL** (par défaut 1GB)
  * quelqu'un à lancé une commande SQL **CHECKPOINT;**
 
 **Lors du checkpoint les changements stockés dans les fichiers WAL sont écrits dans
