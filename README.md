@@ -87,6 +87,12 @@ Pour Nginx:
         location /resources {
             alias /home/roger/git/PostgreSQL-formation-pratique/resources;
             autoindex on;
+            location ~* \.sql$ {
+                 types {
+                    text/plain    sql;
+                 }
+            }
+
         }
     }
 
