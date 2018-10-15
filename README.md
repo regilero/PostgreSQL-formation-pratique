@@ -59,7 +59,7 @@ Les documents html sont générés dans le docssier `docs`.
 
 ## Faire un VirtualHost Nginx
 
-Vous pouvez aussi faire un virtualhost Apache.
+Vous pouvez aussi faire un virtualhost Apache/Nginx.
 
 Un Virtualhost au sein d'un serveur web n'est pas nécessaire pour afficher le
 html, il peut s'afficher en local. Mais un virtualhost peut être utile en formation
@@ -67,6 +67,8 @@ pour rendre les pages visibles sur le réseau local.
 
 Je donne donc un exemple avec un VirtualHost par défaut, qui serait donc aussi
 accessible par IP.
+
+Pour Nginx:
 
     server {
         listen 0.0.0.0:80;
