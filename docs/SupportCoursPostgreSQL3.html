@@ -428,7 +428,7 @@ Essayez (en tant qu'utilisateur ultrogothe) d'ajouter dans la vue <b>vue_drh_ser
 </p></div>
 
 <div class="action"><p>
-Lancez un explain graphique dans pgadmin sur <b>SELECT * from vue_drh_points;</b>
+Lancez un explain graphique dans pgadmin sur <b>SELECT * from app.vue_drh_points;</b>
 et admirez le résultat.
 </p></div>
 
@@ -940,9 +940,9 @@ utilisées sur un même index.</p>
 un <strong>ordre non déterminé</strong>, utiliser CLUSTER pour forcer cet ordre <strong>par défaut</strong>
 n'est <strong>pas une garantie d'ordre</strong>.</p>
 <p>Certaines requêtes sur des tables importantes peuvent par contre bénéficier de
-gains de temps non négligeables si une opréation de CLUSTER sur l'index qui va
+gains de temps non négligeables si une opération de CLUSTER sur l'index qui va
 être utilisé sont passées juste avant (utile sur des batchs, avec des tables
-peut accédées, car le Cluster pose quelques problèmes de locks).</p>
+peu accédées, car le Cluster pose quelques problèmes de locks).</p>
               
             </div>
           </div>
@@ -1083,7 +1083,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
                 <p>Le <strong>principal problème est donc l'isolation des transactions</strong>.</p>
 <p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="http://docs.postgresqlfr.org/9.5/mvcc.html">http://docs.postgresqlfr.org/9.5/mvcc.html</a>,
  <strong>MVCC</strong> signifie <strong>MutliVersion Concurrency Control</strong>.</p>
-<p>Cette page explique bien le problème et les différente s « <em>anomalies</em> » que l'on
+<p>Cette page explique bien le problème et les différentes « <em>anomalies</em> » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.</p>
 <p>Le problème de l'isolation concerne <strong>les transactions concurrentes</strong>, il s'agit
 de transactions qui <strong>tournent en parallèle</strong>, en même temps. La première
@@ -1122,7 +1122,7 @@ transaction n'est pas du tout obligée d'être la première à se terminer.</p>
             <div class="inner">
               
               
-                <p>Représentons par exemple quelques transactions sur un frise chronologique :</p>
+                <p>Représentons par exemple quelques transactions sur une frise chronologique :</p>
 <pre><code>   +----------------------------------------------------------------&gt; temps
 t1 |  B----C
 t2 |         B------------------------------------------------C
@@ -1187,7 +1187,7 @@ deux types de problèmes:</p>
 <p>A partir du moment ou on tape <strong>BEGIN</strong> on fait « sauter » le mode auto-commit.</p>
 <p>Il faudra donc à un moment ou un autre taper <strong>ROLLBACK</strong> ou <strong>COMMIT</strong> dans
 ces sessions, ou atteindre un ROLLBACK par un <strong>timeout</strong> de la transaction, ou
-un ROLLBACk automatique généré par le moteur ou bien encore la <strong>fermeture</strong> de
+un ROLLBACK automatique généré par le moteur ou bien encore la <strong>fermeture</strong> de
 la session.</p>
               
             </div>
@@ -1491,7 +1491,7 @@ UPDATE app.commandes
 
 <td><!-- col2 -->
 <p>
-Ici on ne fais rien, pendant que les 2 requêtes update se font à côté ce programme de haut niveau ayant commencé une transaction est peut-être en attente dans les cycles cpu.
+Ici on ne fait rien, pendant que les 2 requêtes update se font à côté ce programme de haut niveau ayant commencé une transaction est peut-être en attente dans les cycles cpu.
 </p>
 <p>
 (...)
@@ -1875,7 +1875,7 @@ COMMIT;
 </code></pre>
 </td>
 <td> <!-- col2 -->
-On attends, par exemple on fais des calculs.<br/>
+On attends, par exemple on fait des calculs.<br/>
 Puis on tape la même commande:
 </td></tr><tr>
 
@@ -3231,7 +3231,7 @@ SQL</b> en fonctions des <b>statistiques</b> qu'il collecte sur les tables.
 
 <div class="warning"><p>
 Pour travailler l'indexation de votre base il vous faut donc <b>une base
-alimentée en données, sous un forme réaliste.</b>
+alimentée en données, sous une forme réaliste.</b>
 </p></div>
               
             </div>

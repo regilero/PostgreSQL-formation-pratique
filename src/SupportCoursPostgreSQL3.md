@@ -119,7 +119,7 @@ Essayez (en tant qu'utilisateur ultrogothe) d'ajouter dans la vue <b>vue_drh_ser
 </p></div>
 
 <div class="action"><p>
-Lancez un explain graphique dans pgadmin sur <b>SELECT * from vue_drh_points;</b>
+Lancez un explain graphique dans pgadmin sur <b>SELECT * from app.vue_drh_points;</b>
 et admirez le résultat.
 </p></div>
 
@@ -312,9 +312,9 @@ un **ordre non déterminé**, utiliser CLUSTER pour forcer cet ordre **par défa
 n'est **pas une garantie d'ordre**.
 
 Certaines requêtes sur des tables importantes peuvent par contre bénéficier de
-gains de temps non négligeables si une opréation de CLUSTER sur l'index qui va
+gains de temps non négligeables si une opération de CLUSTER sur l'index qui va
 être utilisé sont passées juste avant (utile sur des batchs, avec des tables
-peut accédées, car le Cluster pose quelques problèmes de locks).
+peu accédées, car le Cluster pose quelques problèmes de locks).
 
 --------------------------------------------------------------------------------
 ### 15.4.3 ACID, MVCC et les transactions
@@ -361,7 +361,7 @@ Le **principal problème est donc l'isolation des transactions**.
 La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: [http://docs.postgresqlfr.org/9.5/mvcc.html](http://docs.postgresqlfr.org/9.5/mvcc.html),
  **MVCC** signifie **MutliVersion Concurrency Control**.
 
-Cette page explique bien le problème et les différente s « *anomalies* » que l'on
+Cette page explique bien le problème et les différentes « *anomalies* » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.
 
 Le problème de l'isolation concerne **les transactions concurrentes**, il s'agit
@@ -370,7 +370,7 @@ transaction n'est pas du tout obligée d'être la première à se terminer.
 
 --------------------------------------------------------------------------------
 
-Représentons par exemple quelques transactions sur un frise chronologique :
+Représentons par exemple quelques transactions sur une frise chronologique :
 
        +----------------------------------------------------------------> temps
     t1 |  B----C
@@ -406,7 +406,7 @@ A partir du moment ou on tape **BEGIN** on fait « sauter » le mode auto-comm
 
 Il faudra donc à un moment ou un autre taper **ROLLBACK** ou **COMMIT** dans
 ces sessions, ou atteindre un ROLLBACK par un **timeout** de la transaction, ou
-un ROLLBACk automatique généré par le moteur ou bien encore la **fermeture** de
+un ROLLBACK automatique généré par le moteur ou bien encore la **fermeture** de
 la session.
 
 --------------------------------------------------------------------------------
@@ -564,7 +564,7 @@ UPDATE app.commandes
 
 <td><!-- col2 -->
 <p>
-Ici on ne fais rien, pendant que les 2 requêtes update se font à côté ce programme de haut niveau ayant commencé une transaction est peut-être en attente dans les cycles cpu.
+Ici on ne fait rien, pendant que les 2 requêtes update se font à côté ce programme de haut niveau ayant commencé une transaction est peut-être en attente dans les cycles cpu.
 </p>
 <p>
 (...)
@@ -826,7 +826,7 @@ COMMIT;
 </code></pre>
 </td>
 <td> <!-- col2 -->
-On attends, par exemple on fais des calculs.<br/>
+On attends, par exemple on fait des calculs.<br/>
 Puis on tape la même commande:
 </td></tr><tr>
 
@@ -1373,7 +1373,7 @@ SQL</b> en fonctions des <b>statistiques</b> qu'il collecte sur les tables.
 
 <div class="warning"><p>
 Pour travailler l'indexation de votre base il vous faut donc <b>une base
-alimentée en données, sous un forme réaliste.</b>
+alimentée en données, sous une forme réaliste.</b>
 </p></div>
 
 --------------------------------------------------------------------------------
