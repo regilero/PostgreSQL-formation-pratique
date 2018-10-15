@@ -852,6 +852,63 @@ concaténation de chaîne ou d'addition vous allez avoir des surprises:
 
 --------------------------------------------------------------------------------
 
+Un complément, trouvé sur
+[un article de Haki Benita](https://medium.com/statuscode/the-many-faces-of-distinct-in-postgresql-c52490de5954),
+avec une syntaxe SQL un peu avancée, si vous ne comprenez pas encore la
+syntaxe avancée de la requête ne regardez que le résultat:
+
+
+    WITH t AS (
+        SELECT 1 AS a, 1 AS b UNION ALL
+        SELECT 1, 2 UNION ALL
+        SELECT NULL, 1 UNION ALL
+        SELECT NULL, NULL
+    )
+    SELECT
+        a,
+       b,
+       a = b as equal
+    FROM
+       t;
+
+     a   |  b   | equal 
+    ------+------+-------
+       1 |    1 | t
+       1 |    2 | f
+    NULL |    1 | NULL
+    NULL | NULL | NULL
+
+
+--------------------------------------------------------------------------------
+
+Et notez, surtout pour les utilisateurs avancés, l'usage de **"IS DISTINCT FROM"**
+qui va vous permettre d'éviter ces problèmes de NULL dans les comparaisons:
+
+
+    WITH t AS (
+        SELECT 1 AS a, 1 AS b UNION ALL
+        SELECT 1, 2 UNION ALL
+        SELECT NULL, 1 UNION ALL
+        SELECT NULL, NULL
+    )
+    SELECT
+      a,
+      b,
+      a = b as equal,
+      a IS DISTINCT FROM b AS is_distinct_from
+    FROM
+      t;
+
+      a   |  b   | equal | is_distinct_from 
+    ------+------+-------+------------------
+        1 |    1 | t     | f
+        1 |    2 | f     | t
+     NULL |    1 | NULL  | t
+     NULL | NULL | NULL  | f
+
+
+--------------------------------------------------------------------------------
+
 ## 14.5. Fonctions et opérateurs utiles
 <small>une sélection forcément arbitraire et limitée</small>
 
