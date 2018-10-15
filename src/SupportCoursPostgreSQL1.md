@@ -442,7 +442,7 @@ Pour PostgreSQl les fichiers de configuration doivent se trouver **au niveau du 
 
 Ce répertoire se nomme « **data dir** ». Son emplacement dépend des méthodes d'installation.
 
-Vérifier que vous avez toujours un terminal avec une session root.
+Vérifiez que vous avez toujours un terminal avec une session root.
 
 Puis devenez l'utilisateur Postgres, celui qui est chargé de faire tourner le service/démon PostgreSQL.
 L'utilisateur root à le droit de devenir l'utilisateur qu'il veut sans mot de passe. L'utilisation du « - » dans la commande permet de bien charger les variables d'environnement de l'utilisateur.
@@ -590,7 +590,7 @@ On constate que par défaut aucune machine distante n'est autorisée.
 
 Dans l'immédiat nous allons étendre les valeurs par défaut afin de **rendre ce contrôle d'accès inopérant**.
 
-En développement, et pour cette formation on éditera ce fichier pour remplacer chaque fin de ligne (les `ident`/`md5`/etc) par « **trust** ».
+En développement, et pour cette formation on éditera ce fichier pour remplacer chaque fin de ligne (les `ident`/`peer`/`md5`/etc) par « **trust** ».
 
 Cela veut dire « confiance ».
 
@@ -607,7 +607,7 @@ Vous demandez donc à PostgreSQL de faire une **confiance aveugle**, tous les ut
 <strong>N'oubliez pas de redémarrer PostgreSQL quand vous modifiez le pg_hba.conf !</strong>
 </p></div>
 
-    service postgresql restart 9.6
+    service postgresql restart 9.5
 
 ---------------------------------------------------------------------
 ## 9.2. psql : ligne de commande
@@ -869,7 +869,7 @@ Pour des traitements importants comme des migrations ou des importations (voir d
     psql -h /var/run/postgresql -U postgres
 
 Cela fonctionne si votre fichier pg_hba.conf l'autorise. Si vous regardez dans le répertoire `/var/run/postgresql` vous retrouvez bien un fichier spécial (la socket):
-`/var/run/postgresql/.s.PGSQL.5432`, et peut-être d'autres sockets si vous avez d'autres postgreSQL qui écoutent sur d'autres ports. Auquel cas le numéro de port utilisé dans al ligne de commande permet à `psql` de choisir la bonne socket fichier.
+`/var/run/postgresql/.s.PGSQL.5432`, et peut-être d'autres sockets si vous avez d'autres postgreSQL qui écoutent sur d'autres ports. Auquel cas le numéro de port utilisé dans la ligne de commande permet à `psql` de choisir la bonne socket fichier.
 
 
 ---------------------------------------------------------------------
@@ -1165,7 +1165,7 @@ En l'occurrence nous n'avons pas besoin de modifier ce code SQL.
 
 Une fois la base créée vous pouvez naviguer dans pgadmin et voir que de nombreux objets pourraient exister au sein de cette base :
 
-- **des catalogues**: il y en a deux, le pg_catalog et le catalogue information_schema qui est une obligation de toutes les bases de données se conformant à la norme SQL ANSI. Si vous naviguez dans le catalogue vous y trouverez un grand nombre d'objets qui sont disponibles pour tous en permanence.
+- **des catalogues**: il y en a deux, le pg_catalog et le catalogue information_schema qui est une obligation de toutes les bases de données se conformant à la norme SQL ANSI. On y trfouveun grand nombre d'objets qui sont disponibles pour **tous**.
 - **des schémas**: un seul au départ, nommé public. Dépliez le pour y retrouver les objets de la base
 - **des domaines**: (il s'agit de définitions de types propres à cette base, avec des contraintes associées (comme une chaîne de caractère devant se conformer à une expression régulière)
 - plusieurs objets comportant le mot **FTS**, signifiant Full Text Search. Il s'agit des différents éléments devant être mis en place pour ajouter des fonctionnalités de recherche plein texte
