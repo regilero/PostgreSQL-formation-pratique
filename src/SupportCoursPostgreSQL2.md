@@ -189,7 +189,7 @@ A l'usage il est plutôt conseillé de faire **un fichier SQL dédié aux droits
 d'accès** et d'y ajouter quelques lignes de `GRANT`. La gestion des droits
 d'accès à la base n'étant pas supposée changer trop souvent.
 
-Ce fichier servant aussi de base pour remettre à éro les droits et/ou vues dans
+Ce fichier servant aussi de base pour remettre à zéro les droits et/ou vues dans
 une base partagée entre développeurs, par exemple.
 
 L'autre solution est l'utilisation de `pg_dumpall --globals-only` qui comme son
@@ -350,7 +350,7 @@ sur cet écran <b>la variable role existe mais  ne prends qu'une valeur numériq
 On utilise ensuite l'onglet <b>SQL</b> pour voir la requête générée et on décoche
 <b>« Lecture seule »</b> afin de pouvoir modifier la requête. Qui comporte soit
 une valeur bidon pour la variable role (si vous venez de l'édition utilisateur),
-soit une variable bidon avec une valeurbidon (si vopus êtes sur les propriétés de
+soit une variable bidon avec une valeurbidon (si vous êtes sur les propriétés de
  la base).
 </p></div>
 
@@ -793,7 +793,7 @@ Testez ces différentes requêtes
     ORDER BY emp_code_pays DESC NULLS LAST, per_nom DESC,per_prenom ASC;
 
 <div class="warning"><p>
-Notez dès à présent que ceci peut avoir des impacts non négilgeables sur le
+Notez dès à présent que ceci peut avoir des impacts non négligeables sur le
 temps d'éxecution d'une requête mal indexée.
 </p></div>
 
@@ -806,7 +806,7 @@ temps d'éxecution d'une requête mal indexée.
 
 --------------------------------------------------------------------------------
 
-Comparez ces deux requêtes. L'une affiche tous les résultats, l'autre à supprimé
+Comparez ces deux requêtes. L'une affiche tous les résultats, l'autre a supprimé
 les lignes en doublons, sachant que nous indiquons sur quels éléments nous
 estimons que ce rapprochement est valide (avec le `distinct on`):
 
@@ -887,11 +887,11 @@ Les autres fonctions les plus utiles sont:
  * **trim(chaîne)** : suppression des espaces inutiles, mais elle peut faire
   beaucoup plus (regardez la documentation en ligne)
 
-Pour rechercher une sous chaîne dans un chaîne il existe l'opérateur **LIKE** ou
+Pour rechercher une sous-chaîne dans une chaîne il existe l'opérateur **LIKE** ou
 **ILIKE** (insensible à la casse), qui prend en argument une chaîne de caractère
 où `_` est remplacé par **un seul** caractère et `%` par **0 ou n** caractères.
 
-    SELECT per_nom,per_prenom FROM  drh.employes
+    SELECT per_nom,per_prenom FROM drh.employes
     WHERE per_nom LIKE 'D%'
     AND per_prenom LIKE 'Jo__'
 
@@ -909,7 +909,7 @@ guillemet double), ou on utilisera un caractère d'**échappement \\**.
 Les chaînes qui possèdent des caractères d'échappement (comme `\n` pour le
 retour à la ligne) **devraient être préfixées** par le caractère **E** :
 
-    E'Ceci est \n un chaîne sur deux lignes.'
+    E'Ceci est \n une chaîne sur deux lignes.'
 
 Soit :
 
@@ -932,9 +932,9 @@ notons:
 
 --------------------------------------------------------------------------------
 
-### 14.5.3. Somme, Moyenne, Minimum, maximum
+### 14.5.3. Somme, Moyenne, Minimum, Maximum
 
-De nombreuses fonctions peuvent travailler simplement sur un table sans nécessiter
+De nombreuses fonctions peuvent travailler simplement sur une table **sans** nécessiter
 d'opérations d'agrégation (`GROUP BY`, que nous verrons plus loin).
 
 Retenez donc que ces fonctions peuvent fonctionner **sans GROUP BY**:
@@ -978,13 +978,13 @@ qu'un long discours utilisons de bons exemples:
 ### dates et timezones
 
 Notez que si vous stockez la dates comme "timestamp sans timezone" vous aurez
-des problèmes d'inexation, sauf à créer des index spécifiques qui forcent le
+des problèmes d'indexation, sauf à créer des index spécifiques qui forcent le
 timezone.
 
-Préférez un stockage avec le timezone.
+**Préférez un stockage avec le timezone**.
 
 Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours), pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
-Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par moi, faites un index sur le mois de la date, etc.
+Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites un index sur le mois de la date, etc.
 
 
 --------------------------------------------------------------------------------
@@ -1130,7 +1130,7 @@ Que fait cette requête?
 --------------------------------------------------------------------------------
 ### Réponse:
 
-elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
+Elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
 canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume Unis
 et qui ont plus de 40 ans. Remarquez qu'on utilise pas `extract` dans les clauses
 WHERE, ce traitement n'est utile que pour l'affichage final.
@@ -1440,8 +1440,8 @@ Ainsi observez les différences entre ces deux requêtes:
     SELECT * FROM drh.employes
       WHERE emp_naissance < current_date-INTERVAL '40 years';
 
-Retenez une règle, dans les filtrages de requêtes les fonctions sont mieux à
-droite. Ou encore, préférez les calculs sur des invariants plutôt que sur les
+Retenez une règle, dans les filtrages de requêtes **les fonctions sont mieux à
+droite**. Ou encore, préférez les **calculs sur des invariants** plutôt que sur les
 lignes de la table.
 
 --------------------------------------------------------------------------------

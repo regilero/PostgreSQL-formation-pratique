@@ -664,7 +664,7 @@ elle-même mais <strong>au sein de la base postgres.</strong></p>
                 <p>A l'usage il est plutôt conseillé de faire <strong>un fichier SQL dédié aux droits
 d'accès</strong> et d'y ajouter quelques lignes de <code>GRANT</code>. La gestion des droits
 d'accès à la base n'étant pas supposée changer trop souvent.</p>
-<p>Ce fichier servant aussi de base pour remettre à éro les droits et/ou vues dans
+<p>Ce fichier servant aussi de base pour remettre à zéro les droits et/ou vues dans
 une base partagée entre développeurs, par exemple.</p>
 <p>L'autre solution est l'utilisation de <code>pg_dumpall --globals-only</code> qui comme son
 nom l'indique se contente de sauvegarder les <strong>« globales »</strong> du cluster parmi
@@ -1022,7 +1022,7 @@ sur cet écran <b>la variable role existe mais  ne prends qu'une valeur numériq
 On utilise ensuite l'onglet <b>SQL</b> pour voir la requête générée et on décoche
 <b>« Lecture seule »</b> afin de pouvoir modifier la requête. Qui comporte soit
 une valeur bidon pour la variable role (si vous venez de l'édition utilisateur),
-soit une variable bidon avec une valeurbidon (si vopus êtes sur les propriétés de
+soit une variable bidon avec une valeurbidon (si vous êtes sur les propriétés de
  la base).
 </p></div>
 
@@ -2231,7 +2231,7 @@ SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
 ORDER BY emp_code_pays DESC NULLS LAST, per_nom DESC,per_prenom ASC;
 </code></pre>
 <div class="warning"><p>
-Notez dès à présent que ceci peut avoir des impacts non négilgeables sur le
+Notez dès à présent que ceci peut avoir des impacts non négligeables sur le
 temps d'éxecution d'une requête mal indexée.
 </p></div>
               
@@ -2306,7 +2306,7 @@ temps d'éxecution d'une requête mal indexée.
             <div class="inner">
               
               
-                <p>Comparez ces deux requêtes. L'une affiche tous les résultats, l'autre à supprimé
+                <p>Comparez ces deux requêtes. L'une affiche tous les résultats, l'autre a supprimé
 les lignes en doublons, sachant que nous indiquons sur quels éléments nous
 estimons que ce rapprochement est valide (avec le <code>distinct on</code>):</p>
 <pre><code>SELECT
@@ -2534,10 +2534,10 @@ NULL</strong> et en ajoutant un séparateur pour la deuxième.</p>
 <li><strong>trim(chaîne)</strong> : suppression des espaces inutiles, mais elle peut faire
   beaucoup plus (regardez la documentation en ligne)</li>
 </ul>
-<p>Pour rechercher une sous chaîne dans un chaîne il existe l'opérateur <strong>LIKE</strong> ou
+<p>Pour rechercher une sous-chaîne dans une chaîne il existe l'opérateur <strong>LIKE</strong> ou
 <strong>ILIKE</strong> (insensible à la casse), qui prend en argument une chaîne de caractère
 où <code>_</code> est remplacé par <strong>un seul</strong> caractère et <code>%</code> par <strong>0 ou n</strong> caractères.</p>
-<pre><code>SELECT per_nom,per_prenom FROM  drh.employes
+<pre><code>SELECT per_nom,per_prenom FROM drh.employes
 WHERE per_nom LIKE 'D%'
 AND per_prenom LIKE 'Jo__'
 </code></pre>
@@ -2583,7 +2583,7 @@ AND per_prenom LIKE 'Jo__'
 guillemet double), ou on utilisera un caractère d'<strong>échappement \</strong>.</p>
 <p>Les chaînes qui possèdent des caractères d'échappement (comme <code>\n</code> pour le
 retour à la ligne) <strong>devraient être préfixées</strong> par le caractère <strong>E</strong> :</p>
-<pre><code>E'Ceci est \n un chaîne sur deux lignes.'
+<pre><code>E'Ceci est \n une chaîne sur deux lignes.'
 </code></pre>
 <p>Soit :</p>
 <pre><code>select 'test d''échappement';
@@ -2667,10 +2667,10 @@ notons:</p>
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h3>14.5.3. Somme, Moyenne, Minimum, maximum</h3>
+                <h3>14.5.3. Somme, Moyenne, Minimum, Maximum</h3>
               
               
-                <p>De nombreuses fonctions peuvent travailler simplement sur un table sans nécessiter
+                <p>De nombreuses fonctions peuvent travailler simplement sur une table <strong>sans</strong> nécessiter
 d'opérations d'agrégation (<code>GROUP BY</code>, que nous verrons plus loin).</p>
 <p>Retenez donc que ces fonctions peuvent fonctionner <strong>sans GROUP BY</strong>:</p>
 <ul>
@@ -2774,11 +2774,11 @@ justify_interval(current_timestamp - '2001-10-19');
               
               
                 <p>Notez que si vous stockez la dates comme "timestamp sans timezone" vous aurez
-des problèmes d'inexation, sauf à créer des index spécifiques qui forcent le
+des problèmes d'indexation, sauf à créer des index spécifiques qui forcent le
 timezone.</p>
-<p>Préférez un stockage avec le timezone.</p>
+<p><strong>Préférez un stockage avec le timezone</strong>.</p>
 <p>Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours), pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
-Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par moi, faites un index sur le mois de la date, etc.</p>
+Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites un index sur le mois de la date, etc.</p>
               
             </div>
           </div>
@@ -3199,7 +3199,7 @@ AND age(emp_naissance) &gt;= '40 year'::interval );
                 <h3>Réponse:</h3>
               
               
-                <p>elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
+                <p>Elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
 canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume Unis
 et qui ont plus de 40 ans. Remarquez qu'on utilise pas <code>extract</code> dans les clauses
 WHERE, ce traitement n'est utile que pour l'affichage final.</p>
@@ -3906,8 +3906,8 @@ SELECT * FROM drh.employes
 SELECT * FROM drh.employes
   WHERE emp_naissance &lt; current_date-INTERVAL '40 years';
 </code></pre>
-<p>Retenez une règle, dans les filtrages de requêtes les fonctions sont mieux à
-droite. Ou encore, préférez les calculs sur des invariants plutôt que sur les
+<p>Retenez une règle, dans les filtrages de requêtes <strong>les fonctions sont mieux à
+droite</strong>. Ou encore, préférez les <strong>calculs sur des invariants</strong> plutôt que sur les
 lignes de la table.</p>
               
             </div>
