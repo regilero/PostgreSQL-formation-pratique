@@ -778,7 +778,6 @@ COMMIT; -- ou ROLLBACK;
 --------------------------------------------------------------------------------
 ### Serializable, un niveau d'isolation restrictif
 
-Attention, suivant la version de PostgreSQL vous pourriez ne pas avoir d'erreur mais simplement un lock d'attente.
 
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
@@ -833,6 +832,7 @@ Puis on tape la même commande:
 </td></tr><tr>
 
 <td><!-- col1 -->
+<small><bold>Attention, suivant la version de PostgreSQL vous pourriez ne pas avoir d'erreur mais simplement un lock d'attente.</bold></small>
 </td>
 
 <td><!-- col2 -->
