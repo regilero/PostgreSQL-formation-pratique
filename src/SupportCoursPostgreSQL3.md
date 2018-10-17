@@ -778,12 +778,14 @@ COMMIT; -- ou ROLLBACK;
 --------------------------------------------------------------------------------
 ### Serializable, un niveau d'isolation restrictif
 
+Attention, suivant la version de PostgreSQL vous pourriez ne pas avoir d'erreur mais simplement un lock d'attente.
+
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
 <b>Fenêtre 1</b>
 <pre><code>
-<b>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</b>
 BEGIN;
+<b>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</b>
 </code></pre>
 Et ensuite :
 <pre><code>
@@ -800,8 +802,8 @@ ORDER BY com_id LIMIT 3 ;
 <b>Fenêtre 2</b>
 
 <pre><code>
-<b>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</b>
 BEGIN;
+<b>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</b>
 </code></pre>
 Deuxième transaction démarrée. Videz le texte.
 
@@ -1388,7 +1390,7 @@ notre base.
 
     # installation du php en mode ligne de commande
     # le package peut aussi se nommer php-cli
-    sudo apt-get install php5-cli
+    sudo apt-get install php7.0-cli php7.0-pgsql
     cd /repertoire/de/la/formation
 
 On peut éditer le fichier pour modifier les constantes en tête du fichier et

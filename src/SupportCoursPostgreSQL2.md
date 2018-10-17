@@ -1771,6 +1771,7 @@ pour les champs de `employes`
 ### 14.10.1 GROUP BY
 
 Notre requête se compose pour l'instant :
+
  * d'une ligne de sélection des champs à afficher,
  * d'une liste de tables sources,
  * avec éventuellement des jointures,
