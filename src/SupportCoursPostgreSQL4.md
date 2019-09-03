@@ -25,10 +25,10 @@ Les chapitres précédents contenaient des informations utiles aux administrateu
 
 Ainsi on n'oubliera pas de consulter dans les chapitres précédents:
 
- * la gestion du **pg_hba.conf** (politique d'accès)
- * la gestion des **rôles** et des **droits**
- * les backups en dumps **SQL** et **COMPRESS** ainsi que leurs **restaurations**
- * **l'indexation**
+* la gestion du **pg_hba.conf** (politique d'accès)
+* la gestion des **rôles** et des **droits**
+* les backups en dumps **SQL** et **COMPRESS** ainsi que leurs **restaurations**
+* **l'indexation**
 
 --------------------------------------------------------------------------------
 ## 20.2. 32bits vs 64bits
@@ -39,9 +39,9 @@ Vous pouvez très bien installer une version 32bits sur un OS 64 bits.
 
 Les principaux gains d'une version 64 bits sont:
 
- * une meilleure gestion des types longs, qui peuvent être utilisés dans des
+* une meilleure gestion des types longs, qui peuvent être utilisés dans des
  registres au lieu de passer par des pointeurs (entiers longs, types date)
- * la possibilité d'utiliser plus de 2Go pour le paramètre shared_buffers dont
+* la possibilité d'utiliser plus de 2Go pour le paramètre shared_buffers dont
  on verra qu'il s'agit d'un des paramètres très important pour les performances,
  surtout avant la version 9.5.
 
@@ -51,8 +51,8 @@ de base (la taille d'un pointeur en RAM augmente).
 **Sur un Linux 64 bits on devrait toujours installer une version 64bits**.
 
 Sur un serveur Windows la version 64bits est beaucoup moins intéressante car les
- serveurs Windows supportent assez mal une valeur supérieure à **500Mo** pour le
- paramètre `shared_buffers` (on perd donc le principal gain).
+serveurs Windows supportent assez mal une valeur supérieure à **500Mo** pour le
+paramètre `shared_buffers` (on perd donc le principal gain).
 
 Certains utilisateurs ont rapporté des installations sur Windows avec des très
 fortes valeures de `work_mem`, pour lesquelles une version 64bits était plus performante. Mais comme nous le verrons en étudiant ces deux paramètres
@@ -65,13 +65,13 @@ fortes valeures de `work_mem`, pour lesquelles une version 64bits était plus pe
 Les applications qui utilisent la base peuvent avoir des formes et des usages
 divers. On identifie par exemple certaines grandes familles ainsi:
 
- * **Type Web** : Taille des données tenant en RAM, beaucoup de requêtes simples,
+* **Type Web** : Taille des données tenant en RAM, beaucoup de requêtes simples,
  beaucoup de lectures.
- * **OLTP (Online Transaction Processing)** :  Taille des données très importante
+* **OLTP (Online Transaction Processing)** :  Taille des données très importante
   (supérieure à la RAM), un nombre important d'opérations d'écritures (plus de
   20% des requêtes). Des transactions importantes (beaucoup d'écritures au sein
   d'une même transaction)
- * **Data Warehouse, Business Intelligence** : taille des données très importante,
+* **Data Warehouse, Business Intelligence** : taille des données très importante,
  requêtes d'agrégation complexes (BI), requêtes d'import/export de grandes
  quantités de données
 
@@ -83,8 +83,8 @@ base de données.
 --------------------------------------------------------------------------------
 ## 20.4. Autovacuum, vacuum et analyze
 
- * [http://docs.postgresql.fr/9.5/maintenance.html](http://docs.postgresql.fr/9.5/maintenance.html)
- * [http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html](http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html)
+* [http://docs.postgresql.fr/9.5/maintenance.html](http://docs.postgresql.fr/9.5/maintenance.html)
+* [http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html](http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html)
 
 La page de documentation de PostgreSQl sur les opérations de maintenance est
 assez complète.
@@ -97,14 +97,14 @@ les maintenance à effectuer et **de les faire au fil de l'eau**.
 Parmi toutes les tâches de maintenance les plus importantes sont donc les
 **VACUUM**. Le but du vacuum est **triple**:
 
- * **optimiser l'espace disque** occupé par la base, le fichier physique stocke
+* **optimiser l'espace disque** occupé par la base, le fichier physique stocke
   plusieurs versions des lignes, ce qui permet d'assurer le MVCC dans les
   transactions. Lors des vacuums les lignes qui ne sont plus valides seront
   supprimées.
- * **Mettre à jour les statistiques** sur le nombre de lignes des tables ou les
+* **Mettre à jour les statistiques** sur le nombre de lignes des tables ou les
   cardinalités des index. Ceci afin d'optimiser les choix fait par l'analyseur
   de requête (vaut-il mieux un *seqscan* ou utiliser un *index* ?)
- * A **long terme** éviter d'avoir un problème de **cycle d'identifiant de
+* A **long terme** éviter d'avoir un problème de **cycle d'identifiant de
   transaction** (qui n'est pas un nombre infini)
 
 .fx: wide
@@ -325,13 +325,13 @@ Faisons le point sur les principaux paramètres...
 
 ### 20.5.1. Connexions
 
- * **listen_addresses** : liste des interfaces réseau sur lesquelles le serveur
+* **listen_addresses** : liste des interfaces réseau sur lesquelles le serveur
  est à l'écoute. Par défaut 'localhost' et onc uniquement en local, mettez '*'
  pour utiliser toutes les adresses réseaux du serveur.
- * **port** : le port sur lequel le serveur est en écoute sur les interfaces
+* **port** : le port sur lequel le serveur est en écoute sur les interfaces
   listées dans le paramètre précédent. Modifiez le si plusieurs instances de
   PostgreSQL doivent tourner en parallèle (comme lors d'un upgrade)
- * **max_connections** : nombre maximum de connexions acceptées, le défaut est à
+* **max_connections** : nombre maximum de connexions acceptées, le défaut est à
   100 ce qui est très peu. Ajoutez un zéro et passez à 1000. Pensez par exemple
   que deux serveurs frontaux apache avec un MaxClients à 150 demanderont 300
   connexions en pic (s'ils ne servent qu'une seule application, avec un seul
@@ -340,7 +340,7 @@ Faisons le point sur les principaux paramètres...
   si vous utilisez plusieurs rôles cela va aussi augmenter la consommation de connexions. **Pensez à utiliser des pooler de connexions pour des besoins
   dépassants le milliers de connexions.**
 
- * **superuser_reserved_connections** : Parmi toutes les connexions disponible
+* **superuser_reserved_connections** : Parmi toutes les connexions disponible
  ce nombre de connexions (3 par défaut) sera réservé au superadmin postgres.
  Cela vous permettra de vous connecter à postgreSQL y compris au moment des pics.
 Intégrez dans ce nombre la consommation des membres de l'équipe d'admin et des
@@ -494,7 +494,7 @@ importantes de données pourront avoir un work_mem par défaut plus important.
 
 --------------------------------------------------------------------------------
 
- * **maintenance_work_mem** : 16MB par défaut, montez à 100MB voir plus. Il
+* **maintenance_work_mem** : 16MB par défaut, montez à 100MB voir plus. Il
  s'agit de la mémoire allouée aux processus du superutilisateur effectuant de
  s opérations de maintenance comme les **vaccuums** ou les **réindexations**,
  les clusters etc. Il n'y a normalement pas de parallélisations de ces tâches
@@ -503,7 +503,7 @@ Lors d'un import de données massif, il n'y aura à priori que des connexions
 destinées à cet import (si vous coupez les autres via le pg_hba.conf par
 exemple), pensez à augmenter les valeurs de work_mem et maintenance_work_mem **temporairement** pour accélérer l'import.
 
- * **effective_io_concurrency** : indiquez le nombre de disque présents sur le
+* **effective_io_concurrency** : indiquez le nombre de disque présents sur le
  système
 
 --------------------------------------------------------------------------------
@@ -546,12 +546,12 @@ garder une trace du temps d'exécution, des connections, etc.
 
 Les paramètres les plus importants pour les logs sont:
 
- * **log_min_duration_statement** : indiquez une valeur au dessus de laquelle
+* **log_min_duration_statement** : indiquez une valeur au dessus de laquelle
  vous garderez une trace de la requête, cela vous permettra d'identifier les
  requêtes qui nécessitent un travail de réécriture ou d'indexation.
- * **log_temp_files** : indiquez une taille, si une requête nécessite la
+* **log_temp_files** : indiquez une taille, si une requête nécessite la
  création d'un fichier temporaire supérieur à cette taille elle sera loguée.
- * **lc_messages = 'C'** : contrairement aux autres paramètres de locales (comme
+* **lc_messages = 'C'** : contrairement aux autres paramètres de locales (comme
 les monnaies, ordre de tris, heure) vous devriez laisser les messages dans la
 locale par défaut **C**. Ceci vous permettra de retrouver plus vite de l'aide
 sur Internet en recopiant les messages d'erreur retrouvés dans les logs.
@@ -685,11 +685,11 @@ arrive régulièrement, le <b>CHECKPOINT</b> et que cette opération est elle-m�
 
 Les checkpoints peuvent se produire à plusieurs moments:
 
- * **'checkpoint_timeout' minutes** (par défaut 5) se sont passées depuis le
+* **'checkpoint_timeout' minutes** (par défaut 5) se sont passées depuis le
  dernier checkpoint
- * avant 9.5 il y a eu **plus de 'checkpoint_segments' fichier WAL créés** (par défaut 3)
- * apres 9.5 il y a eu **plus de 'max_wal_size' données créées dans les WAL** (par défaut 1GB)
- * quelqu'un à lancé une commande SQL **CHECKPOINT;**
+* avant 9.5 il y a eu **plus de 'checkpoint_segments' fichier WAL créés** (par défaut 3)
+* apres 9.5 il y a eu **plus de 'max_wal_size' données créées dans les WAL** (par défaut 1GB)
+* quelqu'un à lancé une commande SQL **CHECKPOINT;**
 
 **Lors du checkpoint les changements stockés dans les fichiers WAL sont écrits dans
  les fichiers physiques des tables.**
@@ -790,8 +790,8 @@ l'état physique de la base à un instant couvert par ces journaux).
 
 Ce type de backup est très puissant puisque contrairement aux dumps il permet:
 
- * la sauvegarde des modifications au fil de l'eau
- * le **PITR (Point In Time Recovery)**, la restauration à un état passé de la base.
+* la sauvegarde des modifications au fil de l'eau
+* le **PITR (Point In Time Recovery)**, la restauration à un état passé de la base.
 
 --------------------------------------------------------------------------------
 
@@ -969,7 +969,7 @@ On peut utiliser **'fsync_writethrough'** ou tester **'open_datasync'** mais il
 
 Les 3 opérations qui vont devoir être effectuées lors d'un backup sont:
 
- * **1)** lancer un **SELECT pg_start_backup('iciunechaînedecaractères');**.
+* **1)** lancer un **SELECT pg_start_backup('iciunechaînedecaractères');**.
   Cette commande va créer un fichier dans le répertoire des données qui
   identifiera le backup en cours. Elle lance aussi un **CHECKPOINT** qui force
   l'écriture des données sur le disque. Si vous passez l'option `true` en
@@ -977,7 +977,7 @@ Les 3 opérations qui vont devoir être effectuées lors d'un backup sont:
   du CHEKPOINT qui peut dépendre du paramètre **checkpoint_completion_target**
   que vous avez donné. La requête retournera un résultat quand le checkpoint se
   terminera. *Si cette commande renvoie des erreurs vous devriez sans doute arrêter le backup (un backup précédent qui ne s'est pas terminé?).*
- * **2)** Faire **une copie de tout le contenu du répertoire des données.**
+* **2)** Faire **une copie de tout le contenu du répertoire des données.**
   Il n'est pas nécessaire de copier le sous-répertoire pg_xlog. Celui-ci est
   normalement déjà pris en charge par le système d'archivage des WAL.
   Une des techniques de sauvegarde du répertoire des données et d'utiliser un
@@ -994,7 +994,7 @@ Les 3 opérations qui vont devoir être effectuées lors d'un backup sont:
 
 --------------------------------------------------------------------------------
 
- * **3)** effectuer un **SELECT pg_stop_backup();** ceci arrête le backup en
+* **3)** effectuer un **SELECT pg_stop_backup();** ceci arrête le backup en
   passant au prochain WAL et retire le fichier `backup_label` du répertoire des
   données (que l'on aura donc copié avec la sauvegarde, mais ce n'est pas grave).
   Si nous sommes en mode `archive_mode` (backup des journaux de transactions)
@@ -1069,28 +1069,28 @@ journaux de transaction nous devrions pouvoir tester une restauration.
 
 Quelques notes utiles sur **les restaurations**:
 
- * les segments de WAL qui ne seront pas retrouvés à l'emplacement d'archivage
+* les segments de WAL qui ne seront pas retrouvés à l'emplacement d'archivage
  seront recherchés dans le dossier `pg_xlog` de la base s'il existe encore (nous
  somme en procédure de recovery, si ça se trouve on a plus ce dossier). Par
  contre **les segments présents dans le dossier d'archivage seront prioritaires**.
- *  Avec une restauration on peut voir la gestion du temps dans PostgreSQL comme
+*  Avec une restauration on peut voir la gestion du temps dans PostgreSQL comme
   une **gestion parallèle du temps**. Un monde parallèle dans lequel les
   transactions de la restauration et les transactions éventuellement présente
   dans des WAL locaux ne seront pas mélangés.
- * Normalement une restauration va reprendre tous les WAL qu'elle a à disposition, et donc ramener la base à un point dans le temps qui est le plus proche possible du présent. Normalement une restauration se termine avec un message dans les logs signalant un équivalent de « file not found », rien d'alarmant. Il peut aussi y avoir un message d'erreur en début de restauration sur un fichier 00000001.history, ce n'est pas non plus un vrai problème.
+* Normalement une restauration va reprendre tous les WAL qu'elle a à disposition, et donc ramener la base à un point dans le temps qui est le plus proche possible du présent. Normalement une restauration se termine avec un message dans les logs signalant un équivalent de « file not found », rien d'alarmant. Il peut aussi y avoir un message d'erreur en début de restauration sur un fichier 00000001.history, ce n'est pas non plus un vrai problème.
 
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
- * La commande miroir de **archive_command** est **restore_command**. Elle doit
+* La commande miroir de **archive_command** est **restore_command**. Elle doit
   permettre de **récupérer les segments archivés**. Comme la première cette
   commande doit renvoyer un code de sortie autre que 0 en cas d'erreur.
   Cette commande devra figurer dans un fichier `recovery.conf` situé dans le
   répertoire de la base.
 
- * Il est possible d'écrire des fichiers **recovery.conf** avancés et de les stocker
+* Il est possible d'écrire des fichiers **recovery.conf** avancés et de les stocker
   dans le répertoire des données de la base avant la restauration. Ceci permet
   le **Point in Time Recovery (PITR)** qui permettra de s'arrêter à un **temps**
   ou un **numéro de transaction** donné. Ce point dans le temps doit être situé
@@ -1340,11 +1340,11 @@ Quand cette commande se termine **la restauration est terminée** et les fichier
 écrits sur disques (ou dans le cache disque de l'OS au moins, vous pouvez taper
 sync dans une console root).
 
- * Il est conseillé ensuite d'éteindre postgreSQL puis de** remettre le fichier postgresql.conf original**.
+* Il est conseillé ensuite d'éteindre postgreSQL puis de** remettre le fichier postgresql.conf original**.
 
- * Remettez aussi le **pg_hba.conf** original en place.
+* Remettez aussi le **pg_hba.conf** original en place.
 
- * Redémarrez PostgreSQL
+* Redémarrez PostgreSQL
 
 --------------------------------------------------------------------------------
 
@@ -1560,7 +1560,7 @@ parallèles
 En s'appuyant sur la politique de backup présentée, en cas de problèmes nous
 avons 4 cas:
 
- * **cas 1)-** il s'agissait d'un **arrêt brutal du serveur** (oups le fil),
+* **cas 1)-** il s'agissait d'un **arrêt brutal du serveur** (oups le fil),
   nous allons relancer le serveur et tout sera remis en place par le `pg_xlog`.
   Vous avez éteint le courant. Quand PostgreSQL va se relancer il va rejouer
   les transactions qui ne sont pas dans le stockage binaire des tables (en
@@ -1576,7 +1576,7 @@ même...)
 
 --------------------------------------------------------------------------------
 
- * **cas 2)-** vous avez votre backup de premier niveau des WAL
+* **cas 2)-** vous avez votre backup de premier niveau des WAL
   La commande d'archivage des WAL recopie les WAL quelque part, si vous avez
   encore ce « quelque part » vous n'avez pas tout perdu. Vous avez avec vous
  **les journaux de transactions du backup incrémental** (leur âge est au pire de
@@ -1595,7 +1595,7 @@ simplement qu'il ne faut pas hésiter à faire une copie du répertoire `pg_xlog
 
 --------------------------------------------------------------------------------
 
- * **cas 3)-** Vous **n'avez plus le backup des WAL de 1er niveau**.
+* **cas 3)-** Vous **n'avez plus le backup des WAL de 1er niveau**.
   Allez chercher les WAL sur le 2ème niveau (serveur de backup).
   Vous devriez alors avoir **les journaux de transactions du backup
   incrémental** (leur âge est au pire de 1 jour si votre backup de 2ème niveau
@@ -1604,30 +1604,30 @@ simplement qu'il ne faut pas hésiter à faire une copie du répertoire `pg_xlog
 
 Procédure:
 
- * Allez cherchez les données sur le serveur de backup
- * Effectuez la même procédure que pour le cas2, sauf que vous aurez sans doute
+* Allez cherchez les données sur le serveur de backup
+* Effectuez la même procédure que pour le cas2, sauf que vous aurez sans doute
   perdu un jour de transaction, ou bien une heure de transactions (suivant le
   rythme de votre backup de 2ème niveau des WAL).
 
 Procédure **alternative**:
 
- * utilisez **le dernier dump de la base**. Qui devrait être vieux d'un jour au pire
+* utilisez **le dernier dump de la base**. Qui devrait être vieux d'un jour au pire
 
 --------------------------------------------------------------------------------
 
- * **cas 4)-** Vous avez **une corruption de donnée suite à un problème
+* **cas 4)-** Vous avez **une corruption de donnée suite à un problème
  matériel**. Vous pouvez détecter ce type de problème suite à un pg_dumpall ou à
  un pg_dump, ou bien certaines requêtes sont rejetées avec des erreurs qui
  signalent que quelque chose est cassé.
 
- * **a)** **suspendez l'accès** à PostgreSQL (modifiez le pg_hba.conf)
- * **b)** essayez de **backuper le maximum de choses** de la base actuelle,
+* **a)** **suspendez l'accès** à PostgreSQL (modifiez le pg_hba.conf)
+* **b)** essayez de **backuper le maximum de choses** de la base actuelle,
   mais le dump est cassé, donc:
 
- * **--1.** fixer le problème matériel si cela est possible
- * **--2.** démarrez par un snapshot binaire des fichiers de la base (utilisez
+* **--1.** fixer le problème matériel si cela est possible
+* **--2.** démarrez par un snapshot binaire des fichiers de la base (utilisez
  les scripts de backups prévus pour cela)
- * **--3.** essayez de triturer **pg_dump** pour qu'il sauve un maximum de choses.
+* **--3.** essayez de triturer **pg_dump** pour qu'il sauve un maximum de choses.
  Par défaut `pg_dump` s'arrête sur un « page fault ». Nous allons dire à
  PostgreSQL de vider les données qui provoquent des « page fault » – ici nous
  perdrons des données – et de continuer le dump sur les données valides.
@@ -1646,16 +1646,16 @@ s'arrête.
 
 --------------------------------------------------------------------------------
 
- * **c)** faites un `pg_dumpall` complet (vous pouvez le faire avec
+* **c)** faites un `pg_dumpall` complet (vous pouvez le faire avec
  `--globals-only`), vous aurez des avertissements, à chaque perte de données.
  N'oubliez pas de faire un **pg_dump au format 'c' compress** pour chaque base
  de données. Le format compress sera utilise pour les restaurations partielles
  alors que le pg_dumpall travaille en SQL pur.
- * **d)** enlevez le paramètre `zero_damaged_pages` et redémarrez PostgreSQL
- * **e)** Essayez d'identifier les données perdues. Un diff avec les précédents
+* **d)** enlevez le paramètre `zero_damaged_pages` et redémarrez PostgreSQL
+* **e)** Essayez d'identifier les données perdues. Un diff avec les précédents
  dump sauvegardés, retransformés en SQL pur à partir de serveurs différents,*
  peut vous aider
- * **f)** faire un **REINDEX** sur tous les index existants ou sur les bases
+* **f)** faire un **REINDEX** sur tous les index existants ou sur les bases
  directement, il y a des chances que eux aussi aient été endommagés.
 ...
 
@@ -1679,8 +1679,8 @@ vous pourriez faire:
 
 [http://www.postgresql.org/docs/9.5/static/runtime-config-developer.html](http://www.postgresql.org/docs/9.5/static/runtime-config-developer.html)
 
- * **g)** rétablissez le **ph_hba.conf** et relancez PostgreSQL
- * **h)** faites une pause
+* **g)** rétablissez le **ph_hba.conf** et relancez PostgreSQL
+* **h)** faites une pause
 
 .fx: wide
 
@@ -1728,9 +1728,9 @@ De très bons article publiés dans Linux Magazine France et rédigés en franç
 par Guillaume Lelarge donnent des procédure détaillées sur la mise en place de
 tels système de réplication:
 
- * [http://www.dalibo.org/hs44_la_replication_par_les_journaux_de_transactions](http://www.dalibo.org/hs44_la_replication_par_les_journaux_de_transactions)
- * [http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_1](http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_1)
- * [http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_2](http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_2)
+* [http://www.dalibo.org/hs44_la_replication_par_les_journaux_de_transactions](http://www.dalibo.org/hs44_la_replication_par_les_journaux_de_transactions)
+* [http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_1](http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_1)
+* [http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_2](http://www.dalibo.org/glmf131_mise_en_place_replication_postgresl_9.0_2)
 
 
 --------------------------------------------------------------------------------
@@ -1739,16 +1739,16 @@ tels système de réplication:
 Pour que deux serveurs fonctionnent en mode réplication par les journaux de
 transactions il faut qu'ils respectent certaines contraintes:
 
- * il doivent avoir la même version majeure de PostgreSQL. Le format binaire des
+* il doivent avoir la même version majeure de PostgreSQL. Le format binaire des
   données pouvent être modifié lors d'un changement majeur de version.
 
 9.**0.4** et 9.**0.5** seront **compatibles**
 
 9.**0.4** et 9.**1.0** ne le sont **pas**
 
- * il faut être consistant au niveau du stockage binaire (32bit litlle endian
+* il faut être consistant au niveau du stockage binaire (32bit litlle endian
  != 64 bits big endian).
- * Une des autres limitation de ce type de réplication est qu'il concerne
+* Une des autres limitation de ce type de réplication est qu'il concerne
  **l'ensemble d'un cluster PostgreSQL**, on ne travaille pas sur une base de
  données unique ou sur un set de tables unique (voir les replications par
  triggers type Slony et Londiste pour cela).
@@ -1985,11 +1985,11 @@ peu supérieur de WAL:
 
 Puis comme dans le WARM STANDBY nous devons:
 
- * **redémarrer** le serveur maître
- * effectuer un **backup binaire**
- * **transférer** ce backup sur l'esclave.
- * **décompresser** le backup sur l'esclave
- * s'assurer que tous les fichiers appartiennent bien à postgres
+* **redémarrer** le serveur maître
+* effectuer un **backup binaire**
+* **transférer** ce backup sur l'esclave.
+* **décompresser** le backup sur l'esclave
+* s'assurer que tous les fichiers appartiennent bien à postgres
 
 Là nous allons modifier le fichier `postgresql.conf` de l'esclave qui doit
 contenir le paramétrage du maître, pour lui indiquer le paramétrage de l'esclave
@@ -2033,12 +2033,12 @@ des esclaves.
 
 Plusieurs nouveaux paramètres entrent en jeu:
 
- * **max_wal_senders** : nombre de processus chargés de la synchronisation au
+* **max_wal_senders** : nombre de processus chargés de la synchronisation au
   niveau du maître (un par esclave)
- * **wal_sender_delay** : délai d'attente, par défaut à 200ms entre chaque
+* **wal_sender_delay** : délai d'attente, par défaut à 200ms entre chaque
   « exécution » du cycle de synchronisation, la valeur doit être un multiple
   de 10ms
- * **wal_keep_segments** : nombre de WAL qui peuvent être conservés dans
+* **wal_keep_segments** : nombre de WAL qui peuvent être conservés dans
   `pg_xlog` pour la réplication par flux. Si l'esclave **prends du retard** et
   que les segments ne sont plus dans pg_xlog il devra attendre la récupération
   via l'archivage des WAL (comme en hot_standby ou warm standby classique).
@@ -2144,7 +2144,7 @@ Vous trouverez dans cet article des réglages assez fins des problématiques de
 D'autres système de réplication existent autour de PostgreSQL. Certains sont
 utilisées depuis très longtemps. On citera les principaux:
 
- * **SLONY** : **réplication par les triggers**. Historiquement Slony était le
+* **SLONY** : **réplication par les triggers**. Historiquement Slony était le
  principal outil de réplication pour les solutions Web sur lesquelles on voulait
 disposer d'un esclave accessible en lecture et synchrone avec les modifications
 de la base. Slony impose de ne pas modifier le schéma de la base et de disposer
@@ -2153,7 +2153,7 @@ Slony se charge ensuite, base par base, table par table, de répercuter les
 modifications quand elles arrivent sur les esclaves (un serveur peut être maître
 d'une base ou d'une partie des tables de la base, et esclaves sur d'autres bases
 et/ou tables)
- * **Pgpool II** : **réplication des requêtes**. Pgpool est un **pooler de
+* **Pgpool II** : **réplication des requêtes**. Pgpool est un **pooler de
  connexions**, une des fonctionnalités offertes par un pooler est de répercuter
  sur tous les serveurs d'une grappe l'ensemble des requêtes effectuant des
  opérations en écriture. Si toutes les connexions passent bien par le pooler et
@@ -2168,10 +2168,10 @@ et/ou tables)
 
 --------------------------------------------------------------------------------
 
- * **Bucardo**: réplication **master-master** : le système le plus **complexe**
+* **Bucardo**: réplication **master-master** : le système le plus **complexe**
   et le **plus avancé**, vous obtenez un cluster de serveurs PostgreSQL dans
   lequel vous pouvez effectuer vos écritures sur n'importe quel serveur
- * **DRBD** : DRBD est une solution de **réplication des disques entre serveurs**,
+* **DRBD** : DRBD est une solution de **réplication des disques entre serveurs**,
   il ne s'agit donc pas d'une réplication de base de donnée. Les deux serveurs,
   le maître et l'esclave, partagent **un même disque dur**. Toutes les écritures
   effectuées sur le disque du maître sont répliquées sur le disque de l'esclave.
@@ -2193,7 +2193,7 @@ et/ou tables)
 --------------------------------------------------------------------------------
 ### 20.13.1. Monitorer PostgreSQL
 
- * [http://bucardo.org/wiki/Check_postgres](http://bucardo.org/wiki/Check_postgres)
+* [http://bucardo.org/wiki/Check_postgres](http://bucardo.org/wiki/Check_postgres)
 
 Pour intégrer la supervsion de PostgreSQL dans vos solutions de monitoring le
 principal outil sera la sonde **Nagios** **check_postgres**, sonde écrite en
@@ -2205,10 +2205,10 @@ les Actions de la sonde dont vous pouvez [voir la liste sur cette page](http://b
 
 En terme de **supervision passive (graphiques)** on pourra consulter ces liens:
 
- * [http://wiki.postgresql.org/wiki/Cacti](http://wiki.postgresql.org/wiki/Cacti) (Cacti)
- * [http://munin-monitoring.org/wiki/PluginCat](http://munin-monitoring.org/wiki/PluginCat) (Munin)
- * [http://muninpgplugins.projects.postgresql.org/](http://muninpgplugins.projects.postgresql.org/) (Munin)
- * [http://tigreraye.org/Modules%20PostgreSQL%20pour%20Munin](http://tigreraye.org/Modules%20PostgreSQL%20pour%20Munin) (Munin)
+* [http://wiki.postgresql.org/wiki/Cacti](http://wiki.postgresql.org/wiki/Cacti) (Cacti)
+* [http://munin-monitoring.org/wiki/PluginCat](http://munin-monitoring.org/wiki/PluginCat) (Munin)
+* [http://muninpgplugins.projects.postgresql.org/](http://muninpgplugins.projects.postgresql.org/) (Munin)
+* [http://tigreraye.org/Modules%20PostgreSQL%20pour%20Munin](http://tigreraye.org/Modules%20PostgreSQL%20pour%20Munin) (Munin)
 
 On trouvera beaucoup plus de ressources, et d'un meilleur niveau, pour Munin que
 pour Cacti.
@@ -2216,7 +2216,7 @@ pour Cacti.
 --------------------------------------------------------------------------------
 ### 20.13.2. PgAgent
 
- * [https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html](https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html)
+* [https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html](https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html)
 
 **PgAgent** est un programme complémentaire de **pgAdmin** qui permet la mise en
 place de **scripts de maintenance récurrents**. On peut l'utiliser pour
@@ -2228,8 +2228,8 @@ scripts systèmes et découper ses « jobs » en plusieurs étapes (steps).
 --------------------------------------------------------------------------------
 ### 20.13.3. PgPool II
 
- * [http://pgpool.projects.postgresql.org/](http://pgpool.projects.postgresql.org/)
- * [http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html](http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html)
+* [http://pgpool.projects.postgresql.org/](http://pgpool.projects.postgresql.org/)
+* [http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html](http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html)
 
 **pgpool II** est un **pooler de connexions**.
 
@@ -2257,8 +2257,8 @@ parallélisation de traitement, bascules failover, etc).
 --------------------------------------------------------------------------------
 ### 20.13.4. PgSnap!
 
- * [http://pgsnap.projects.postgresql.org/](http://pgsnap.projects.postgresql.org/)
- * [http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/](http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/) (démo)
+* [http://pgsnap.projects.postgresql.org/](http://pgsnap.projects.postgresql.org/)
+* [http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/](http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/) (démo)
 
 PGSnap! Est un programme PHP qui **génère un rapport sur l'état de la base**.
 
@@ -2296,7 +2296,7 @@ du rapport, etc.
 --------------------------------------------------------------------------------
 ### 20.13.6. pgfouine
 
- * [http://pgfouine.projects.postgresql.org/](http://pgfouine.projects.postgresql.org/)
+* [http://pgfouine.projects.postgresql.org/](http://pgfouine.projects.postgresql.org/)
 pgFouine est un programme PHP, c'est un analyseur de logs.
 
 Examinez les démonstrations de rapports générés par pgFouine sur cette page http://pgfouine.projects.postgresql.org/reports.html
@@ -2307,5 +2307,5 @@ l'on trouve encore pour raisons historiques.
 --------------------------------------------------------------------------------
 ### 20.13.7. d'autres?
 
- * [https://wiki.postgresql.org/wiki/Performance_Analysis_Tools](https://wiki.postgresql.org/wiki/Performance_Analysis_Tools)
-  * [https://wiki.postgresql.org/wiki/Monitoring](https://wiki.postgresql.org/wiki/Monitoring)
+* [https://wiki.postgresql.org/wiki/Performance_Analysis_Tools](https://wiki.postgresql.org/wiki/Performance_Analysis_Tools)
+* [https://wiki.postgresql.org/wiki/Monitoring](https://wiki.postgresql.org/wiki/Monitoring)

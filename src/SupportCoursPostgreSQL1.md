@@ -121,14 +121,14 @@ et **l'analyse décisionnelle** (Business Intelligence).
 
 Makina Corpus intervient sur :
 
- * une expertise technologique de haut niveau ;
- * l'intégration d'applications hétérogènes ;
- * une offre sur mesure, conçue et développée en interne pour répondre
+* une expertise technologique de haut niveau ;
+* l'intégration d'applications hétérogènes ;
+* une offre sur mesure, conçue et développée en interne pour répondre
   spécifiquement à vos besoins ;
- * une réduction du coût d'acquisition logiciel, grâce à l'utilisation de
+* une réduction du coût d'acquisition logiciel, grâce à l'utilisation de
   logiciels du monde libre ;
- * un service complet clés en main.
- * des formations sur les technologies Open Source
+* un service complet clés en main.
+* des formations sur les technologies Open Source
 
 --------------------------------------------------------------------------------
 
@@ -228,10 +228,10 @@ La documentation en ligne de PostgreSQL est sans doute un modèle du genre.
 
 Chaque version de PostgreSQL possède sa propre version de la documentation, dans plusieurs langues, et quand Google vous amène sur une page de cette documentation il suffit le plus souvent de changer le numéro de version dans l'url pour obtenir la même page mais adaptée à votre version. Par exemple:
 
- * [http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource)
- * [http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource)
- * [http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html](http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html)
- * [http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html](http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html)
+* [http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/9.4/INSTALL.html#install-getsource)
+* [http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource](http://docs.postgresql.fr/8.4/INSTALL.html#install-getsource)
+* [http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html](http://docs.postgresqlfr.org/9.3/plpgsql-expressions.html)
+* [http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html](http://docs.postgresqlfr.org/8.2/plpgsql-expressions.html)
 
 --------------------------------------------------------------------------------
 
@@ -1359,11 +1359,11 @@ Il faut donc créer cinq 'serveurs', qui sont en fait à chaque fois
 le même serveur PostgreSQL, sur le même port, mais avec
 un utilisateur de connexion différent:
 
- * **postges9-­formation­-admin**­: login *ultrogothe* : couleur orange
- * **postges9­-formation­-ecriture**: login *nantilde* : pas de couleur
- * **postges9­-formation­-lecture**: login *thibaut* : couleur verte
- * **postges9­-formation­-drh-­childeric**: login *childeric* : couleur grise
- * **postges9­-formation­-drh-­bertrude**: login *bertrude* : couleur verte
+* **postges9-­formation­-admin**­: login *ultrogothe* : couleur orange
+* **postges9­-formation­-ecriture**: login *nantilde* : pas de couleur
+* **postges9­-formation­-lecture**: login *thibaut* : couleur verte
+* **postges9­-formation­-drh-­childeric**: login *childeric* : couleur grise
+* **postges9­-formation­-drh-­bertrude**: login *bertrude* : couleur verte
 
 <div class="warning"><p>
 Attention: après avoir créé les connexions il est <strong>très fortement recommandé de quitter
@@ -1427,7 +1427,7 @@ schémas d'une base, ce n'est pas le cas entre plusieurs bases</strong>
 
 Plusieurs niveaux de droits existent dans PostgreSQL:
 
- * les droits **d'accès à la base**, une couche qui peut faire redondance avec les restrictions situées dans ph_hba.conf (mais la redondance n'est pas un mal en terme de sécurité)
+* les droits **d'accès à la base**, une couche qui peut faire redondance avec les restrictions situées dans ph_hba.conf (mais la redondance n'est pas un mal en terme de sécurité)
   * droits sur les **créations d'objets** dans la base (tables, tables temporaires)
   * droits par défaut sur des **éléments du langage SQL**. Ainsi le `SELECT` donne
    le droit de visualiser les données, mais pour les commandes permettant d'éditer
@@ -1531,8 +1531,8 @@ Est-il possible de modifier le nom d'une base de données après sa création?
 Nous allons maintenant appliquer **une politique de droits en deux étapes** qui
 correspondent aux deux onglets de droits présentés par pgadmin sur les objets:
 
- * les droits généraux **d'accès aux objets**
- * les droits sur les éléments du langage **SQL**
+* les droits généraux **d'accès aux objets**
+* les droits sur les éléments du langage **SQL**
 
 L'écriture des droits d'accès se fait en choisissant propriétés sur un clic
 droit sur la base formation.
@@ -1937,9 +1937,9 @@ Choisissez le schéma drh, faites un *clic droit, Ajouter un objet > Ajouter une
 
 Il faut créer une table **test2**, avec :
 
- * une colonne **id** en type **serial** (tout en bas dans la liste des types),
- * une colonne **val** en type **character varying**
- * une **primary key** sur la colonne **id**.
+* une colonne **id** en type **serial** (tout en bas dans la liste des types),
+* une colonne **val** en type **character varying**
+* une **primary key** sur la colonne **id**.
 
 Vérifiez avec l'onglet SQL que vous obtenez:
 
@@ -2151,21 +2151,21 @@ ne les expliquent:
 Un count de test1
 
     SELECT COUNT(*) FROM test1;
- * ultrogothe : 999
- * childeric: 999
- * bertrude: 10
- * nantilde: 10
- * thibaut: 10
+* ultrogothe : 999
+* childeric: 999
+* bertrude: 10
+* nantilde: 10
+* thibaut: 10
 
 Un count de test2
 
     SELECT COUNT(*) FROM test2;
 
- * ultrogothe : 20000
- * childeric: 20000
- * bertrude: 20000
- * nantilde: `ERROR: permission denied for relation test2`
- * thibaut: `ERROR: permission denied for relation test2`
+* ultrogothe : 20000
+* childeric: 20000
+* bertrude: 20000
+* nantilde: `ERROR: permission denied for relation test2`
+* thibaut: `ERROR: permission denied for relation test2`
 
 .fx: wide
 
@@ -2175,11 +2175,11 @@ Une insertion dans test1
 
     INSERT INTO test1 (val) VALUES ('ins1');
 
- * ultrogothe : OK
- * childeric: OK
- * bertrude: `ERROR: permission denied for relation test1`
- * nantilde: `ERROR: null value in column "id" violates not-null constraint`
- * thibaut: `ERROR: permission denied for relation test1`
+* ultrogothe : OK
+* childeric: OK
+* bertrude: `ERROR: permission denied for relation test1`
+* nantilde: `ERROR: null value in column "id" violates not-null constraint`
+* thibaut: `ERROR: permission denied for relation test1`
 
 -----------------------------------------------------------------
 

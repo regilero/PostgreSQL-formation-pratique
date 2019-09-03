@@ -48,8 +48,8 @@ Si vous lancez cette restauration une deuxième fois elle sera en échec sauf si
 
 Faites un rafraîchissement du schéma `app`, on y voit maintenant:
 
- * **3 tables et séquences**
- * **4 vues**
+* **3 tables et séquences**
+* **4 vues**
 
 Les 4 vues permettent un accès aux données du schéma drh, en tous cas celles que
 les créateurs des vues nous autorisent à voir. Les tables sont là pour gérer les
@@ -76,22 +76,22 @@ La vue **vue_drh_points** possède par contre **7 règles**.
 
 Le but de cette vue est double:
 
- * donner un aperçu global du nombre de points affecté à chaque employé et
+* donner un aperçu global du nombre de points affecté à chaque employé et
    service ou agence à travers une requête d'UNION (ces points sont enregistrés
    dans le schéma drh)
- * **autoriser la modification de la colonne points** depuis le schéma app pour
+* **autoriser la modification de la colonne points** depuis le schéma app pour
    répercuter ces points sur la bonne table dans le schéma drh.
 
 Examinons chacune des ces règles...
 
 --------------------------------------------------------------------------------
 
- * **vue_drh_points_agences** : si le nombre de points à changé dans une règle update et que l'entité est une agence alors mettre à jour le nombre de points dans la table agences du schéma drh. Les autres colonnes modifiées sont ignorées puisque non répercutées.
- * **vue_drh_points_services**: même chose que la précédente mais pour les services
- * **vue_drh_points_personnels** : toujours la même chose mais pour les personnels, heureusement la colonne de points est bien sur la table personnels et pas sur employes ou interimaires.
- * **_vue_drh_points_upd_protect** : empêche l'exécution de toute requête UPDATE, cette règle commence par un underscore, en ordre alphabétique elle est donc exécutée après toutes les autres, c'est un « catch-all » pour rejeter toutes les autres conditions d'update.
- * **vue_drh_points_ins_protection** : empêche toute requête d'insertion (règle optionnelle)
- * **vue_drh_points_del_protection** : empêche toute suppression de ligne (règle optionnelle)
+* **vue_drh_points_agences** : si le nombre de points à changé dans une règle update et que l'entité est une agence alors mettre à jour le nombre de points dans la table agences du schéma drh. Les autres colonnes modifiées sont ignorées puisque non répercutées.
+* **vue_drh_points_services**: même chose que la précédente mais pour les services
+* **vue_drh_points_personnels** : toujours la même chose mais pour les personnels, heureusement la colonne de points est bien sur la table personnels et pas sur employes ou interimaires.
+* **_vue_drh_points_upd_protect** : empêche l'exécution de toute requête UPDATE, cette règle commence par un underscore, en ordre alphabétique elle est donc exécutée après toutes les autres, c'est un « catch-all » pour rejeter toutes les autres conditions d'update.
+* **vue_drh_points_ins_protection** : empêche toute requête d'insertion (règle optionnelle)
+* **vue_drh_points_del_protection** : empêche toute suppression de ligne (règle optionnelle)
 
 --------------------------------------------------------------------------------
 
@@ -167,16 +167,16 @@ Les requêtes qui permettent de modifier la base en SQL sont assez peu nombreuse
 
 Il y a :
 
- * **INSERT** : [http://docs.postgresqlfr.org/9.5/sql-insert.html](http://docs.postgresqlfr.org/9.5/sql-insert.html),
+* **INSERT** : [http://docs.postgresqlfr.org/9.5/sql-insert.html](http://docs.postgresqlfr.org/9.5/sql-insert.html),
   insertion d'une ligne dans une table.
   Notez que le mots clef **RETURNING** permet de spécifier que vous voulez avoir
   en retour de la commande **l'identifiant créé** ou tout autre information. Remarquez aussi le **INSERT INTO ... SELECT ...**;
- * **UPDATE** : [http://docs.postgresqlfr.org/9.5/dml-update.html](http://docs.postgresqlfr.org/9.5/dml-update.html),
+* **UPDATE** : [http://docs.postgresqlfr.org/9.5/dml-update.html](http://docs.postgresqlfr.org/9.5/dml-update.html),
   mise à jour d'une ou plusieurs lignes, notez que cette commande aussi supporte
   le mot clef RETURNING.
- * **DELETE** : [http://docs.postgresqlfr.org/9.5/dml-delete.html](http://docs.postgresqlfr.org/9.5/dml-delete.html),
+* **DELETE** : [http://docs.postgresqlfr.org/9.5/dml-delete.html](http://docs.postgresqlfr.org/9.5/dml-delete.html),
   suppression d'une ou plusieurs lignes.
- * **TRUNCATE** :  [http://docs.postgresqlfr.org/9.5/sql-truncate.html](http://docs.postgresqlfr.org/9.5/sql-truncate.html),
+* **TRUNCATE** :  [http://docs.postgresqlfr.org/9.5/sql-truncate.html](http://docs.postgresqlfr.org/9.5/sql-truncate.html),
   un delete « amélioré » qui vide toute la table en une seule opération
 
 
@@ -197,7 +197,7 @@ transaction</b>
 --------------------------------------------------------------------------------
 #### MERGE, UPSERT
 
- * [https://wiki.postgresql.org/wiki/UPSERT](https://wiki.postgresql.org/wiki/UPSERT)
+* [https://wiki.postgresql.org/wiki/UPSERT](https://wiki.postgresql.org/wiki/UPSERT)
 
 Depuis PostgreSQL 9.5 on trouve une fonctionnalité d'upsert dans la méthode
 **INSERT**.
@@ -210,7 +210,7 @@ ce qu'on trouve souvent documenté comme un *merge*.
 
 En l'occurence un exemple vaut plus qu'un long discours :
 
- * [Exemples sur le wiki de PostgreSQL](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5#INSERT_..._ON_CONFLICT_DO_NOTHING.2FUPDATE_.28.22UPSERT.22.29)
+* [Exemples sur le wiki de PostgreSQL](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5#INSERT_..._ON_CONFLICT_DO_NOTHING.2FUPDATE_.28.22UPSERT.22.29)
 
 --------------------------------------------------------------------------------
 ### 15.4.2. FillFactor, Vacuum, HOT
@@ -286,10 +286,10 @@ aujourd'hui sont gérées par un processus de PostgreSQL (l'**auto-vacuum**).
 
 Lors de ces opérations plusieurs choses peuvent intervenir :
 
- * Les données sont réorganisées dans la table,
- * les index mis à jour,
- * les espaces libres remis en ordre,
- * etc.
+* Les données sont réorganisées dans la table,
+* les index mis à jour,
+* les espaces libres remis en ordre,
+* etc.
 
 Des statistiques sur **l'organisation des données dans la table** seront peut-être
 aussi remis à jour. Dans un premier temps retenez qu'**il est important que le
@@ -327,16 +327,16 @@ Pour effectuer plusieurs commandes dans une même transaction on utilise les mot
 Peut-être connaissez vous le raccourci mnémotechnique **ACID**, il représente
  tout ce qu'une transaction gère:
 
- * **Atomicité** : tout ce qui est compris entre **BEGIN** et **COMMIT** aura
+* **Atomicité** : tout ce qui est compris entre **BEGIN** et **COMMIT** aura
   lieu ou n'aura pas lieu (**ROLLBACK** au lieu de **COMMIT**), il n'y aura pas
    d'exécution partielle, ce n'est pas découpable, c'est donc **atomique**.
- * **Cohérence** : La base de données était dans un état cohérent **avant**,
+* **Cohérence** : La base de données était dans un état cohérent **avant**,
    elle le sera aussi **après**. Pensez par exemple au contraintes d'intégrité,
    au cours de la transaction elle peuvent être suspendues, à la fin de la
    transaction elles devront être vérifiées.
- * **Isolation** : nous y reviendrons, c'est là **le vrai problème**.
+* **Isolation** : nous y reviendrons, c'est là **le vrai problème**.
   L'isolation de la transaction par rapport aux autres transactions concurrentes
- * **Durabilité** : Une fois le **COMMIT** effectué et validé par la base de
+* **Durabilité** : Une fois le **COMMIT** effectué et validé par la base de
   données vos opérations d'écritures sont **réputées validées**, elles ne peuvent
   plus être annulées, le **SGBD** doit assurer leur pérennité.
 
@@ -351,7 +351,7 @@ de la base, vous pourrez modifier une donnée enregistrée par PostgreSQL.<br/>
 Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'intégrité de ces données physiques</b> comme pourrait le faire un , <b>DBCC CHECKDB sur SQL Server</b>.
 </p></div>
 
- * [https://wiki.postgresql.org/wiki/Corruption_detection](https://wiki.postgresql.org/wiki/Corruption_detection)
+* [https://wiki.postgresql.org/wiki/Corruption_detection](https://wiki.postgresql.org/wiki/Corruption_detection)
 
 --------------------------------------------------------------------------------
 #### Isolation
@@ -385,10 +385,10 @@ Représentons par exemple quelques transactions sur une frise chronologique :
 **X** représente un moment dans le temps à partir desquels des problèmes
 d'isolation peuvent survenir pour les transactions qui tournent encore (pour les niveaux d'isolations supérieurs à *Uncommited Read* qui n'existe pas dans PostgreSQL).
 
- * La transaction **t1** n'a pas de problème d'isolation, elle est seule.
- * Au moment ou **t3** se termine **t2** et **t4** pourraient avoir des problèmes.
- * Au moment ou **t4** fait un Rollback cela ne pose de problèmes à personne.
- * Au moment où **t2** se termine **t5** qui a déjà commencée pourrait avoir un problème.
+* La transaction **t1** n'a pas de problème d'isolation, elle est seule.
+* Au moment ou **t3** se termine **t2** et **t4** pourraient avoir des problèmes.
+* Au moment ou **t4** fait un Rollback cela ne pose de problèmes à personne.
+* Au moment où **t2** se termine **t5** qui a déjà commencée pourrait avoir un problème.
 
 .fx: wide
 
@@ -399,8 +399,8 @@ Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la pag
 ce niveau **Commited Read** autorise, après les X indiqués sur le schémas,
 deux types de problèmes:
 
- * les lectures **non reproductibles**
- * les lectures **fantômes**.
+* les lectures **non reproductibles**
+* les lectures **fantômes**.
 
 A partir du moment ou on tape **BEGIN** on fait « sauter » le mode auto-commit.
 
@@ -873,8 +873,8 @@ Une exception de verrous (deadlock par exemple), n'est pas forcément un bug.<br
 C'est un comportement normal, que le développeur devrait intégrer dans la conception.
 </p></div>
 
- * [ACIDRAIN, attaques de sites ecommerce](http://www.bailis.org/papers/acidrain-sigmod2017.pdf)
- * [Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog](https://makina-corpus.com/blog/metier/2015/bien-debuter-avec-les-transactions-sql)
+* [ACIDRAIN, attaques de sites ecommerce](http://www.bailis.org/papers/acidrain-sigmod2017.pdf)
+* [Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog](https://makina-corpus.com/blog/metier/2015/bien-debuter-avec-les-transactions-sql)
 
 --------------------------------------------------------------------------------
 
@@ -1012,22 +1012,22 @@ modification en cours**.
 
 Les déclencheurs sont documentés ici :
 
- * [http://docs.postgresql.fr/9.5/triggers.html](http://docs.postgresql.fr/9.5/triggers.html),
- * [http://docs.postgresqlfr.org/9.5/sql-createtrigger.html](http://docs.postgresqlfr.org/9.5/sql-createtrigger.html)
- * [http://docs.postgresql.fr/9.5/plpgsql-trigger.html](http://docs.postgresql.fr/9.5/plpgsql-trigger.html)
+* [http://docs.postgresql.fr/9.5/triggers.html](http://docs.postgresql.fr/9.5/triggers.html),
+* [http://docs.postgresqlfr.org/9.5/sql-createtrigger.html](http://docs.postgresqlfr.org/9.5/sql-createtrigger.html)
+* [http://docs.postgresql.fr/9.5/plpgsql-trigger.html](http://docs.postgresql.fr/9.5/plpgsql-trigger.html)
 
 Quelques points à noter:
 
- * **OLD et NEW ne sont pas toujours présents tous les deux**, sur un **INSERT**
+* **OLD et NEW ne sont pas toujours présents tous les deux**, sur un **INSERT**
   on aura que **NEW**, sur un **UPDATE** on a **NEW et OLD**, sur un **DELETE**
   on aura **OLD** uniquement
- * les déclencheurs se lancent soit avant (**BEFORE**) soit après (**AFTER**)
+* les déclencheurs se lancent soit avant (**BEFORE**) soit après (**AFTER**)
   un événement
- * on peut associer **plusieurs déclencheurs à un même événement** (ce qui n'est
+* on peut associer **plusieurs déclencheurs à un même événement** (ce qui n'est
   pas le cas sur MySQL par exemple), ils sont exécutés **en ordre alphabétique.**
- * les déclencheurs peuvent être de **niveau ligne (FOR EACH ROW)** ou de
+* les déclencheurs peuvent être de **niveau ligne (FOR EACH ROW)** ou de
   **niveau requête (FOR EACH STATEMENT)**.
- * Renvoyer **FALSE** peut permettre d'annuler la requête dans certains types
+* Renvoyer **FALSE** peut permettre d'annuler la requête dans certains types
   de triggers.
 
 <div class="warning"><p>
@@ -1136,7 +1136,7 @@ ou de TRUNCATE sur la table commandes.
 
 ### Solutions
 
- * **Q1** : il faut entrer au **minimum lic_quantite**, **lic_prix-unitaire**,
+* **Q1** : il faut entrer au **minimum lic_quantite**, **lic_prix-unitaire**,
   **com_id** et **pro_id**. Donc la quantité, le prix et l'identifiant du
   produit plus la commande à laquelle on appartient. Tout le reste est
   **calculé** par des triggers. Faites **F5** pour rafraîchir la ligne. Vous
@@ -1144,7 +1144,7 @@ ou de TRUNCATE sur la table commandes.
   intérimaire) et de son service (ou agence) et voir que le nombre de points a
   été répercuté partout.
 
- * **Q2** : La fonction est écrite en **SQL** (et non en **pl/pgsql**). Elle
+* **Q2** : La fonction est écrite en **SQL** (et non en **pl/pgsql**). Elle
   calcule simplement le nombre de points à affecter à une commande en fonction
   d'un montant reçu en paramètre.
 
@@ -1186,7 +1186,7 @@ pas les données et qui ne dépendent pas des données autres que leurs paramèt
 
     select app.update_commande_amounts(42,3079);
 
- * **Q4** : Pour que cette fonction nous renvoie quelque chose nous pouvons
+* **Q4** : Pour que cette fonction nous renvoie quelque chose nous pouvons
   utiliser la clause **RETURNING** de la commande **UPDATE**. Mais il faut
   alors définir un type retour pour la fonction. La commande
   `CREATE OR REPLACE FUNCTION` ne suffit alors, plus, il faut utiliser un
@@ -1504,8 +1504,8 @@ de données json complexes.
 Effectuons une requête dans le catalogue pour regarder la taille de nos tables
 et index:
 
- * [http://www.postgresql.org/docs/9.5/interactive/disk-usage.html](http://www.postgresql.org/docs/9.5/interactive/disk-usage.html)
- * [http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE](http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE)
+* [http://www.postgresql.org/docs/9.5/interactive/disk-usage.html](http://www.postgresql.org/docs/9.5/interactive/disk-usage.html)
+* [http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE](http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE)
 
 Visualisons la taille des indexs et tables :
 
@@ -1542,14 +1542,14 @@ données** il faut trouver les index qui serviront réellement et les créer.
 
 Les index vont intervenir dans une requête:
 
- * sur les conditions de **Tri** du résultat ORDER BY. (Si je vous demande de me
+* sur les conditions de **Tri** du résultat ORDER BY. (Si je vous demande de me
   donner les habitants de Nantes dans l'ordre alphabétique et que je vous donne
   l'annuaire ce sera plus simple que sans l'annuaire avec juste la liste des
   habitants non ordonnée)
- * sur les **jointures** entre tables (choix des algorithmes *nested loop*,
+* sur les **jointures** entre tables (choix des algorithmes *nested loop*,
   *merge joins*, *sequential scan*, etc). Notez que les clefs étrangères
   génèrent la création automatique d'index.
- * Sur les **filtrages** divers et les conditions de **regroupement** effectués
+* Sur les **filtrages** divers et les conditions de **regroupement** effectués
   dans la requête
 
 <div class="warning"><p>
@@ -1693,9 +1693,9 @@ Deux modules complémentaires (contrib) peuvent s'avérer utiles [auto_explain](
 Le catalogue fournit deux vues qu'on ne manquera pas de consulter sur une base
 utilisée en production:
 
- * **pg_stat_user_indexes** : si certains index ne sont jamais utilisés doit-on
+* **pg_stat_user_indexes** : si certains index ne sont jamais utilisés doit-on
   les garder?
- * **pg_stat_user_tables** : si certaines tables on trop de **seq_scan** il leur
+* **pg_stat_user_tables** : si certaines tables on trop de **seq_scan** il leur
   manque sans doute des index
 
 <div class="warning"><p>
@@ -1722,17 +1722,17 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
   commerciale est enregistrée) [http://docs.postgresqlfr.org/9.5/sql-listen.html](http://docs.postgresqlfr.org/9.5/sql-listen.html) [http://docs.postgresqlfr.org/9.5/sql-notify.html](http://docs.postgresqlfr.org/9.5/sql-notify.html).
   il s'agit de queues de messages.
 
- * **Recherche Plein Texte** : [http://docs.postgresqlfr.org/9.5/textsearch.html](http://docs.postgresqlfr.org/9.5/textsearch.html)
- * **postgis** : [http://www.postgis.org](http://www.postgis.org) (extension de **Système d'Information Géographique**)
- * **types composites** : [http://docs.postgresqlfr.org/9.5/rowtypes.html](http://docs.postgresqlfr.org/9.5/rowtypes.html)
- * **DO** : [http://docs.postgresqlfr.org/9.5/sql-do.html](http://docs.postgresqlfr.org/9.5/sql-do.html) envie de tester une fonction
+* **Recherche Plein Texte** : [http://docs.postgresqlfr.org/9.5/textsearch.html](http://docs.postgresqlfr.org/9.5/textsearch.html)
+* **postgis** : [http://www.postgis.org](http://www.postgis.org) (extension de **Système d'Information Géographique**)
+* **types composites** : [http://docs.postgresqlfr.org/9.5/rowtypes.html](http://docs.postgresqlfr.org/9.5/rowtypes.html)
+* **DO** : [http://docs.postgresqlfr.org/9.5/sql-do.html](http://docs.postgresqlfr.org/9.5/sql-do.html) envie de tester une fonction
  sans l'enregistrer? **Do** permet de **définir à la volée** une fonction pour
  l'utiliser immédiatement.
- * **Create Aggregate** : [http://docs.postgresqlfr.org/9.5/sql-createaggregate.html](http://docs.postgresqlfr.org/9.5/sql-createaggregate.html)
- * **Vues materialisées** (> 9.3): la vue est cachée comme une table réèlle,
+* **Create Aggregate** : [http://docs.postgresqlfr.org/9.5/sql-createaggregate.html](http://docs.postgresqlfr.org/9.5/sql-createaggregate.html)
+* **Vues materialisées** (> 9.3): la vue est cachée comme une table réèlle,
  elle peut être recalculée à la volée `REFRESH MATERIALIZED VIEW nom;`. Gain de
  temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).
- * etc.
+* etc.
 
 .fx: wide
 
@@ -1747,12 +1747,12 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
 
 Si vous voulez pousser plus loin ce TP il est à présent temps de se poser des questions sur le travail effectué sur `app`.
 
- * **Quels sont les index manquants?**
+* **Quels sont les index manquants?**
 
- * Est-ce que les personnels qui ne sont **ni employés ni intérimaires** sont bien
+* Est-ce que les personnels qui ne sont **ni employés ni intérimaires** sont bien
  gérés dans app?
 
- * La mise à jour du nombre de points en déclencheurs de niveau ligne est-elle
+* La mise à jour du nombre de points en déclencheurs de niveau ligne est-elle
   la meilleure solution pour contrer les problèmes d'isolation?
   Est-ce que toutes les problématiques de **concurrence** de transactions et de
   LOCKS ont été prises en comptes dans les triggers? Comment pourrait-on gérer

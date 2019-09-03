@@ -19,8 +19,8 @@ Nous avons pu constater que toutes les commandes effectuées dans PostgreSQL ave
 
 Les sauvegardes vont principalement avoir deux rôles:
 
- * permettre de **récupérer l'état de la base en cas de problème** technique ou fonctionnel, la vision classique de la **sauvegarde** pour un administrateur
- * permettre de **partager la base entre développeurs**, de créer des fichiers d'installation et de population de la base, vision plus utile au **développeur**.
+* permettre de **récupérer l'état de la base en cas de problème** technique ou fonctionnel, la vision classique de la **sauvegarde** pour un administrateur
+* permettre de **partager la base entre développeurs**, de créer des fichiers d'installation et de population de la base, vision plus utile au **développeur**.
 
 Pour **l'administrateur** la vision que nous allons étudier dans un premier temps,
 le **dump**, est une première solution, **ce n'est pas la seule** et nous y
@@ -65,14 +65,14 @@ Ce format génère du **SQL**.
 
 Nous donnons donc l'extension **« .sql »** au fichier de sortie.
 
- * **formation_test1.sql** : PLAIN + codage UTF8 + **inclure l'instruction CREATE DATABASE**:
+* **formation_test1.sql** : PLAIN + codage UTF8 + **inclure l'instruction CREATE DATABASE**:
  `pg_dump --host localhost --port 5432 --username "postgres" --format plain --create --encoding UTF8 --verbose –file "(...)/formation_test1.sql" "formation"`
 
- * **formation_test2.sql** : PLAIN + codage UTF8 + **inclure l'instruction DROP Database + utiliser les colonnes pour les INSERT +  utiliser des commandes INSERT**: `pg_dump --host localhost --port 5432 --username "postgres" --format plain --clean --encoding UTF8 --inserts --column-inserts --verbose --file "(...)/formation_test2.sql" "formation"`
+* **formation_test2.sql** : PLAIN + codage UTF8 + **inclure l'instruction DROP Database + utiliser les colonnes pour les INSERT +  utiliser des commandes INSERT**: `pg_dump --host localhost --port 5432 --username "postgres" --format plain --clean --encoding UTF8 --inserts --column-inserts --verbose --file "(...)/formation_test2.sql" "formation"`
 
- * **formation_test3.sql**: PLAIN + codage UTF8 + **inclure l'instruction DROP Database + schéma uniquement** : `pg_dump --host localhost --port 5432 --username "postgres" --format plain --schema-only --clean --encoding UTF8 --verbose --file "(...)/formation_test3.sql" "formation"`
+* **formation_test3.sql**: PLAIN + codage UTF8 + **inclure l'instruction DROP Database + schéma uniquement** : `pg_dump --host localhost --port 5432 --username "postgres" --format plain --schema-only --clean --encoding UTF8 --verbose --file "(...)/formation_test3.sql" "formation"`
 
- * **formation_test4.sql**: PLAIN + codage UTF8 + **schéma uniquement** : `pg_dump --host localhost --port 5432 --username "postgres" --format plain --schema-only --encoding UTF8 --verbose --file "(...)/formation_tests_4.sql" "formation"`
+* **formation_test4.sql**: PLAIN + codage UTF8 + **schéma uniquement** : `pg_dump --host localhost --port 5432 --username "postgres" --format plain --schema-only --encoding UTF8 --verbose --file "(...)/formation_tests_4.sql" "formation"`
 
 .fx: wide
 
@@ -81,7 +81,7 @@ Nous donnons donc l'extension **« .sql »** au fichier de sortie.
 Si nous comparons le contenu des ces fichiers avec un éditeur de texte on peut
 remarquer plusieurs choses:
 
- * **formation_test1.sql** :il s'agit d'un script destiné à être lu par la ligne
+* **formation_test1.sql** :il s'agit d'un script destiné à être lu par la ligne
   de commande psql, il comporte des instructions spécifiques propres à psql
   comme toutes celles qui commencent par **« \ »**. L'insertion des données se
   fait en utilisant l'option **-f** dans **psql** plutôt que par des instructions
@@ -95,7 +95,7 @@ Nous pourrions l'exécuter très simplement ainsi:
 
 --------------------------------------------------------------------------------
 
- * **formation_test2.sql** ne contient aucune commande destinées à psql, c'est le
+* **formation_test2.sql** ne contient aucune commande destinées à psql, c'est le
    format idéal pour être rejoué dans pgadmin (fenêtre SQL). Il ne contient pas
    de commande de création de base de donnée mais supprime tous les objets et
    droits puis les recrée dans l'ordre. **Notez que l'ordre de suppression et
@@ -112,6 +112,7 @@ dans l'assistant aurait du être nommée <b>"inclure DROP des objets de la base"
 (il n'y a pas de <b>DROP DATABASE</b>!!).
 </p></div>
 --------------------------------------------------------------------------------
+
 * **formation_test3.sql** est quasi équivalent au deuxième fichier sauf qu'il ne
   contient pas les données. Notez que l'instruction **"ne sauvegardez que le schéma"**
   aurait du être traduite par **"ne sauvegardez que la structure"** car cela
@@ -416,7 +417,7 @@ tels qu'ils pourraient être gérés dans un vrai projet.
 
 Les fichiers à disposition sont:
 
- * **formation_creation.sql**: Ce fichier a été fait à la main et contient la
+* **formation_creation.sql**: Ce fichier a été fait à la main et contient la
  commande de création de la base et les **GRANT initiaux** minimums, ceux qui ne
  peuvent être dumpés (recopiés depuis pgAdmin):
 
@@ -440,18 +441,18 @@ Les fichiers à disposition sont:
 
 --------------------------------------------------------------------------------
 
- * **formation_initialisation.sql**: création des droits d'accès minimaux et des
+* **formation_initialisation.sql**: création des droits d'accès minimaux et des
  schémas. Créé en faisant un dump en **UTF8 + PLAIN + avec « Schéma uniquement
   »**, sans décocher aucun objet. Le dump obtenu a ensuite été vidé de 90% de
  son contenu, pour ne garder que les créations de schémas, et les grants sur ces
  schémas ainsi que les grants sur les rôles (les pg_dump partiels ne sont pas
  toujours capable de créer les schémas et de sauver les GRANTS par défaut)
- * **formation_drh_public.sql** : tout le contenu du schéma drh, avec les données
+* **formation_drh_public.sql** : tout le contenu du schéma drh, avec les données
  DRH et le schéma public (qui ne contient qu'une fonction). Créé avec un dump en
- **UTF8 + PLAIN + colonnes et commandes INSERT + le schéma app décoché**.
- * **formation_schema_app_dev1.backup**: une première version de l'application,
+**UTF8 + PLAIN + colonnes et commandes INSERT + le schéma app décoché**.
+* **formation_schema_app_dev1.backup**: une première version de l'application,
  pour le schéma **app**, que nous installerons **plus tard**.
- * **formation_schema_app_dev2.backup**: une deuxième version de l'application,
+* **formation_schema_app_dev2.backup**: une deuxième version de l'application,
  pour le schéma **app** avec des **fonctions** et **triggers**, que nous
  étudieront plus tard aussi
 
@@ -598,8 +599,8 @@ index sont <b>propres à chaque table</b>, la définition de contraintes
 
 Dans cette base schéma on trouve des relations de clef étrangère entre tables:
 
- * classiquement entre employés et services ou entre intérimaires et agences
- * mais aussi en passant par une table d'association n-aire comme pour la relation entre employés et projets
+* classiquement entre employés et services ou entre intérimaires et agences
+* mais aussi en passant par une table d'association n-aire comme pour la relation entre employés et projets
 
 Les **valeurs par défaut pour les cascades sont RESTRICT** qui empêchent les
 modifications si celles-ci pourraient avoir des impacts. Remarquez qu'il existe
@@ -659,14 +660,14 @@ au niveau de la base.
 
 Les **vues** peuvent servir à de nombreuses choses:
 
- * assurer la **compatibilité des anciens programmes** connaissant un ancien modèle
+* assurer la **compatibilité des anciens programmes** connaissant un ancien modèle
   de tables en leur proposant des « *fausses* » tables qui portent les anciens
   noms de colonnes
- * Ajouter des **vues simplifiées** sur des objets répartis dans différentes
+* Ajouter des **vues simplifiées** sur des objets répartis dans différentes
  tables (c'est le cas dans le modèle drh), ou avec des conversions de types (en
  version plus lisible), il y a de nombreux exemples de telles vues dans le
  **pg_catalog** aussi, les vues du pg_catalog sont plus lisibles que les tables.
- * Appliquer **des politiques de droits** en autorisant l'accès à une vue tout
+* Appliquer **des politiques de droits** en autorisant l'accès à une vue tout
   en interdisant l'accès aux tables qui composent cette vue.
 
 Une vue est en fait **une requête déjà écrite** et qui se présente comme une
@@ -691,7 +692,7 @@ requête sous-jacente.
 Pour bien voir ce système tapez:
 </p></div>
 
-    SELECT *  FROM drh.vue_tableau_personnel;
+    SELECT * FROM drh.vue_tableau_personnel;
 
 ![bouton explain <](captures/boutonexplain.png)
 
@@ -723,17 +724,17 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
 --------------------------------------------------------------------------------
 ### Solutions:
 
- * **Q1:** La modification de l'identifiant du service de 2 à 200 a été répercutée
+* **Q1:** La modification de l'identifiant du service de 2 à 200 a été répercutée
  dans la table des employés, ceux qui avaient un `ser_id` à 2 on maintenant un
  `ser_id` à 200.
  Il y a aussi une clef étrangère définissant la relation de parenté des services
  entre eux, quand le code du service Financier à changé la CASCADE a répercuté
  le changement sur ses fils (Comptabilité et Trading)
- * **Q2:** Lorsque le code est modifié un trigger est exécuté
+* **Q2:** Lorsque le code est modifié un trigger est exécuté
  (`ser_update_alter_emp_code`), dans ce trigger on voit que si le code a changé
  une requête update est effectuée sur la table employés pour recalculer le code
  employé de tous les employés de ce service.
- * **Q3:** La clef étrangère définit le comportement en cas de `DELETE` à
+* **Q3:** La clef étrangère définit le comportement en cas de `DELETE` à
  `SET DEFAULT`, la valeur par défaut de la colonne `ser_id` pour les employés
  est **1**, ils sont donc passés au service d'identifiant 1. Un trigger est
  déclenché sur la table employes en cas de création d'employé ou en cas de
@@ -782,9 +783,9 @@ Partant d'une requête de base :
 En vous appuyant sur la [documentation](https://www.postgresql.org/docs/9.6/queries-order.html),
 essayez de trouver **deux** syntaxes différentes qui permettent de trier ces résultats :
 
- * par **code pays**
- * puis par **nom**
- * puis par **prénom**.
+* par **code pays**
+* puis par **nom**
+* puis par **prénom**.
 
 --------------------------------------------------------------------------------
 
@@ -1308,7 +1309,6 @@ Que fait cette requête?
     OR (emp_code_pays IN ('FR','UK')
     AND age(emp_naissance) >= '40 year'::interval );
 
-
 --------------------------------------------------------------------------------
 ### Réponse:
 
@@ -1375,11 +1375,11 @@ Nous avons vu dans une requête précédente l'opérateur **IN** (`... emp_code_
 
  Il existe d'autres opérateurs du même type (ensemblistes):
 
- * **ANY** : renverra vrai si au moins un élément est concordant
+* **ANY** : renverra vrai si au moins un élément est concordant
   (**IN** est équivalent à  `=ANY`)
- * **ALL** : ne renverra vrai que si tous les éléments concordent
+* **ALL** : ne renverra vrai que si tous les éléments concordent
   (**NOT IN** est équivalent à  `<>ALL`)
- * **EXISTS** : est un équivalent de ANY
+* **EXISTS** : est un équivalent de ANY
 
 Avec ces opérateurs il n'y a pas de garantie que la sous-requête sera
 complètement exécutée, **dès qu'une ligne est bonne la sous-requête peut s'arrêter**.
@@ -1486,16 +1486,16 @@ Q6: Que se passerait-il si nous changions ALL en ANY comme dans la requête ci d
 --------------------------------------------------------------------------------
 ### solutions
 
- * **Q1:** : ANY renvoi NULL si il rencontre un NULL dans la liste des valeurs
+* **Q1:** : ANY renvoi NULL si il rencontre un NULL dans la liste des valeurs
 comparées, il ne renvoit plus faux. La requête correcte est donc **R4**.
 
- * **Q2:** : Cette requête renvoie les noms, prénoms, codes pays et salaires des
+* **Q2:** : Cette requête renvoie les noms, prénoms, codes pays et salaires des
    employés ayant un salaire annuel supérieur ou égal au salaire maximum des
    employés des USA ou du Royaume Unis.
    **Par chance aucun salaire dans ces pays n'est à NULL**.
    Sans cela la requête serait en échec.
 
- * **Q3** : le résultat serait le même. Le risque de rencontrer un NULL serait
+* **Q3** : le résultat serait le même. Le risque de rencontrer un NULL serait
    diminué (mais pas absent, si tous les salaires sont vides). Par contre la
    sous-requête ne renvoie qu'une seule ligne (et une seule colonne), on peut
    alors écrire la requête sans le ALL:
@@ -1515,15 +1515,15 @@ donc :
 
 --------------------------------------------------------------------------------
 
- * **Q4** : Cette version renvoie la liste des personnes qui ont un salaire
+* **Q4** : Cette version renvoie la liste des personnes qui ont un salaire
   supérieur ou égal au salaire maximum des gens qui ne sont pas en France.
 
- * **Q5** : nous avons enlevé le max, et une des lignes au moins de la sous-requête
+* **Q5** : nous avons enlevé le max, et une des lignes au moins de la sous-requête
   à un salaire NULL, ALL renvoie NULL s'il trouve un NULL. La vraie solution
   serait d'ajouter un AND emp_salaire_annuel IS NOT NULL dans la sous-requête
   mais aussi dans toutes les précédentes.
 
- * **Q6** : si nous changeons pour ANY nous obtenons beaucoup plus de résultats,
+* **Q6** : si nous changeons pour ANY nous obtenons beaucoup plus de résultats,
   puisqu'il suffit alors d'avoir un salaire supérieur à n'importe quel salaire
   d'un employé ne travaillant pas en France.
 
@@ -1681,15 +1681,14 @@ Il faut retenir cependant qu'exprimer les jointures de cette façon **n'est pas
 une très bonne idée**, surtout si la requête commence à travailler avec un
 nombre important de tables.
 
- * On prends le risque d'oublier les conditions de jointures (une liste de
+* On prends le risque d'oublier les conditions de jointures (une liste de
   10 tables et seulement 9 conditions de jointure?)
- * On écrit une requête qui demande un filtrage de produit cartésien tout en
+* On écrit une requête qui demande un filtrage de produit cartésien tout en
   espérant que l'analyseur de requête soit plus intelligent que nous
- * Si on veut ajouter des vrais filtrages du résultat, ils seront mélangés avec
+* Si on veut ajouter des vrais filtrages du résultat, ils seront mélangés avec
   nos conditions de jointure
 
 Bref c'est assez peu maintenable.
-
 
 --------------------------------------------------------------------------------
 ### 14.8.2. Jointure Complète, Droite, Gauche, Naturelle
@@ -1777,9 +1776,9 @@ Viennent ensuite des **LEFT JOIN** (très courants aussi) et des **RIGHT JOIN**
 
 Mais pour faire simple on utilise souvent les LEFT JOIN pour deux tâches:
 
- * aller chercher de **l'information optionelle**, sans exclure les enregistrements
+* aller chercher de **l'information optionelle**, sans exclure les enregistrements
   qui  n'ont pas ces infos optionelles
- * rechercher une absence dans la jointure (et filter ensuite sur `tableB.id IS
+* rechercher une absence dans la jointure (et filter ensuite sur `tableB.id IS
   NULL`).
 
 .fx: wide
@@ -1793,20 +1792,20 @@ lister les deux tables dans le FROM.
 
 Les noms des jointures sont parfois exprimés différemment:
 
- * **JOIN: INNER JOIN** : Jointure interne (on aura les champs des deux tables
+* **JOIN: INNER JOIN** : Jointure interne (on aura les champs des deux tables
  qui concordent, ceux qui n'ont pas de concordance, quelque soit le côté ne
  seront plus là)
- * **Auto-jointure** : une jointure de la table vers elle-même (le cas des
+* **Auto-jointure** : une jointure de la table vers elle-même (le cas des
  relations parent souvent), peut être exprimé sous forme de inner joint,
  left join, etc. autojointure est un terme fonctionnel et non technique
- * **LEFT JOIN: LEFT OUTER JOIN**: jointure externe gauche (les champs de la
+* **LEFT JOIN: LEFT OUTER JOIN**: jointure externe gauche (les champs de la
   nouvelle table, donc celle de gauche, seront affichés avec des valeurs NULL
    si un champ de la table d'origine n'a pas de concordance dans cette table)
- * **RIGHT JOIN: RIGHT OUTER JOIN**: jointure externe droite (toutes les valeurs
+* **RIGHT JOIN: RIGHT OUTER JOIN**: jointure externe droite (toutes les valeurs
    de la nouvelle table seront gardées, les champs de la table d'origine qui
    n'ont pas de concordance avec cette nouvelle table seront affichés avec des
    valeurs NULL)
- * **FULL JOIN: FULL OUTER JOIN**: jointure externe **bilatérale*, il s'agit
+* **FULL JOIN: FULL OUTER JOIN**: jointure externe **bilatérale*, il s'agit
   d'un `LEFT JOIN` plus un `RIGHT JOIN` (contrairement au INNER JOIN où on a
   aucun NULL on a donc aussi les champs NULL à droite et à gauche). Jamais vu
   un cas d'utilisation :-)
@@ -1897,21 +1896,21 @@ pour les champs de `employes`
 
 Notre requête se compose pour l'instant :
 
- * d'une ligne de sélection des champs à afficher,
- * d'une liste de tables sources,
- * avec éventuellement des jointures,
- * des conditions de filtrages, qui pourraient contenir des sous-requêtes.
- * En bas de la requête nous connaissons les lignes d'ordre,
- * et les conditions de limitation du nombre de lignes.
+* d'une ligne de sélection des champs à afficher,
+* d'une liste de tables sources,
+* avec éventuellement des jointures,
+* des conditions de filtrages, qui pourraient contenir des sous-requêtes.
+* En bas de la requête nous connaissons les lignes d'ordre,
+* et les conditions de limitation du nombre de lignes.
 
 Après les conditions de filtrage et avant les conditions d'ordre et de limite
 un nouvel élément peut s'insérer, **le GROUP BY, les conditions d'agrégation**.
 
 L'idée de l'agrégation est en fait assez simple.
 
- * La requête n'est pas encore ordonnée,
- * elle n'est pas encore non plus limitée en nombre de lignes de résultats.
- * Les conditions d'agrégation vont **regrouper les lignes sur des critères
+* La requête n'est pas encore ordonnée,
+* elle n'est pas encore non plus limitée en nombre de lignes de résultats.
+* Les conditions d'agrégation vont **regrouper les lignes sur des critères
  communs**, dans les parties qui ne seront pas gardées (car sur des critères
  non listés) des opérations d'agrégation vont pouvoir être effectuées (des
  **sommes, moyennes, min, max**).
@@ -2092,8 +2091,8 @@ Remarquez que nous obtenons **deux personnes**.
 --------------------------------------------------------------------------------
 ### 14.10.5. Curseurs et Table temporaires
 
- * [http://docs.postgresql.fr/9.5/plpgsql-cursors.html](http://docs.postgresql.fr/9.5/plpgsql-cursors.html)
- * [http://docs.postgresql.fr/9.5/sql-createtable.html](http://docs.postgresql.fr/9.5/sql-createtable.html)
+* [http://docs.postgresql.fr/9.5/plpgsql-cursors.html](http://docs.postgresql.fr/9.5/plpgsql-cursors.html)
+* [http://docs.postgresql.fr/9.5/sql-createtable.html](http://docs.postgresql.fr/9.5/sql-createtable.html)
 
 Les **tables temporaires** et les **curseurs** sont des objets qui sont
 utilisées par les programmes utilisant la base.
@@ -2232,15 +2231,15 @@ ORDER BY rectable.rflatpath LIMIT 100;
 
 --------------------------------------------------------------------------------
 
- * Que se passe-t-il si on enlève le **AND ser_id<>1**?
- * Que se passe-t-il si on inverse **WHERE orig.ser_parent=rec.ser_id en WHERE orig.ser_id=rec.ser_parent?**
+* Que se passe-t-il si on enlève le **AND ser_id<>1**?
+* Que se passe-t-il si on inverse **WHERE orig.ser_parent=rec.ser_id en WHERE orig.ser_id=rec.ser_parent?**
 <div class="warning"><p>
 N'enlevez jamais le LIMIT 100 tant que vous êtes en test sur une requête
 récursive.
 </p></div>
 
- * Essayez de faire partir la requête depuis un sous arbre
- * Essayez de créer **un cycle**, que peut on faire pour arrêter la requête en cas de détection de cycle?
+* Essayez de faire partir la requête depuis un sous arbre
+* Essayez de créer **un cycle**, que peut on faire pour arrêter la requête en cas de détection de cycle?
 
 <div class="action"><p>
 Regardez le <b>EXPLAIN</b> de la requête.<br/>
