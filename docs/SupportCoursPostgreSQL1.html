@@ -163,7 +163,7 @@
 10.2.Utilitaires en ligne de commande
 10.3.Cluster, Encodage des caractères, Locales, langages et templates
 10.4.Créer une connexion administrateur avec pgAdminIII
-10.5.Créer une base de donnée formation
+10.5.Créer une base de données formation
 11.Tablespaces
 12.Définitions des rôles et droits
 12.1.Les rôles de connexions
@@ -608,7 +608,7 @@ licence BSD modifié (Simplified BSD licence ou BSD-2).</p>
               
               
                 <p>Ce support de formation est soumis à la licence détaillée dans le chapitre 3.Licence.
-Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants , nous autorisons sans republication des modifications :</p>
+Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants, nous autorisons sans republication des modifications :</p>
 <ul>
 <li>la suppression du chapitre 2.Makina Corpus et du chapitre 4.Usages</li>
 <li>l'intégration de l'intégralité du support de formation (hormis le chapitre 2.Makina Corpus et 4.Usages) dans un modèle de document différent de celui de Makina Corpus.</li>
@@ -862,7 +862,7 @@ Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarch
               
                 <p>Les possibilités techniques et fonctionnelles de PostgreSQL sont très étendues, il serait donc <strong>inutile d'essayer de toutes les lister et de toutes les expérimenter</strong>.
 Les documents d'explication en français existent et sont très complets. Nous choisissons donc d'orienter la formation sur des retours d'expériences réelles, sur de l'expérimentation, afin d'ouvrir les débats et de poser les principales questions.</p>
-<p>Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande <code>psql</code> mais nous utiliserons principalement le client d'administration graphique <strong>pgAdmin</strong>.</p>
+<p>Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande <code>psql</code> mais nous utiliserons principalement le client d'administration graphique <strong>pgAdmin</strong> (version <strong>pgadmin3</strong> très souvent, mais <strong>pgadmin4</strong> est utilisable).</p>
 <p>Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être fournis avec le support de formation.</p>
               
             </div>
@@ -1031,6 +1031,8 @@ Les documents d'explication en français existent et sont très complets. Nous c
 <p>ou</p>
 <pre><code># apt-get install postgresql-9.5
 # apt-get install postgresql-9.6
+# apt-get install postgresql-10
+# apt-get install postgresql-11
 </code></pre>
               
             </div>
@@ -1489,8 +1491,8 @@ En faire une version multi-threadée imposerait d'écrire en fait un nouveau pro
                 <h2>8.1. Emplacement des fichiers de configuration</h2>
               
               
-                <p>Pour réussir à vous connecter à votre serveur PostgreSQl vous devrez peut-être modifier sa configuration. Il faut donc déjà dans un premier temps retrouver ces fichiers.</p>
-<p>Pour PostgreSQl les fichiers de configuration doivent se trouver <strong>au niveau du répertoire de stockage des données du cluster</strong>.</p>
+                <p>Pour réussir à vous connecter à votre serveur PostgreSQL vous devrez peut-être modifier sa configuration. Il faut donc déjà dans un premier temps retrouver ces fichiers.</p>
+<p>Pour PostgreSQL les fichiers de configuration doivent se trouver <strong>au niveau du répertoire de stockage des données du cluster</strong>.</p>
 <p>Ce répertoire se nomme « <strong>data dir</strong> ». Son emplacement dépend des méthodes d'installation.</p>
 <p>Vérifiez que vous avez toujours un terminal avec une session root.</p>
 <p>Puis devenez l'utilisateur Postgres, celui qui est chargé de faire tourner le service/démon PostgreSQL.
@@ -3276,7 +3278,7 @@ Ce fichier d'entrée pourrait alors contenir des commandes <code>\*</code>, elle
 <li>un nombre <strong>fixe</strong> de points sera attribué au <strong>service ou à l'agence d'intérim</strong> de l'employé.</li>
 </ul>
 <p>L'usage final de ces points n'est pas dans notre exemple.</p>
-<p>La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de donnée PostgreSQL pour leur application, qui sera appelée sous le code projet <strong>APP</strong>.</p>
+<p>La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de données PostgreSQL pour leur application, qui sera appelée sous le code projet <strong>APP</strong>.</p>
 <p>Ces employés devront donc accéder aux données, mais pas aux données interdites, et ils devront mettre en place un système de d'enregistrement des commandes et d'attribution des points.</p>
               
             </div>
@@ -3358,7 +3360,7 @@ createlang
 <p>Ces lignes de commandes acceptent l'option <code>--help</code> ainsi que bien d'autres options.</p>
 <p>Leur maniement est simple et nécessite soit d'être l'utilisateur root soit d'être l'utilisateur postgres.</p>
 <p>Cependant pour cette formation nous utiliserons les outils graphiques mis à disposition par pgadmin. Ceux-ci présentent le même nombre d'options, avec cependant l'énorme avantage d'être graphiques.</p>
-<p>Signalons que l'utilitaire <code>createlang</code> permet d'ajouter le support de langages différents dans une base de donnée ; notamment pour ce qui concerne les triggers et les procédures stockées.</p>
+<p>Signalons que l'utilitaire <code>createlang</code> permet d'ajouter le support de langages différents dans une base de données; notamment pour ce qui concerne les triggers et les procédures stockées.</p>
               
             </div>
           </div>
@@ -3433,7 +3435,7 @@ createlang
                 <h3>Cluster</h3>
               
               
-                <p>Pour bien comprendre la création d'une base de donnée il faut revenir sur quelques concepts.</p>
+                <p>Pour bien comprendre la création d'une base de données il faut revenir sur quelques concepts.</p>
 <p>Tout d'abord le serveur de bases de données postgreSQL est <strong>un cluster</strong>.</p>
 <p>Cela signifie que pour un même démon (ou service sous Windows) nous pouvons installer <strong>plusieurs bases de données</strong> différentes.</p>
 <p>Ces bases seront très fortement séparées.</p>
@@ -3732,7 +3734,7 @@ On ajoute donc une couleur <strong>rouge</strong> à la connexion.</p>
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>10.5. Créer une base de donnée formation</h2>
+                <h2>10.5. Créer une base de données formation</h2>
               
               
             </div>
@@ -4024,7 +4026,7 @@ En l'occurrence nous n'avons pas besoin de modifier ce code SQL.
               
               
                 <p>Il est tout à fait possible de créer plusieurs tablespaces sur un même disque mais c'est en fait inutile.</p>
-<p>Le vrai intérêt du tablespace est de forcer l'usage de disques différents. Tous les objets créés dans la base de donnée auront un tablespace affecté.</p>
+<p>Le vrai intérêt du tablespace est de forcer l'usage de disques différents. Tous les objets créés dans la base de données auront un tablespace affecté.</p>
 <p>Une des techniques d'optimisation courante avec les tablespaces consiste par exemple à forcer le stockage des index d'une table sur un disque et les données de la table sur un autre (en utilisant deux tablespaces différents).</p>
 <p>Lorsque le serveur fera des requêtes intensives sur cette table il pourra ainsi paralléliser les lectures d'index et les lectures de données, au niveau du système d'exploitation et de l'électronique des contrôleurs de disques les traitements seront parallélisés.</p>
 <p>La gestion des tablespaces est donc un élément de tunning assez avancé que nous pouvons ignorer pour le moment (il est possible de modifier les tablespaces des objets après leur création, mais cette opération aura des impacts si les données sont importantes en taille).</p>
@@ -4307,7 +4309,7 @@ Créez les utilisateurs <b>ultrogothe</b>, <b>bertrude</b>, <b>thibaut</b>, <b>g
               
               
                 <ul>
-<li><strong>formation_admin</strong> : rôle des administrateurs de cette base de donnée au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.</li>
+<li><strong>formation_admin</strong> : rôle des administrateurs de cette base de données au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.</li>
 <li><strong>formation_ecriture</strong>: rôle permettant d'ajouter des données dans la base (childeric et nantilde)</li>
 <li><strong>formation_lecture</strong>: rôle permettant de requêter la base (bertrude, thibaut et gondioque)</li>
 <li><strong>formation_app</strong>: rôle des utilisateurs gérant l'application « app » (bertrude, thibaut,gondioque et nantilde)</li>
@@ -7527,7 +7529,7 @@ fallait utiliser le projet <a href="http://veil.projects.postgresql.org/curdocs/
       
         
         <tr id="toc-row-87" class="sub">
-          <th><a href="#slide87">10.5. Créer une base de donnée formation</a></th>
+          <th><a href="#slide87">10.5. Créer une base de données formation</a></th>
           <td><a href="#slide87">87</a></td>
         </tr>
         

@@ -238,8 +238,8 @@
 de base (la taille d'un pointeur en RAM augmente).</p>
 <p><strong>Sur un Linux 64 bits on devrait toujours installer une version 64bits</strong>.</p>
 <p>Sur un serveur Windows la version 64bits est beaucoup moins intéressante car les
- serveurs Windows supportent assez mal une valeur supérieure à <strong>500Mo</strong> pour le
- paramètre <code>shared_buffers</code> (on perd donc le principal gain).</p>
+serveurs Windows supportent assez mal une valeur supérieure à <strong>500Mo</strong> pour le
+paramètre <code>shared_buffers</code> (on perd donc le principal gain).</p>
 <p>Certains utilisateurs ont rapporté des installations sur Windows avec des très
 fortes valeures de <code>work_mem</code>, pour lesquelles une version 64bits était plus performante. Mais comme nous le verrons en étudiant ces deux paramètres
 (<code>shared_buffers</code> et <code>work_mem</code>) il s'agit là d'installations atypiques.</p>
@@ -336,7 +336,7 @@ base de données.</p>
 <li><a href="http://docs.postgresql.fr/9.5/maintenance.html">http://docs.postgresql.fr/9.5/maintenance.html</a></li>
 <li><a href="http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html">http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html</a></li>
 </ul>
-<p>La page de documentation de PostgreSQl sur les opérations de maintenance est
+<p>La page de documentation de PostgreSQL sur les opérations de maintenance est
 assez complète.</p>
 <p>Parmi les choses importantes il faut identifier <strong>le service autovacuum.</strong></p>
 <p>Il s'agit d'un des processus fils de PostgreSQL dont le travail est de détecter
@@ -3409,7 +3409,7 @@ n'est pas faite par PostgreSQL.</p>
 <ul>
 <li><a href="http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability">http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability</a></li>
 </ul>
-<p>Depuis PostgreSQl 9.3 des sommes de contrôle CRC sont utilisés à divers endroits
+<p>Depuis PostgreSQL 9.3 des sommes de contrôle CRC sont utilisés à divers endroits
 pour se protéger des erreurs d'intégrité de données sur les disques (des bits
 qui disparaîtraient).</p>
 <p>Il n'y a pas par contre de protection contre des problèmes d'intégrité en RAM.</p>
@@ -4880,7 +4880,7 @@ host    replication     ultrogothe        192.168.1.13/24            trust
             <div class="inner">
               
               
-                <p>Faites un restart du serveur PostgreSQl du maître</p>
+                <p>Faites un restart du serveur PostgreSQL du maître</p>
 <pre><code>/etc/init.d/postgresql-9.6 restart
 </code></pre>
 <p>Si nous regardons du côté du serveur esclave nous avons toujours notre esclave

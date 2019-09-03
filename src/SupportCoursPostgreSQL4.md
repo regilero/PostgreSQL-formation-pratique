@@ -86,7 +86,7 @@ base de données.
 * [http://docs.postgresql.fr/9.5/maintenance.html](http://docs.postgresql.fr/9.5/maintenance.html)
 * [http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html](http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html)
 
-La page de documentation de PostgreSQl sur les opérations de maintenance est
+La page de documentation de PostgreSQL sur les opérations de maintenance est
 assez complète.
 
 Parmi les choses importantes il faut identifier **le service autovacuum.**
@@ -1452,7 +1452,7 @@ n'est pas faite par PostgreSQL.
 
 * [http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability](http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability)
 
-Depuis PostgreSQl 9.3 des sommes de contrôle CRC sont utilisés à divers endroits
+Depuis PostgreSQL 9.3 des sommes de contrôle CRC sont utilisés à divers endroits
 pour se protéger des erreurs d'intégrité de données sur les disques (des bits
 qui disparaîtraient).
 
@@ -2078,7 +2078,7 @@ On ajoute ensuite le 1er processus d'envoi des WAL en flux dans le
 
 --------------------------------------------------------------------------------
 
-Faites un restart du serveur PostgreSQl du maître
+Faites un restart du serveur PostgreSQL du maître
 
     /etc/init.d/postgresql-9.6 restart
 

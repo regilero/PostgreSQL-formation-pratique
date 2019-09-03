@@ -35,7 +35,7 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
     10.2.Utilitaires en ligne de commande
     10.3.Cluster, Encodage des caractères, Locales, langages et templates
     10.4.Créer une connexion administrateur avec pgAdminIII
-    10.5.Créer une base de donnée formation
+    10.5.Créer une base de données formation
     11.Tablespaces
     12.Définitions des rôles et droits
     12.1.Les rôles de connexions
@@ -182,7 +182,7 @@ Retrouvez les livres blancs **Makina Corpus** et les contributions diverses sur
 
 
 Ce support de formation est soumis à la licence détaillée dans le chapitre 3.Licence.
-Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants , nous autorisons sans republication des modifications :
+Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants, nous autorisons sans republication des modifications :
 
  - la suppression du chapitre 2.Makina Corpus et du chapitre 4.Usages
  - l'intégration de l'intégralité du support de formation (hormis le chapitre 2.Makina Corpus et 4.Usages) dans un modèle de document différent de celui de Makina Corpus.
@@ -257,7 +257,7 @@ On trouvera aussi des articles intéressants sur le wiki PostgreSQL, comme
 Les possibilités techniques et fonctionnelles de PostgreSQL sont très étendues, il serait donc **inutile d'essayer de toutes les lister et de toutes les expérimenter**.
 Les documents d'explication en français existent et sont très complets. Nous choisissons donc d'orienter la formation sur des retours d'expériences réelles, sur de l'expérimentation, afin d'ouvrir les débats et de poser les principales questions.
 
-Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande `psql` mais nous utiliserons principalement le client d'administration graphique **pgAdmin**.
+Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande `psql` mais nous utiliserons principalement le client d'administration graphique **pgAdmin** (version **pgadmin3** très souvent, mais **pgadmin4** est utilisable).
 
 Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être fournis avec le support de formation.
 
@@ -304,6 +304,8 @@ ou
 
     # apt-get install postgresql-9.5
     # apt-get install postgresql-9.6
+    # apt-get install postgresql-10
+    # apt-get install postgresql-11
 
 
 ---------------------------------------------------------------------
@@ -421,7 +423,6 @@ En faire une version multi-threadée imposerait d'écrire en fait un nouveau pro
 
 Nous reviendrons sur ces sujets dans les parties sur le tunning de configuration.
 
-
 ---------------------------------------------------------------------
 ## Gestion des versions de PostgreSQL
 <small>fichiers de configurations et mises à jour</small>
@@ -436,9 +437,9 @@ Nous reviendrons sur ces sujets dans les parties sur le tunning de configuration
 ---------------------------------------------------------------------
 ## 8.1. Emplacement des fichiers de configuration
 
-Pour réussir à vous connecter à votre serveur PostgreSQl vous devrez peut-être modifier sa configuration. Il faut donc déjà dans un premier temps retrouver ces fichiers.
+Pour réussir à vous connecter à votre serveur PostgreSQL vous devrez peut-être modifier sa configuration. Il faut donc déjà dans un premier temps retrouver ces fichiers.
 
-Pour PostgreSQl les fichiers de configuration doivent se trouver **au niveau du répertoire de stockage des données du cluster**.
+Pour PostgreSQL les fichiers de configuration doivent se trouver **au niveau du répertoire de stockage des données du cluster**.
 
 Ce répertoire se nomme « **data dir** ». Son emplacement dépend des méthodes d'installation.
 
@@ -482,9 +483,9 @@ Sur Windows des raccourcis dans le Menu démarrer sont présents. Et nous pourro
 
 Nous avons vu plusieurs fois qu'il est utile de préfixer les répertoires de stockage des données avec le numéro double de version, par exemple **8.4** ou **9.0** ou **9.1**. Ce numéro est le **numéro de version majeur**.
 
- - Passer d'une version **8** à une version **9** est un changement de version **majeur**
- - Passer d'une **8.3** à une **8.4** ou bien d'une **9.0** à une **9.2** est **aussi une changement de version majeur**.
- - Passer de **9.2.1** à **9.2.3** est par contre un changement de version **mineur**
+* Passer d'une version **8** à une version **9** est un changement de version **majeur**
+* Passer d'une **8.3** à une **8.4** ou bien d'une **9.0** à une **9.2** est **aussi une changement de version majeur**.
+* Passer de **9.2.1** à **9.2.3** est par contre un changement de version **mineur**
 
 ---------------------------------------------------------------------
 ## Compatibilité binaire, version majeure et mineure
@@ -1001,7 +1002,7 @@ Dernièrement il a été décidé qu'un système de **points de fidélité** ser
 
 L'usage final de ces points n'est pas dans notre exemple.
 
-La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de donnée PostgreSQL pour leur application, qui sera appelée sous le code projet **APP**.
+La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de données PostgreSQL pour leur application, qui sera appelée sous le code projet **APP**.
 
 Ces employés devront donc accéder aux données, mais pas aux données interdites, et ils devront mettre en place un système de d'enregistrement des commandes et d'attribution des points.
 
@@ -1026,7 +1027,7 @@ Leur maniement est simple et nécessite soit d'être l'utilisateur root soit d'�
 
 Cependant pour cette formation nous utiliserons les outils graphiques mis à disposition par pgadmin. Ceux-ci présentent le même nombre d'options, avec cependant l'énorme avantage d'être graphiques.
 
-Signalons que l'utilitaire `createlang` permet d'ajouter le support de langages différents dans une base de donnée ; notamment pour ce qui concerne les triggers et les procédures stockées.
+Signalons que l'utilitaire `createlang` permet d'ajouter le support de langages différents dans une base de données; notamment pour ce qui concerne les triggers et les procédures stockées.
 
 ---------------------------------------------------------------------
 ## 10.3. Cluster, Encodage des caractères, Locales, langages et templates
@@ -1037,7 +1038,7 @@ Signalons que l'utilitaire `createlang` permet d'ajouter le support de langages 
 ---------------------------------------------------------------------
 ### Cluster
 
-Pour bien comprendre la création d'une base de donnée il faut revenir sur quelques concepts.
+Pour bien comprendre la création d'une base de données il faut revenir sur quelques concepts.
 
 Tout d'abord le serveur de bases de données postgreSQL est **un cluster**.
 
@@ -1126,7 +1127,7 @@ Cela se fait depuis le menu « Fichier > Ajouter un serveur ». Nous allons en
 Cette connexion est assez dangereuse, nous sommes super-utilisateur et nous pouvons tout casser.
 On ajoute donc une couleur **rouge** à la connexion.
 ---------------------------------------------------------------------
-## 10.5. Créer une base de donnée formation
+## 10.5. Créer une base de données formation
 
 .fx: title2
 
@@ -1209,7 +1210,7 @@ Créer des tablespaces différents permet de forcer la répartition physique des
 
 Il est tout à fait possible de créer plusieurs tablespaces sur un même disque mais c'est en fait inutile.
 
-Le vrai intérêt du tablespace est de forcer l'usage de disques différents. Tous les objets créés dans la base de donnée auront un tablespace affecté.
+Le vrai intérêt du tablespace est de forcer l'usage de disques différents. Tous les objets créés dans la base de données auront un tablespace affecté.
 
 Une des techniques d'optimisation courante avec les tablespaces consiste par exemple à forcer le stockage des index d'une table sur un disque et les données de la table sur un autre (en utilisant deux tablespaces différents).
 
@@ -1278,7 +1279,7 @@ Nous créerons autant de rôles que d'utilisateurs et nous y associerons des «�
 
 -----------------------------------------------------------------
 
- - **formation_admin** : rôle des administrateurs de cette base de donnée au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
+ - **formation_admin** : rôle des administrateurs de cette base de données au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
  - **formation_ecriture**: rôle permettant d'ajouter des données dans la base (childeric et nantilde)
  - **formation_lecture**: rôle permettant de requêter la base (bertrude, thibaut et gondioque)
  - **formation_app**: rôle des utilisateurs gérant l'application « app » (bertrude, thibaut,gondioque et nantilde)

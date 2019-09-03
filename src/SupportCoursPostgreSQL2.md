@@ -86,7 +86,7 @@ remarquer plusieurs choses:
   comme toutes celles qui commencent par **« \ »**. L'insertion des données se
   fait en utilisant l'option **-f** dans **psql** plutôt que par des instructions
   `SQL` (commande `COPY test1 (id, val) FROM stdin`). Ce script **présuppose que
-  la base de donnée formation n'existe pas**, il faut donc supprimer une éventuelle
+  la base de données formation n'existe pas**, il faut donc supprimer une éventuelle
    base avant de l'exécuter.
 
 Nous pourrions l'exécuter très simplement ainsi:
@@ -97,7 +97,7 @@ Nous pourrions l'exécuter très simplement ainsi:
 
 * **formation_test2.sql** ne contient aucune commande destinées à psql, c'est le
    format idéal pour être rejoué dans pgadmin (fenêtre SQL). Il ne contient pas
-   de commande de création de base de donnée mais supprime tous les objets et
+   de commande de création de base de données mais supprime tous les objets et
    droits puis les recrée dans l'ordre. **Notez que l'ordre de suppression et
    création des objets est très complexe**, il est quasi impossible d'effectuer
    à la main un script qui saurait organiser les suppressions et recréation en
@@ -176,7 +176,7 @@ verrez que certaines sont **absentes** :
     GRANT CONNECT, TEMPORARY ON DATABASE formation TO formation_ecriture;
     GRANT CONNECT ON DATABASE formation TO formation_lecture;
 
-Il s'agit du contenu du premier onglet Droits sur la base de donnée elle-même
+Il s'agit du contenu du premier onglet Droits sur la base de données elle-même
 (les droits sur les schémas font eux partie du dump).
 
 Ceci est du au fait que ces droits qui gère **un premier niveau d'accès à la base**
@@ -2168,7 +2168,7 @@ d'un **arbre** (une arborescence de fichiers, une arborescence de taxonomie,
 de catégories), surtout en partant d'un ensemble de cet arbre, vous aurez pu
 mesurer une certaine complexité algorithmique. Hors le moteur de base de données
 est capable de vous fournir les données arborescentes. En tous cas les moteurs
-de base de donnée puissants (PostgreSQl v>8.4, Oracle –CONNECT BY--, mais pas MySQL).
+de base de données puissants (PostgreSQL v>8.4, Oracle –CONNECT BY--, mais pas MySQL).
 
 A titre personnel je pense qu'essayer de comprendre puis d'améliorer une requête
 récursive est un très bon moyen d'appréhender les possibilités offertes par le

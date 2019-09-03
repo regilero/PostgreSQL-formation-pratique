@@ -337,7 +337,7 @@ remarquer plusieurs choses:</p>
   comme toutes celles qui commencent par <strong>« \ »</strong>. L'insertion des données se
   fait en utilisant l'option <strong>-f</strong> dans <strong>psql</strong> plutôt que par des instructions
   <code>SQL</code> (commande <code>COPY test1 (id, val) FROM stdin</code>). Ce script <strong>présuppose que
-  la base de donnée formation n'existe pas</strong>, il faut donc supprimer une éventuelle
+  la base de données formation n'existe pas</strong>, il faut donc supprimer une éventuelle
    base avant de l'exécuter.</li>
 </ul>
 <p>Nous pourrions l'exécuter très simplement ainsi:</p>
@@ -380,7 +380,7 @@ remarquer plusieurs choses:</p>
                 <ul>
 <li><strong>formation_test2.sql</strong> ne contient aucune commande destinées à psql, c'est le
    format idéal pour être rejoué dans pgadmin (fenêtre SQL). Il ne contient pas
-   de commande de création de base de donnée mais supprime tous les objets et
+   de commande de création de base de données mais supprime tous les objets et
    droits puis les recrée dans l'ordre. <strong>Notez que l'ordre de suppression et
    création des objets est très complexe</strong>, il est quasi impossible d'effectuer
    à la main un script qui saurait organiser les suppressions et recréation en
@@ -620,7 +620,7 @@ GRANT ALL ON DATABASE formation TO formation_admin WITH GRANT OPTION;
 GRANT CONNECT, TEMPORARY ON DATABASE formation TO formation_ecriture;
 GRANT CONNECT ON DATABASE formation TO formation_lecture;
 </code></pre>
-<p>Il s'agit du contenu du premier onglet Droits sur la base de donnée elle-même
+<p>Il s'agit du contenu du premier onglet Droits sur la base de données elle-même
 (les droits sur les schémas font eux partie du dump).</p>
 <p>Ceci est du au fait que ces droits qui gère <strong>un premier niveau d'accès à la base</strong>
 (globalement le droit de s'y connecter) ne sont pas gérés au sein de la base
@@ -5691,7 +5691,7 @@ d'un <strong>arbre</strong> (une arborescence de fichiers, une arborescence de t
 de catégories), surtout en partant d'un ensemble de cet arbre, vous aurez pu
 mesurer une certaine complexité algorithmique. Hors le moteur de base de données
 est capable de vous fournir les données arborescentes. En tous cas les moteurs
-de base de donnée puissants (PostgreSQl v&gt;8.4, Oracle –CONNECT BY--, mais pas MySQL).</p>
+de base de données puissants (PostgreSQL v&gt;8.4, Oracle –CONNECT BY--, mais pas MySQL).</p>
 <p>A titre personnel je pense qu'essayer de comprendre puis d'améliorer une requête
 récursive est un très bon moyen d'appréhender les possibilités offertes par le
 SQL dans PostgreSQL. L'algorithme de la requête se présente ainsi</p>

@@ -860,7 +860,7 @@ Cependant si vous re-testez le scénario précédent **sans faire de requête
 SELECT** vous remarquerez que la transaction n'échoue plus.
 
 <div class="warning"><p>
-Utilisez des requêtes en lecture sur les éléments qui devraient rester intacts pour forcer la pose de verrous par PostgreSQl sur les lignes impactées.
+Utilisez des requêtes en lecture sur les éléments qui devraient rester intacts pour forcer la pose de verrous par PostgreSQL sur les lignes impactées.
 </p></div>
 --------------------------------------------------------------------------------
 
