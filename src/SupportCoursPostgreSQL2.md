@@ -775,26 +775,65 @@ Testez les résultats obtenus avec ces différentes requêtes:
 
 Pour trier les résultats d'une requête on doit utiliser **ORDER BY**.
 
-Testez ces différentes requêtes
+Partant d'une requête de base :
+
+    SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes;
+
+En vous appuyant sur la [documentation](https://www.postgresql.org/docs/9.6/queries-order.html),
+essayez de trouver **deux** syntaxes différentes qui permettent de trier ces résultats :
+
+ * par **code pays**
+ * puis par **nom**
+ * puis par **prénom**.
+
+--------------------------------------------------------------------------------
+
+## 14.2. ORDER BY
+
+
+Solutions
 
     SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
-    ORDER BY 1;
+    ORDER BY 
+      emp_code_pays,
+      per_nom,
+      per_prenom
+    ;
 
     SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
-    ORDER BY 1,3,2;
+    ORDER BY
+      3,
+      1,
+      2
+    ;
+
+
+Pouvez-vous aller plus loin, inverser certains ordres ou choisir comment les **NULLS**
+sont gérés.
+
+--------------------------------------------------------------------------------
+
+## 14.2. ORDER BY
+
 
     SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
-    ORDER BY emp_code_pays, per_nom,per_prenom;
+    ORDER BY
+        emp_code_pays DESC,
+        per_nom DESC,
+        per_prenom ASC
+    ;
 
     SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
-    ORDER BY emp_code_pays DESC, per_nom DESC,per_prenom ASC;
-
-    SELECT per_nom,per_prenom,emp_code_pays FROM drh.employes
-    ORDER BY emp_code_pays DESC NULLS LAST, per_nom DESC,per_prenom ASC;
+    ORDER BY
+        emp_code_pays DESC NULLS LAST,
+        per_nom DESC,
+        per_prenom ASC
+    ;
 
 <div class="warning"><p>
-Notez dès à présent que ceci peut avoir des impacts non négligeables sur le
-temps d'éxecution d'une requête mal indexée.
+Notez dès à présent que la gestion de ces ordres ascendants/descendants et des
+nulls peut avoir des impacts non négligeables sur le temps d'éxecution d'une
+requête mal indexée (on retrouve ces mêmes précisions dans les indexs).
 </p></div>
 
 --------------------------------------------------------------------------------
@@ -938,10 +977,10 @@ NULL** et en ajoutant un séparateur pour la deuxième.
 
 Les autres fonctions les plus utiles sont:
 
- * **character_length(chaîne)** : longueur de la chaîne
- * **lower(chaîne)** : passage en minuscules (upper() pour l'inverse)
- * **substring(chaine,début,fin)** : extraction d'une sous chaîne
- * **trim(chaîne)** : suppression des espaces inutiles, mais elle peut faire
+* **character_length(chaîne)** : longueur de la chaîne
+* **lower(chaîne)** : passage en minuscules (upper() pour l'inverse)
+* **substring(chaine,début,fin)** : extraction d'une sous chaîne
+* **trim(chaîne)** : suppression des espaces inutiles, mais elle peut faire
   beaucoup plus (regardez la documentation en ligne)
 
 Pour rechercher une sous-chaîne dans une chaîne il existe l'opérateur **LIKE** ou
@@ -955,26 +994,42 @@ où `_` est remplacé par **un seul** caractère et `%` par **0 ou n** caractèr
 .fx: wide
 
 --------------------------------------------------------------------------------
+## 14.5.1. Travailler sur les chaînes de caractères
 
-Les chaînes de caractères sont séparées par des guillemets simples **'**
+Les **noms de tables** ou d'alias de colonnes sont séparés par des **guillemets
+doubles `"`** (quote anglaise sous MySQL **`**).
+
+Les **chaînes de caractères** sont séparées par des guillemets simples **'**
 (guillemets doubles pour MySQL).
 
-Pour mettre une apostrophe ou un guillemet simple on **doublera le guillemet**
-(donc **`''`**, deux fois le caractère guillemet simple et pas **`"`** le
-guillemet double), ou on utilisera un caractère d'**échappement \\**.
+Mais comment gérer une chaîne avec des guillemets?
 
-Les chaînes qui possèdent des caractères d'échappement (comme `\n` pour le
-retour à la ligne) **devraient être préfixées** par le caractère **E** :
+    SELECT 'Demain dès l'aube';
 
-    E'Ceci est \n une chaîne sur deux lignes.'
+Problème...
 
-Soit :
+--------------------------------------------------------------------------------
 
-    select 'test d''échappement';
-    select E'test d\'échappement';
+On peut **doubler le guillemet** (donc **`''`**, deux fois le caractère guillemet
+simple et pas **`"`** le guillemet double)
 
-Les noms de tables ou d'alias de colonnes sont eux séparés par des guillemets
-doubles **`"`** (quote anglaise sous MySQL **`**)
+    select 'Demain dès l''aube';
+
+Mais il y a une autre solution on peut utiliser un caractère d'**échappement \\**.
+Pourtant on dirait que ce n'est pas suffisant:
+
+    select 'Demain dès l\'aube';
+
+La requête ne marche pas...
+
+--------------------------------------------------------------------------------
+
+Une chaîne qui contient un caractère échappé **doit** être préfixée avec un **E** :
+
+    select E'Demain dès l\'aube';
+
+    select E'\tDemain dès l\'aube \n\tà l\'heure où blanchit la campagne.\n\n';
+
 
 --------------------------------------------------------------------------------
 
@@ -983,9 +1038,9 @@ doubles **`"`** (quote anglaise sous MySQL **`**)
 Il y a de très nombreux opérateurs mathématiques et beaucoup de fonctions aussi,
 notons:
 
- * **round()** : arrondi mathématique (52.65 donne 53)
- * **ceil()** : arrondi à l'entier inférieur (52.65 donne 52), voir floor() pour le contraire.
- * **random()** : un nombre réel aléatoire entre 0 et 1 (non compris)
+* **round()** : arrondi mathématique (52.65 donne 53)
+* **ceil()** : arrondi à l'entier inférieur (52.65 donne 52), voir floor() pour le contraire.
+* **random()** : un nombre réel aléatoire entre 0 et 1 (non compris)
 
 --------------------------------------------------------------------------------
 
@@ -996,11 +1051,35 @@ d'opérations d'agrégation (`GROUP BY`, que nous verrons plus loin).
 
 Retenez donc que ces fonctions peuvent fonctionner **sans GROUP BY**:
 
- * **sum()** : somme
- * **max()** : maximum
- * **min()** : minimum
- * **avg()** : moyenne
- * **count()** : compteur
+* **sum()** : somme
+* **max()** : maximum
+* **min()** : minimum
+* **avg()** : moyenne
+
+----------------------------------------------------------------------------------
+
+### 14.5.4. Count
+
+* **count()** : compteur
+
+Tentez d'expliquer ces différents résultats:
+
+    SELECT count(*)
+    from drh.employes;
+    => 24
+
+    SELECT count(emp_code_pays)
+    from drh.employes;
+    => 22
+
+    SELECT count(distinct(emp_code_pays))
+    from drh.employes;
+    => 10
+
+
+----------------------------------------------------------------------------------
+
+### 14.5.4. Count
 
 <div class="warning"><p>
 <b>count(*)</b> compte les lignes de résultat.<br/>
@@ -1008,9 +1087,21 @@ Retenez donc que ces fonctions peuvent fonctionner **sans GROUP BY**:
 <b>count(distinct champ)</b> compte les valeurs distinctes du champ.
 </p></div>
 
+    SELECT count(*)
+    from drh.employes;
+    => 24
+
+    SELECT count(emp_code_pays)
+    from drh.employes;
+    => 22
+
+    SELECT count(distinct(emp_code_pays))
+    from drh.employes;
+    => 10
+
 --------------------------------------------------------------------------------
 
-### 14.5.4. Travailler avec les dates
+### 14.5.5. Travailler avec les dates
 
 Je ne saurais trop vous conseiller la lecture complète de [http://docs.postgresqlfr.org/9.5/functions-datetime.html](http://docs.postgresqlfr.org/9.5/functions-datetime.html) où vous trouverez de
 nombreuses fonctions très utiles comme **age()**, ainsi que des opérateurs
@@ -1030,128 +1121,162 @@ qu'un long discours utilisons de bons exemples:
     SELECT current_timestamp - '2001-10-19',
     justify_interval(current_timestamp - '2001-10-19');
 
-
 --------------------------------------------------------------------------------
 ### dates et timezones
 
-Notez que si vous stockez la dates comme "timestamp sans timezone" vous aurez
-des problèmes d'indexation, sauf à créer des index spécifiques qui forcent le
+Notez que si vous stockez la date sous forme de "timestamp sans timezone" vous aurez
+des problèmes d'indexation, sauf à créer des index spécifiques qui forcent la
 timezone.
 
-**Préférez un stockage avec le timezone**.
+**Préférez un stockage avec la timezone**.
 
-Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours), pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
-Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites un index sur le mois de la date, etc.
-
+Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours),
+pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
+Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance
+le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites
+un index sur le mois de la date, etc.
 
 --------------------------------------------------------------------------------
-### 14.5.5. Autres fonctions utiles
+### 14.5.6. Autres fonctions utiles
 
 Il y a un grand nombres de fonctions utiles. Nous avons déjà vu `generate_series()`,
 en voici quelques autres:
 
- * **coalesce(a;b;c;d)** : renvoie la première valeur non Nulle de la liste.
- * **string_agg()** : l'équivalent de group_concat sous MySQL
+* **string_agg()** : l'équivalent de group_concat sous MySQL
+* **coalesce(a;b;c;d)** : renvoie la première valeur non Nulle de la liste.
+
+Renvoyer la première valeur non nulle d'un liste cela peut aussi s'exprimer d'une autre
+façon :
 
 --------------------------------------------------------------------------------
-### 14.4.6. Exercices
 
-Tapez les requêtes qui permettent de répondre à ces questions:
+Fournir une valeur par défaut :
 
-<div class="action"><p>
-<b>R1:</b> Quel est le salaire annuel minimum des employés?
-</p></div>
-<div class="action"><p>
-<b>R2:</b> Quel est l'âge du plus jeune employé?
-</p></div>
-<div class="action"><p>
-<b>R3:</b> Quelle est la date d'embauche de l'employé le plus récemment embauché?
-</p></div>
-<div class="action"><p>
-<b>R4:</b> Quel est le salaire moyen des employés?
-</p></div>
-<div class="action"><p>
-<b>R4bis:</b> Arrondissez le résultat à 2 chiffres après la virgule
-</p></div>
-<div class="action"><p>
-<b>R5:</b> Combien d'employés?
-</p></div>
+    SELECT coalesce(emp_code_pays, 'CODE PAYS MANQUANT!!!')
+    from drh.employes;
+
+--------------------------------------------------------------------------------
+### 14.4.7. Exercices
+
+Reliez les requêtes et les questions (**attention** plusieurs pages et une requête en trop):
+
+<table>
+<tr>
+<th>Questions</th>
+<th>Requêtes</th>
+</tr>
+<tr><td>
+<div class="action"><p><b>Q1:</b> Quel est le salaire annuel minimum des employés?</p></div>
+</td><td>
+<pre><code>-- R1 [Q&nbsp;&nbsp;&nbsp;]
+SELECT MAX(emp_date_entree)
+FROM drh.employes;</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><p><b>Q2:</b> Quel est l'âge du plus jeune employé?</p></div>
+</td><td>
+<pre><code>-- R2 [Q&nbsp;&nbsp;&nbsp;]
+SELECT count(*)
+FROM drh.employes;</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><p><b>Q3:</b> Quelle est la date d'embauche de l'employé le plus récemment embauché?</p></div>
+</td><td>
+<pre><code>-- R3 [Q&nbsp;&nbsp;&nbsp;]
+SELECT MIN(emp_salaire_annuel)
+FROM drh.employes;</code></pre>
+</td></tr>
+</table>
 
 .fx: wide
 
 --------------------------------------------------------------------------------
+<table>
+<tr>
+<th>Questions</th>
+<th>Requêtes</th>
+</tr>
+<tr><td>
+<div class="action"><p><b>Q4:</b> Quel est le salaire moyen des employés?</p></div>
+</td><td>
+<pre><code>-- R4 [Q&nbsp;&nbsp;&nbsp;]
+SELECT MIN(age(emp_naissance))
+FROM drh.employes;</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><p><b>Q5:</b> Combien d'employés?</p></div>
+</td><td>
+<pre><code>-- R5 [Q&nbsp;&nbsp;&nbsp;]
+SELECT ROUND(AVG(emp_salaire_annuel),2)
+FROM drh.employes;</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><b>Q6:</b> Combien d'employés avec un code pays?</p></div>
+</td><td>
+<pre><code>-- R6 [Q&nbsp;&nbsp;&nbsp;]
+SELECT count(emp_code_pays)
+FROM drh.employes
+WHERE emp_code_pays IS NOT NULL;</code></pre>
+</td></tr>
+<tr><td>
+</td><td>
+<pre><code>-- R7 [Q&nbsp;&nbsp;&nbsp;]
+SELECT count(distinct emp_code_pays)
+FROM drh.employes;</code></pre>
+</td></tr>
+</table>
 
-<div class="action"><p>
-<b>R6:</b> Combien d'employés avec un code pays?
-</p></div>
-<div class="action"><p>
-<b>R7:</b> Combien de code pays différents?
-</p></div>
-<div class="action"><p>
-<b>R8:</b> Combien d'employés ont la chaîne 'im' dans leur prénom (majuscules ou minuscules)?
-</p></div>
+.fx: wide
+
+--------------------------------------------------------------------------------
+<table>
+<tr>
+<th>Questions</th>
+<th>Requêtes</th>
+</tr>
+<tr><td>
+<div class="action"><b>Q7:</b> Combien de code pays différents?</p></div>
+</td><td>
+<pre><code>-- R8 [Q&nbsp;&nbsp;&nbsp;]
+SELECT COUNT(per_prenom)
+FROM drh.employes
+WHERE per_prenom ILIKE '%im%';</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><p><b>Q8:</b> Combien d'employés ont la chaîne 'im' dans leur prénom (majuscules ou minuscules)?</p></div>
+</td><td>
+<pre><code>-- R9 [Q&nbsp;&nbsp;&nbsp;]
+SELECT COUNT(per_prenom)
+FROM drh.employes
+WHERE per_prenom LIKE '%im%';</code></pre>
+</td></tr>
+<tr><td>
+<div class="action"><p><b>Q9:</b> Combien d'employés ont la chaîne 'im' dans leur prénom?</p></div>
+</td><td>
+<pre><code>-- R10 [Q&nbsp;&nbsp;&nbsp;]
+SELECT count(emp_code_pays)
+FROM drh.employes;</code></pre>
+</td></tr>
+</table>
 
 --------------------------------------------------------------------------------
 ### 14.4.7. Solutions
 
-**R1:**
-
-    SELECT MIN(emp_salaire_annuel) as "salaire minimum"
-    FROM drh.employes;
-
-**R2:**
-
-    SELECT MIN(age(emp_naissance))
-    FROM drh.employes;
-
-**R3:**
-
-    SELECT MAX(emp_date_entree)
-    FROM drh.employes;
-
-**R4:**
-
-    SELECT AVG(emp_salaire_annuel) as "salaire moyen"
-    FROM drh.employes;
+* Q1:**R3**
+* Q2:**R4**
+* Q3:**R1**
+* Q4:**R5**
+* Q5:**R2**
+* Q6:**R10**
+* Q7:**R7**
+* Q8:**R8**
+* Q9:**R9**
+* **R6** : **non utilisée**, Pas besoin de spécifier un filtre « IS NOT NULL », le count ne compte pas les valeurs nulles, donc R10 suffit.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-**R4 bis:**
-
-    SELECT ROUND(AVG(emp_salaire_annuel),2) as "salaire moyen"
-    FROM drh.employes;
-
-**R5**
-
-    SELECT count(*)
-    FROM drh.employes;
-
-**R6**
-
-    SELECT count(emp_code_pays)
-    FROM drh.employes;
-
-Pas besoin de spécifier un filtre « IS NOT NULL », le count ne compte pas les valeurs nulles.
-
-**R7**
-
-    SELECT count(distinct emp_code_pays)
-    FROM drh.employes;
-
-.fx: wide
-
---------------------------------------------------------------------------------
-
-**R8**
-
-    SELECT COUNT(per_prenom)
-    FROM drh.employes
-    WHERE per_prenom ILIKE '%im%';
-
-
---------------------------------------------------------------------------------
 ## 14.6. Filtrage avec WHERE
 
 .fx: title2
