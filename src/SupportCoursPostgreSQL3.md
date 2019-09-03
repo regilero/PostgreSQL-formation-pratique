@@ -46,6 +46,16 @@ Si vous lancez cette restauration une deuxième fois elle sera en échec sauf si
 
 --------------------------------------------------------------------------------
 
+Une technique efficace pour la restauration du schéma `app`:
+
+- supprimer le schéma, avec l'option **cascade**
+- restaurez le fichier `formation_schema_app_dev1.backup`
+
+Technique qui peut s'avérer très utile en développement, par exemple, et qui renforce
+la nécessité de bien scinder la base en schémas.
+
+--------------------------------------------------------------------------------
+
 Faites un rafraîchissement du schéma `app`, on y voit maintenant:
 
 * **3 tables et séquences**
@@ -140,10 +150,8 @@ et admirez le résultat.
 Le schéma app contient des objets particuliers qui sont des types personnalisés
 (**ENUM** en l'occurence) mais pgadmin **ne nous les montre pas**.
 
-
 Par contre nous n'utilisons pas du tout la recherche plein texte mais les écrans
 de pgadmin nous montrent les objets **FTS**.
-
 
 Nous allons donc **modifier les affichages de pgadmin** en allant dans le menu
 **Fichier > Préférences**.
@@ -1084,6 +1092,8 @@ tir raisonnable. C'est une option nouvelle (postgresql 9) qui va permettre de
 paralléliser les restaurations qui peuvent l'être sur plusieurs processeurs,
 il faut donc déjà disposer d'une machine à processeurs multiples.
 
+.fx: wide
+
 --------------------------------------------------------------------------------
 
 On constate l'apparition de **7 fonctions et de 4 fonctions trigger**. Si vous voulez retrouver la table qui lance ces fonctions trigger regardez l'onglet **Objets dépendants** de ces fonctions. Vous remarquerez l'importance d'utiliser une **nomenclature** parlante dans le nom des triggers. On peut voir la définition de l'association des triggers à une table dans le menu triggers accessible en
@@ -1390,7 +1400,7 @@ notre base.
 
     # installation du php en mode ligne de commande
     # le package peut aussi se nommer php-cli
-    sudo apt-get install php7.0-cli php7.0-pgsql
+    sudo apt-get install php7.3-cli php7.3-pgsql
     cd /repertoire/de/la/formation
 
 On peut éditer le fichier pour modifier les constantes en tête du fichier et
@@ -1421,7 +1431,7 @@ une machine bien chargée et sans optimisations du serveur PostgreSQL.
 ### 17.1.3 Comment fonctionne un index?
 
 Un index peut être vu comme un fichier distinct de la table qui prends le ou les
-champs qui vous lui demandez d'indexer, qui les stocke **dans l'ordre**, puis
+champs que vous lui demandez d'indexer, qui les stocke **dans l'ordre**, puis
 qui stocke le numéro de ligne (l'adresse réelle) de la ligne correspondante de
 la table.
 
@@ -1433,13 +1443,17 @@ au critère.
 La **cardinalité** d'un index est le nombre d'éléments distincts qu'il doit
 indexer (par exemple un index des pays des employés devrait stocker 10 valeurs).
 
+Un **dictionnaire de la langue française** est un index, un tri alphabétique des mots.
+Ce n'est pas un index **UNIQUE** car il recense aussi les sens multiples associés à un mot.
+
 **Un index peut être vu comme un annuaire téléphonique,** vous y entrez avec
-vos critères (le département, le nom de la ville et le nom et prénom de la personne), vous recherchez d'abord, pour un département, le nom de la ville (ordre
+vos critères (le département, le nom de la ville et le nom et prénom de la personne),
+vous recherchez d'abord, pour un département, le nom de la ville (ordre
 alphabétique), puis dans cette ville, toujours en ordre alphabétique le nom de
 la personne. Enfin vous recherchez le prénom. Et vous trouvez en face l'adresse
 (ou le numéro de téléphone).
 
-Un index peut donc aussi être construit sur **plusieurs champs**
+Un index peut donc aussi être construit sur **plusieurs champs**.
 
 .fx: wide
 
@@ -1460,7 +1474,8 @@ personne puis filtrer les doublons par ville.
 
 Pour le moteur SQL c'est la même chose. Si vous lui demandez de lister toutes
 les personnes de la ville NANTES ayant le nom DURAND il va utiliser idx_annuaire,
-filtrer sur la ville NANTES, puis sur le nom DURAND, ignorer le prénom et sortir l'ensemble des lignes communes à cette ville et ce prénom. **Il lui est impossible
+filtrer sur la ville NANTES, puis sur le nom DURAND, ignorer le prénom et sortir
+l'ensemble des lignes communes à cette ville et ce prénom. **Il lui est impossible
 d'utiliser idx_annuaire_nom pour cette tâche.**
 
 Par contre si vous lui demandez Toutes les personnes dont le prénom est Pierre
@@ -1489,7 +1504,10 @@ champ2 uniquement.
 
 En terme de stockage physique PostgreSQL utilise des **B-TREE** par défaut.
 
-Le support des index de type **hash** est autorisé, mais souvent inutile à cause des performances de l'implémentation des b-tree, il y a aussi des problèmes de reconstruction des index de type hash, après une restauration il faut lancer des commandes de reconstruction d'index pour les hash. On les voit donc très rarement.
+Le support des index de type **hash** est autorisé, mais souvent inutile à cause
+des performances de l'implémentation des b-tree, il y a aussi des problèmes de
+reconstruction des index de type hash, après une restauration il faut lancer des
+commandes de reconstruction d'index pour les hash. On les voit donc très rarement.
 
 Enfin des types d'index avancés **GIST** et **GIN** existent, souvent pour des
 types de données complexes comme des coordonnées géographiques ou du stockage
@@ -1713,6 +1731,7 @@ utilisés, etc. Supprimer ces indexs est important.
 .fx: title1 title1-3
 
 --------------------------------------------------------------------------------
+## 18.1 Divers
 
 Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une base PostgreSQL. Voici cependant quelques liens vers des objets qui pourraient vous être utiles un jour:
 

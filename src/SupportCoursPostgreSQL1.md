@@ -83,6 +83,8 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
     17.Indexation
     17.1.Pourquoi indexer?
     18.Éléments Complémentaires
+    18.1 Divers
+    18.2 Apports de postgreSQL 10 et 11
     19.Questions subsidiaires?
 
 --------------------------------------------------------------------------------
@@ -184,9 +186,9 @@ Retrouvez les livres blancs **Makina Corpus** et les contributions diverses sur
 Ce support de formation est soumis à la licence détaillée dans le chapitre 3.Licence.
 Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarches commerciales et afin de pouvoir modeler le plan de cours en fonction des attentes des apprenants, nous autorisons sans republication des modifications :
 
- - la suppression du chapitre 2.Makina Corpus et du chapitre 4.Usages
- - l'intégration de l'intégralité du support de formation (hormis le chapitre 2.Makina Corpus et 4.Usages) dans un modèle de document différent de celui de Makina Corpus.
- - La suppression de chapitres complets (comme les derniers chapitres dédiés aux aspects administration PostgreSQL). Il est par contre nécessaire d'indiquer le retrait de ces chapitres en listant dans ce support les titres des chapitres retirés du support original.
+* la suppression du chapitre 2.Makina Corpus et du chapitre 4.Usages
+* l'intégration de l'intégralité du support de formation (hormis le chapitre 2.Makina Corpus et 4.Usages) dans un modèle de document différent de celui de Makina Corpus.
+* La suppression de chapitres complets (comme les derniers chapitres dédiés aux aspects administration PostgreSQL). Il est par contre nécessaire d'indiquer le retrait de ces chapitres en listant dans ce support les titres des chapitres retirés du support original.
 
 .fx: larger
 
@@ -195,7 +197,7 @@ Cependant, afin de pouvoir réutiliser ce support de formation dans vos démarch
 
 ## Réutilisation du contenu de ce support de formation
 
- - Toute autre modification substantielle ou contribution à ce support devrait être accompagnée d'une publication de ces modifications ou de l'intégralité du support sur un support librement disponible à tous (dépôt de sources publiques type github par exemple). Afin de mutualiser les efforts nous vous invitons bien sûr à contribuer à l'oeuvre originale dans la mesure du possible.
+* Toute autre modification substantielle ou contribution à ce support devrait être accompagnée d'une publication de ces modifications ou de l'intégralité du support sur un support librement disponible à tous (dépôt de sources publiques type github par exemple). Afin de mutualiser les efforts nous vous invitons bien sûr à contribuer à l'oeuvre originale dans la mesure du possible.
 
 **Il est interdit de retirer les références aux auteurs et à Makina Corpus du chapitre  3.Licence.**
 
@@ -487,6 +489,15 @@ Nous avons vu plusieurs fois qu'il est utile de préfixer les répertoires de st
 * Passer d'une **8.3** à une **8.4** ou bien d'une **9.0** à une **9.2** est **aussi une changement de version majeur**.
 * Passer de **9.2.1** à **9.2.3** est par contre un changement de version **mineur**
 
+[Mais cela **change à partir de la version 10**](https://www.postgresql.org/support/versioning/). Seul le **premier** chiffre est dorénavant utilisé pour indiquer les versions **majeures**.
+
+* passer de **10.8** à **10.9** est un changement **mineur**
+* passer de **10.x** à **11.x** est un changement de version **majeur**
+
+En quelque sorte une version 10.8 aurait été une version 9.7.8 si rien n'avait changé en terme de versioning.
+
+.fx: wide
+
 ---------------------------------------------------------------------
 ## Compatibilité binaire, version majeure et mineure
 
@@ -499,17 +510,15 @@ Ces versions corrigent des bugs (sur la **9.0.4** on peut notamment voir un bug 
 
 PostgreSQL **assure la compatibilité binaire sur ces changements de versions mineurs**.
 
-Cela signifie que vous pouvez remplacer les binaires PostgreSQL de la version **9.0.2** avec ceux de la **9.0.5** sans aucun processus de migration de vos données (à priori, lisez quand même les Changelog au cas où vous seriez impactés par un bug qui nécessite des traitements annexes).
-
+Cela signifie que vous pouvez remplacer les binaires PostgreSQL de la version **9.0.2** avec ceux de la **9.0.5**, ou de la **10.2** avec la **10.5** sans aucun processus de migration de vos données (à priori, lisez quand même les Changelog au cas où vous seriez impactés par un bug qui nécessite des traitements annexes).
 
 Passer d'une version **9.0** à une version **9.2** sera par contre un changement majeur.
 
-Comme le passage d'une **8.3** à une **9.1**.
+Comme le passage d'une **8.3** à une **9.1**. Ou **9.6.5** à **10.5**.
 
 Il faudra effectuer **un processus de migration et de transformation de vos données**.
 
 Un utilitaire est prévu à cet effet: **`pg_upgrade`**.
-
 
 ---------------------------------------------------------------------
 ## Compatibilité binaire, version majeure et mineure
@@ -560,7 +569,7 @@ A partir de ce fichier on peut :
 L'étendue des possibilités est très grande, les deux références en la matière sont:
 
 - les commentaires du fichier pg_hba.conf
-- la documentation en ligne : [http://www.postgresql.org/docs/9.0/static/auth-pg-hba-conf.html](http://www.postgresql.org/docs/9.0/static/auth-pg-hba-conf.html)
+- la documentation en ligne : [http://www.postgresql.org/docs/11/static/auth-pg-hba-conf.html](http://www.postgresql.org/docs/11/static/auth-pg-hba-conf.html)
 
 .fx: wide
 
@@ -597,9 +606,7 @@ Cela veut dire « confiance ».
 
 Vous demandez donc à PostgreSQL de faire une **confiance aveugle**, tous les utilisateurs peuvent se connecter sur toutes les bases, avec le login de leur choix, **sans même avoir besoin d'indiquer le bon mot de passe**.
 
-
 **Le trust ne doit surtout pas être utilisé en production**. Cela permet d'abstraire cette première couche de sécurité, cela n’exclue pas des contrôles d'accès supplémentaires au sein de PostgreSQL en fonction du login utilisé. C'est un peu comme si vous aviez un Windows avec des comptes utilisateurs différents, y compris un compte administrateur (ici postgres), sans mots de passe. Il faut cependant bien se connecter avec le compte administrateur pour avoir les accès administrateur.
-
 
 ---------------------------------------------------------------------
 ## pg_hba.conf
@@ -626,14 +633,13 @@ Ce client de connexion à un serveur est le plus simple (un simple écran de lig
 
 Vous devriez toujours apprendre à vous en servir, pour exécuter des scripts SQL, pour taper quelques commandes simples, ou pour devenir votre principal moyen de communication avec le serveur PostgreSQL.
 
-Il faut *de préférence* disposer d'un client psql d'une version au moins supérieure à la version du serveur (un client 8.4 ne saurait pas parler avec un serveur 9.0).
+Il faut *de préférence* disposer d'un **client** psql d'une **version au moins supérieure** à la version du **serveur** (un client 8.4 ne saurait pas parler avec un serveur 9.0).
 
 Cette commande est l'équivalent de la commande `mysql` avec MySQL ou `sqlplus` avec Oracle.
 
 ---------------------------------------------------------------------
 ## psql
 Comme toute ligne de commande cette commande accepte un grand nombre d'options à commencer par un «--help»
-
 
     $ sudo su -
     # su - postgres
@@ -794,7 +800,8 @@ Pour un serveur 8.4 cela donne:
 
     SELECT n.nspname as "Schema",
     c.relname as "Name",
-    CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' END as "Type",
+    CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'i' THEN 'index' WHEN 'S'
+        THEN 'sequence' WHEN 's' THEN 'special' END as "Type",
     pg_catalog.pg_get_userbyid(c.relowner) as "Owner"
     FROM pg_catalog.pg_class c
         LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
@@ -805,9 +812,34 @@ Pour un serveur 8.4 cela donne:
     AND pg_catalog.pg_table_is_visible(c.oid)
     ORDER BY 1,2;
 
-Ainsi si vous voulez un jour faire des requêtes dans le catalogue pour obtenir des informations utiles (quel est le code de mon trigger? Quelles sont les tables sur lesquelles l'utilisateur toto à les droits d'écriture?) vous pourrez demander à votre psql de vous montrer comment lui interroge le catalogue et vous en inspirer.
+---------------------------------------------------------------------
+## psql
 
-.fx: wide
+Et en version 11:
+
+    SELECT n.nspname as "Schema",
+    c.relname as "Name",
+    CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view'
+     WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' WHEN 'f' THEN 'foreign table'
+     WHEN 'p' THEN 'table' WHEN 'I' THEN 'index' END as "Type",
+    pg_catalog.pg_get_userbyid(c.relowner) as "Owner"
+    FROM pg_catalog.pg_class c
+        LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+    WHERE c.relkind IN ('r','p','v','m','S','f','')
+        AND n.nspname <> 'pg_catalog'
+        AND n.nspname <> 'information_schema'
+        AND n.nspname !~ '^pg_toast'
+    AND pg_catalog.pg_table_is_visible(c.oid)
+    ORDER BY 1,2;
+
+---------------------------------------------------------------------
+## psql
+
+On peut voir ici pourquoi un client psql trop ancien ne saurait bien exploiter un serveur récent, il risquerait de
+ne pas connaîtrez certaines informations disponibles dans la catalogue, ou pire, des informations qui auraient été
+déplacées (très rare).
+
+Retenez aussi que si vous voulez un jour faire des requêtes dans le catalogue pour obtenir des informations utiles (quel est le code de mon trigger? Quelles sont les tables sur lesquelles l'utilisateur toto à les droits d'écriture?) vous pourrez demander à votre psql de vous montrer comment lui interroge le catalogue et vous en inspirer.
 
 ---------------------------------------------------------------------
 ## psql
@@ -889,7 +921,7 @@ Mais si vous n'êtes pas l'utilisateur postgres vous aurez certainement besoin d
 
 
 ---------------------------------------------------------------------
-## 9.3. PgAdmin III : le client graphique
+## 9.3. PgAdmin III/pgAdmin4 : le client graphique
 <small>Notre principal outil dans cette formation.</small>
 
 
@@ -911,10 +943,9 @@ pgAdmin effectue un grand nombre de requêtes sur le catalogue afin de nous pré
 
 **pgadmin4** est arrivé en 2016, il s'agit d'une refonte de pgadmin3 (qui était en C++ Qt) en python et javascript/jQuery dans une version web mais avec aussi toujours un client lourd en C++/Qt.
 
-On retrouve les mêmes éléments que dans pgadmin3, avec des nouvelles fonctionnalités et des bugs liés à la jeunesse du produit.
+On retrouve les mêmes éléments que dans pgadmin3, avec des nouvelles fonctionnalités et des bugs et lenteurs liés à la jeunesse du produit.
 
-Libre à vous de tester pgadmin4, pour l'instant il n'est pas encore présent dans les distributions et pgadmin3 nous servira de base, tout ce que vous y ferez sera bien sûr aussi faisable avec pgadmin4.
-
+Libre à vous de tester pgadmin4, pour l'instant il n'est pas encore présent dans les distributions et pgadmin3 nous servira de base, tout ce que vous y ferez sera bien sûr aussi faisable avec pgadmin4. Nous présenteront certains écrans sur la version 3 ou la 4.
 
 ---------------------------------------------------------------------
 ## 9.4. PhpPgAdmin: un client web
@@ -997,8 +1028,8 @@ Cette société fabrique des fournitures du types **trombones** et **punaises** 
 
 Dernièrement il a été décidé qu'un système de **points de fidélité** serait mis en place afin de récompenser les employés et intérimaires qui passent des commandes de fournitures en interne.
 
-- un nombre **variable** de points seront attribués à **la personne** en fonction du montant de la commande
-- un nombre **fixe** de points sera attribué au **service ou à l'agence d'intérim** de l'employé.
+* un nombre **variable** de points seront attribués à **la personne** en fonction du montant de la commande
+* un nombre **fixe** de points sera attribué au **service ou à l'agence d'intérim** de l'employé.
 
 L'usage final de ces points n'est pas dans notre exemple.
 
@@ -1067,7 +1098,9 @@ Les locales se nomment par exemple **fr_FR.UTF_EUR** ou **fr_FR_ISO8859-1_EUR**,
 Enfin l'encodage des caractères va déterminer la taille minimale d'un caractère et l'encodage utilisé pour le transformer d'une série de bits à un caractère reconnu.
 
 C'est ici que l'on indique si on utilise de l'**ASCII7** (pas d'accents), de l'**ISO8859-1** (latin1), ou de l'**UTF8**.
-Ces paramètres sont propres à chacune des bases de données hébergées sur le cluster. Rappel sur les encodages:
+Ces paramètres sont propres à chacune des bases de données hébergées sur le cluster.
+
+Rappel sur les encodages:
 
     +--------------+-------------+--------------+---------------------+----------+
     |  CARACTERE   |  ASCII 7    |  ISO 8859-1  |        UTF-8        |  BASE64  |
@@ -1126,6 +1159,7 @@ Cela se fait depuis le menu « Fichier > Ajouter un serveur ». Nous allons en
 
 Cette connexion est assez dangereuse, nous sommes super-utilisateur et nous pouvons tout casser.
 On ajoute donc une couleur **rouge** à la connexion.
+
 ---------------------------------------------------------------------
 ## 10.5. Créer une base de données formation
 
@@ -1154,7 +1188,7 @@ Si vous naviguez parmi les onglets présents vous pourrez voir que le dernier on
     COMMENT ON DATABASE formation IS 'Base de données test pour formation';
 
 <div class="warning">
-Remarquez la case <strong>lecture seule</strong> sur l'assistant, si vous décochez cette case vous pouvez alors ajouter vous-même du code SQL que pgAdmin <strong>ne saurait pas
+Remarquez la case <strong>lecture seule</strong> sur l'assistant (absente sur pgAdmin 4), si vous décochez cette case vous pouvez alors ajouter vous-même du code SQL que pgAdmin <strong>ne saurait pas
 intégrer à la requête</strong>. Les écrans de l'assistant ne peuvent du coup plus fonctionner.<br/>
 Ceci vous permet d'avoir un train d'avance sur pgadmin (une nouvelle option qui n'est pas encore intégrée dans l'outil), ne l'oubliez pas.<br/>
 En l'occurrence nous n'avons pas besoin de modifier ce code SQL.
@@ -1410,7 +1444,7 @@ Mais ils permettent aussi de mieux scinder des aspects purement fonctionnels de 
 L'avantage de l'utilisation des schémas par rapport à l'utilisation de plusieurs
 bases est <strong>qu'il est possible d'effectuer des requêtes impactant plusieurs
 schémas d'une base, ce n'est pas le cas entre plusieurs bases</strong>
-(pas sans outils plus abtraits et moins performants comme dblink).
+(pas sans outils plus abstraits et moins performants comme dblink).
 </p></div>
 
 .fx: wide
@@ -1487,6 +1521,8 @@ On constate que le SQL généré est:
     COMMENT ON SCHEMA drh
         IS 'Schémas des données de la DRH.';
 
+PS: Si vous utilisez pgAdmin4 on ne retrouve pas le groupe formation_admin, pensez à vous déconnecter du serveur et à vous reconnecter.
+
 -----------------------------------------------------------------
 
 On peut donc utiliser une commande SQL pour générer le second schéma (app) sur lequel on garde formation_admin en propriétaire (remarquez la double apostrophe dans le commentaire):
@@ -1499,9 +1535,9 @@ On peut donc utiliser une commande SQL pour générer le second schéma (app) su
 ![liste des connexions <](./captures/boutonsql.png)
 Pour taper du SQL utilisez le bouton SQL de pgadmin dans la barre d'outil, la connexion en cours sera utilisée.
 
-Rafraichissez les données de pgadmin avec la touche **F5** ou le bouton rafraîchir.
+Rafraichissez les données de pgadmin avec la touche **F5** ou le bouton rafraîchir (ou un clic droit).
 
-Nous allons dans la partie suivante altérer les propriétaires des schémas afin
+Nous allons dans la partie suivante altérer les propriétaires du schéma public afin
 qu'il s'agisse bien de **formation_admin** et non de **ultrogothe** ou **postgres**.
 
 
@@ -2077,7 +2113,7 @@ cette façon:
 - **gondioque** : search_path=**app,public**
 - **nantilde** : search_path=**app,public**
 
-Pour cela nous utiliserons pgadmin en cliquant (droit) sur les rôles et en
+Pour cela nous utiliserons pgadmin (pas pgadmin4, il ne sait pas le faire proprement, il ajoute des quotes et il ne faut pas) en cliquant (droit) sur les rôles et en
 allant dans l'onglet variables:
 
 On voit que le SQL généré est du type:

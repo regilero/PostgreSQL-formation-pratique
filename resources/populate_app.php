@@ -40,6 +40,7 @@ function connect() {
     $dbconn = pg_connect(PG_CONNECT_STRING) or die('Connexion impossible : ' . pg_last_error());
     return $dbconn;
 }
+
 function endprogram($dbconn) {
     // Ferme la connexion
     if (isset($dbconn)) {

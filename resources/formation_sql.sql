@@ -6702,7 +6702,7 @@ REVOKE ALL ON TABLE vue_tableau_personnel FROM PUBLIC;
 GRANT ALL ON TABLE vue_tableau_personnel TO postgres;
 GRANT SELECT,INSERT,DELETE,TRUNCATE,UPDATE ON TABLE vue_tableau_personnel TO formation_ecriture;
 GRANT SELECT ON TABLE vue_tableau_personnel TO formation_lecture;
-GRANT ALL ON TABLE vue_tableau_personnel TO aicha;
+GRANT ALL ON TABLE vue_tableau_personnel TO ultrogothe;
 
 
 SET search_path = app, pg_catalog;
