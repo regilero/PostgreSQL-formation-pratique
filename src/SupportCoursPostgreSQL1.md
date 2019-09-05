@@ -85,6 +85,8 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
     18.Éléments Complémentaires
     18.1 Divers
     18.2 Apports de postgreSQL 10 et 11
+    18.3 pg_upgrade, migration 9.x vers 11
+    18.4 Exemple de partionnement avec PostgreSQL11
     19.Questions subsidiaires?
 
 --------------------------------------------------------------------------------

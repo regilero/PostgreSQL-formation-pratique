@@ -1756,7 +1756,178 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
 .fx: wide
 
 --------------------------------------------------------------------------------
+## 18.2 Apports de PostgreSQL 10 et 11
 
+Il a de nombreux éléments nouveaux dans les version 10 et 11:
+
+* https://wiki.postgresql.org/wiki/New_in_postgres_10
+* https://pgdash.io/blog/postgres-11-whats-new.html
+
+Mais s'il fallait ne retenir que quelques éléments nous citerions:
+
+* un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers applicqués sur les tables partionnées, etc. Avec encore des amélioration sattendues en version 12.
+* un gros travail sur le parallélisme dans l'exécution des requêtes
+* des améliorations sur les index de type HASH
+* des solutions nouvelles en administration et en réplication, comme la réplication logique, mais aussi un certain nombre de renommage de dossiers ou d'instructions (donc attention aux versions des documentations)
+* les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle
+* les colonnes **identity**, qui sont l'équivalent des `serial`, sans les bizarreries liées à la transformation de serial en `int+sequence`.
+
+.fx: wide
+
+
+--------------------------------------------------------------------------------
+## 18.3 pg_upgrade, migration 9.x vers 11
+
+Avant de tester le partionnement sur un PostgreSQL 11, si votre base est installée sur une version 9.x, nous pouvonsla migrer automatiquement vers une version 11.
+
+On suppose que vous avez une version de postgresql 11 installée (via un `apt-get install postgresql-11`). Elle tourne donc
+sur votre machine, sur un port différent (par exemple **5435**). Vérifiez le fichier `pg_hba.conf` de cette instance.
+
+* **étape 1**: passez en user **postgres**
+* **étape2**: arrêtez la nouvelle instance
+
+<code><pre>
+service postgresql stop 11
+</pre></code>
+
+* **étape 2**: lancez pg_upgrade en mode `--check`, pour voir si la migration semble faisable. Remarquez qu'on utilise **toujours** le binaire pg_upgrade de la nouvelle version.
+
+<code><pre>
+/usr/lib/postgresql/11/bin/pg_upgrade --check \
+  --old-datadir=/var/lib/postgresql/9.5/main/ \
+  --new-datadir=/var/lib/postgresql/11/main \
+  --old-bindir=/usr/lib/postgresql/9.5/bin \
+  --new-bindir=/usr/lib/postgresql/11/bin \
+  --old-options '-c config_file=/etc/postgresql/9.5/main/postgresql.conf' \
+  --new-options '-c config_file=/etc/postgresql/11/main/postgresql.conf'
+</pre></code>
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+## 18.3 pg_upgrade, migration 9.x vers 11
+
+* **étape 3**: arrêt de la base source
+
+<code><pre>
+service postgresql stop 9.5
+</pre></code>
+
+* **étape 4:**: lancez la migration.
+
+<code><pre>
+/usr/lib/postgresql/11/bin/pg_upgrade \
+  --old-datadir=/var/lib/postgresql/9.5/main/ \
+  --new-datadir=/var/lib/postgresql/11/main \
+  --old-bindir=/usr/lib/postgresql/9.5/bin \
+  --new-bindir=/usr/lib/postgresql/11/bin \
+  --old-options '-c config_file=/etc/postgresql/9.5/main/postgresql.conf' \
+  --new-options '-c config_file=/etc/postgresql/11/main/postgresql.conf'
+</pre></code>
+
+Des scripts bash à lancer sont déposés pour pouvoir être lançés ensuite, comme le `analyze_new_cluster.sh`.
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+## 18.3 pg_upgrade, migration 9.x vers 11
+
+* **étape 5**: démarrage du nouveau serveur (avec changement de port éventuel en production)
+
+<code><pre>
+service postgresql start 11
+</pre></code>
+
+* **étape 6:**: lancez les scripts indiqués par pg_upgrade
+
+<code><pre>
+./analyze_new_cluster.sh
+</pre></code>
+
+Vous pouvez dorénavant manipuler la base formation sur PostgreSQL11 (notez qu'utiliser les backups de l'application pouvait aussi fonctionner, mais il aurait fallu auparavant recréer les rôles de connexion).
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+## 18.4 Exemple de partionnement avec PostgreSQL11
+
+Pour visualiser un exemple de partitionnement, nous allons mettre en place une table d'audit des mouvements observés sur la table commande (vous pourrez par exemple générer du mouvement avec les scripts PHP).
+
+Les développeurs de `app` nous fournissent un script SQL qui permet la mise en place de cette table d'audit, et ils ont eu la bonne idée de partitionner cette table.
+
+Un vrai partionement utile aurait été basé sur le temps (par exemple une sous table par année-mois), mais pour visualiser les effets en formation on part plutôt sur un partitionnement par type d'opération (`'D'`/`'I'`/`'U'`).
+
+    CREATE TABLE app.commande_audit(
+        operation         char(1)   NOT NULL,
+        stamp             timestamp NOT NULL,
+        userid            text      NOT NULL,
+        commande          app.commandes NOT NULL -- type ligne de la table!!
+    ) PARTITION BY LIST (operation);
+  
+    CREATE index idx_commande_audit_operation ON app.commande_audit(operation);
+    CREATE index idx_commande_audit_com_id ON app.commande_audit(((commande).com_id));
+  
+    CREATE TABLE app.commande_select PARTITION OF app.commande_audit FOR VALUES IN ('D');
+    CREATE TABLE app.commande_update PARTITION OF app.commande_audit FOR VALUES IN ('U');
+    CREATE TABLE app.commande_insert PARTITION OF app.commande_audit FOR VALUES IN ('I');
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+## 18.4 Exemple de partionnement avec PostgreSQL11
+
+On continue avec la mise en place du trigger d'audit :
+
+    CREATE OR REPLACE FUNCTION app.process_commande_audit() RETURNS TRIGGER AS $commande_audit$
+        BEGIN
+            --
+            -- Create a row in commande_audit to reflect the operation performed on commande,
+            -- making use of the special variable TG_OP to work out the operation.
+            --
+            IF (TG_OP = 'DELETE') THEN
+                INSERT INTO app.commande_audit SELECT 'D', now(), user, OLD;
+            ELSIF (TG_OP = 'UPDATE') THEN
+                INSERT INTO app.commande_audit SELECT 'U', now(), user, NEW;
+            ELSIF (TG_OP = 'INSERT') THEN
+                INSERT INTO app.commande_audit SELECT 'I', now(), user, NEW;
+            END IF;
+            RETURN NULL; -- result is ignored since this is an AFTER trigger
+        END;
+    $commande_audit$ LANGUAGE plpgsql;
+  
+    CREATE TRIGGER TRIGGER_PROCESS_COMMANDES_AUDIT
+    AFTER INSERT OR UPDATE OR DELETE ON app.commandes
+        FOR EACH ROW EXECUTE PROCEDURE app.process_commande_audit();
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+## 18.4 Exemple de partionnement avec PostgreSQL11
+
+Vous pouvez remarquer que les index ont été créés automatiquement sur la sous-tables.
+
+Si vous générez de l'activité, vous verrez que les sous tables se remplissent.
+Et si vous altérez à la main la colonne `operation` d'un des enregsitrements de l'audit
+vous verrez qu'il change de table de parti onnement.
+
+    SELECT count(1),tableoid::regclass FROM commande_audit GROUP by 2 order by 2;
+
+--------------------------------------------------------------------------------
+## 18.4 Exemple de partionnement avec PostgreSQL11
+
+
+<div class="warning"><p>
+<b>Attention</b> le partionnement n'est pas une opération transparente.
+</p></div>
+
+* une table existante ne peut devenir automatiquement partionnée, il faut surement passer par des migrations de données
+* il y a un grand nombre de limites (par exemple les types de foreign keys supportés, les champs utilisés dans les Primary Key, les types de triggers supportés, de la partition par défaut, des création sde sous tables à l'avance).
+* il y a de fortes différences entre les version 10,11 et 12 de PostgreSQL sur les éléments supportés
+* il faut prendre le temps de bien valider tous les développements (tests unitaires), les indexs, et les choix de partionnements.
+
+Bref, évitez d'intervenir **après-coup** sur une table qui devient trop grosse.
+
+--------------------------------------------------------------------------------
 # 19. Questions subsidiaires?
 
 .fx: title1 title1-4
