@@ -103,3 +103,20 @@ au groupe utilisé par votre serveur web.
     chmod 2755 docs
     chgrp -R www-data resources*
     chmod 2755 resources
+
+## TODO
+
+* replication slots, avec warning : https://saifulmuhajir.web.id/postgresql-inactive-replication-slot-the-butterfly-effect/ https://www.opsdash.com/blog/postgresql-replication-slots.html
+* System Administration Functions https://www.postgresql.org/docs/10/functions-admin.html
+* advisory lock : use xact versions
+* simplifications sur gestions des droits aux départ de la formation
+* revue d'exercices
+* pg_receivewal https://docs.postgresql.fr/10/app-pgreceivewal.html
+* role pg_monitor
+GRANT pg_monitor TO user;
+* pgmetrics
+
+    wget https://github.com/rapidloop/pgmetrics/releases/download/v1.7.0/pgmetrics_1.7.0_linux_amd64.tar.gz
+    tar xvf pgmetrics_1.7.0_linux_amd64.tar.gz
+    cd pgmetrics_1.7.0_linux_amd64
+   ./pgmetrics --help
