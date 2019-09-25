@@ -59,7 +59,7 @@ function populate($dbconn) {
         echo "->Put everyone to score 0\n";
         pg_query($dbconn,'UPDATE vue_drh_points SET points=0');
     }
-    echo "->Generating\n";
+    echo "->Generates\n";
     populate_prepare_queries($dbconn);
     for ($i=1;$i<= NUMBER_OF_COMMANDES;$i++) {
         echo ".";

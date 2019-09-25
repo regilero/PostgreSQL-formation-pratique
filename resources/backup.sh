@@ -28,12 +28,21 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-DATADIR=/opt/PostgreSQL/9.0/data
+# DATADIR=/opt/PostgreSQL/11/data
+DATADIR=/var/lib/postgresql/11/main/
+PGPORT=5432
+PGPORT=5435
 ARCHIVEDIR=/mnt/serveur/archive
 BACKUPDIR=/mnt/serveur/backup
+
 # demarrage du backup
-psql --username=postgres -d postgres -h localhost -c "select pg_start_backup('hot_backup');"
+echo "running select pg_start_backup('hot_backup')"
+psql --username=postgres -d postgres -h localhost -p ${PGPORT} \
+  -c "select pg_start_backup('hot_backup');"
 # backup binaire
+echo "running tar command"
 tar -cf ${BACKUPDIR}/backup.tar ${DATADIR}
 # fin du backup
-psql --username=postgres -d postgres -h localhost -c "select pg_stop_backup();"
+echo "running select pg_stop_backup()"
+psql --username=postgres -d postgres -h localhost  -p ${PGPORT} \
+  -c "select pg_stop_backup();"
