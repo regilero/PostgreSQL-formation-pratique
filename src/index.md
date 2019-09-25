@@ -2,6 +2,8 @@
 
 --------------------------------------------------------------------------------
 
+## Index Général
+
 ### Partie 1 : <a href="SupportCoursPostgreSQL1.html">droits d'accès, users, bases et schémas</a>
 
 ### Partie 2 : <a href="SupportCoursPostgreSQL2.html">SQL: requêtes simples et avancées</a>
