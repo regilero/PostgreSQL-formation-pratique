@@ -1768,7 +1768,7 @@ Mais s'il fallait ne retenir que quelques éléments nous citerions:
 * un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers applicqués sur les tables partionnées, etc. Avec encore des amélioration sattendues en version 12.
 * un gros travail sur le parallélisme dans l'exécution des requêtes
 * des améliorations sur les index de type HASH
-* des solutions nouvelles en administration et en réplication, comme la réplication logique, mais aussi un certain nombre de renommage de dossiers ou d'instructions (donc attention aux versions des documentations)
+* des solutions nouvelles en administration et en réplication, comme la réplication logique, mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)
 * les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle
 * les colonnes **identity**, qui sont l'équivalent des `serial`, sans les bizarreries liées à la transformation de serial en `int+sequence`.
 

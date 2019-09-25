@@ -13,6 +13,7 @@ copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
 .fx: title1 title1-3
 
 --------------------------------------------------------------------------------
+
 ## 20.1. Pré-requis
 
 <small>Puis-je commencer ici?</small>
@@ -31,6 +32,7 @@ Ainsi on n'oubliera pas de consulter dans les chapitres précédents:
 * **l'indexation**
 
 --------------------------------------------------------------------------------
+
 ## 20.2. 32bits vs 64bits
 
 PostgreSQL existe en version 32 ou 64 bits.
@@ -60,6 +62,7 @@ fortes valeures de `work_mem`, pour lesquelles une version 64bits était plus pe
 
 
 --------------------------------------------------------------------------------
+
 ## 20.3. Analysez l'usage de la base
 
 Les applications qui utilisent la base peuvent avoir des formes et des usages
@@ -81,10 +84,11 @@ plusieurs bases peut-être devrez-vous songer à utiliser différents serveurs d
 base de données.
 
 --------------------------------------------------------------------------------
+
 ## 20.4. Autovacuum, vacuum et analyze
 
-* [http://docs.postgresql.fr/9.5/maintenance.html](http://docs.postgresql.fr/9.5/maintenance.html)
-* [http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html](http://docs.postgresql.fr/9.5/runtime-config-autovacuum.html)
+* [http://docs.postgresql.fr/11/maintenance.html](http://docs.postgresql.fr/11/maintenance.html)
+* [http://docs.postgresql.fr/11/runtime-config-autovacuum.html](http://docs.postgresql.fr/11/runtime-config-autovacuum.html)
 
 La page de documentation de PostgreSQL sur les opérations de maintenance est
 assez complète.
@@ -100,7 +104,7 @@ Parmi toutes les tâches de maintenance les plus importantes sont donc les
 * **optimiser l'espace disque** occupé par la base, le fichier physique stocke
   plusieurs versions des lignes, ce qui permet d'assurer le MVCC dans les
   transactions. Lors des vacuums les lignes qui ne sont plus valides seront
-  supprimées.
+  recyclées.
 * **Mettre à jour les statistiques** sur le nombre de lignes des tables ou les
   cardinalités des index. Ceci afin d'optimiser les choix fait par l'analyseur
   de requête (vaut-il mieux un *seqscan* ou utiliser un *index* ?)
@@ -110,6 +114,7 @@ Parmi toutes les tâches de maintenance les plus importantes sont donc les
 .fx: wide
 
 --------------------------------------------------------------------------------
+
 ### vacuum full
 
 Il y a une forme extrême du **VACUUM** qui est **VACUUM FULL**.
@@ -119,7 +124,7 @@ réorganisation de toutes ces lignes. **C'est une opération longue et bloquante
 
 Depuis la version 9.0 de PostgreSQL cette opération est plus rapide que sur les
  versions précédentes mais elle impose de **disposer de deux fois la taille
- physique de la table**, Si vous avez une table 2Go sur laquelle vous effectuez
+ physique de la table** (au moins les lignes actives), Si vous avez une table 2Go sur laquelle vous effectuez
  un `VACUUM FULL` une nouvelle table sera créé, il faut donc environ 2Go
  d'espace disque disponible. Cette opération pose un **LOCK exclusif** sur la
  table, elle est inaccessible pour PostgreSQL.
@@ -138,19 +143,29 @@ pas avoir de gaspillage de place.
 .fx: wide
 
 --------------------------------------------------------------------------------
+
 ### autovacuum
 
+<div class="warning"><p>
 Le but d'autovacuumm est donc de tourner suffisamment souvent pour maintenir la
-taille physique des tables et pour garantir que le planificateur de requête
-dispose d'informations à jour.
+<b>taille physique des tables</b> et pour garantir que le <b>planificateur de
+requête</b> dispose d'informations à jour.
+</p></div>
 
-Le démon autovacuum dispose d'indicateurs pour ces deux fonctions qui vont lui permettre de décider du moment ou il devra agir.
+Le démon autovacuum dispose **d'indicateurs**, de réglages, pour ces deux
+fonctions (analysez et nettoyage) qui vont lui permettre de décider du moment
+ou il devra agir.
 
 Parallèlement il ne faut pas que les vacuum se lancent trop souvent car s'ils ne
-sont pas bloquants ils sont cependant consommateurs en ressource serveur.
+sont pas bloquants ils sont cependant **consommateurs** en ressource serveur.
 
-Il y a des paramètres généraux qui s'appliquent à toutes les tables mais on peut changer ce paramétrage pour une table (disponible dans les propriétés de la
-table sur pgadmin):
+--------------------------------------------------------------------------------
+
+### autovacuum par table
+
+Il y a des paramètres généraux qui s'appliquent à toutes les tables mais
+**on peut changer ce paramétrage pour une table** (disponible dans les
+propriétés de la table sur pgadmin):
 
     # suspendre l'autovacuum pour une table
     ALTER TABLE mytable SET autovacuum_enabled = false;
@@ -165,6 +180,19 @@ table sur pgadmin):
       autovacuum_vacuum_cost_delay = 10,
       autovacuum_vacuum_cost_limit = 100
     );
+    # lire les réglages (moins facile)
+    select relname, reloptions
+      from pg_class
+      where relname = "nom de ma table";
+    # lire les éléments décisifs
+    SELECT
+      n_tup_ins as "inserts",
+      n_tup_upd as "updates",
+      n_tup_del as "deletes",
+      n_live_tup as "live_tuples",
+      n_dead_tup as "dead_tuples"
+    FROM pg_stat_user_tables
+    WHERE schemaname = 'nom_du_schema' and relname = 'nom_de_la_table';
 
 .fx: wide
 
@@ -180,25 +208,31 @@ La documentation nous donne ces deux formules:
 Si on mets les vrais noms de variables et des parenthèses on obtient:
 
     limite du vacuum = autovacuum_vacuum_threshold
-                       + (autovacuum_vacuum_scale_factor *nb lignes)
+                       + (autovacuum_vacuum_scale_factor * nb lignes)
     limite du analyze = autovacuum_analyze_thresold
-                       + (autovacuum_analyze_scale_factor *nb lignes)
+                       + (autovacuum_analyze_scale_factor * nb lignes)
 
 * **autovacuum_vacuum_threshold** : Après que ce nombre de lignes mortes dans la
- table (dues à des  delete ou update) soit atteint un vacuum sera lancé afin de
+ table (dues à des **delete** ou **update**) soit atteint un vacuum sera lancé afin de
  récupérer de l'espace disque.
 * **autovacuum_analyze_threshold** : Après avoir atteint, en gros, ce nombre
- d'insert ou update ou delete un vacuum analyze sera lancé afin de mettre à jour
- les statistiques utilisées par l'analyseur de requêtes.
+ d'**insert** ou **update** ou **delete** un vacuum analyze sera lancé afin de
+ mettre à jour les statistiques utilisées par l'analyseur de requêtes.
+<div class="warning"><p>
+le nombre d'<b>inserts</b> n'est utile qu'à l'analyse, pas au ménage.
+</p></div>
+
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
+### autovacuum
+
 Les `*_scale_factor` sont des pourcentages appliqués à la taille de la table et
-vont ajouter des valeurs au « thresold » (seuil) original. Donc une grosse table
+vont ajouter des valeurs au « thresold » (seuil) original. **Donc une grosse table
 (2 millions de lignes) avec un scale factor de 0.1 (10%) va ajouter 200 000 au
-seuil:
+seuil**:
 
     limite du vacuum = 50 + (0.1 * 2 000 000) = 50 + 200 000 = 200 050
 
@@ -212,19 +246,8 @@ généraux dus aux vacuums de certains tables importantes.
 .fx: wide
 
 --------------------------------------------------------------------------------
-### vacuumdb
 
-Un utilitaire `vacuumdb` existe, avec un ensemble d'options disponibles, dont
-une option `-j` qui permet de paralléliser les traitements de maintenance
-(depuis la version 9.4).
-
-Par exemple cette commande, lancée par l'utilisateur postgres:
-
-    vacuumdb -j4 formation
-
-Va permettre de lancer des vacuum en utilisant 4 process parallèles.
-
---------------------------------------------------------------------------------
+### autovacuum
 
 **Comment savoir si on doit changer les réglages par défaut d'une table ?**
 
@@ -241,7 +264,8 @@ requête.
 * Pour une table **statique** (données de paramétrage par exemple), où les
  données bougent très rarement, ne vous occupez pas des problèmes de vacuum
 * Une table qui ne subit **que des insertions** n'aura **jamais de vacuum**
- (mais n'a pas besoin de vacuum, si vous avez uniquement des insertions et un fillfactor à 100 la table ne va pas gaspiller d'espace disque)
+ (mais n'a pas besoin de vacuum, si vous avez uniquement des insertions et un
+ fillfactor à 100 la table ne va pas gaspiller d'espace disque)
 
 --------------------------------------------------------------------------------
 
@@ -262,7 +286,8 @@ Pour les <b>grosses tables</b> (en nombre de lignes) avec beaucoup de
  <b>mouvements (delete, update, insert)</b> vous devriez <b>réduire le
   autovacuum_vacuum_scale_factor</b> pour avoir plus souvent des opérations de
   vacuum. Vous pouvez aussi décider de monter le <b>autovacuum_vacuum_thresold</b>
-  à un chiffre élevé (comme 1000 ou 5000) et mettre <b>0 au  autovacuum_vacuum_scale_factor</b>.
+  à un chiffre élevé (comme 1000 ou 5000) et mettre <b>0 au
+  autovacuum_vacuum_scale_factor</b>.
 </p></div>
 
 .fx: wide
@@ -298,9 +323,31 @@ optimisations de requête.
 .fx: wide
 
 --------------------------------------------------------------------------------
+### vacuumdb
+
+Un utilitaire `vacuumdb` existe, avec un ensemble d'options disponibles, dont
+une option `-j` qui permet de paralléliser les traitements de maintenance
+(depuis la version 9.4).
+
+Par exemple cette commande, lancée par l'utilisateur postgres:
+
+    vacuumdb -j4 formation
+
+Va permettre de lancer des vacuum en utilisant 4 process parallèles.
+
+On peut avoir bien sur des commandes plus complexes:
+
+    /usr/lib/postgresql/11/bin/vacuumdb -p 5435 \
+      --echo \
+      -j 2 \
+      --analyze-only \
+      -d formation
+
+.fx: wide
+
+--------------------------------------------------------------------------------
 
 ## 20.5. Paramètres de configuration principaux
-
 
 .fx: title2
 
@@ -320,13 +367,12 @@ pour être pris en compte, dans le cas contraire un simple reload suffira).
 
 Faisons le point sur les principaux paramètres...
 
-
 --------------------------------------------------------------------------------
 
 ### 20.5.1. Connexions
 
 * **listen_addresses** : liste des interfaces réseau sur lesquelles le serveur
- est à l'écoute. Par défaut 'localhost' et onc uniquement en local, mettez '*'
+ est à l'écoute. Par défaut 'localhost' et donc uniquement en local, mettez '*'
  pour utiliser toutes les adresses réseaux du serveur.
 * **port** : le port sur lequel le serveur est en écoute sur les interfaces
   listées dans le paramètre précédent. Modifiez le si plusieurs instances de
@@ -352,20 +398,20 @@ logiciels de supervision.
 
 ### 20.5.2. Mémoire
 
-* [http://docs.postgresqlfr.org/9.6/runtime-config-resource.html](http://docs.postgresqlfr.org/9.6/runtime-config-resource.html)
+* [http://docs.postgresqlfr.org/11/runtime-config-resource.html](http://docs.postgresqlfr.org/11/runtime-config-resource.html)
 
 
 La mémoire est utilisée par PostgreSQL de deux façons, une partie de cette
 mémoire est consommée par chaque connexion ouverte. Une seconde partie beaucoup
 plus importante est utilisée en tant que mémoire partagée par toutes les
-connexions.
+connexions (schématiquement).
 
 Chaque connexion est un processus différent (fork) et la principale particularité
  de PostgreSQL avant la version 9.3 était l'utilisation intensive de cette
  mémoire partagée. La consommation n'est plus aussi importante depuis.
 
 Sur la plupart des distributions les valeurs par défaut pour la mémoire sont très
- faibles, adaptées à une utilisation légère de PostgreSQL par une seul utilisateur.
+ faibles, adaptées à une utilisation légère de PostgreSQL par un seul utilisateur.
 Ceci parce que la plupart des distributions n'autorisent par défaut que des
 valeurs très petites pour la taille d'un fichier de mémoire partagée.
 Vous aurez donc assez souvent le besoin de modifier ces paramètres et de modifier
@@ -384,25 +430,28 @@ et n'impose plus la modification de SHMMAX et SHMALL dans la plupart des cas.
 
 --------------------------------------------------------------------------------
 
-* **wal_buffers** : taille réservé au cache des journaux transactions: 64KB par
- défaut: sur un serveur ou des transactions sont réellement en œuvre (pas
- uniquement des opérations en lecture) utiliser des valeurs entre 1Mo et 10Mo.
+### Mémoire
+
+* **wal_buffers** : taille réservé au cache des journaux transactions: 3% de
+ `shared_buffers` par défaut (soit 64KB): sur un serveur ou des transactions
+ sont réellement en œuvre (pas uniquement des opérations en lecture) et
+ parallélisées utiliser des valeurs entre 1Mo et 10Mo.
 * **shared_buffers** : 128MB par défaut (je crois) taille réservée au cache des
 données : le plus est le mieux, plus vous pourrez mapper de vos données physiques
 dans ce cache mieux le serveur se portera. Le problème étant que vous devez
 disposer de cette mémoire (sinon le serveur va swapper, ce qui serait pire).
 On conseille souvent d'utiliser au départ un quart de la mémoire du serveur
-(donc 500MB sur un serveur qui dispose de 2Go de RAM). En mode 32bit la limite
-est de 2GB. Surveillez la statistique **cache_miss** pour voir si votre
-paramètre est trop petit.
+(**25%**, donc 500MB sur un serveur qui dispose de 2Go de RAM). En mode 32bit
+la limite est de 2GB. Surveillez la statistique **cache_miss** pour voir si
+votre paramètre est trop petit.
 
 **ATTENTION:** sur Windows ne jamais utiliser plus de 512MB en shared_buffers.
 Les performances s'effondrent une fois ce seuil dépassé. Il faudra jouer sur
 d'autres paramètres.
 
-Sur les PostgreSQL récents il est conseillé de ne pas dépasser 40 pourcent de la
-RAM du serveur sous Linux. Pour que le cache disque de l'OS puisse prendre le
-relais.
+Sur les PostgreSQL récents il est conseillé de ne pas dépasser **40%** de la
+RAM du serveur sous Linux. Pour que le **cache disque de l'OS** puisse prendre
+le relais.
 
 Quand vous essayerez de démarrer ou redémarrer postgreSQL avec des nouvelles
 valeurs dans ces champs il est probable que celui-ci refuse de se lancer à cause
@@ -412,6 +461,8 @@ celui-ci indique la valeur que le serveur à tenté d'allouer:
 .fx: wide
 
 --------------------------------------------------------------------------------
+
+### Mémoire
 
     > /etc/init.d/postgresql-9.6 restart
     Restarting PostgreSQL 9.6:
@@ -440,6 +491,7 @@ celui-ci indique la valeur que le serveur à tenté d'allouer:
 
 --------------------------------------------------------------------------------
 
+### Mémoire
 
 Pour modifier les paramètre SHMIN et SHMMAX on utilise sysctl ainsi:
 
@@ -466,6 +518,8 @@ J2EE. Donnez lui une machine dédiée, avec aussi des disques rapides et sûrs.
 
 --------------------------------------------------------------------------------
 
+### Mémoire
+
 Pour la **consommation par processus** le paramètre important est :
 
 * **work_mem** : cela représente la mémoire que le processus à le droit
@@ -486,30 +540,34 @@ explain montre). S'il a besoin de plus de mémoire il devra passer par un
  ralentira le temps d'exécution des requêtes et augmentera l'activité sur disque
  (qui est lente).
 
+<div class="warning"><p>
 Vous pouvez affecter cette valeur à l'aide des variables utilisateur, par exemple
 au niveau des rôles. Ainsi certains rôles effectuant du travail sur des quantités
 importantes de données pourront avoir un work_mem par défaut plus important.
+</p></div>
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
+### Mémoire
+
 * **maintenance_work_mem** : 16MB par défaut, montez à 100MB voir plus. Il
- s'agit de la mémoire allouée aux processus du superutilisateur effectuant de
- s opérations de maintenance comme les **vaccuums** ou les **réindexations**,
+ s'agit de la mémoire allouée aux processus du superutilisateur effectuant des
+ opérations de maintenance comme les **vacuums** ou les **réindexations**,
  les clusters etc. Il n'y a normalement pas de parallélisations de ces tâches
 
 Lors d'un import de données massif, il n'y aura à priori que des connexions
 destinées à cet import (si vous coupez les autres via le pg_hba.conf par
 exemple), pensez à augmenter les valeurs de work_mem et maintenance_work_mem **temporairement** pour accélérer l'import.
 
-* **effective_io_concurrency** : indiquez le nombre de disque présents sur le
- système
-
 --------------------------------------------------------------------------------
 
 Signalons enfin d'autre paramètres proches de l'utilisation mémoire mais qui
 sont plus des réglages informatifs:
+
+* **effective_io_concurrency** : indiquez le nombre de disque présents sur le
+ système
 
 * **effective_cache_size** : 128MB par défaut il ne s'agit pas d'un paramètre de
  consommation de mémoire par PostgreSQL. Il s'agit d'un paramètre d'information
@@ -527,8 +585,8 @@ moyenne du marché baissez ce coût. Par exemple à 3.0 ou 2.0. Dans l'idéal
 faites des benchmarks pour mesurer les gains éventuels sur des requêtes.
 
 <div class="warning"><p>
-Ces deux paramètres peuvent jouer en faveur des parcours d'index au lieu de
-parcours séquentiels lors de l'exécution des requêtes.
+Ces deux derniers paramètres peuvent jouer en faveur des parcours d'index au
+lieu de parcours séquentiels lors de l'exécution des requêtes.
 </p></div>
 
 .fx: wide
@@ -560,6 +618,8 @@ sur Internet en recopiant les messages d'erreur retrouvés dans les logs.
 
 --------------------------------------------------------------------------------
 
+# logs
+
 Si vous voulez tester les logs en CSV vous devrez paramétrer vos logs ainsi :
 
     # eventlog & stderr ne sont pas requis pour les logs csv
@@ -584,7 +644,9 @@ Si vous voulez tester les logs en CSV vous devrez paramétrer vos logs ainsi :
 
 --------------------------------------------------------------------------------
 
-Si vous voulez importer vos logs CSV dans une table PostgreSQL vous aurez besoin de cette table:
+# logs
+
+Puis, pour importer vos logs CSV dans une table PostgreSQL créez cette table:
 
     CREATE TABLE postgres_log
     (
@@ -617,7 +679,10 @@ Si vous voulez importer vos logs CSV dans une table PostgreSQL vous aurez besoin
 .fx: wide
 
 --------------------------------------------------------------------------------
-Ensuite importez le log dans la table:
+
+# logs
+
+Enfin, importez le log dans la table:
 
     COPY postgres_log FROM '/chemin/complet/vers/logfile.csv' WITH csv;
 
@@ -637,13 +702,16 @@ pas de le regarder. Le jour où ce fichier ne sera pas vide ce sera pour des
 problèmes critiques <b>« on ne réalise pas qu'on en a besoin jusqu'à ce qu'on en
  ai besoin, et ce jour là on en a vraiment besoin ».</b>
 </p></div>
+
+.fx: wide
+
 --------------------------------------------------------------------------------
 
 ### 20.5.4. Les journaux de transactions (WAL) et CHECKPOINT
 
-Quand des écritures on lieu dans postgresql il y a toujours une transaction.
+Quand des écritures on lieu dans postgresql il y a toujours une **transaction**.
 Chacune de ces transactions est tracée dans le WAL (Write Ahead Logging).
-Nous pouvons d'ailleurs observer que parmis les premiers processus de PostgreSQL
+Nous pouvons d'ailleurs observer que parmi les premiers processus de PostgreSQL
 l'un d'entre eux est dédié à cette opération:
 
     >ps auxf|grep postgres
@@ -664,15 +732,17 @@ Cela permet la reprise d'un état cohérent de la base en cas d'arrêt brutal, s
 Le WAL est constitué de fichiers. Ces fichiers contiennent des copies des pages
  mémoire des tables et des informations de modification à effectuer.
  Quand un fichier WAL est rempli un nouveau fichier WAL est créé. Ces fichiers
- font 16MB. Ils sont stockés dans le répertoire pg_xlog du dossier data de la
- base.
+ font 16MB.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-Les fichiers WAL (journaux) sont stockés dans le dossier `pg_xlog` du répertoire
- des données. Il peut s'avérer très utile d'utiliser un disque différent sur ce
+### wal & checkpoint
+
+Les fichiers WAL (journaux) sont stockés dans le dossier `pg_xlog` ou `pg_wal`
+(après la version 10) du répertoire des données.
+Il peut s'avérer très utile d'utiliser un disque différent sur ce
  point de montage du système de fichier (parallélisation, gestion du disque
 cache, taux d'IO du disque). Sur Windows voir les systèmes de JUNCTION.
 
@@ -698,6 +768,8 @@ Les checkpoints peuvent se produire à plusieurs moments:
 
 --------------------------------------------------------------------------------
 
+### wal & checkpoint
+
 On peut alors imaginer que l'opération de CHECKPOINT est une **opération coûteuse**
  pour l'OS, toutes les écritures sont reportés à un moment ultime, quand ce
 moment intervient un grand nombre d'écritures doivent se faire.
@@ -712,11 +784,12 @@ un lissage plus fort encore de ces écritures. Mais vous pouvez aussi repousser
 
 <div class="warning"><p>
 Remarquez le paramètre <b>checkpoint_warning</b> à <b>30s</b> par défaut.
-Si plus de 3 WAL sont créés en moins de 30s un nouveau CHECKPOINT très
+Si plus de 1Go de données ou de 3 WAL sont créés en moins de 30s un nouveau
+CHECKPOINT très
 rapproché de l'ancien sera généré et vous aurez une ligne de warning dans les
 logs, si vous voyez un grand nombre de ces warnings lors d'une activité
 régulière de la base cela signifiera que vous devrez <b>augmenter votre valeur
-de checkpoint_segments qui est à 3 par défaut</b>.
+de max_wal_size ou checkpoint_segments</b> (en fonction de votre version).
 </p></div>
 
 --------------------------------------------------------------------------------
@@ -726,6 +799,8 @@ de checkpoint_segments qui est à 3 par défaut</b>.
 .fx: title2
 
 --------------------------------------------------------------------------------
+
+### considérations matérielles
 
 Plus vous aurez de CPU (nombre) plus vous pourrez traiter de requêtes en
  parallèle. Et cela pourra aussi devenir crucial lors de l'utilisation de
@@ -755,7 +830,9 @@ supportant un grand nombre d'Entrées/Sorties, spécifiquement pour le WAL.
 
 --------------------------------------------------------------------------------
 
-Si vos disques sont en RAID http://fr.wikipedia.org/wiki/RAID_%28informatique%29
+### considérations matérielles
+
+Si vos disques sont en RAID [cf wikipedia](http://fr.wikipedia.org/wiki/RAID_%28informatique%29)
  notez qu'un **RAID5** peut ralentir les opérations d'écritures, le meilleur
  système de RAID est le **RAID1+0** (mirroring et agrégation), mais il est assez
 coûteux en nombre de disques.
@@ -764,13 +841,14 @@ Pour des volumes vraiment très gros vous devrez étudier les différents systè
 de SAN à disposition, mais évitez les système de disque réseau type NFS ou ISCSI
 si vous pouvez utiliser des vrais disques avec du RAID matériel.
 
-Multipliez les **cartes réseau** et ne mélangez pas les différents flux réseaux.
-Si vous avez des **flux de réplication** ils ne devraient pas passer par les
-mêmes cartes réseau que les flux à destination des serveurs d'application.
-Vous pourrez de plus mieux **superviser** les évolutions de trafic des
-différents flux. Utiliser un réseau d'administration peut aussi permettre de
-régler des **politiques d'accès** (pg_hba.conf) ou d'éviter d'engorger le trafic
- réseau au moment des **sauvegardes**.
+Multipliez les **cartes réseau** et évitez de mélanger les différents flux
+réseaux pour
+
+* mieux **superviser** les flux
+* mieux **détecter** les évolutions dans ces flux
+* isoler les **flux de réplication**
+* faciliter les **politiques d'accès** dans le pg_hba.conf
+* mieux gérer le traffic des sauvegardes
 
 **Monitorez** et mesurez les impacts des changements de matériel et de configuration
 
@@ -782,10 +860,12 @@ régler des **politiques d'accès** (pg_hba.conf) ou d'éviter d'engorger le tra
 
 --------------------------------------------------------------------------------
 
+### Backup Wal
+
 Nous verrons par la suite que le WAL peut servir à des politiques de **réplication**.
 
 Dans un premier temps nous analyserons sa première utilité qui est de permettre
-un backup par sauvegarde des journaux de transactions (associé à un backup de
+un **backup par sauvegarde des journaux de transactions** (associé à un backup de
 l'état physique de la base à un instant couvert par ces journaux).
 
 Ce type de backup est très puissant puisque contrairement aux dumps il permet:
@@ -807,15 +887,39 @@ version récente de la base (et on peut s'arrêter à une transaction donnée).
 
 Ce système de backup existe et s'appelle le **WAL Archiving**.
 
-Ceci se fait en indiquant **'archive'** au lieu de **'minimal'** à l'option
-`wal_level` et en activant l'`archive_mode`, et l'`archive_command`.
+Ceci se fait en jouant sur querlques paramètres, le `wal_level`, l'`archive_mode`, et l'`archive_command`
+
+Le [`wal_level`](https://docs.postgresql.fr/11/runtime-config-wal.html#guc-wal-level)
+est un paramètre important dont les valeurs possibles on évolué entre les
+[premières version 9.x](https://docs.postgresql.fr/9.5/runtime-config-wal.html#guc-wal-level)
+et les versions 10 et 11.
+Sur la version 11 sa valeur par défaut est `replica`, qui est suffisant pour le
+mode backup, sur la version 9.5 on voit que la valeur par défaut est `minimal`.
+En mode `minimal` on accélère l'écriture des wal sur disque, car ils contiennent
+moins d'informations, mais on ne gère que le mode **'récupération de l'état de la base en cas d'arrêt catastrophique'**.
+
+--------------------------------------------------------------------------------
+
+### Archivage des wal
+
+<div class="warning"><p>
+Retenez les <b>principes généraux</b>, mais confirmez toujours les valeurs des
+ paramètres par rapport à votre version cible.
+</p></div>
+
+Pour le `wal_level` il nous faut un mode supérieur à `minimal` pour la gestion
+du backup, donc `replica` sur une version 11, ou encore `archive` sur des
+versions 9.5 ou 9.6.
+
+Nous allons aussi activer l'**archivage des journaux de transactions** avec
+ [`archive_mode`](https://docs.postgresql.fr/11/runtime-config-wal.html#guc-archive-mode), et l'`archive_command`.
 
 Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait de configuration commenté :
 
 --------------------------------------------------------------------------------
 
     # Activation de l'archivage WAL
-    wal_level = archive
+    wal_level = replica # ou archive sur les anciennes versions
 
     # Ceci va activer la commande d'archivage
     archive_mode = on
@@ -823,21 +927,19 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # Ceci est la commande utilisée par PostgreSQL pour archiver les logs
     # %p : chemin du fichier à archiver (le journal de transaction original)
     # %f : le nom du fichier sans le chemin
-    # la commande ne doit retourner 0 en code sortie
-    # qu'en cas de succès!!!
+    # la commande ne doit retourner 0 en code sortie qu'en cas de succès!!!
     # Il s'agit ici d'un script de backup incrémental
     # Quand le ficher WAL est plein ou trop vieux il sera archivé
-    # à l'aide de cette commande et un nouveau WAL sera utilisé par
-    # le serveur
+    # à l'aide de cette commande et un nouveau WAL sera utilisé par le serveur
     # En cas de succès de l'archivage le fichier WAL peut être
     # supprimé ou réutilisé par postgreSQL
     # Ici nous pourrions aussi utiliser un script qui au passage ferait
-    # une compression une utiliser un pipe pour cela (|)
+    # une compression et utiliser un pipe pour cela (|)
     archive_command = 'test ! -f /mnt/serveur/archive/%f && cp -i %p /mnt/serveur/archive/%f </dev/null'
 
     # Ceci va forcer l'archivage d'un journal de transaction (WAL)
     # même si'il n'y a pas eu beaucoup de modifications.
-    # Donc en cas de période d'inactivité sur la base nous aurons ic
+    # Donc en cas de période d'inactivité sur la base nous aurons ici
     # le temps le plus long avant qu'une modification ne soit
     # réèllement archivée (300s->5min)
     archive_timeout = 300s
@@ -854,16 +956,14 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # WAL est synchronisé sur le disque
     #"fsync" ou "fsync_writethrough" : Force écriture réèlle sur le disque
     # sans que l'OS puisse utiliser son cache disque
-    # "open_datasync" : valeur par dfaut pour windows mais cela implique
-    # un cache disque
+    # "open_datasync" : valeur par défaut pour windows
     # "fsync" apelle fsync() à chaque commit,"fsync_writethrough" aussi
-    # en forcant les « write-through »des caches internes aux disques
-    # testez le support sur votre serveur
+    # en forcant les « write-through » des caches internes aux disques
     wal_sync_method = 'fsync_writethrough'
     # wal_sync_method = 'fsync'
 
     # checkpoint_completion_target indique que PostgreSQL peut utiliser
-    # ce % de checkpoint intervall time (5min par défaut)
+    # ce pourcentage de checkpoint_timeout (5min par défaut)
     # pour effectuer les vraies E/S disque lors des checkpoints
     # ici on utilise seulement 0.3, car 0.3*15min=4min30s
     checkpoint_completion_target = 0.3
@@ -871,26 +971,30 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
     # la valeur par défaut est 5min,
     # on pourrait la garder mais cela provoque une modif dans le WAL
     # toutes les 5 minutes (à cause du checkpoint enregistré dans le WAL)
-    # Donc comme un fichier WAL ne peut être plus vieuw que 5 minutes
+    # Donc comme un fichier WAL ne peut être plus vieux que 5 minutes,
     # cela génèrerait un fichier WAL toutes les 5 minutes au moins.
     # Nous le poussons à 15 minutes.
     # Cela signifie que les écritures de pages ne se feront sur le disque
-    # que toutes les 15 minutes si l'activité est faible
-    # Mais les fichiers WAL sont écrits sur disque à chaque fois eux,
-    # ce n'est pas trop grave.
+    # que toutes les 15 minutes si l'activité est faible.
+    # Les fichiers wal par contre restent écrits sur disque en permanence
     # Note: 15 minutes est uniquement un maximum,
-    # si 3 (checkpoint_segments) sont près un checkpoint sera effectué
+    # <v9.5 :si 3 (checkpoint_segments) sont près un checkpoint sera effectué
+    # >>v9.5 :si 1G (max_wal_size) d'écriture est passé un checkpoint sera effectué
     checkpoint_timeout = 15min
     # @deprecated in v9.5, cf min_wal_size and max_wal_size
     # checkpoint_segments = 3
+    # -------
+    # max_wal_size = 1GB
+    # min_wal_size = 80MB
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
 Le point important est **archive_command**. Le but de cette commande d'archivage
-est de recopier les fichiers WAL stockés dans le dossier `pg_xlog` **vers un
-endroit sûr**. La commande peut être un script complexe ou une simple ligne de
+est de recopier les fichiers WAL stockés dans le dossier `pg_xlog` ou `pg_wal`
+**vers un endroit sûr**.
+La commande peut être un script complexe ou une simple ligne de
 commande, le résultat est pour PostgreSQL **la certitude que ce WAL a été
 recopié à un endroit où il ne craint plus un arrêt brutal du serveur**.
 
@@ -939,7 +1043,7 @@ Indiquez ces paramètres dans <b>postgresql.conf</b>, créez un dossier (<b>mkdi
  -p /mnt/serveur/archive; chown -R postgres /mnt/serveur;</b>) qui ne sera pas
 déporté mais qui pourrait l'être. Redémarrez PostgreSQL puis testez l'effet du
  programme de génération de commandes (populate_app.php) sur les fichiers
- présents dans pg_xlog et dans votre répertoire d'archivage (/mnt/serveur/archive).
+ présents dans pg_wal et dans votre répertoire d'archivage (/mnt/serveur/archive).
 </p></div>
 
 .fx: wide
@@ -951,7 +1055,7 @@ déporté mais qui pourrait l'être. Redémarrez PostgreSQL puis testez l'effet 
 Sur une machine Windows on pourrait utiliser pour l'archive_command une commande
  de ce type:
 
-    archive_command = 'copy %p E:\\ExternalBackup\\pg_xlog\\%f'
+    archive_command = 'copy %p E:\\ExternalBackup\\pg_wal\\%f'
 
 Un des problèmes par contre sur windows est le `wal_sync_method` qui est à
 **'open_datasync'** par défaut, avec comme indiqué dans le commentaire de ce
@@ -978,7 +1082,7 @@ Les 3 opérations qui vont devoir être effectuées lors d'un backup sont:
   que vous avez donné. La requête retournera un résultat quand le checkpoint se
   terminera. *Si cette commande renvoie des erreurs vous devriez sans doute arrêter le backup (un backup précédent qui ne s'est pas terminé?).*
 * **2)** Faire **une copie de tout le contenu du répertoire des données.**
-  Il n'est pas nécessaire de copier le sous-répertoire pg_xlog. Celui-ci est
+  Il n'est pas nécessaire de copier le sous-répertoire pg_wal. Celui-ci est
   normalement déjà pris en charge par le système d'archivage des WAL.
   Une des techniques de sauvegarde du répertoire des données et d'utiliser un
   système de fichier capable de faire des **snapshots** en faisant des freeze
@@ -1070,9 +1174,10 @@ journaux de transaction nous devrions pouvoir tester une restauration.
 Quelques notes utiles sur **les restaurations**:
 
 * les segments de WAL qui ne seront pas retrouvés à l'emplacement d'archivage
- seront recherchés dans le dossier `pg_xlog` de la base s'il existe encore (nous
- somme en procédure de recovery, si ça se trouve on a plus ce dossier). Par
- contre **les segments présents dans le dossier d'archivage seront prioritaires**.
+ seront recherchés dans le dossier `pg_xlog` ou `pg_wal` de la base s'il existe
+ encore (nous  somme en procédure de recovery, si ça se trouve on a plus ce
+ dossier). Par contre **les segments présents dans le dossier d'archivage seront
+ prioritaires**.
 *  Avec une restauration on peut voir la gestion du temps dans PostgreSQL comme
   une **gestion parallèle du temps**. Un monde parallèle dans lequel les
   transactions de la restauration et les transactions éventuellement présente
@@ -1115,12 +1220,7 @@ certainement utile de **préparer à l'avance un fichier de configuration
     cp postgresql.conf postgresql.restore.conf
     cp postgresql.conf postgresql.orig.conf
 
-Vous pouvez aussi utiliser ces réglages sur les **machines de développement** si
- la stabilité de la base n'est pas une priorité par rapport au temps de réponse
-puisqu'il s'agit d'un fichier **optimisé en vitesse d'exécution** et non en
-intégrité des données physiques.
-
-Éditez donc cette copie postgresql.restore.conf puis changez ces paramètres:
+Éditez cette copie postgresql.restore.conf puis changez ces paramètres:
 
     # Ne pas tout mettre dans les fichiers WAL
     # par exemple exclure les instructions COPY du dump
@@ -1197,19 +1297,36 @@ intégrité des données physiques.
     log_hostname = off
     log_statement = 'none'
     log_temp_files=-1
+    # Si vous avez un postgreSQL récent il faut vérifier que les éléments de
+    # réplication sont bien suspendus
+    max_wal_senders = 0
+    max_logical_replication_workers = 0
 
 On teste ce fichier (assurez d'avoir une copie du postgresql.conf original avant de mettre celui-ci en place)
 
     cp postgresql.conf postgresql.orig.conf
     cp postgresql.restore.conf postgresql.conf
-    /etc/init.d/postgresql-9.6 restart
+    # et on relance avec une commande de ce type
+    # /etc/init.d/postgresql-9.6 restart
+    # ou encore
+    service postgresql restart 11
 
+.fx: wide
+
+--------------------------------------------------------------------------------
+
+### Testez le mode unsafe/recovery
 
 Testez le script `populate_app.php` sur cette version de PostgreSQL. Vous
 devriez obtenir des **gains de vitesse très très importants**. Mais vous n'avez
 plus en face un serveur de base de données très sûr en terme de stockage disque.
 
-.fx: wide
+<div class="warning"><p>
+Vous pouvez aussi utiliser ces réglages sur les <b>machines de développement</b> si
+ la stabilité de la base n'est pas une priorité par rapport au temps de réponse
+puisqu'il s'agit d'un fichier <b>optimisé en vitesse d'exécution</b> et non en
+intégrité des données physiques.
+</p></div>
 
 --------------------------------------------------------------------------------
 ### 20.7.6. Créer un crash
@@ -1281,8 +1398,8 @@ Si votre `archive_command` compressait les WAL la `restore_command` doit les dé
 `pg_decompresslog`.
 
 Cette commande va permettre à PostgreSQL de retrouver des segments de WAL afin
-de les recopier dans le `pg_xlog` local s'il en a besoin pour remettre l'état
- binaire des fichiers physiques de la base à jour.
+de les recopier dans le `pg_xlog` ou `pg_wal` local s'il en a besoin pour
+remettre l'état binaire des fichiers physiques de la base à jour.
 
 Pour le PITR regardez les paramètres `recovery_target_time` et
 `recovery_target_xid`.
@@ -1301,8 +1418,8 @@ Pour le PITR regardez les paramètres `recovery_target_time` et
     chown postgres recovery.conf
 
 Vous pouvez retirer le `backup_label` du DATADIR. Ici nous utilisons les **WAL
- archivés** et nous n'avons plus de WAL dans le *'vrai'* `pg_xlog`. Ce fichier
- contient des infos sur les derniers pg_xlog locaux valides, **mais ils ne sont
+ archivés** et nous n'avons plus de WAL dans le *'vrai'* `pg_wal`. Ce fichier
+ contient des infos sur les derniers wal locaux valides, **mais ils ne sont
  plus là**.
 
 Nous devrions être maintenant près pour lancer cette restauration (au fait, il
@@ -1436,13 +1553,48 @@ données voici [une histoire utile](http://www.depesz.com/index.php/2009/09/19/s
  un changement de version majeure de PostgreSQL qui demande un passage par le
  **dump & restore**.
 
+--------------------------------------------------------------------------------
+
+### pg_basebackup
+
+Nous avons utilisé l'API bas niveau de PostgreSQL lors du backup en appelant
+nous-même `pg_start_backup()` et `pg_stop_backup()`.
+
+Il existe un utilitaire [`pg_basebackup`](https://docs.postgresql.fr/11/app-pgbasebackup.html) qui effectue des choses équivalentes, et qui sera utilisé
+très souvent pour effectuer les sauvegardes de base servant à créer des réplicas:
+
+    /usr/lib/postgresql/11/bin/pg_basebackup \
+     --write-recovery-conf \
+     --waldir="/mnt/serveur/backup2_pg_wal" \
+     --wal-method=fetch \
+     --format=plain \
+     --label="backup via pg_basebackup plain" \
+     --progress \
+     --verbose \
+     -h localhost -p 5432 -U postgres \
+     --pgdata="/mnt/serveur/backup2/"
+
+    /usr/lib/postgresql/11/bin/pg_basebackup \
+     --write-recovery-conf \
+     --wal-method=fetch \
+     --format=tar --gzip \
+     --label="backup via pg_basebackup tar" \
+     --progress \
+     --verbose \
+     -h localhost -p 5432 -U postgres \
+     --pgdata="/mnt/serveur/backup3/"
+
+.fx: wide
 
 --------------------------------------------------------------------------------
+
 ## 20.9. Intégrité des données
 
 .fx: title2
 
 --------------------------------------------------------------------------------
+
+### intégrité des données
 
 PostgreSQL s'assure que les données écrites sur le disque sont valides et bien
 écrites, en travaillant à plusieurs niveaux ces vérifications d'écritures,
@@ -1450,27 +1602,37 @@ en stockant des pages mémoire dans les WAL, etc. Malheureusement une fois ces
 données stockées sur le disque la prise en compte des défaillances du disque
 n'est pas faite par PostgreSQL.
 
-* [http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability](http://docs.postgresqlfr.org/9.5/wal.html#wal-reliability)
+* [intégrité des wal](http://docs.postgresqlfr.org/11/wal.html#wal-reliability)
+ici on trouvera des conseils divers sur les réglages de disques sur les
+différents OS afin d'éviter par exemple que le disque stockant les WAL ne soit
+en mode cache d'écriture.
+
+Pensez aussi à spécifier les **options du système de fichier** dans les points de
+montage. Ainsi un système ext3 sera plus rapide avec `--data=writeback, noatime,
+nodiratime` sans que l'intégrité du système de fichier soit diminuée.
 
 Depuis PostgreSQL 9.3 des sommes de contrôle CRC sont utilisés à divers endroits
 pour se protéger des erreurs d'intégrité de données sur les disques (des bits
-qui disparaîtraient).
+qui disparaîtraient). Depuis postgreSQL 11 on peut faire tourner un utilitaire
+`pg_verify_checksums` sur un cluster éteint pour vérifier l'intégrité des données.
 
-Il n'y a pas par contre de protection contre des problèmes d'intégrité en RAM.
+* [Des détails en anglais](https://bsdmag.org/page-checksum-protection-in-postgresql/)
+ sur les vérifications d'intégrité de données. Où l'on voit qu'avec un `page checksum`
+ actif PostgreSQL détectera les altérations de données dans les pages de la base
+ mais ne fera pas les opérations de remise à zéro de ces pages sans interactions
+ manuelles.
 
-* [http://www.postgresql.org/docs/9.5/static/wal-reliability.html](http://www.postgresql.org/docs/9.5/static/wal-reliability.html) : ici on
-trouvera des conseils divers sur les réglages de disques sur les différents OS
-afin d'éviter par exemple que le disque stockant les WAL ne soit en mode cache d'écriture.
+Notez qu'il faut l'option `--data-checksum` à la création du cluster pour avoir
+ce fonctionnement. Cf [exemple](https://www.xf.is/convert-postgresql-cluster-to-use-page-checksums).
 
-Pensez aussi à spécifier les options du système de fichier dans les points de
-montage. Ainsi un système ext3 sera plus rapide avec `--data=writeback, noatime,
- nodiratime` sans que l'intégrité du système de fichier soit diminuée.
+.fx: wide
 
 --------------------------------------------------------------------------------
 ## 20.10. Exemple de Politique de backups
 
 <small>Nous présentons ici une politique de backups. Il peut en exister
-d'autres.</small>
+d'autres. Par exemple en n'activant ll'archivage des journaux de transactions
+qu'au moment des backups.</small>
 
 .fx: title2
 
@@ -1561,7 +1723,8 @@ En s'appuyant sur la politique de backup présentée, en cas de problèmes nous
 avons 4 cas:
 
 * **cas 1)-** il s'agissait d'un **arrêt brutal du serveur** (oups le fil),
-  nous allons relancer le serveur et tout sera remis en place par le `pg_xlog`.
+  nous allons relancer le serveur et tout sera remis en place par le `pg_xlog`
+  ou `pg_wall`.
   Vous avez éteint le courant. Quand PostgreSQL va se relancer il va rejouer
   les transactions qui ne sont pas dans le stockage binaire des tables (en
   dehors des WAL qui ne sont pas passés au checkpoint la dernière écriture de
@@ -1571,7 +1734,7 @@ avons 4 cas:
 
 Maintenant examinons les 2 cas ou vous n'arrivez pas à relancer le serveur à
 cause d'un problème un peu plus important. Par exemple le répertoire des
-binaires ou le répertoire des `pg_xlog` ont disparus (mauvaise journée quand
+binaires ou le répertoire des `pg_xlog` ou `pg_wal` ont disparus (mauvaise journée quand
 même...)
 
 --------------------------------------------------------------------------------
@@ -1584,14 +1747,14 @@ même...)
  qui a eu lieu la nuit dernière donc vieux d'un jour maximum.
 
 La procédure résumée en ligne :
-[http://www.postgresql.org/docs/9.5/static/continuous-archiving.html#BACKUP-PITR-RECOVERY](http://www.postgresql.org/docs/9.5/static/continuous-archiving.html#BACKUP-PITR-RECOVERY)
+[http://www.postgresql.org/docs/11/static/continuous-archiving.html#BACKUP-PITR-RECOVERY](http://www.postgresql.org/docs/11/static/continuous-archiving.html#BACKUP-PITR-RECOVERY)
 
 Mais peut être possédez vous une procédure encore plus détaillée, adaptée à
 votre cas, que vous avez déjà testé au moins une fois sur vos machines.
 
 Nous avons déjà effectué cette procédure lors du teste de recovery. Ajoutons
 simplement qu'il ne faut pas hésiter à faire une copie du répertoire `pg_xlog`
- du DATADIR actuel s'il est encore présent.
+ou `pg_wal` du DATADIR actuel s'il est encore présent.
 
 --------------------------------------------------------------------------------
 
@@ -1677,7 +1840,7 @@ démarrer. Démarrez alors PostgreSQL avec l'option `-P` pour qu'il effectue des
 vérifications sur les index system. Regardez aussi cette page pour voir ce que
 vous pourriez faire:
 
-[http://www.postgresql.org/docs/9.5/static/runtime-config-developer.html](http://www.postgresql.org/docs/9.5/static/runtime-config-developer.html)
+[http://www.postgresql.org/docs/11/static/runtime-config-developer.html](http://www.postgresql.org/docs/11/static/runtime-config-developer.html)
 
 * **g)** rétablissez le **ph_hba.conf** et relancez PostgreSQL
 * **h)** faites une pause
@@ -1717,14 +1880,17 @@ décalage dans le temps**.
 
 Suivant les versions successives de PostgreSQL 9.x plusieurs améliorations
 diverses ont eu lieu au niveau des processus de réplication
-(*cascading streaming*, *streaming-only*, *multiple synchronous standbys*),
+(*cascading streaming*, *streaming-only*, *multiple synchronous standbys*,
+*replication slots*),
 ainsi que l'ajout d'éléments de base pour les réplications master-master.
+
+Il y a aussi la **réplication logique** qui est très différente.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-De très bons article publiés dans Linux Magazine France et rédigés en français
+De très bons articles publiés dans Linux Magazine France et rédigés en français
 par Guillaume Lelarge donnent des procédure détaillées sur la mise en place de
 tels système de réplication:
 
@@ -1742,18 +1908,18 @@ transactions il faut qu'ils respectent certaines contraintes:
 * il doivent avoir la même version majeure de PostgreSQL. Le format binaire des
   données pouvent être modifié lors d'un changement majeur de version.
 
-9.**0.4** et 9.**0.5** seront **compatibles**
+**9.0**.4 et **9.0**.5 seront **compatibles**
 
-9.**0.4** et 9.**1.0** ne le sont **pas**
+**10**.4 et **10**.5 seront **compatibles**
+
+**9.0**.4 et **9.1**.0 ne le sont **pas**, comme **10**.4 et **11**.2 non plus.
 
 * il faut être consistant au niveau du stockage binaire (32bit litlle endian
  != 64 bits big endian).
 * Une des autres limitation de ce type de réplication est qu'il concerne
  **l'ensemble d'un cluster PostgreSQL**, on ne travaille pas sur une base de
  données unique ou sur un set de tables unique (voir les replications par
- triggers type Slony et Londiste pour cela).
-
-
+ triggers type Slony et Londiste pour cela, ou la réplication logique).
 
 --------------------------------------------------------------------------------
 ### 20.11.2. WARM STANDBY
@@ -2039,11 +2205,13 @@ Plusieurs nouveaux paramètres entrent en jeu:
   « exécution » du cycle de synchronisation, la valeur doit être un multiple
   de 10ms
 * **wal_keep_segments** : nombre de WAL qui peuvent être conservés dans
-  `pg_xlog` pour la réplication par flux. Si l'esclave **prends du retard** et
-  que les segments ne sont plus dans pg_xlog il devra attendre la récupération
-  via l'archivage des WAL (comme en hot_standby ou warm standby classique).
+  `pg_xlog` ou `pg_wal` pour la réplication par flux. Si l'esclave **prends du
+  retard** et que les segments ne sont plus dans leur dossier il devra attendre la
+  récupération via l'archivage des WAL (comme en hot_standby ou warm standby
+  classique).
   Le défaut à 0 signifie que le maître ne fais pas attention à conserver ou pas
-  des WAL pour la réplication par flux, il gère ces WAL dans le pg_xlog comme
+  des WAL pour la réplication par flux, il gère ces WAL dans le `pg_xlog` ou
+  `pg_wall` comme
   d'habitude, en fonction des CHECKPOINT principalement.
 
 .fx: wide
@@ -2179,7 +2347,8 @@ et/ou tables)
   peut à tout moment reprendre la main sur le maître avec une bascule de type
   **keepalived**, il devient le maître de DRBD et peut alors lancer sa propre
   version de la base qui disposera des mêmes fichiers physiques (un partage
-  DRBD devrait **inclure le partage du pg_xlog** pour éviter d'avoir à faire une
+  DRBD devrait **inclure le partage du pg_xlog ou pg_wal** pour éviter d'avoir
+  à faire une
   restauration). Certains système des fichiers avancés comme **OCFS-2** peuvent
   supporter des écritures concurrentes sur le partage DRBD, mais il serait
   dangereux d'utiliser DRBD dans ce sens avec des systèmes de base de données.
