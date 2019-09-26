@@ -1309,7 +1309,7 @@ On teste ce fichier (assurez d'avoir une copie du postgresql.conf original avant
     # et on relance avec une commande de ce type
     # /etc/init.d/postgresql-9.6 restart
     # ou encore
-    service postgresql restart 11
+    systemctl restart postgresql@11-main
 
 .fx: wide
 
@@ -1926,13 +1926,16 @@ transactions il faut qu'ils respectent certaines contraintes:
 
 Obtenir des serveurs en **WARM STANDBY** est assez proche de la problématique de
 la restauration basée sur les WAL. Travaillez en binôme. L'un des deux serveurs
-sera le maître et l'autre l'esclave.
+sera le maître et l'autre l'esclave. Ou bien montez [une deuxième instance
+locale](https://stackoverflow.com/questions/37861262/create-multiple-postgres-instances-on-same-machine).
 
 On commence par arrêter les serveurs PostgreSQL sur le maître et l'esclave.
 
 Sur le maître on garde notre configuration où les WAL sont archivés avec
 l'archive_command. Nous allons simplement modifier cette commande pour que
-l'archivage sur fasse sur le serveur esclave. Nous avions:
+l'archivage sur fasse sur le serveur esclave si vous êtes en doublon.
+
+Nous avions:
 
     archive_command = 'test ! -f /mnt/serveur/archive/%f && cp -i \
       %p /mnt/serveur/archive/%f </dev/null'
@@ -1951,7 +1954,10 @@ sur le **/mnt/serveur/archive** du maître.
 
 --------------------------------------------------------------------------------
 
-Il faut aussi bien sur tester une commande scp avec le user postgres à
+### warm stand-by réseau
+
+Toujourssi vous êtes en réseau, il faut aussi bien sur tester une commande scp
+avec le user postgres à
 destination de cette machine (par exemple en recopiant une vieiile archive que
 nous avions dans notre /mnt/serveur/archive dans le même répertoire sur l'autre
 machine). Nous avons écris un commande scp où la connexion ssh se fait sans
@@ -1976,6 +1982,8 @@ faudrait que l'utilisateur postgres possède un mot de passe.
 .fx: wide
 
 --------------------------------------------------------------------------------
+
+### warm stand-by réseau
 
 Sur le serveur esclave on passe donc root et on tape ces commandes:
 
@@ -2002,13 +2010,40 @@ script `populate_app.php`).
 
 --------------------------------------------------------------------------------
 
+### warm stand-by local
+
+Pour tester en local on créé une deuxième instance de postgreSQL 11.
+
+    pg_createcluster -u postgres -g postgres \
+      -d /var/lib/postgresql/11bis/main \
+      -l /var/log/postgresql/postgresqlbis-11-main.log \
+      -p 5436 \
+      11 11bis
+    pg_lsclusters
+
+Si vous n'êtes pas sur une distribution de type Debian il faudra utiliser à la
+place les vraies commandes PostgreSQL:
+
+    initdb -D /var/lib/postgresql/11bis/main
+    pg_ctl -D /var/lib/postgresql/11bis/main \
+     -o "-p 5436" \
+     -l /var/log/postgresql/postgresqlbis-11-main.log
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+
+### warm stand-by
+
 On en profite aussi pour relancer notre script de backup afin d'avoir une copie
  binaire de la base à donner à l'esclave comme point de départ.
 
     > sudo ./backup.sh
     # puis on recopie ce backup binaire sur l'esclave, quelque part
+    # en mode réseau
     > scp /mnt/serveur/backup/backup.tar \
       serveuresclave:/mnt/serveur/backup/
+    # en local le fichier est déjà local, donc on ne fait rien
 
 Sur l'esclave on modifie quelques éléments:
 
@@ -2017,25 +2052,41 @@ contenu des fichiers physiques de la base
 
     cp /mnt/serveur/backup/backup.tar /backup.tar
     [root@localhost ~]# cd /
+    # si vous êtes en mode réseau :
     [root@localhost /]# tar xfv backup.tar
+    # si vous êtes en mode local :
+    [root@localhost /]# tar xfv  backup.tar \
+       --transform 's#postgresql/11/main#postgresql/11bis/main#'
 
 Vérifiez que les deux serveurs sont **à la même heure!** Utilisez un protocole
 comme **ntp** pour avoir des serveurs à l'heure.
-
-On suspend l'archivage des WAL et on passe le `wal_level` à sa valeur par défaut.
-Sur l'esclave on n'a pas besoin de générer une deuxième version des journaux de
-transactions
-
-    wal_level = minimal
-    archive_mode = off
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
+### warm stand-by
+
+Sur le serveur esclave de la réplication il faut une configuration différente.
+
+On suspend l'archivage des WAL et on passe le `wal_level` à une valeur minimale.
+Sur l'esclave on n'a pas besoin de générer une deuxième version des journaux de
+transactions
+
+    wal_level = minimal
+    archive_mode = off
+    hot_standby = off
+    # si cette option existe et vaut autre chose
+    # par exemple sur un postgresql11 qui par défaut est en mode replica
+    max_wal_senders = 0
+
+--------------------------------------------------------------------------------
+
+### warm stand-by
+
 <div class="warning"><p>
-<b>ATTENTION:</b> en recopiant le dossier physique venant du maître on a sans
-doute recopié son <b>pg_hba.conf</b> et son fichier <b>postgresql.conf</b>.
+<b>ATTENTION:</b> en recopiant le dossier physique venant du maître on a
+peut-être recopié son <b>pg_hba.conf</b> et son fichier <b>postgresql.conf</b>.
 Il faut donc bien modifier ces valeurs de configuration après la copie.
 Un script pourrait utiliser du sed, ou recopier un fichier de configuration
 sauvegardé sous un autre nom.
@@ -2051,13 +2102,15 @@ peu spéciale puisqu'elle utilise le programme `pg_standby`. (faites un
 contrib de postgreSQL).
 
     # cette commande tient sur une ligne
-    restore_command = '/path/to/9.0/bin/pg_standby -d -t \
+    restore_command = '/usr/lib/postgresql/11/bin/pg_standby -d -t \
      /tmp/trigger_stanby_end /mnt/serveur/archive %f %p %r \
      >>/var/log/postgresql/pg_standby.log 2>&1'
 
 .fx: wide
 
 --------------------------------------------------------------------------------
+
+### warm stand-by
 
 Nous pouvons voir que le programme va essayer de faire un log de ce qui lui
 arrive dans `/var/log/postgresql/pg_standby.log`, on va donc initialiser ce
@@ -2071,6 +2124,8 @@ le DATADIR récupéré du maitre appartient bien à l'utilisateur postgres.
 Enfin on peut démarrer notre serveur esclave
 
     /etc/init.d/postgresql start
+    #ou
+    systemctl start postgresql@11-main
 
 Celui-ci se lance en mode restauration.
 
@@ -2080,16 +2135,21 @@ commandes:
     ps auxf|grep postgres
     tail -f /var/log/postgresql/pg_standby.log
 
-Si la commande de popualtion de la base (`populate_app.php`) tourne sur le
-master on pourra visualiser l'arrivée progressive des WAL sur l'esclave.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-Par contre toute tentative d'accès direct à la base esclave est impossible.
+### warm stand-by
 
-    psql -Upostgres -d postgres -h localhost -p 5432
+Si la commande de population de la base (`populate_app.php`) tourne sur le
+master on pourra visualiser l'arrivée progressive des WAL sur l'esclave.
+
+
+Par contre toute tentative d'accès direct à la base esclave est impossible (ici
+sur le 5432, mais si c'est un clone local c'est le 5436).
+
+    psql -Upostgres -d postgres -p 5432
 
 Par rapport à une restauration classique nous avons le programme `pg_standby`
 qui est en fait en attente d'un fichier que nous lui avons indiqué dans la
@@ -2097,18 +2157,25 @@ commande. Tant que ce fichier « trigger file »  `/tmp/trigger_stanby_end`
  n'existe pas pg_standby force le serveur à rester en mode restauration (en
  attente de WAL), et donc le serveur est injoignable.
 
+--------------------------------------------------------------------------------
+
+### warm stand-by
+
+
 Arrêtons la réplication en créant ce fichier:
 
     touch /tmp/trigger_stanby_end
 
-On obtient alors une base indépendant de la base maître. La création de ce
+On obtient alors une base **indépendante** de la base maître. La création de ce
 **« fichier trigger »** est donc plutôt à la charge d'un service comme
 **keepalived** qui démarre le service sur l'esclave lors d'une bascule.
 
-Repasser l'esclave en statut esclave demande de repartir d'un backup binaire du
-maître.
+Repasser l'esclave en statut esclave demande de **repartir d'un backup binaire du
+maître.**
 
 --------------------------------------------------------------------------------
+
+### warm stand-by
 
 Une **bascule retour (failback)** devrait être prévue dans vos procédures, sans
 doute à partir d'une sauvegarde de ce nouveau maître (peut-être alors
@@ -2118,7 +2185,7 @@ backup binaire)
 <div class="warning"><p>
 A noter: il existe des outils libres pour simplifier la mise en œuvre d'une
 réplication <b>WARM STANDBY</b> : <b>walmgr</b> de Skype et <b>pitrtools</b> de
-Command Prompt.
+Command Prompt par exemple, ainsi que le programme <b>pg_basebackup</b>.
 </p></div>
 
 --------------------------------------------------------------------------------
@@ -2128,7 +2195,7 @@ PostgreSQL 9 introduit une variation sur le **Warm Standby** qui est donc le
 **Hot Standby**.
 
 Dans ce mode la connexion au serveur esclave est possible et nous affiche le
-contenu de la base en décalé (l'esclave ne dispose que des journaux transférés
+contenu de la base en **décalé** (l'esclave ne dispose que des journaux transférés
 – on parle de **log shipping**).
 
 On peut réduire le décalage en jouant sur des paramètres **archive_timeout** de
@@ -2137,6 +2204,9 @@ fichiers WAL est rapide entre le maître et l'esclave et que les scripts
 d'archivage et de restauration font un nettoyage efficace des WAL qui ne sont
 plus utiles.
 
+--------------------------------------------------------------------------------
+
+### hot standby
 
 On commence par arrêter le serveur esclave qui est sans doute devenu maître à
 la fin de l'exercice précédent, et on supprime le fichier
@@ -2145,9 +2215,8 @@ la fin de l'exercice précédent, et on supprime le fichier
 On modifie le fichier `postgresql.conf` du maître pour passer à un niveau un
 peu supérieur de WAL:
 
-    wal_level = 'hot_standby'
-
---------------------------------------------------------------------------------
+    wal_level = 'hot_standby' # version <10
+    wal_level = 'replica' # version >=10
 
 Puis comme dans le WARM STANDBY nous devons:
 
@@ -2157,25 +2226,60 @@ Puis comme dans le WARM STANDBY nous devons:
 * **décompresser** le backup sur l'esclave
 * s'assurer que tous les fichiers appartiennent bien à postgres
 
-Là nous allons modifier le fichier `postgresql.conf` de l'esclave qui doit
-contenir le paramétrage du maître, pour lui indiquer le paramétrage de l'esclave
-en hot_standby, en gras j'indique ce qui change par rapport au warm standby:
+--------------------------------------------------------------------------------
+
+### hot standby
+
+Là nous allons modifier le fichier `postgresql.conf` de l'esclave pour lui
+indiquer le paramétrage de l'esclave en hot_standby, en gras j'indique ce qui
+change par rapport au warm standby:
 
 <pre><code>wal_level = minimal
 archive_mode = off
+max_wal_senders = 0
 <b>hot_standby = on</b>
 </code></pre>
 
-Ensuite nous devons remettre en place un fichier `recovery.conf`, identique à
-celui du warm standby, contenant la `commande pg_stanby`. Puis :
+**Stoppez le serveur esclave.**
+On le réinitialise avec cette fois la commande pg_basebackup.
+Ici en mode local je dépose les fichiers directement dans le dossier de
+l'esclave, en mode réseau il faut retransférer tout ça au bon endroit.
 
-    /etc/init.d/postgresql-9.6 start
+    rm -rf /var/lib/postgresql/11bis/main/
+    mkdir /var/lib/postgresql/11bis/main/
+    chown postgres:postgres /var/lib/postgresql/11bis/main/
+    chmod 0700 /var/lib/postgresql/11bis/main/
+    /usr/lib/postgresql/11/bin/pg_basebackup \
+      --wal-method=fetch \
+      --format=plain \
+      --label="backup via pg_basebackup plain" \
+      --progress \
+      --verbose  \
+      -h localhost -p 5435 -U postgres \
+      --pgdata="/var/lib/postgresql/11bis/main/"
 
-Nous obtenons un serveur en lecture seule et en décalage léger avec le maître.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
+
+### hot standby
+
+Comme avec le warm standby, nous aurons besoin d'un `recovery.conf` dans le
+dossier des données de l'esclave, appartenant au user **postgres** et contenant:
+
+    # cette commande tient sur une ligne
+    restore_command = '/usr/lib/postgresql/11/bin/pg_standby -d -t \
+     /tmp/trigger_stanby_end /mnt/serveur/archive %f %p %r \
+     >>/var/log/postgresql/pg_standby.log 2>&1'
+
+Puis:
+
+    /etc/init.d/postgresql-11 start
+    # ou
+    systemctl start postgresql@11-11bis
+
+Nous obtenons un serveur en lecture seule et en décalage léger avec le maître.
 
 <div class="action"><p>
 En utilisant populate_app.php sur le maître constatez les différences entre les
@@ -2183,7 +2287,10 @@ deux serveurs en effectuant des requête de <b>count(*)</b> sur
 <b>app.commandes</b>.
 </p></div>
 
+.fx: wide
+
 --------------------------------------------------------------------------------
+
 ### 20.11.4. STREAMING REPLICATION
 
 Pour obtenir un serveur de type **hot standby** avec une **latence plus courte**,
@@ -2191,7 +2298,7 @@ un temps plus court de répercution des WAL, on peut donc réduire
 **l'archive_timeout**. Mais une meilleure solution existe.
 
 La **réplication par flux** va ajouter aux **Hot Standby** un **flux d'envoi
-direct des transactions** entre le maître et ses esclaves.
+direct des transactions** (des wal) entre le maître et ses esclaves.
 
 Au niveau du maître **des processus wal_sender** vont se charger d'envoyer des
 informations en flux tendus à des **processus wal_receiver** situés au niveau
@@ -2218,6 +2325,41 @@ Plusieurs nouveaux paramètres entrent en jeu:
 
 --------------------------------------------------------------------------------
 
+### REPLICATION SLOTS
+
+Imaginez un serveur maître.
+Au départ si il dispose d'un commande `archive_command`, il peut se débarrasser
+de ses fichiers wal dès lors que ceux-ci sont réputés sauvegardés à distance par
+cette commande.
+
+Il en garde quelques-uns en local pour assurer un reboot en cas de crash.
+
+Maintenant ce serveur possède quelques serveurs esclaves, l'un de ces esclaves
+peut se retrouver décalé dans le temps (par exemple ils est mis en pause).
+Il aura besoin au redémarrage de wals assez anciens. Si ces wal anciens ne sont
+plus disponibles pour le maître, il ne pourra **pas** les envoyer dans le flux
+de réplication et la réplication sera en échec pour cet esclave.
+
+L'arcive_command ets destinée à sauvegarder les wal, on pourrait avoir envoyé
+tous les wal à tous les esclaves, pour êtr erejoués au cas où.
+
+**On peut aussi prévoir de ne pas recycler les wals au niveau du serveur tant
+qu'un des esclaves ne l'a pas reçu**. Et maintenir cette information sur la
+rétention de wals par rapport aux différents clients de ces walls se manifeste
+avec les [**replication slots**](https://www.opsdash.com/blog/postgresql-replication-slots.html), qui sont déclaratifs.
+
+<div class="warning"><p>
+Travailler avec des slots de réplication est <b>dangereux</b> si vous n'avez pas
+une supervision opérationelle très active. Garder des wal en place sur le maître
+avoir un slot de réplication qui se bloque <a href="https://saifulmuhajir.web.id/postgresql-inactive-replication-slot-the-butterfly-effect/">peut avoir des effets indésriables</a>.
+</p></div>
+
+ .fx: wide
+
+--------------------------------------------------------------------------------
+
+### STREAMING REPLICATION
+
 Si l'esclave ne fonctionne qu'avec **un** wal_receiver et sans
 **restore_command** capable de récupérer des WAL archivés il faut absolument
 spécifier un nombre **assez élevé** dans wal_keep_segments afin d'éviter de
@@ -2236,11 +2378,10 @@ fichier **pg_hba.conf** cette ligne (adaptez l'adresse IP à votre cas):
     # TYPE  DATABASE        USER            CIDR-ADDRESS            METHOD
     host    replication     ultrogothe        192.168.1.13/24            trust
 
-On ajoute ensuite le 1er processus d'envoi des WAL en flux dans le
+On ajoute ensuite les premiers processus d'envoi des WAL en flux dans le
 **postgresql.conf** du maître (qui est déjà configuré pour du hot_standby):
 
-    max_wal_sender = 1
-
+    max_wal_sender = 10
 
 .fx: wide
 
@@ -2248,7 +2389,7 @@ On ajoute ensuite le 1er processus d'envoi des WAL en flux dans le
 
 Faites un restart du serveur PostgreSQL du maître
 
-    /etc/init.d/postgresql-9.6 restart
+    systemctl restart postgresql@11-main
 
 Si nous regardons du côté du serveur esclave nous avons toujours notre esclave
 en **HOT STANDBY**, avec un **recovery.conf actif**. Nous allons devoir
@@ -2271,15 +2412,15 @@ On modifie donc le **recovery.conf** (pas le **postgresql.conf*) de cette façon
     restore_command = 'cp /mnt/serveur/archive/%f %p'
     primary_conninfo = 'host=192.168.1.10 port=5432 user=ultrogothe'
     trigger_file = '/tmp/trigger_stanby_end'
-
+recovery_target_timeline = 'latest'
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-Il faut un user superutilisateur de la base. Vérifiez que l'utilisateur possède
-ce droit. Ici nous indiquons trust en nous filtrons sur l'adresse IP plus le
-masque de sous-réseau de l'esclave. Vous pourriez utiliser md5 pour forcer la
-vérification du mot de passe.
+Il faut un user superutilisateur de la base, et sur les dernières versions il faut même un droit spécial de réplication. Donnons ce droit à ultrogothe sur le maître:
+
+    ALTER ROLE ultrogothe
+	    REPLICATION;
 
 Consultez les logs de l'esclave pour d'éventuels problèmes de connexion et pour
 observer la réplication (faires un grep replication sur les fichiers de log).
@@ -2320,7 +2461,7 @@ d'une liste des tables et des clefs primaires de chaque table.
 Slony se charge ensuite, base par base, table par table, de répercuter les
 modifications quand elles arrivent sur les esclaves (un serveur peut être maître
 d'une base ou d'une partie des tables de la base, et esclaves sur d'autres bases
-et/ou tables)
+et/ou tables). **Ce qu'on retrouve dans postgreSQL11 avec la replication logique.**
 * **Pgpool II** : **réplication des requêtes**. Pgpool est un **pooler de
  connexions**, une des fonctionnalités offertes par un pooler est de répercuter
  sur tous les serveurs d'une grappe l'ensemble des requêtes effectuant des

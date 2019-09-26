@@ -359,11 +359,16 @@ Vous pouvez-voir que **le service PostgreSQL est suffixé avec son numéro de ve
     /etc/init.d/postgresql-9.5 start
 ou:
 
-    service postgresql
     service postgresql stop 9.5
     service postgresql start 9.5
     service postgresql stop
     service postgresql start
+
+Ou encore
+
+    systemctl start postgresql@10-main
+
+.fx: wide
 
 --------------------------------------------------------------------------------
 ## Initialisation

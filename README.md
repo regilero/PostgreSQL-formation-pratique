@@ -106,7 +106,6 @@ au groupe utilisé par votre serveur web.
 
 ## TODO
 
-* replication slots, avec warning : https://saifulmuhajir.web.id/postgresql-inactive-replication-slot-the-butterfly-effect/ https://www.opsdash.com/blog/postgresql-replication-slots.html
 * System Administration Functions https://www.postgresql.org/docs/10/functions-admin.html
 * advisory lock : use xact versions
 * simplifications sur gestions des droits aux départ de la formation

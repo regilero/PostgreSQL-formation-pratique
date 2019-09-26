@@ -1189,7 +1189,7 @@ service nom-du-service stop
       
       <!-- slide source: src/SupportCoursPostgreSQL1.md -->
       <div class="slide-wrapper">
-        <div class="slide">
+        <div class="slide wide">
           <div class="inner-wrapper">
             <div class="inner">
               
@@ -1203,12 +1203,15 @@ service nom-du-service stop
 /etc/init.d/postgresql-9.5 start
 </code></pre>
 <p>ou:</p>
-<pre><code>service postgresql
-service postgresql stop 9.5
+<pre><code>service postgresql stop 9.5
 service postgresql start 9.5
 service postgresql stop
 service postgresql start
 </code></pre>
+<p>la commande la plus stable étant</p>
+<pre><code>pg_ctlcluster 11 main start
+</code></pre>
+
               
             </div>
           </div>
