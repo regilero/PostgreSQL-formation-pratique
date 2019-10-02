@@ -1041,7 +1041,7 @@ Il y a de très nombreux opérateurs mathématiques et beaucoup de fonctions aus
 notons:
 
 * **round()** : arrondi mathématique (52.65 donne 53)
-* **ceil()** : arrondi à l'entier inférieur (52.65 donne 52), voir floor() pour le contraire.
+* **ceil()** : arrondi à l'entier supérieur (52.65 donne 53), voir floor() pour le contraire.
 * **random()** : un nombre réel aléatoire entre 0 et 1 (non compris)
 
 --------------------------------------------------------------------------------
