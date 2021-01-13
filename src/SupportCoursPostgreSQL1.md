@@ -366,7 +366,7 @@ ou:
 
 Ou encore
 
-    systemctl start postgresql@10-main
+    systemctl start postgresql@11-main
 
 .fx: wide
 
@@ -2247,6 +2247,34 @@ De même si nous tentons de modifier la structure d'une table:
     ALTER TABLE public.test1 ADD COLUMN foo integer;
     Tout le monde, en dehors d'ultrogothe, aura ce message d'erreur:
     ERROR: must be owner of relation test1
+
+
+-----------------------------------------------------------------
+### 12.8.7. SERIAL vs IDENTITY
+
+Depuis PostgreSQL 11 il est possible de ne plus utiliser les mots **serial/bigserial** mais d'utiliser à la place l'expression **GENERATED AS IDENTITY** (et donc de définir le type smallint, int, bigint classiquement).
+
+    CREATE TABLE test41 (
+        id bigserial PRIMARY KEY,
+        test_name VARCHAR NOT NULL
+    );
+    CREATE TABLE test42 (
+        id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        test_name VARCHAR NOT NULL
+    );
+    INSERT INTO test41(test_name)
+      VALUES ('test1'),('test2'),('testC')
+      RETURNING *;
+    INSERT INTO test42(test_name)
+      VALUES ('test1'),('test2'),('testC')
+      RETURNING *;
+
+-----------------------------------------------------------------
+
+* Le moteur retient mieux avec la deuxième forme que l'on a demandé un `serial`, en examinant la table dans pgAdmin on retrouve bien notre syntaxe et pas un un type bigint avec un default valant nextval() d'une série.
+*on règle queqlues problèmes potentiels liés à la gestion séparée des séquences
+* Plus de détails ici : https://www.2ndquadrant.com/en/blog/postgresql-10-identity-columns/
+* vous pouvez garder l'ancien système, par exemple pour partager des séquences entre plusieurs tables ou pour une compatibilité avec les version précédant la version 11.
 
 -----------------------------------------------------------------
 ## 12.9. DDL DML et DCL : et gestion avancée des droits
