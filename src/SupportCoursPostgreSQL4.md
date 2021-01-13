@@ -2524,7 +2524,70 @@ On trouvera beaucoup plus de ressources, et d'un meilleur niveau, pour Munin que
 pour Cacti.
 
 --------------------------------------------------------------------------------
-### 20.13.2. PgAgent
+### pg_monitor
+
+Un rôle spécial a été créé (v 10) pour autoriser la collecte d'informations.
+
+    GRANT pg_monitor TO user;
+
+> The pg_monitor, pg_read_all_settings, pg_read_all_stats and
+> pg_stat_scan_tables roles are intended to allow administrators to easily 
+> configure a role for the purpose of monitoring the database server. They 
+> grant a set of common privileges allowing the role to read various useful 
+> configuration settings, statistics and other system information normally 
+> restricted to superusers.
+
+--------------------------------------------------------------------------------
+### 20.13.2. PgSnap!
+
+* [http://pgsnap.projects.postgresql.org/](http://pgsnap.projects.postgresql.org/)
+* [http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/](http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/) (démo)
+
+PGSnap! Est un programme PHP qui **génère un rapport sur l'état de la base**.
+
+Je devrais plutôt dire qu'il génère un ensemble de rapports. Il s'agit d'un bon
+outil complémentaire de la supervision et qui permettra à un DBA d'avoir une
+vision de ses serveurs à la fois synthétique et détaillée pour les éventuels
+problèmes.
+
+Parcourez la démonstration pour découvrir les différents rapports. Remarquez la
+possibilité de demander les requêtes effectuées sur le catalogue pour pouvoir
+les réutiliser de votre côté en les adaptant.
+
+--------------------------------------------------------------------------------
+### 20.13.3. pgbadger
+
+* [http://dalibo.github.io/pgbadger/](http://dalibo.github.io/pgbadger/)
+* [https://github.com/dalibo/pgbadger](https://github.com/dalibo/pgbadger)
+* [démo](https://github.com/dalibo/pgbadger)
+
+
+Si vous trouvez PgSnap sympa et intéressant, **pgBadger** est en fait là pour
+faire **la même chose en mieux**.
+
+Il s'agit d'un analyseur de logs, qui va générer un rapport très complet et très
+graphique sur de nombreux éléments (requêtes gourmandes, répartition du traffic
+par type de requêtes, ar application, stats internes, vacuums, etc)
+
+Comme pour beaucoup d'analyseurs de logs, avec une base qui génère des logs
+quotidiens volumineux il faudra tester un fonctionnement.
+
+Par exemple mettre en place la génération du rapport chaque jour, et la rotation
+de logs de requêtes sur une journée max, retirer une partie des logs et donc
+du rapport, etc.
+
+--------------------------------------------------------------------------------
+### 20.13.4. pgmetrics
+
+https://pgmetrics.io/
+
+    wget https://github.com/rapidloop/pgmetrics/releases/download/v1.10.4/pgmetrics_1.10.4_linux_amd64.tar.gz
+    tar xvf pgmetrics_1.10.4_linux_amd64.tar.gz
+    cd pgmetrics_1.10.4_linux_amd64
+   ./pgmetrics --help
+
+--------------------------------------------------------------------------------
+### 20.13.5. PgAgent
 
 * [https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html](https://www.pgadmin.org/docs/pgadmin3/1.22/pgagent.html)
 
@@ -2536,7 +2599,7 @@ scripts systèmes et découper ses « jobs » en plusieurs étapes (steps).
 
 
 --------------------------------------------------------------------------------
-### 20.13.3. PgPool II
+### 20.13.6. PgPool II
 
 * [http://pgpool.projects.postgresql.org/](http://pgpool.projects.postgresql.org/)
 * [http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html](http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-fr.html)
@@ -2565,46 +2628,7 @@ parallélisation de traitement, bascules failover, etc).
 
 
 --------------------------------------------------------------------------------
-### 20.13.4. PgSnap!
-
-* [http://pgsnap.projects.postgresql.org/](http://pgsnap.projects.postgresql.org/)
-* [http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/](http://pgsnap.projects.postgresql.org/pagila2_snap_20111029/) (démo)
-
-PGSnap! Est un programme PHP qui **génère un rapport sur l'état de la base**.
-
-Je devrais plutôt dire qu'il génère un ensemble de rapports. Il s'agit d'un bon
-outil complémentaire de la supervision et qui permettra à un DBA d'avoir une
-vision de ses serveurs à la fois synthétique et détaillée pour les éventuels
-problèmes.
-
-Parcourez la démonstration pour découvrir les différents rapports. Remarquez la
-possibilité de demander les requêtes effectuées sur le catalogue pour pouvoir
-les réutiliser de votre côté en les adaptant.
-
---------------------------------------------------------------------------------
-### 20.13.5. pgbadger
-
-* [http://dalibo.github.io/pgbadger/](http://dalibo.github.io/pgbadger/)
-* [https://github.com/dalibo/pgbadger](https://github.com/dalibo/pgbadger)
-* [démo](https://github.com/dalibo/pgbadger)
-
-
-Si vous trouvez PgSnap sympa et intéressant, **pgBadger** est en fait là pour
-faire **la même chose en mieux**.
-
-Il s'agit d'un analyseur de logs, qui va générer un rapport très complet et très
-graphique sur de nombreux éléments (requêtes gourmandes, répartition du traffic
-par type de requêtes, ar application, stats internes, vacuums, etc)
-
-Comme pour beaucoup d'analyseurs de logs, avec une base qui génère des logs
-quotidiens volumineux il faudra tester un fonctionnement.
-
-Par exemple mettre en place la génération du rapport chaque jour, et la rotation
-de logs de requêtes sur une journée max, retirer une partie des logs et donc
-du rapport, etc.
-
---------------------------------------------------------------------------------
-### 20.13.6. pgfouine
+### 20.13.7. pgfouine
 
 * [http://pgfouine.projects.postgresql.org/](http://pgfouine.projects.postgresql.org/)
 pgFouine est un programme PHP, c'est un analyseur de logs.
@@ -2615,7 +2639,7 @@ Comme pgSnap c'est un outil qui est sans doute dépassé par bdPadger, mais que
 l'on trouve encore pour raisons historiques.
 
 --------------------------------------------------------------------------------
-### 20.13.7. d'autres?
+### 20.13.8. d'autres?
 
 * [https://wiki.postgresql.org/wiki/Performance_Analysis_Tools](https://wiki.postgresql.org/wiki/Performance_Analysis_Tools)
 * [https://wiki.postgresql.org/wiki/Monitoring](https://wiki.postgresql.org/wiki/Monitoring)
