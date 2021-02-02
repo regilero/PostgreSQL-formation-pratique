@@ -858,7 +858,7 @@ En regardant l'aide nous voyons que la commande `\d` peut s'écrire avec un gran
 Vous obtenez un résultat qui est paginé par le programme car le contenu est trop long pour tenir à l'écran (utilisez les flèches haut et bas pour naviguer).
 Pour sortir de ce programme de pagination du résultat il faut taper « `q` ».
 
-Certaines autres commandes permettent de changer de base de données courante (`\use`) ou d'effectuer des commandes en dehors de la ligne de commande (commandes système) ou de changer les options d'affichage, etc.
+Certaines autres commandes permettent de changer de base de données courante (`\connect`) ou d'effectuer des commandes en dehors de la ligne de commande (commandes système) ou de changer les options d'affichage, etc.
 
 ---------------------------------------------------------------------
 ## psql
