@@ -2,7 +2,7 @@
 
 --------------------------------------------------------------------------------
 
-copyright (c) 2012-2017 : [Makina Corpus](http://www.makina-corpus.com)
+copyright (c) 2012-2021 : [Makina Corpus](http://www.makina-corpus.com)
 
 .fx: alternate
 
