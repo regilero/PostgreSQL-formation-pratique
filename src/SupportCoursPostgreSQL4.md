@@ -2579,7 +2579,9 @@ du rapport, etc.
 --------------------------------------------------------------------------------
 ### 20.13.4. pgmetrics
 
-https://pgmetrics.io/
+Un utilitaire en ligne de commande pour rappatrier beaucoup d'informations utiles.
+
+[https://pgmetrics.io/](https://pgmetrics.io/)
 
     wget https://github.com/rapidloop/pgmetrics/releases/download/v1.10.4/pgmetrics_1.10.4_linux_amd64.tar.gz
     tar xvf pgmetrics_1.10.4_linux_amd64.tar.gz
