@@ -1756,7 +1756,7 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.2 Apports de PostgreSQL 10 et 11
+## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14
 
 Il a de nombreux éléments nouveaux dans les version 10 et 11:
 
@@ -1765,15 +1765,26 @@ Il a de nombreux éléments nouveaux dans les version 10 et 11:
 
 Mais s'il fallait ne retenir que quelques éléments nous citerions:
 
-* un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers applicqués sur les tables partionnées, etc. Avec encore des amélioration sattendues en version 12.
-* un gros travail sur le parallélisme dans l'exécution des requêtes
+* un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers appliqués sur les tables partionnées, etc. Avec encore des améliorations attendues en version 12.
+* un gros travail sur le parallélisme dans l'exécution des requêtes (qui là aussi se poursuit à chaque release depuis)
 * des améliorations sur les index de type HASH
-* des solutions nouvelles en administration et en réplication, comme la réplication logique, mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)
-* les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle
+* des solutions nouvelles en administration et en réplication, comme la réplication logique (qui arive en 11, puis s'ouvre aux tables partitionnées en 12), mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)
+* les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle. [Parcours d'index seul et index couvrants](https://docs.postgresql.fr/14/indexes-index-only-scans.html).
 * les colonnes **identity**, qui sont l'équivalent des `serial`, sans les bizarreries liées à la transformation de serial en `int+sequence`.
 
 .fx: wide
 
+--------------------------------------------------------------------------------
+## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14
+
+Rappelez vous d'utiliser la [Feature Matrix](https://www.postgresql.org/about/featurematrix/)
+
+Vous pourriez y découvrir des éléments nouveaux.
+
+Par exemple cette feature [STORED GENERATED COLUMNS](https://www.postgresql.org/docs/current/ddl-generated-columns.html).
+Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans `app`, qui utilisait des triggers pour calculer automatiquement ces valeurs, pourrait depuis la version 12 s'écrire automatiquement, **sans triggers**.
+
+.fx: wide
 
 --------------------------------------------------------------------------------
 ## 18.3 pg_upgrade, migration 9.x vers 11
