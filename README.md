@@ -111,11 +111,3 @@ au groupe utilisé par votre serveur web.
 * simplifications sur gestions des droits aux départ de la formation
 * revue d'exercices
 * pg_receivewal https://docs.postgresql.fr/10/app-pgreceivewal.html
-* role pg_monitor
-GRANT pg_monitor TO user;
-* pgmetrics
-
-    wget https://github.com/rapidloop/pgmetrics/releases/download/v1.7.0/pgmetrics_1.7.0_linux_amd64.tar.gz
-    tar xvf pgmetrics_1.7.0_linux_amd64.tar.gz
-    cd pgmetrics_1.7.0_linux_amd64
-   ./pgmetrics --help
