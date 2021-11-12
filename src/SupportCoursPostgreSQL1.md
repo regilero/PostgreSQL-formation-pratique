@@ -261,7 +261,7 @@ On trouvera aussi des articles intéressants sur le wiki PostgreSQL, comme
 Les possibilités techniques et fonctionnelles de PostgreSQL sont très étendues, il serait donc **inutile d'essayer de toutes les lister et de toutes les expérimenter**.
 Les documents d'explication en français existent et sont très complets. Nous choisissons donc d'orienter la formation sur des retours d'expériences réelles, sur de l'expérimentation, afin d'ouvrir les débats et de poser les principales questions.
 
-Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande `psql` mais nous utiliserons principalement le client d'administration graphique **pgAdmin** (version **pgadmin3** très souvent, mais **pgadmin4** est utilisable).
+Nous utiliserons donc des installations packagées de PostgreSQL, nous testerons la ligne de commande `psql` mais nous utiliserons principalement le client d'administration graphique **pgAdmin** (version **pgadmin4** très souvent, avec aussi des exemples **pgadmin3**).
 
 Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être fournis avec le support de formation.
 
@@ -939,9 +939,9 @@ Mais si vous n'êtes pas l'utilisateur postgres vous aurez certainement besoin d
 
 L'administration en ligne de commande a ses fans. Mais un outil graphique s'il est bien fait est certainement un atout indispensable pour le développeur de base de données comme pour l'administrateur.
 
-Cet outil existe pour PostgreSQL, il s'agit de **pgAdmin III**, souvent nommé **pgadmin**.
+Cet outil existe pour PostgreSQL, il s'agit de **pgAdmin III**, souvent nommé **pgadmin** (on parle du 4 juste après).
 
-Nous utiliserons principalement cet outil dans cette formation. Nous n'allons donc pas faire très long dans un premier temps. Signalons simplement qu'il est possible à partir de cet outil de se connecter à plusieurs serveurs, sous des identités différentes. Mais comme pour le client psql il faut disposer d'un client ayant la connaissance du schéma du pg_catalog du serveur, donc avec un client d'une version supérieure ou égale à celle du serveur.
+Les copies d'écrans dans ce support sont souvent tirées de pgadmin3. Nous n'allons donc pas faire très long dans un premier temps. Signalons simplement qu'il est possible à partir de cet outil de se connecter à plusieurs serveurs, sous des identités différentes. Mais comme pour le client psql il faut disposer d'un client ayant la connaissance du schéma du pg_catalog du serveur, donc avec un client d'une version supérieure ou égale à celle du serveur.
 
 pgAdmin effectue un grand nombre de requêtes sur le catalogue afin de nous présenter tous ces objets de façon graphique; Il n'y a pas de protocole de communication magique entre les clients et le serveur, tout se passe avec le langage SQL.
 
@@ -950,9 +950,9 @@ pgAdmin effectue un grand nombre de requêtes sur le catalogue afin de nous pré
 
 **pgadmin4** est arrivé en 2016, il s'agit d'une refonte de pgadmin3 (qui était en C++ Qt) en python et javascript/jQuery dans une version web mais avec aussi toujours un client lourd en C++/Qt.
 
-On retrouve les mêmes éléments que dans pgadmin3, avec des nouvelles fonctionnalités et des bugs et lenteurs liés à la jeunesse du produit.
+On retrouve les mêmes éléments que dans pgadmin3, avec des nouvelles fonctionnalités et des nouveaux bugs et lenteurs liés au départ à la jeunesse du produit. Il y a toujours à ce jour des bugs  (par exemple il vaut mieux ne pas tenter de détacher les fenêtres).
 
-Libre à vous de tester pgadmin4, pour l'instant il n'est pas encore présent dans les distributions et pgadmin3 nous servira de base, tout ce que vous y ferez sera bien sûr aussi faisable avec pgadmin4. Nous présenteront certains écrans sur la version 3 ou la 4.
+Pour la pratique, et surtout pour pouvoir discuter avec des Serveurs PostgreSQL récents, il vaut mieux préférer PgAdmin4 à la version 3. Les écrans ne sont pas très différents entre ces versions, en terme de fonctionnalités. Comme pour tous les clients, un client ancien ne permet pas de discuter avec des serveurs récents, même si l'ergonomie du client récent ets moins bonne.
 
 ---------------------------------------------------------------------
 ## 9.4. PhpPgAdmin: un client web
