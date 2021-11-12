@@ -1035,6 +1035,23 @@ Une chaîne qui contient un caractère échappé **doit** être préfixée avec 
 
 --------------------------------------------------------------------------------
 
+Sachant qu'il y a aussi la technique du **$$**
+
+    select $$ Demain dès l'aube 
+      à l'heure où blanchit la campagne.
+    
+    
+    $$;
+
+
+    select $DenseCourtesiesIntensifyGuiltily$ Demain dès l'aube 
+      à l'heure où blanchit la campagne.
+      avec des $$
+    
+    $DenseCourtesiesIntensifyGuiltily$;
+
+--------------------------------------------------------------------------------
+
 ### 14.5.2. Travailler avec les nombres
 
 Il y a de très nombreux opérateurs mathématiques et beaucoup de fonctions aussi,
