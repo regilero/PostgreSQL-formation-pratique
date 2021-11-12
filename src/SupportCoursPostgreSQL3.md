@@ -1784,6 +1784,8 @@ Vous pourriez y découvrir des éléments nouveaux.
 Par exemple cette feature [STORED GENERATED COLUMNS](https://www.postgresql.org/docs/current/ddl-generated-columns.html).
 Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans `app`, qui utilisait des triggers pour calculer automatiquement ces valeurs, pourrait depuis la version 12 s'écrire automatiquement, **sans triggers**.
 
+Ou encore le support natif du type **UUID** avec postgreSQL **13** (extension **uuid-ossp** avant cela).
+
 .fx: wide
 
 --------------------------------------------------------------------------------
