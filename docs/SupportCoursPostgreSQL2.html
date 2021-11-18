@@ -5297,6 +5297,11 @@ qu'elle prend tout son sens, testez cette requête:</p>
   FROM drh.employes
 GROUP BY emp_code_pays;
 </code></pre>
+<p>Et encore meilleur, testez array_agg :</p>
+<pre><code>SELECT emp_code_pays, array_agg(distinct(per_nom))
+  FROM drh.employes
+GROUP BY emp_code_pays;
+</code></pre>
               
             </div>
           </div>

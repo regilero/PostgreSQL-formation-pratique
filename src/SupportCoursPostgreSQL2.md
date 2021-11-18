@@ -2015,6 +2015,12 @@ qu'elle prend tout son sens, testez cette requête:
       FROM drh.employes
     GROUP BY emp_code_pays;
 
+Et encore meilleur, testez array_agg :
+
+    SELECT emp_code_pays, array_agg(distinct(per_nom))
+      FROM drh.employes
+    GROUP BY emp_code_pays;
+
 --------------------------------------------------------------------------------
 ### 14.10.2. HAVING
 
