@@ -386,7 +386,7 @@ Faisons le point sur les principaux paramètres...
   si vous utilisez plusieurs rôles cela va aussi augmenter la consommation de connexions. **Pensez à utiliser des pooler de connexions pour des besoins
   dépassants le milliers de connexions.**
 
-* **superuser_reserved_connections** : Parmi toutes les connexions disponible
+* **superuser_reserved_connections** : Parmi toutes les connexions disponibles
  ce nombre de connexions (3 par défaut) sera réservé au superadmin postgres.
  Cela vous permettra de vous connecter à postgreSQL y compris au moment des pics.
 Intégrez dans ce nombre la consommation des membres de l'équipe d'admin et des
@@ -522,7 +522,7 @@ J2EE. Donnez lui une machine dédiée, avec aussi des disques rapides et sûrs.
 
 Pour la **consommation par processus** le paramètre important est :
 
-* **work_mem** : cela représente la mémoire que le processus à le droit
+* **work_mem** : cela représente la mémoire que le processus a le droit
 d'utiliser pour effectuer ses opérations de hachage et de tris (celles que le
 explain montre). S'il a besoin de plus de mémoire il devra passer par un
 **stockage temporaire sur disque** des opérations en cours. La difficulté de ce
@@ -555,7 +555,7 @@ importantes de données pourront avoir un work_mem par défaut plus important.
 * **maintenance_work_mem** : 16MB par défaut, montez à 100MB voir plus. Il
  s'agit de la mémoire allouée aux processus du superutilisateur effectuant des
  opérations de maintenance comme les **vacuums** ou les **réindexations**,
- les clusters etc. Il n'y a normalement pas de parallélisations de ces tâches
+ les clusters etc. Il n'y a normalement pas de parallélisation de ces tâches
 
 Lors d'un import de données massif, il n'y aura à priori que des connexions
 destinées à cet import (si vous coupez les autres via le pg_hba.conf par
@@ -563,7 +563,7 @@ exemple), pensez à augmenter les valeurs de work_mem et maintenance_work_mem **
 
 --------------------------------------------------------------------------------
 
-Signalons enfin d'autre paramètres proches de l'utilisation mémoire mais qui
+Signalons enfin d'autres paramètres proches de l'utilisation mémoire mais qui
 sont plus des réglages informatifs:
 
 * **effective_io_concurrency** : indiquez le nombre de disque présents sur le
