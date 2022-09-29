@@ -1565,8 +1565,8 @@ Les index vont intervenir dans une requête:
   l'annuaire ce sera plus simple que sans l'annuaire avec juste la liste des
   habitants non ordonnée)
 * sur les **jointures** entre tables (choix des algorithmes *nested loop*,
-  *merge joins*, *sequential scan*, etc). Notez que les clefs étrangères
-  génèrent la création automatique d'index.
+  *merge joins*, *sequential scan*, etc). Notez que **les clefs étrangères
+  ne génèrent pas** la création automatique d'index.
 * Sur les **filtrages** divers et les conditions de **regroupement** effectués
   dans la requête
 
