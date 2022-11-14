@@ -1434,7 +1434,7 @@ produits dans les connexions de pgAdmin.
 -----------------------------------------------------------------
 ## Les schémas
 
-[http://docs.postgresql.fr/9.5/ddl-schemas.html](http://docs.postgresql.fr/9.5/ddl-schemas.html)
+[http://docs.postgresql.fr/13/ddl-schemas.html](http://docs.postgresql.fr/13/ddl-schemas.html)
 
 On peut voir de façon simplifiée les schémas comme **des bases de données à
 l'intérieur d'une base de données**.
@@ -1465,7 +1465,7 @@ schémas d'une base, ce n'est pas le cas entre plusieurs bases</strong>
 
 -----------------------------------------------------------------
 
-[http://www.postgresql.org/docs/9.5/static/sql-grant.html](http://www.postgresql.org/docs/9.5/static/sql-grant.html)
+[http://www.postgresql.org/docs/13/static/sql-grant.html](http://www.postgresql.org/docs/13/static/sql-grant.html)
 
 Plusieurs niveaux de droits existent dans PostgreSQL:
 

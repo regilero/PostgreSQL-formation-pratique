@@ -517,7 +517,7 @@ ou depuis l'interface de pgAdmin.
 
 Pour commencer vous pouvez observer les types utilisés sur les colonnes.
 
-De nombreux types sont disponibles [http://docs.postgresqlfr.org/9.5/datatype.html](http://docs.postgresqlfr.org/9.5/datatype.html)
+De nombreux types sont disponibles [http://docs.postgresqlfr.org/13/datatype.html](http://docs.postgresqlfr.org/13/datatype.html)
 et une base de données bien conçue devrait toujours utiliser le bon type pour la
 bonne donnée.
 
@@ -540,7 +540,7 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
 --------------------------------------------------------------------------------
 <div class="warning"><p>
 Pour les types binaires utilisez <b>binary</b>. La gestion des binaires de taille
-importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/9.5/storage-toast.html">http://docs.postgresqlfr.org/9.5/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
+importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/13/storage-toast.html">http://docs.postgresqlfr.org/13/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
 Les binaires de taille importante (>8Ko s on simplifie) seront stockés dans un
 espace physique secondaire de la table. Ceci permet à un champ sur une ligne de
 table, d'atteindre une taille de 1Go.
@@ -964,7 +964,7 @@ en liste plus de deux mille éléments...
 
 La documentation en ligne est plus utile, les fonctions y sont classées:
 
-* [http://docs.postgresqlfr.org/9.5/functions.html](http://docs.postgresqlfr.org/9.5/functions.html)
+* [http://docs.postgresqlfr.org/13/functions.html](http://docs.postgresqlfr.org/13/functions.html)
 
 Nous allons regarder un tout petit sous-ensemble des ces fonctions utiles.
 
@@ -1122,7 +1122,7 @@ Tentez d'expliquer ces différents résultats:
 
 ### 14.5.5. Travailler avec les dates
 
-Je ne saurais trop vous conseiller la lecture complète de [http://docs.postgresqlfr.org/9.5/functions-datetime.html](http://docs.postgresqlfr.org/9.5/functions-datetime.html) où vous trouverez de
+Je ne saurais trop vous conseiller la lecture complète de [http://docs.postgresqlfr.org/13/functions-datetime.html](http://docs.postgresqlfr.org/13/functions-datetime.html) où vous trouverez de
 nombreuses fonctions très utiles comme **age()**, ainsi que des opérateurs
 miraculeux comme `OVERLAP`.
 
@@ -1338,7 +1338,7 @@ WHERE, ce traitement n'est utile que pour l'affichage final.
 --------------------------------------------------------------------------------
 ## 14.7. LIMIT et OFFSET
 
-[http://docs.postgresqlfr.org/9.5/queries-limit.html](http://docs.postgresqlfr.org/9.5/queries-limit.html)
+[http://docs.postgresqlfr.org/13/queries-limit.html](http://docs.postgresqlfr.org/13/queries-limit.html)
 
 Le dernier mot clef d'une requête SQL peut être **LIMIT**.
 
@@ -2115,8 +2115,8 @@ Remarquez que nous obtenons **deux personnes**.
 --------------------------------------------------------------------------------
 ### 14.10.5. Curseurs et Table temporaires
 
-* [http://docs.postgresql.fr/9.5/plpgsql-cursors.html](http://docs.postgresql.fr/9.5/plpgsql-cursors.html)
-* [http://docs.postgresql.fr/9.5/sql-createtable.html](http://docs.postgresql.fr/9.5/sql-createtable.html)
+* [http://docs.postgresql.fr/13/plpgsql-cursors.html](http://docs.postgresql.fr/13/plpgsql-cursors.html)
+* [http://docs.postgresql.fr/13/sql-createtable.html](http://docs.postgresql.fr/13/sql-createtable.html)
 
 Les **tables temporaires** et les **curseurs** sont des objets qui sont
 utilisées par les programmes utilisant la base.
@@ -2137,7 +2137,7 @@ L'avantage d'une table temporaire est que l'on peut s'en servir pour y ajouter
 **des index** (qui seront eux aussi temporaires), ou pour faire tourner
 **l'analyseur de table dessus** (`vacuum analyze`) afin d'optimiser les futures
 requêtes sur cette table. On peut par exemple utiliser une table temporaire
-pour créer une table et la manipuler puis la destiner à un export CSV [http://www.postgresql.org/docs/9.5/static/sql-copy.html](http://www.postgresql.org/docs/9.5/static/sql-copy.html).
+pour créer une table et la manipuler puis la destiner à un export CSV [http://www.postgresql.org/docs/13/static/sql-copy.html](http://www.postgresql.org/docs/13/static/sql-copy.html).
 
 .fx: wide
 
@@ -2147,7 +2147,7 @@ pour créer une table et la manipuler puis la destiner à un export CSV [http://
 Les **fonctions window** sont des opérations avancées sur les agrégats.
 
 La documentation en ligne fournis de bonnes explications
-[http://docs.postgresqlfr.org/9.5/tutorial-window.html](http://docs.postgresqlfr.org/9.5/tutorial-window.html), en la matière un bon
+[http://docs.postgresqlfr.org/13/tutorial-window.html](http://docs.postgresqlfr.org/13/tutorial-window.html), en la matière un bon
 exemple vaut de très longues explications :
 
     SELECT per_nom,

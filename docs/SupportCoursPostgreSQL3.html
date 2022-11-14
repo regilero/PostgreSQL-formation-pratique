@@ -630,19 +630,19 @@ de pgadmin nous montrent les objets <strong>FTS</strong>.</p>
               
               
                 <p>Les requêtes qui permettent de modifier la base en SQL sont assez peu nombreuses.
-<a href="http://docs.postgresqlfr.org/9.5/dml.html">http://docs.postgresqlfr.org/9.5/dml.html</a></p>
+<a href="http://docs.postgresqlfr.org/13/dml.html">http://docs.postgresqlfr.org/13/dml.html</a></p>
 <p>Il y a :</p>
 <ul>
-<li><strong>INSERT</strong> : <a href="http://docs.postgresqlfr.org/9.5/sql-insert.html">http://docs.postgresqlfr.org/9.5/sql-insert.html</a>,
+<li><strong>INSERT</strong> : <a href="http://docs.postgresqlfr.org/13/sql-insert.html">http://docs.postgresqlfr.org/13/sql-insert.html</a>,
   insertion d'une ligne dans une table.
   Notez que le mots clef <strong>RETURNING</strong> permet de spécifier que vous voulez avoir
   en retour de la commande <strong>l'identifiant créé</strong> ou tout autre information. Remarquez aussi le <strong>INSERT INTO ... SELECT ...</strong>;</li>
-<li><strong>UPDATE</strong> : <a href="http://docs.postgresqlfr.org/9.5/dml-update.html">http://docs.postgresqlfr.org/9.5/dml-update.html</a>,
+<li><strong>UPDATE</strong> : <a href="http://docs.postgresqlfr.org/13/dml-update.html">http://docs.postgresqlfr.org/13/dml-update.html</a>,
   mise à jour d'une ou plusieurs lignes, notez que cette commande aussi supporte
   le mot clef RETURNING.</li>
-<li><strong>DELETE</strong> : <a href="http://docs.postgresqlfr.org/9.5/dml-delete.html">http://docs.postgresqlfr.org/9.5/dml-delete.html</a>,
+<li><strong>DELETE</strong> : <a href="http://docs.postgresqlfr.org/13/dml-delete.html">http://docs.postgresqlfr.org/13/dml-delete.html</a>,
   suppression d'une ou plusieurs lignes.</li>
-<li><strong>TRUNCATE</strong> :  <a href="http://docs.postgresqlfr.org/9.5/sql-truncate.html">http://docs.postgresqlfr.org/9.5/sql-truncate.html</a>,
+<li><strong>TRUNCATE</strong> :  <a href="http://docs.postgresqlfr.org/13/sql-truncate.html">http://docs.postgresqlfr.org/13/sql-truncate.html</a>,
   un delete « amélioré » qui vide toute la table en une seule opération</li>
 </ul>
               
@@ -973,7 +973,7 @@ aussi remis à jour. Dans un premier temps retenez qu'<strong>il est important q
               
               
                 <p>Signalons aussi l'existence de la commande SQL <strong>CLUSTER</strong></p>
-<p><a href="http://docs.postgresqlfr.org/9.5/sql-cluster.html">http://docs.postgresqlfr.org/9.5/sql-cluster.html</a>
+<p><a href="http://docs.postgresqlfr.org/13/sql-cluster.html">http://docs.postgresqlfr.org/13/sql-cluster.html</a>
 qui <strong>réordonne les données d'une table sur un index de cette table</strong>.</p>
 <p>Ceci peut éviter des opérations de pages sur des grosses tables souvent
 utilisées sur un même index.</p>
@@ -1122,7 +1122,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
               
               
                 <p>Le <strong>principal problème est donc l'isolation des transactions</strong>.</p>
-<p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="http://docs.postgresqlfr.org/9.5/mvcc.html">http://docs.postgresqlfr.org/9.5/mvcc.html</a>,
+<p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="http://docs.postgresqlfr.org/13/mvcc.html">http://docs.postgresqlfr.org/13/mvcc.html</a>,
  <strong>MVCC</strong> signifie <strong>MutliVersion Concurrency Control</strong>.</p>
 <p>Cette page explique bien le problème et les différentes « <em>anomalies</em> » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.</p>
@@ -1218,7 +1218,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
                 <h3>Niveaux d'isolation</h3>
               
               
-                <p>Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page <a href="http://docs.postgresqlfr.org/9.5/transaction-iso.html">http://docs.postgresqlfr.org/9.5/transaction-iso.html</a>,
+                <p>Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page <a href="http://docs.postgresqlfr.org/13/transaction-iso.html">http://docs.postgresqlfr.org/13/transaction-iso.html</a>,
 ce niveau <strong>Commited Read</strong> autorise, après les X indiqués sur le schémas,
 deux types de problèmes:</p>
 <ul>
@@ -1340,7 +1340,7 @@ retrouvera des <strong>Deadlock Exception</strong> par exemple.</p>
 <p>Notez qu'il existe en interne de nombreux niveaux de verrouillages correspondants
 à diverses opérations, il est par exemple impossible de modifier une table
 qu'une opération de maintenance est en train de réorganiser sur le disque.</p>
-<p>La référence complète en la matière est ici: <a href="http://docs.postgresqlfr.org/9.5/explicit-locking.html">http://docs.postgresqlfr.org/9.5/explicit-locking.html</a>.</p>
+<p>La référence complète en la matière est ici: <a href="http://docs.postgresqlfr.org/13/explicit-locking.html">http://docs.postgresqlfr.org/13/explicit-locking.html</a>.</p>
 <p>Remarquez le <strong>pg_advisory_lock(id)</strong> qui permet de poser <strong>un verrou applicatif</strong>.
 PostgreSQL devient alors un moyen de stockage de <strong>sémaphores</strong> pour votre application.</p>
 
@@ -1685,7 +1685,7 @@ COMMIT; -- ou ROLLBACK;
                 <h3>utilisation de locks (for update)</h3>
               
               
-                <p>Testons la mise en places de LOCKS avec le mot clef FOR UPDATE (<a href="http://docs.postgresqlfr.org/9.5/sql-select.html#sql-for-update-share">http://docs.postgresqlfr.org/9.5/sql-select.html#sql-for-update-share</a>):</p>
+                <p>Testons la mise en places de LOCKS avec le mot clef FOR UPDATE (<a href="http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share">http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share</a>):</p>
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
 <b>Fenêtre 1</b>
@@ -2370,9 +2370,9 @@ modification en cours</strong>.</p>
               
                 <p>Les déclencheurs sont documentés ici :</p>
 <ul>
-<li><a href="http://docs.postgresql.fr/9.5/triggers.html">http://docs.postgresql.fr/9.5/triggers.html</a>,</li>
-<li><a href="http://docs.postgresqlfr.org/9.5/sql-createtrigger.html">http://docs.postgresqlfr.org/9.5/sql-createtrigger.html</a></li>
-<li><a href="http://docs.postgresql.fr/9.5/plpgsql-trigger.html">http://docs.postgresql.fr/9.5/plpgsql-trigger.html</a></li>
+<li><a href="http://docs.postgresql.fr/13/triggers.html">http://docs.postgresql.fr/13/triggers.html</a>,</li>
+<li><a href="http://docs.postgresqlfr.org/13/sql-createtrigger.html">http://docs.postgresqlfr.org/13/sql-createtrigger.html</a></li>
+<li><a href="http://docs.postgresql.fr/13/plpgsql-trigger.html">http://docs.postgresql.fr/13/plpgsql-trigger.html</a></li>
 </ul>
 <p>Quelques points à noter:</p>
 <ul>
@@ -2432,9 +2432,9 @@ au lieu de le faire une seule fois à la fin</b>.
               
               
                 <p>Le premier lien de documentation fournit un exemple de trigger en <strong>C</strong>.</p>
-<p>Le langage le plus utilisé est le <strong>pl/pgSQL</strong>. Mais vous pouvez aussi utiliser d'autres langages, comme le <a href="http://docs.postgresqlfr.org/9.5/plperl.html">pl/Perl</a>,
-le <a href="http://docs.postgresqlfr.org/9.5/plpython.html">pl/Python</a>,
-le <a href="http://docs.postgresqlfr.org/9.5/pltcl.html">pl/Tcl</a>...</p>
+<p>Le langage le plus utilisé est le <strong>pl/pgSQL</strong>. Mais vous pouvez aussi utiliser d'autres langages, comme le <a href="http://docs.postgresqlfr.org/13/plperl.html">pl/Perl</a>,
+le <a href="http://docs.postgresqlfr.org/13/plpython.html">pl/Python</a>,
+le <a href="http://docs.postgresqlfr.org/13/pltcl.html">pl/Tcl</a>...</p>
 <p><strong>Un déclencheur ne fait qu'associer une fonction particulière (qui doit renvoyer
 des valeurs particulières) à un évènement particulier</strong>. Mais on peut aussi
 écrire <strong>des fonctions qui ne soient pas des triggers</strong>.</p>
@@ -3577,8 +3577,8 @@ de données json complexes.</p>
                 <p>Effectuons une requête dans le catalogue pour regarder la taille de nos tables
 et index:</p>
 <ul>
-<li><a href="http://www.postgresql.org/docs/9.5/interactive/disk-usage.html">http://www.postgresql.org/docs/9.5/interactive/disk-usage.html</a></li>
-<li><a href="http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE">http://www.postgresql.org/docs/9.5/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE</a></li>
+<li><a href="http://www.postgresql.org/docs/13/interactive/disk-usage.html">http://www.postgresql.org/docs/13/interactive/disk-usage.html</a></li>
+<li><a href="http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE">http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE</a></li>
 </ul>
 <p>Visualisons la taille des indexs et tables :</p>
 <pre><code>SELECT relname, relpages,
@@ -3953,7 +3953,7 @@ le fichier <strong>postgresql.conf</strong> et rechercher cette ligne:</p>
 </code></pre>
 <p>Ce qui indique de loger les requêtes qui mettent plus de deux secondes à
 s'exécuter. Ce sera une bonne piste de départ.</p>
-<p>Deux modules complémentaires (contrib) peuvent s'avérer utiles <a href="http://www.postgresql.org/docs/9.5/interactive/auto-explain.html">auto_explain</a> et <a href="http://www.postgresql.org/docs/9.5/interactive/pgstatstatements.html">pg_stat_statements</a>.</p>
+<p>Deux modules complémentaires (contrib) peuvent s'avérer utiles <a href="http://www.postgresql.org/docs/13/interactive/auto-explain.html">auto_explain</a> et <a href="http://www.postgresql.org/docs/13/interactive/pgstatstatements.html">pg_stat_statements</a>.</p>
               
             </div>
           </div>
@@ -4084,18 +4084,18 @@ utilisés, etc. Supprimer ces indexs est important.
 <p><strong>LISTEN/NOTIFY</strong> : ces instructions permettent la mise en place de programmes
   persistants en  écoute de certains messages (imaginez par exemple un programme
   externe qui doit effectuer des tâches quand une nouvelle transaction
-  commerciale est enregistrée) <a href="http://docs.postgresqlfr.org/9.5/sql-listen.html">http://docs.postgresqlfr.org/9.5/sql-listen.html</a> <a href="http://docs.postgresqlfr.org/9.5/sql-notify.html">http://docs.postgresqlfr.org/9.5/sql-notify.html</a>.
+  commerciale est enregistrée) <a href="http://docs.postgresqlfr.org/13/sql-listen.html">http://docs.postgresqlfr.org/13/sql-listen.html</a> <a href="http://docs.postgresqlfr.org/13/sql-notify.html">http://docs.postgresqlfr.org/13/sql-notify.html</a>.
   il s'agit de queues de messages.</p>
 </li>
 <li>
-<p><strong>Recherche Plein Texte</strong> : <a href="http://docs.postgresqlfr.org/9.5/textsearch.html">http://docs.postgresqlfr.org/9.5/textsearch.html</a></p>
+<p><strong>Recherche Plein Texte</strong> : <a href="http://docs.postgresqlfr.org/13/textsearch.html">http://docs.postgresqlfr.org/13/textsearch.html</a></p>
 </li>
 <li><strong>postgis</strong> : <a href="http://www.postgis.org">http://www.postgis.org</a> (extension de <strong>Système d'Information Géographique</strong>)</li>
-<li><strong>types composites</strong> : <a href="http://docs.postgresqlfr.org/9.5/rowtypes.html">http://docs.postgresqlfr.org/9.5/rowtypes.html</a></li>
-<li><strong>DO</strong> : <a href="http://docs.postgresqlfr.org/9.5/sql-do.html">http://docs.postgresqlfr.org/9.5/sql-do.html</a> envie de tester une fonction
+<li><strong>types composites</strong> : <a href="http://docs.postgresqlfr.org/13/rowtypes.html">http://docs.postgresqlfr.org/13/rowtypes.html</a></li>
+<li><strong>DO</strong> : <a href="http://docs.postgresqlfr.org/13/sql-do.html">http://docs.postgresqlfr.org/13/sql-do.html</a> envie de tester une fonction
  sans l'enregistrer? <strong>Do</strong> permet de <strong>définir à la volée</strong> une fonction pour
  l'utiliser immédiatement.</li>
-<li><strong>Create Aggregate</strong> : <a href="http://docs.postgresqlfr.org/9.5/sql-createaggregate.html">http://docs.postgresqlfr.org/9.5/sql-createaggregate.html</a></li>
+<li><strong>Create Aggregate</strong> : <a href="http://docs.postgresqlfr.org/13/sql-createaggregate.html">http://docs.postgresqlfr.org/13/sql-createaggregate.html</a></li>
 <li><strong>Vues materialisées</strong> (&gt; 9.3): la vue est cachée comme une table réèlle,
  elle peut être recalculée à la volée <code>REFRESH MATERIALIZED VIEW nom;</code>. Gain de
  temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).</li>

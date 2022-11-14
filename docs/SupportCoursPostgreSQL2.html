@@ -1499,7 +1499,7 @@ ou depuis l'interface de pgAdmin.</p>
               
               
                 <p>Pour commencer vous pouvez observer les types utilisés sur les colonnes.</p>
-<p>De nombreux types sont disponibles <a href="http://docs.postgresqlfr.org/9.5/datatype.html">http://docs.postgresqlfr.org/9.5/datatype.html</a>
+<p>De nombreux types sont disponibles <a href="http://docs.postgresqlfr.org/13/datatype.html">http://docs.postgresqlfr.org/13/datatype.html</a>
 et une base de données bien conçue devrait toujours utiliser le bon type pour la
 bonne donnée.</p>
 <div class="action"><p>
@@ -1554,7 +1554,7 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
               
                 <p><div class="warning"><p>
 Pour les types binaires utilisez <b>binary</b>. La gestion des binaires de taille
-importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/9.5/storage-toast.html">http://docs.postgresqlfr.org/9.5/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
+importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/13/storage-toast.html">http://docs.postgresqlfr.org/13/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
 Les binaires de taille importante (&gt;8Ko s on simplifie) seront stockés dans un
 espace physique secondaire de la table. Ceci permet à un champ sur une ligne de
 table, d'atteindre une taille de 1Go.
@@ -2697,7 +2697,7 @@ FROM
 en liste plus de deux mille éléments...</p>
 <p>La documentation en ligne est plus utile, les fonctions y sont classées:</p>
 <ul>
-<li><a href="http://docs.postgresqlfr.org/9.5/functions.html">http://docs.postgresqlfr.org/9.5/functions.html</a></li>
+<li><a href="http://docs.postgresqlfr.org/13/functions.html">http://docs.postgresqlfr.org/13/functions.html</a></li>
 </ul>
 <p>Nous allons regarder un tout petit sous-ensemble des ces fonctions utiles.</p>
               
@@ -3160,7 +3160,7 @@ from drh.employes;
                 <h3>14.5.5. Travailler avec les dates</h3>
               
               
-                <p>Je ne saurais trop vous conseiller la lecture complète de <a href="http://docs.postgresqlfr.org/9.5/functions-datetime.html">http://docs.postgresqlfr.org/9.5/functions-datetime.html</a> où vous trouverez de
+                <p>Je ne saurais trop vous conseiller la lecture complète de <a href="http://docs.postgresqlfr.org/13/functions-datetime.html">http://docs.postgresqlfr.org/13/functions-datetime.html</a> où vous trouverez de
 nombreuses fonctions très utiles comme <strong>age()</strong>, ainsi que des opérateurs
 miraculeux comme <code>OVERLAP</code>.</p>
 <p>Signalons ici quelques fonctions de base pour le travail avec les dates, et plus
@@ -3717,7 +3717,7 @@ WHERE, ce traitement n'est utile que pour l'affichage final.</p>
                 <h2>14.7. LIMIT et OFFSET</h2>
               
               
-                <p><a href="http://docs.postgresqlfr.org/9.5/queries-limit.html">http://docs.postgresqlfr.org/9.5/queries-limit.html</a></p>
+                <p><a href="http://docs.postgresqlfr.org/13/queries-limit.html">http://docs.postgresqlfr.org/13/queries-limit.html</a></p>
 <p>Le dernier mot clef d'une requête SQL peut être <strong>LIMIT</strong>.</p>
 <p>Cette instruction permet de limiter le nombre de résultats renvoyés par la requête.</p>
 <p>Si votre requête ne nécessite pas trop d'instructions complexes (comme un tri
@@ -5583,8 +5583,8 @@ Remarquez que nous obtenons <strong>deux personnes</strong>.</p>
               
               
                 <ul>
-<li><a href="http://docs.postgresql.fr/9.5/plpgsql-cursors.html">http://docs.postgresql.fr/9.5/plpgsql-cursors.html</a></li>
-<li><a href="http://docs.postgresql.fr/9.5/sql-createtable.html">http://docs.postgresql.fr/9.5/sql-createtable.html</a></li>
+<li><a href="http://docs.postgresql.fr/13/plpgsql-cursors.html">http://docs.postgresql.fr/13/plpgsql-cursors.html</a></li>
+<li><a href="http://docs.postgresql.fr/13/sql-createtable.html">http://docs.postgresql.fr/13/sql-createtable.html</a></li>
 </ul>
 <p>Les <strong>tables temporaires</strong> et les <strong>curseurs</strong> sont des objets qui sont
 utilisées par les programmes utilisant la base.</p>
@@ -5600,7 +5600,7 @@ session qui créé cette table, et qui disparaîtra avec la session ou la transa
 <strong>des index</strong> (qui seront eux aussi temporaires), ou pour faire tourner
 <strong>l'analyseur de table dessus</strong> (<code>vacuum analyze</code>) afin d'optimiser les futures
 requêtes sur cette table. On peut par exemple utiliser une table temporaire
-pour créer une table et la manipuler puis la destiner à un export CSV <a href="http://www.postgresql.org/docs/9.5/static/sql-copy.html">http://www.postgresql.org/docs/9.5/static/sql-copy.html</a>.</p>
+pour créer une table et la manipuler puis la destiner à un export CSV <a href="http://www.postgresql.org/docs/13/static/sql-copy.html">http://www.postgresql.org/docs/13/static/sql-copy.html</a>.</p>
 
               
             </div>
@@ -5640,7 +5640,7 @@ pour créer une table et la manipuler puis la destiner à un export CSV <a href=
               
                 <p>Les <strong>fonctions window</strong> sont des opérations avancées sur les agrégats.</p>
 <p>La documentation en ligne fournis de bonnes explications
-<a href="http://docs.postgresqlfr.org/9.5/tutorial-window.html">http://docs.postgresqlfr.org/9.5/tutorial-window.html</a>, en la matière un bon
+<a href="http://docs.postgresqlfr.org/13/tutorial-window.html">http://docs.postgresqlfr.org/13/tutorial-window.html</a>, en la matière un bon
 exemple vaut de très longues explications :</p>
 <pre><code>SELECT per_nom,
        per_prenom,
