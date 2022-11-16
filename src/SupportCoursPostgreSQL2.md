@@ -2081,7 +2081,7 @@ Q3: Affichez le nom, prénom et code employé du ou des employés ayant le salai
 Q1:
 
     SELECT ser_nom,
-           round(coalesce(avg(emp_salaire_annuel),0),2) as "moyenne salaires"
+           round(avg(coalesce(emp_salaire_annuel,0)),2) as "moyenne salaires"
       FROM drh.services ser
         LEFT JOIN drh.employes emp ON ser.ser_id=emp.ser_id
     GROUP BY ser_nom
@@ -2091,7 +2091,7 @@ Q2:
 
     SELECT
         age_nom,
-        round(20*coalesce(avg(int_salaire_quotidien),0),2) as "moyenne salaire mensuel",
+        round( 20* avg(coalesce(int_salaire_quotidien,0)) ,2) as "moyenne salaire mensuel",
         count(int.int_id) as "nb intérimaires"
     FROM drh.agences ag
       LEFT JOIN drh.interimaires int ON ag.age_id = int.age_id
