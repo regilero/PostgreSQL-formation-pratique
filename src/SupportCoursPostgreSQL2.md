@@ -2146,7 +2146,7 @@ pour créer une table et la manipuler puis la destiner à un export CSV [http://
 
 Les **fonctions window** sont des opérations avancées sur les agrégats.
 
-La documentation en ligne fournis de bonnes explications
+La documentation en ligne fournit de bonnes explications
 [http://docs.postgresqlfr.org/13/tutorial-window.html](http://docs.postgresqlfr.org/13/tutorial-window.html), en la matière un bon
 exemple vaut de très longues explications :
 
