@@ -1765,7 +1765,7 @@ Il a de nombreux éléments nouveaux dans les version 10 et 11:
 
 Mais s'il fallait ne retenir que quelques éléments nous citerions:
 
-* un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers appliqués sur les tables partionnées, etc. Avec encore des améliorations attendues en version 12.
+* un gros travail de simplification sur la gestion du **partitionnement**, surtout sur la version 11 qui autorise les clefs étrangères, les index et triggers appliqués sur les tables partitionnées, etc. Avec encore des améliorations attendues en version 12.
 * un gros travail sur le parallélisme dans l'exécution des requêtes (qui là aussi se poursuit à chaque release depuis)
 * des améliorations sur les index de type HASH
 * des solutions nouvelles en administration et en réplication, comme la réplication logique (qui arive en 11, puis s'ouvre aux tables partitionnées en 12), mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)
