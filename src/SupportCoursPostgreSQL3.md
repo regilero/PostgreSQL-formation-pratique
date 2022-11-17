@@ -1039,7 +1039,7 @@ Quelques points à noter:
   de triggers.
 
 <div class="warning"><p>
-Si vous utilisez un trigger pour pqr exemple recalculer des résultats
+Si vous utilisez un trigger pour par exemple recalculer des résultats
 (comme une requête GROUP BY) et les stocker dans une table statistique,
 travaillez <b>au niveau requête</b> et pas au niveau <b>ROW</b>.
 <b>Sinon une requête qui mets à jour 10 000 lignes lancera 10 000 fois le calcul
