@@ -1430,7 +1430,7 @@ une machine bien chargée et sans optimisations du serveur PostgreSQL.
 --------------------------------------------------------------------------------
 ### 17.1.3 Comment fonctionne un index?
 
-Un index peut être vu comme un fichier distinct de la table qui prends le ou les
+Un index peut être vu comme un fichier distinct de la table qui prend le ou les
 champs que vous lui demandez d'indexer, qui les stocke **dans l'ordre**, puis
 qui stocke le numéro de ligne (l'adresse réelle) de la ligne correspondante de
 la table.
