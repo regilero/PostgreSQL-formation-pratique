@@ -96,7 +96,7 @@ assez complète.
 Parmi les choses importantes il faut identifier **le service autovacuum.**
 
 Il s'agit d'un des processus fils de PostgreSQL dont le travail est de détecter
-les maintenance à effectuer et **de les faire au fil de l'eau**.
+les maintenances à effectuer et **de les faire au fil de l'eau**.
 
 Parmi toutes les tâches de maintenance les plus importantes sont donc les
 **VACUUM**. Le but du vacuum est **triple**:
