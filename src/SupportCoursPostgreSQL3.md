@@ -410,7 +410,7 @@ deux types de problèmes:
 * les lectures **non reproductibles**
 * les lectures **fantômes**.
 
-A partir du moment ou on tape **BEGIN** on fait « sauter » le mode auto-commit.
+A partir du moment où on tape **BEGIN** on fait « sauter » le mode auto-commit.
 
 Il faudra donc à un moment ou un autre taper **ROLLBACK** ou **COMMIT** dans
 ces sessions, ou atteindre un ROLLBACK par un **timeout** de la transaction, ou
@@ -425,14 +425,14 @@ la session.
  le BEGIN a peut-être déjà été modifié</b>.
 </p></div>
 <div class="warning"><p>
- <b>Règle #2</b> : Une transaction <b>sans locks</b> est quasi assurée de provoquer
+ <b>Règle #2</b> : Une transaction <b>sans lock</b> est quasi assurée de provoquer
  des erreurs fonctionnelles. C'est une règle beaucoup trop ignorée (Au point que
  depuis MySQL 5.1, par exemple, les locks sont automatiques sur les sélections dans les
  transactions MySQL-- ne cherchez pas ce qui se passe dans MySQL 5.0, c'est
  instable).
 </p></div>
 <div class="warning"><p>
- <b>Règles #3</b>: Attendez vous à ce qu'une transaction puisse <b>être annulée
+ <b>Règles #3</b>: Attendez-vous à ce qu'une transaction puisse <b>être annulée
  par le moteur</b>. Pour des problèmes d'isolation ou de deadlock. Votre
  programme devrait peut-être <b>essayer de jouer les transactions plusieurs fois.</b>
 </p></div>
@@ -663,7 +663,7 @@ COMMIT; -- ou ROLLBACK;
 --------------------------------------------------------------------------------
 ### utilisation de locks (for update)
 
-Testons la mise en places de LOCKS avec le mot clef FOR UPDATE ([http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share](http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share)):
+Testons la mise en places de LOCKS avec le mot clef FOR UPDATE ([http://docs.postgresqlfr.org/9.5/sql-select.html#sql-for-update-share](http://docs.postgresqlfr.org/9.5/sql-select.html#sql-for-update-share)):
 
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
@@ -1748,7 +1748,7 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
  sans l'enregistrer? **Do** permet de **définir à la volée** une fonction pour
  l'utiliser immédiatement.
 * **Create Aggregate** : [http://docs.postgresqlfr.org/13/sql-createaggregate.html](http://docs.postgresqlfr.org/13/sql-createaggregate.html)
-* **Vues materialisées** (> 9.3): la vue est cachée comme une table réèlle,
+* **Vues materialisées** (> 9.3): la vue est cachée comme une table réelle,
  elle peut être recalculée à la volée `REFRESH MATERIALIZED VIEW nom;`. Gain de
  temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).
 * etc.
@@ -1791,7 +1791,7 @@ Ou encore le support natif du type **UUID** avec postgreSQL **13** (extension **
 --------------------------------------------------------------------------------
 ## 18.3 pg_upgrade, migration 9.x vers 11
 
-Avant de tester le partionnement sur un PostgreSQL 11, si votre base est installée sur une version 9.x, nous pouvonsla migrer automatiquement vers une version 11.
+Avant de tester le partionnement sur un PostgreSQL 11, si votre base est installée sur une version 9.x, nous pouvons la migrer automatiquement vers une version 11.
 
 On suppose que vous avez une version de postgresql 11 installée (via un `apt-get install postgresql-11`). Elle tourne donc
 sur votre machine, sur un port différent (par exemple **5435**). Vérifiez le fichier `pg_hba.conf` de cette instance.
@@ -1921,7 +1921,7 @@ Vous pouvez remarquer que les index ont été créés automatiquement sur la sou
 
 Si vous générez de l'activité, vous verrez que les sous tables se remplissent.
 Et si vous altérez à la main la colonne `operation` d'un des enregsitrements de l'audit
-vous verrez qu'il change de table de parti onnement.
+vous verrez qu'il change de table de partionnement.
 
     SELECT count(1),tableoid::regclass FROM commande_audit GROUP by 2 order by 2;
 
@@ -1934,7 +1934,7 @@ vous verrez qu'il change de table de parti onnement.
 </p></div>
 
 * une table existante ne peut devenir automatiquement partionnée, il faut surement passer par des migrations de données
-* il y a un grand nombre de limites (par exemple les types de foreign keys supportés, les champs utilisés dans les Primary Key, les types de triggers supportés, de la partition par défaut, des création sde sous tables à l'avance).
+* il y a un grand nombre de limites (par exemple les types de foreign keys supportés, les champs utilisés dans les Primary Key, les types de triggers supportés, de la partition par défaut, des créations de sous tables à l'avance).
 * il y a de fortes différences entre les version 10,11 et 12 de PostgreSQL sur les éléments supportés
 * il faut prendre le temps de bien valider tous les développements (tests unitaires), les indexs, et les choix de partionnements.
 
