@@ -619,10 +619,12 @@ Vous demandez donc à PostgreSQL de faire une **confiance aveugle**, tous les ut
 ## pg_hba.conf
 
 <div class="warning"><p>
-<strong>N'oubliez pas de redémarrer PostgreSQL quand vous modifiez le pg_hba.conf !</strong>
+<strong>N'oubliez pas de recharger la configuration PostgreSQL quand vous modifiez le pg_hba.conf !</strong>. Soit avec un reload simple, soit avec un redémarrage du service.
 </p></div>
 
-    service postgresql restart 9.5
+    service postgresql reload
+    # ou
+    service postgresql restart
 
 ---------------------------------------------------------------------
 ## 9.2. psql : ligne de commande
