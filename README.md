@@ -25,16 +25,22 @@ La première fois on commence donc par créer ce virtualenv (qui existe surement
 
     virtualenv /home/roger/venvs/formation-pg
     source /home/roger/venvs/formation-pg/bin/activate
+    # ou :
+    python3 -m venv .venv
+    source .venv/bin/activate
+    # puis :
     pip install landslide
     pip install watchdog
 
 Les fois suivantes il suffira d'activer le virtualenv pour avoir le programme landslide disponible dans votre session.
 
     source /home/roger/venvs/formation-pg/bin/activate
+    # ou :
+    source .venv/bin/activate
 
 ## Génération
 
-    source /home/roger/venvs/formation-pg/bin/activate
+    # une fois le virtualenv activé
     landslide src/SupportCoursPostgreSQL.cfg
     landslide src/SupportCoursPostgreSQL1.cfg
     landslide src/SupportCoursPostgreSQL2.cfg
