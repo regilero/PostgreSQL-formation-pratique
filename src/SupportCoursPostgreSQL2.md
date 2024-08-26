@@ -95,14 +95,14 @@ Nous pourrions l'exécuter très simplement ainsi:
 
 --------------------------------------------------------------------------------
 
-* **formation_test2.sql** ne contient aucune commande destinées à psql, c'est le
+* **formation_test2.sql**: ne contient aucune commande destinées à psql, c'est le
    format idéal pour être rejoué dans pgadmin (fenêtre SQL). Il ne contient pas
    de commande de création de base de données mais supprime tous les objets et
    droits puis les recrée dans l'ordre. **Notez que l'ordre de suppression et
    création des objets est très complexe**, il est quasi impossible d'effectuer
-   à la main un script qui saurait organiser les suppressions et recréation en
-   tenant compte de toutes les dépendances entre objets *(remarquez au passage
-   l'onglet dépendances sur tous les objets dans pgAdmin)*. Notez que des
+   à la main un script qui saurait organiser les recréations en
+   tenant compte de toutes les dépendances entre objets (remarquez au passage
+   l'onglet dépendances sur tous les objets dans pgAdmin). Notez que des
    insertions sous forme de requêtes `INSERT` sont plus lentes qu'avec le premier
    fichier (`COPY`).
 
@@ -111,6 +111,7 @@ Remarquez aussi que l'instruction <b>"inclure DROP DATABASE"</b>
 dans l'assistant aurait du être nommée <b>"inclure DROP des objets de la base"</b>
 (il n'y a pas de <b>DROP DATABASE</b>!!).
 </p></div>
+
 --------------------------------------------------------------------------------
 
 * **formation_test3.sql** est quasi équivalent au deuxième fichier sauf qu'il ne
@@ -179,7 +180,7 @@ verrez que certaines sont **absentes** :
 Il s'agit du contenu du premier onglet Droits sur la base de données elle-même
 (les droits sur les schémas font eux partie du dump).
 
-Ceci est du au fait que ces droits qui gère **un premier niveau d'accès à la base**
+Ceci est du au fait que ces droits qui gèrent **un premier niveau d'accès à la base**
 (globalement le droit de s'y connecter) ne sont pas gérés au sein de la base
 elle-même mais **au sein de la base postgres.**
 
@@ -517,7 +518,7 @@ ou depuis l'interface de pgAdmin.
 
 Pour commencer vous pouvez observer les types utilisés sur les colonnes.
 
-De nombreux types sont disponibles [http://docs.postgresqlfr.org/13/datatype.html](http://docs.postgresqlfr.org/13/datatype.html)
+De nombreux types sont disponibles [https://doc.postgresql.fr/16/datatype.html](https://doc.postgresql.fr/16/datatype.html)
 et une base de données bien conçue devrait toujours utiliser le bon type pour la
 bonne donnée.
 
@@ -528,7 +529,7 @@ Parcourez les différents types de données proposés par postgreSQL
 <div class="warning"><p>
 Pour les <b>montants</b> utilisez les types <b>numeric</b> et pas les <b>float</b>.<br/>
 Ou alors utilisez des <b>entiers</b>, et géréez des centimes.<br/>
-Le type <b>money</b> existe aussi, mais il est assez pauvres en <b>conversions de
+Le type <b>money</b> existe aussi, mais il est assez pauvre en <b>conversions de
  types</b> et vous devriez éviter de l'utiliser.
 </p></div>
 <div class="warning"><p>
@@ -540,7 +541,7 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
 --------------------------------------------------------------------------------
 <div class="warning"><p>
 Pour les types binaires utilisez <b>binary</b>. La gestion des binaires de taille
-importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/13/storage-toast.html">http://docs.postgresqlfr.org/13/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
+importante sera faite automatiquement avec les <b>TOAST </b> <a href="https://doc.postgresql.fr/16/storage-toast.html">https://doc.postgresql.fr/16/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
 Les binaires de taille importante (>8Ko s on simplifie) seront stockés dans un
 espace physique secondaire de la table. Ceci permet à un champ sur une ligne de
 table, d'atteindre une taille de 1Go.
@@ -634,7 +635,7 @@ ALTER TABLE ONLY employes_projet
 
 Sur le schéma **drh** des **triggers** existent, nous verrons plus en détail
 l'écriture et le fonctionnement des triggers, mais sachez que ce schéma se sert
-des ces triggers pour **mettre à jour la date de modification** de certaines
+de ces triggers pour **mettre à jour la date de modification** de certaines
 tables, ou pour **calculer le code d'un employé**.
 
 --------------------------------------------------------------------------------
@@ -644,7 +645,7 @@ Plus important **des contraintes supplémentaires ont été ajoutées**.
 
 Examinez par exemple toutes les contraintes exprimées sur la table `employes`.
 
-Ces contraintes que l'on nomme des **CHECKS** sont importants pour
+Ces contraintes que l'on nomme des **CHECKS** sont importantes pour
 l'administrateur de données. **Elles permettent de s'assurer qu'une base de
 données alimentée par plusieurs programmes possède ses propres règles de
 validation des données et que ces règles seront toujours respectées**, quelque
@@ -716,7 +717,7 @@ Pourquoi?
 <b>Q2:</b> Modifiez maintenant le code du service Finance qui a l'identifiant 200 en « FXXX1 ».<br/> Que s'est-il passé sur la table des employés (faites des rafraichissements si vous affichiez déjà la table)?
 </p></div>
 <div class="action"></p>
-<b>Q3:</b> Supprimez le service Finance avec identifiant 200 et rafraîchissez la table. Que s'est-il passé sur la table service et dans la table « employes ».<br/>
+<b>Q3:</b> Supprimez le service Finance avec identifiant 200 et rafraîchissez la table. Que s'est-il passé sur la table service et dans la table « employes »?<br/>
 Pour rétablir la situation indiquez l'identifiant du service Finance nouvellement créé aux utilisateurs qui étaient dans ce service sur la table « employes ». Puis indiquez cet identifiant aux services dépendants du service Finance (Comptabilité et Trading).
 </p></div>
 
@@ -835,7 +836,7 @@ sont gérés.
 <div class="warning"><p>
 Notez dès à présent que la gestion de ces ordres ascendants/descendants et des
 nulls peut avoir des impacts non négligeables sur le temps d'éxecution d'une
-requête mal indexée (on retrouve ces mêmes précisions dans les indexs).
+requête mal indexée (on retrouve ces mêmes précisions dans les index).
 </p></div>
 
 --------------------------------------------------------------------------------
@@ -894,7 +895,7 @@ concaténation de chaîne ou d'addition vous allez avoir des surprises:
 --------------------------------------------------------------------------------
 
 Un complément, trouvé sur
-[un article de Haki Benita](https://medium.com/statuscode/the-many-faces-of-distinct-in-postgresql-c52490de5954),
+[un article de Haki Benita](https://hakibenita.com/the-many-faces-of-distinct-in-postgre-sql),
 avec une syntaxe SQL un peu avancée, si vous ne comprenez pas encore la
 syntaxe avancée de la requête ne regardez que le résultat:
 
@@ -907,17 +908,17 @@ syntaxe avancée de la requête ne regardez que le résultat:
     )
     SELECT
         a,
-       b,
-       a = b as equal
-    FROM
-       t;
+        b,
+        a = b as equal
+      FROM
+        t;
 
-     a   |  b   | equal 
+      a   |  b   | equal 
     ------+------+-------
-       1 |    1 | t
-       1 |    2 | f
-    NULL |    1 | NULL
-    NULL | NULL | NULL
+        1 |    1 | t
+        1 |    2 | f
+     NULL |    1 | NULL
+     NULL | NULL | NULL
 
 
 --------------------------------------------------------------------------------
@@ -964,7 +965,7 @@ en liste plus de deux mille éléments...
 
 La documentation en ligne est plus utile, les fonctions y sont classées:
 
-* [http://docs.postgresqlfr.org/13/functions.html](http://docs.postgresqlfr.org/13/functions.html)
+* [https://doc.postgresql.fr/16/functions.html](https://doc.postgresql.fr/16/functions.html)
 
 Nous allons regarder un tout petit sous-ensemble des ces fonctions utiles.
 
@@ -1122,7 +1123,7 @@ Tentez d'expliquer ces différents résultats:
 
 ### 14.5.5. Travailler avec les dates
 
-Je ne saurais trop vous conseiller la lecture complète de [http://docs.postgresqlfr.org/13/functions-datetime.html](http://docs.postgresqlfr.org/13/functions-datetime.html) où vous trouverez de
+Je ne saurais trop vous conseiller la lecture complète de [https://doc.postgresql.fr/16/functions-datetime.html](https://doc.postgresql.fr/16/functions-datetime.html) où vous trouverez de
 nombreuses fonctions très utiles comme **age()**, ainsi que des opérateurs
 miraculeux comme `OVERLAP`.
 
@@ -1150,7 +1151,7 @@ timezone.
 **Préférez un stockage avec la timezone**.
 
 Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours),
-pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
+pensez à utiliser les fonctions sur les index (que nous verrons plus loin).
 Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance
 le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites
 un index sur le mois de la date, etc.
@@ -1162,17 +1163,11 @@ Il y a un grand nombres de fonctions utiles. Nous avons déjà vu `generate_seri
 en voici quelques autres:
 
 * **string_agg()** : l'équivalent de group_concat sous MySQL
-* **coalesce(a;b;c;d)** : renvoie la première valeur non Nulle de la liste.
+* **coalesce(a, b, c, d)** : renvoie la première valeur non Nulle de la liste:
 
-Renvoyer la première valeur non nulle d'un liste cela peut aussi s'exprimer d'une autre
-façon :
-
---------------------------------------------------------------------------------
-
-Fournir une valeur par défaut :
-
-    SELECT coalesce(emp_code_pays, 'CODE PAYS MANQUANT!!!')
-    from drh.employes;
+        SELECT
+          coalesce(emp_code_pays, 'CODE PAYS MANQUANT!!!')
+        FROM drh.employes;
 
 --------------------------------------------------------------------------------
 ### 14.4.7. Exercices
@@ -1322,23 +1317,23 @@ Que fait cette requête?
     SELECT per_nom,per_prenom,emp_code_pays, extract(year from age(emp_naissance)) as age
     FROM drh.employes
     WHERE
-    (emp_code_pays IN ('US','CA')
-    AND age(emp_naissance) >= '50 year'::interval )
-    OR (emp_code_pays IN ('FR','UK')
-    AND age(emp_naissance) >= '40 year'::interval );
+      (emp_code_pays IN ('US','CA') AND age(emp_naissance) >= '50 year'::interval )
+    OR (
+      emp_code_pays IN ('FR','UK') AND age(emp_naissance) >= '40 year'::interval
+    );
 
 --------------------------------------------------------------------------------
 ### Réponse:
 
-Elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
-canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume Unis
-et qui ont plus de 40 ans. Remarquez qu'on utilise pas `extract` dans les clauses
+Elle liste les noms, prénoms et ages des employés qui sont aux États-Unis ou au
+Canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume-Unis
+et qui ont plus de 40 ans. Remarquez qu'on n'utilise pas `extract` dans les clauses
 WHERE, ce traitement n'est utile que pour l'affichage final.
 
 --------------------------------------------------------------------------------
 ## 14.7. LIMIT et OFFSET
 
-[http://docs.postgresqlfr.org/13/queries-limit.html](http://docs.postgresqlfr.org/13/queries-limit.html)
+[https://doc.postgresql.fr/16/queries-limit.html](https://doc.postgresql.fr/16/queries-limit.html)
 
 Le dernier mot clef d'une requête SQL peut être **LIMIT**.
 
@@ -1596,17 +1591,17 @@ sous-requêtes en dernier recours, et non l'inverse.</b>
 </p></div>
 
 --------------------------------------------------------------------------------
-### 14.7.3. Sous requêtes Corrélées
+### 14.8.3. Sous requêtes corrélées
 
 Une sous-requête corrélée est une sous-requête qui comporte **une référence à
 une des tables de sa requête parente**. Schématiquement:
 
-    Select a.*
+    SELECT a.*
       FROM tableA a
       WHERE a.foo = (
         SELECT foo
           FROM tableB b
-          WHERE b.bar =a.bar  – ici la corrélation avec la requête parente
+          WHERE b.bar = a.bar  -- ici la corrélation avec la requête parente
         );
 
 A partir du moment où une requête est corrélée le résultat de son exécution
@@ -1619,6 +1614,8 @@ chaque ligne parente on va devoir recalculer la sous-requête**.
 
 Cela peut avoir un impact **non négligeable** en terme de performances de la
 requête.
+
+.fx: wide
 
 --------------------------------------------------------------------------------
 
@@ -1771,7 +1768,7 @@ n'exprime pas clairement la relation de jointure**. Ce n'est pas explicite à la
 lecture.
 
 C'est dangereux si l'on reprend un des principes de programmation qui est
-**« Makes Wrong Code Looks Wrong »**. Le code de la requête ici est dur à
+**« Makes Wrong Code Look Wrong »**. Le code de la requête ici est dur à
 comprendre sans disposer du schéma des tables, ce qui n'est pas le cas pour les
 autres jointures.
 
@@ -1823,7 +1820,7 @@ Les noms des jointures sont parfois exprimés différemment:
    de la nouvelle table seront gardées, les champs de la table d'origine qui
    n'ont pas de concordance avec cette nouvelle table seront affichés avec des
    valeurs NULL)
-* **FULL JOIN: FULL OUTER JOIN**: jointure externe **bilatérale*, il s'agit
+* **FULL JOIN: FULL OUTER JOIN**: jointure externe *bilatérale*, il s'agit
   d'un `LEFT JOIN` plus un `RIGHT JOIN` (contrairement au INNER JOIN où on a
   aucun NULL on a donc aussi les champs NULL à droite et à gauche). Jamais vu
   un cas d'utilisation :-)
@@ -1933,16 +1930,16 @@ L'idée de l'agrégation est en fait assez simple.
  non listés) des opérations d'agrégation vont pouvoir être effectuées (des
  **sommes, moyennes, min, max**).
 
-Cela permet d'obtenir des `min()`, `max()`, `avg()`, `sum()`, `count()` qui
-renverront **plusieurs lignes de résultats** (sinon on a pas besoin du GROUp BY**).
-
-Voyons un exemple:
-
 .fx: wide
 
 --------------------------------------------------------------------------------
 
-Nous avions un comptage des employés
+Cela permet d'obtenir des `min()`, `max()`, `avg()`, `sum()`, `count()` qui
+renverront **plusieurs lignes de résultats** (sinon on a pas besoin du GROUP BY**).
+
+Voyons un exemple:
+
+Nous avions un comptage des employés :
 
     SELECT count(distinct(per_nom))
       FROM drh.employes;
@@ -2002,7 +1999,7 @@ au moins tous les champs qui ne sont pas des agrégats.
 Les agrégats sont le **count(nom)** et le **avg(salaire)**.
 
 Remarquez que le **GROUP BY** n'est pas obligé d'appliquer toutes les
-**transformations** qui sont effectuées en sortie, **s'il les utilisaient cela
+**transformations** qui sont effectuées en sortie, **s'il les utilisait cela
 aurait un sens au moment du regroupement** (deux services qui auraient les 4
 mêmes premières lettres seraient regroupés).
 
@@ -2119,17 +2116,17 @@ Remarquez que nous obtenons **deux personnes**.
 * [http://docs.postgresql.fr/13/sql-createtable.html](http://docs.postgresql.fr/13/sql-createtable.html)
 
 Les **tables temporaires** et les **curseurs** sont des objets qui sont
-utilisées par les programmes utilisant la base.
+utilisés par les programmes utilisant la base.
 
 Ces objets permettent de **stocker temporairement le résultat d'une requête pour
 travailler avec**.
 
-On utilisera les curseurs pour par exemple paginer la lecture des résultats
+On utilisera [les curseurs](https://makina-corpus.com/python/les-curseurs-postgresql) pour par exemple paginer la lecture des résultats
 d'une requête importante. Le curseur sera détruit à la fin de la transaction
 (que nous verrons un peu plus tard).
 
 La table temporaire est par contre **une table**, visible uniquement depuis la
-session qui créé cette table, et qui disparaîtra avec la session ou la transaction.
+session qui crée cette table, et qui disparaîtra avec la session ou la transaction.
 
 Si elle porte le même nom qu'une vraie table elle **masquera** cette vraie table.
 
@@ -2146,8 +2143,8 @@ pour créer une table et la manipuler puis la destiner à un export CSV [http://
 
 Les **fonctions window** sont des opérations avancées sur les agrégats.
 
-La documentation en ligne fournis de bonnes explications
-[http://docs.postgresqlfr.org/13/tutorial-window.html](http://docs.postgresqlfr.org/13/tutorial-window.html), en la matière un bon
+La documentation en ligne fournit de bonnes explications
+[https://doc.postgresql.fr/16/tutorial-window.html](https://doc.postgresql.fr/16/tutorial-window.html), en la matière un bon
 exemple vaut de très longues explications :
 
     SELECT per_nom,

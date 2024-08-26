@@ -171,20 +171,20 @@ Nous allons donc **modifier les affichages de pgadmin** en allant dans le menu
 ### 15.4.1. Opérations d'écriture en SQL
 
 Les requêtes qui permettent de modifier la base en SQL sont assez peu nombreuses.
-[http://docs.postgresqlfr.org/13/dml.html](http://docs.postgresqlfr.org/13/dml.html)
+[https://doc.postgresql.fr/16/dml.html](https://doc.postgresql.fr/16/dml.html)
 
 Il y a :
 
-* **INSERT** : [http://docs.postgresqlfr.org/13/sql-insert.html](http://docs.postgresqlfr.org/13/sql-insert.html),
+* **INSERT** : [https://doc.postgresql.fr/16/sql-insert.html](https://doc.postgresql.fr/16/sql-insert.html),
   insertion d'une ligne dans une table.
   Notez que le mots clef **RETURNING** permet de spécifier que vous voulez avoir
   en retour de la commande **l'identifiant créé** ou tout autre information. Remarquez aussi le **INSERT INTO ... SELECT ...**;
-* **UPDATE** : [http://docs.postgresqlfr.org/13/dml-update.html](http://docs.postgresqlfr.org/13/dml-update.html),
+* **UPDATE** : [https://doc.postgresql.fr/16/dml-update.html](https://doc.postgresql.fr/16/dml-update.html),
   mise à jour d'une ou plusieurs lignes, notez que cette commande aussi supporte
   le mot clef RETURNING.
-* **DELETE** : [http://docs.postgresqlfr.org/13/dml-delete.html](http://docs.postgresqlfr.org/13/dml-delete.html),
+* **DELETE** : [https://doc.postgresql.fr/16/dml-delete.html](https://doc.postgresql.fr/16/dml-delete.html),
   suppression d'une ou plusieurs lignes.
-* **TRUNCATE** :  [http://docs.postgresqlfr.org/13/sql-truncate.html](http://docs.postgresqlfr.org/13/sql-truncate.html),
+* **TRUNCATE** :  [https://doc.postgresql.fr/16/sql-truncate.html](https://doc.postgresql.fr/16/sql-truncate.html),
   un delete « amélioré » qui vide toute la table en une seule opération
 
 
@@ -309,7 +309,7 @@ aussi remis à jour. Dans un premier temps retenez qu'**il est important que le
 
 Signalons aussi l'existence de la commande SQL **CLUSTER**
 
-[http://docs.postgresqlfr.org/13/sql-cluster.html](http://docs.postgresqlfr.org/13/sql-cluster.html)
+[https://doc.postgresql.fr/16/sql-cluster.html](https://doc.postgresql.fr/16/sql-cluster.html)
 qui **réordonne les données d'une table sur un index de cette table**.
 
 Ceci peut éviter des opérations de pages sur des grosses tables souvent
@@ -366,7 +366,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
 
 Le **principal problème est donc l'isolation des transactions**.
 
-La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: [http://docs.postgresqlfr.org/13/mvcc.html](http://docs.postgresqlfr.org/13/mvcc.html),
+La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: [https://doc.postgresql.fr/16/mvcc.html](https://doc.postgresql.fr/16/mvcc.html),
  **MVCC** signifie **MutliVersion Concurrency Control**.
 
 Cette page explique bien le problème et les différentes « *anomalies* » que l'on
@@ -403,7 +403,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
 --------------------------------------------------------------------------------
 ### Niveaux d'isolation
 
-Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page [http://docs.postgresqlfr.org/13/transaction-iso.html](http://docs.postgresqlfr.org/13/transaction-iso.html),
+Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page [https://doc.postgresql.fr/16/transaction-iso.html](https://doc.postgresql.fr/16/transaction-iso.html),
 ce niveau **Commited Read** autorise, après les X indiqués sur le schémas,
 deux types de problèmes:
 
@@ -465,7 +465,7 @@ Notez qu'il existe en interne de nombreux niveaux de verrouillages correspondant
 à diverses opérations, il est par exemple impossible de modifier une table
 qu'une opération de maintenance est en train de réorganiser sur le disque.
 
-La référence complète en la matière est ici: [http://docs.postgresqlfr.org/13/explicit-locking.html](http://docs.postgresqlfr.org/13/explicit-locking.html).
+La référence complète en la matière est ici: [https://doc.postgresql.fr/16/explicit-locking.html](https://doc.postgresql.fr/16/explicit-locking.html).
 
 Remarquez le **pg_advisory_lock(id)** qui permet de poser **un verrou applicatif**.
 PostgreSQL devient alors un moyen de stockage de **sémaphores** pour votre application.
@@ -663,7 +663,7 @@ COMMIT; -- ou ROLLBACK;
 --------------------------------------------------------------------------------
 ### utilisation de locks (for update)
 
-Testons la mise en places de LOCKS avec le mot clef FOR UPDATE ([http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share](http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share)):
+Testons la mise en places de LOCKS avec le mot clef FOR UPDATE ([https://doc.postgresql.fr/16/sql-select.html#sql-for-update-share](https://doc.postgresql.fr/16/sql-select.html#sql-for-update-share)):
 
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
@@ -1021,7 +1021,7 @@ modification en cours**.
 Les déclencheurs sont documentés ici :
 
 * [http://docs.postgresql.fr/13/triggers.html](http://docs.postgresql.fr/13/triggers.html),
-* [http://docs.postgresqlfr.org/13/sql-createtrigger.html](http://docs.postgresqlfr.org/13/sql-createtrigger.html)
+* [https://doc.postgresql.fr/16/sql-createtrigger.html](https://doc.postgresql.fr/16/sql-createtrigger.html)
 * [http://docs.postgresql.fr/13/plpgsql-trigger.html](http://docs.postgresql.fr/13/plpgsql-trigger.html)
 
 Quelques points à noter:
