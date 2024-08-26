@@ -757,7 +757,7 @@ Pour nous connecter à notre serveur local avec l'utilisateur postgres nous tape
     $ psql -h localhost -p 5432 -U postgres
     postgres=#
 
-la ligne `postgres=#` signifie que nous sommes dans la session interactive de psql. Les commandes les lus utiles dans un premier temps seront:
+la ligne `postgres=#` signifie que nous sommes dans la session interactive de psql. Les commandes les plus utiles dans un premier temps seront:
 
     \h
 
@@ -824,28 +824,36 @@ Pour un serveur 8.4 cela donne:
 ---------------------------------------------------------------------
 ## psql
 
-Et en version 11:
+Et en version 16:
 
     SELECT n.nspname as "Schema",
-    c.relname as "Name",
-    CASE c.relkind WHEN 'r' THEN 'table' WHEN 'v' THEN 'view' WHEN 'm' THEN 'materialized view'
-     WHEN 'i' THEN 'index' WHEN 'S' THEN 'sequence' WHEN 's' THEN 'special' WHEN 'f' THEN 'foreign table'
-     WHEN 'p' THEN 'table' WHEN 'I' THEN 'index' END as "Type",
-    pg_catalog.pg_get_userbyid(c.relowner) as "Owner"
+          c.relname as "Name",
+      CASE c.relkind
+        WHEN 'r' THEN 'table'
+        WHEN 'v' THEN 'view'
+        WHEN 'm' THEN 'materialized view'
+        WHEN 'i' THEN 'index'
+        WHEN 'S' THEN 'sequence'
+        WHEN 't' THEN 'TOAST table'
+        WHEN 'f' THEN 'foreign table'
+        WHEN 'p' THEN 'partitioned table'
+        WHEN 'I' THEN 'partitioned index'
+        END as "Type",
+      pg_catalog.pg_get_userbyid(c.relowner) as "Owner"
     FROM pg_catalog.pg_class c
         LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        LEFT JOIN pg_catalog.pg_am am ON am.oid = c.relam
     WHERE c.relkind IN ('r','p','v','m','S','f','')
-        AND n.nspname <> 'pg_catalog'
-        AND n.nspname <> 'information_schema'
-        AND n.nspname !~ '^pg_toast'
-    AND pg_catalog.pg_table_is_visible(c.oid)
-    ORDER BY 1,2;
+            AND n.nspname <> 'pg_catalog'
+          AND n.nspname !~ '^pg_toast'
+          AND n.nspname <> 'information_schema'
+      AND pg_catalog.pg_table_is_visible(c.oid);
 
 ---------------------------------------------------------------------
 ## psql
 
 On peut voir ici pourquoi un client psql trop ancien ne saurait bien exploiter un serveur récent, il risquerait de
-ne pas connaîtrez certaines informations disponibles dans la catalogue, ou pire, des informations qui auraient été
+ne pas connaître certaines informations disponibles dans le catalogue, ou pire, des informations qui auraient été
 déplacées (très rare).
 
 Retenez aussi que si vous voulez un jour faire des requêtes dans le catalogue pour obtenir des informations utiles (quel est le code de mon trigger? Quelles sont les tables sur lesquelles l'utilisateur toto à les droits d'écriture?) vous pourrez demander à votre psql de vous montrer comment lui interroge le catalogue et vous en inspirer.
@@ -1044,7 +1052,7 @@ L'usage final de ces points n'est pas dans notre exemple.
 
 La partie qui nous intéresse est que certains employés sont chargés de mettre en place une base de données PostgreSQL pour leur application, qui sera appelée sous le code projet **APP**.
 
-Ces employés devront donc accéder aux données, mais pas aux données interdites, et ils devront mettre en place un système de d'enregistrement des commandes et d'attribution des points.
+Ces employés devront donc accéder aux données, mais pas aux données interdites, et ils devront mettre en place un système d'enregistrement des commandes et d'attribution des points.
 
 ---------------------------------------------------------------------
 ## 10.2. Utilitaires en ligne de commande
@@ -1209,15 +1217,15 @@ En l'occurrence nous n'avons pas besoin de modifier ce code SQL.
 
 Une fois la base créée vous pouvez naviguer dans pgadmin et voir que de nombreux objets pourraient exister au sein de cette base :
 
-- **des catalogues**: il y en a deux, le pg_catalog et le catalogue information_schema qui est une obligation de toutes les bases de données se conformant à la norme SQL ANSI. On y trfouveun grand nombre d'objets qui sont disponibles pour **tous**.
+- **des catalogues**: il y en a deux, le pg_catalog et le catalogue information_schema qui est une obligation de toutes les bases de données se conformant à la norme SQL ANSI. On y trouve un grand nombre d'objets qui sont disponibles pour **tous**.
 - **des schémas**: un seul au départ, nommé public. Dépliez le pour y retrouver les objets de la base
-- **des domaines**: (il s'agit de définitions de types propres à cette base, avec des contraintes associées (comme une chaîne de caractère devant se conformer à une expression régulière)
-- plusieurs objets comportant le mot **FTS**, signifiant Full Text Search. Il s'agit des différents éléments devant être mis en place pour ajouter des fonctionnalités de recherche plein texte
+- **des domaines**: il s'agit de définitions de types propres à cette base, avec des contraintes associées (comme une chaîne de caractère devant se conformer à une expression régulière)
 
 .fx: wide
 
 ---------------------------------------------------------------------
 
+- plusieurs objets comportant le mot **FTS**, signifiant Full Text Search. Il s'agit des différents éléments devant être mis en place pour ajouter des fonctionnalités de recherche plein texte
 - **des fonctions**: si vous regardez l'équivalent dans le `pg_catalog` vous retrouverez toutes les fonctions que vous pouvez utiliser dans les requêtes (comme substring par exemple)
 - **des séquences**: il s'agit d'objets permettant de générer des auto-incréments (pour faire simple)
 - **des tables** bien sûr
@@ -1272,7 +1280,8 @@ La gestion des tablespaces est donc un élément de tunning assez avancé que no
 
 Pour le moment nous avons une nouvelle base mais elle appartient à l'utilisateur **postgres**.
 
-Afin de nous placer dans un cas plus réaliste il nous commencer à créer des **logins**, des **rôles**.
+Afin de nous placer dans un cas plus réaliste il nous faut commencer à créer des **logins**, des **rôles**.
+
 
 Ceci pourrait se faire à l'aide de la commande `createuser`, mais là encore nous allons plutôt utiliser les assistants de pgadmin.
 
@@ -1299,7 +1308,7 @@ Une application qui **au minimum serait capable d'utiliser deux connexions**, un
 
 Dans notre cas nous avons plusieurs utilisateurs :
 
- - **Ultrogothe**: DBA (Administrateur de base de données) responsable de cette application. Nous lui créons un rôle pour éviter d'utiliser l'utilisateur **postgres**. Nous pourrions aussi créer un rôle portant le nom de la base, histoire de bien séparer les droits d'administrations par base. **Ultrogothe à tous les droits**.
+ - **Ultrogothe**: DBA (Administrateur de base de données) responsable de cette application. Nous lui créons un rôle pour éviter d'utiliser l'utilisateur **postgres**. Nous pourrions aussi créer un rôle portant le nom de la base, histoire de bien séparer les droits d'administrations par base. **Ultrogothe a tous les droits**.
  - **Thibaut**, **Gondioque** et **Bertrude** sont des utilisateurs de la base de données. Ils sont responsable de la mise en place d'une application que nous nommerons **'app'**. Bertrude travaille au service DRH, elle a le droit de voir le contenu complet des tables de la DRH. Ce n'est pas le cas pour les autres, qui ne devraient voir qu'un sous ensemble des données de la partie DRH.
  - **Childeric** et **Nantilde** : deux personnes ayant le droit d'alimenter les données de la base, mais aussi de supprimer ces données. Childeric est de plus **DRH** et est le seul à pouvoir alimenter les données en rapport avec la gestion du personnel, par contre Nantilde n'a rien à voir avec l'application 'app'.
 
@@ -1322,7 +1331,7 @@ Nous créerons autant de rôles que d'utilisateurs et nous y associerons des «�
 
 -----------------------------------------------------------------
 
- - **formation_admin** : rôle des administrateurs de cette base de données au sein du serveur de base de données. Si vous gérer un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
+ - **formation_admin** : rôle des administrateurs de cette base de données au sein du serveur de base de données. Si vous gérez un seul login et un seul niveau de droit il vous faudra sans doute n'utiliser que ce rôle.
  - **formation_ecriture**: rôle permettant d'ajouter des données dans la base (childeric et nantilde)
  - **formation_lecture**: rôle permettant de requêter la base (bertrude, thibaut et gondioque)
  - **formation_app**: rôle des utilisateurs gérant l'application « app » (bertrude, thibaut,gondioque et nantilde)
@@ -1436,7 +1445,7 @@ produits dans les connexions de pgAdmin.
 -----------------------------------------------------------------
 ## Les schémas
 
-[http://docs.postgresql.fr/13/ddl-schemas.html](http://docs.postgresql.fr/13/ddl-schemas.html)
+[https://docs.postgresql.fr/16/ddl-schemas.html](https://docs.postgresql.fr/16/ddl-schemas.html)
 
 On peut voir de façon simplifiée les schémas comme **des bases de données à
 l'intérieur d'une base de données**.
@@ -2032,8 +2041,7 @@ Revenons à l'éditeur de SQL et tapons:
     CREATE TABLE test1 (id integer, val character varying, PRIMARY KEY (id));
 
 On constate que la table **est créée dans le premier schéma défini dans
-`search_path`**, donc dans le schéma « app ». Vérifiez que le propriétaire de la
-table est bien `formation_admin` et pas un user.
+`search_path`**, donc dans le schéma « app ».
 
 Maintenant que la variable `search_path` contient notre schéma `app` et le
 schéma `drh`, si nous tapons :
@@ -2063,11 +2071,10 @@ des insertions. Essayons d'utiliser generate_series:
 
     SELECT generate_series(1,10), 'nii' || generate_series(1,10);
 
-Nous donne 110 lignes de résultats avec postgreSQL 9.0
-(apparemment PostgreSQL >= 9.1 supporte cette syntaxe par contre).
-
-Ce n'est pas le bon chemin. Essayez d'utiliser la série de donnée automatique
-comme une table sur laquelle on fait une requête...
+Avec des versions de PostgreSQL antérieures à 9.1 cela produsait 110 lignes, ce
+qui n'est pas ce que l'on souhaite. Dans ce cas de figure, on peut utiliser la
+série de donnée automatique comme une table sur laquelle on fait une requête,
+voir page suivante...
 
 .fx: wide
 
@@ -2109,7 +2116,7 @@ Testons que cela a fonctionné:
 -----------------------------------------------------------------
 ### variable search_path
 
-![écran phppgadmin >](captures/search_path_ultrogothe.png)
+![écran phppgadmin >](captures/search_path_childeric.png)
 
 Les différents utilisateurs auront des besoins différents en terme d'accès aux
 schémas. On va donc régler leur **search_path** au niveau des **«rôles»** de
@@ -2118,16 +2125,16 @@ cette façon:
 - **ultrogothe** : search_path=**public,app,drh**
 - **childeric** : search_path=**drh,public**
 - **bertrude** : search_path=**app,drh,public**
-- **thibaut** : search_path=**app,public**
-- **gondioque** : search_path=**app,public**
-- **nantilde** : search_path=**app,public**
+- **thibaut**, **gondioque** et **nantilde** : search_path=**app,public**
 
-Pour cela nous utiliserons pgadmin (pas pgadmin4, il ne sait pas le faire proprement, il ajoute des quotes et il ne faut pas) en cliquant (droit) sur les rôles et en
-allant dans l'onglet variables:
-
-On voit que le SQL généré est du type:
+Pour cela nous utiliserons pgadmin en cliquant droit sur les rôles et en
+allant dans l'onglet *Paramètres*. On voit que le SQL généré est du type:
 
     ALTER ROLE gondioque SET search_path=app, public;
+
+<div class="warning"><p>
+Remarquez que la valeur de la variable `search_path` n'est pas une chaîne de caractères, pas de guillemets.
+</div>
 
 .fx: wide
 
@@ -2175,7 +2182,7 @@ de la base.
 Si vous aviez des connexions serveurs ouvertes dans pgAdmin il faut les fermer et les rouvrir pour que les variables sont bien initialisées (attention, pas simplement les replier et déplier, il faut choisir « se déconnecter »).
 
 <div class="warning"><p>
-Parfois postgreSQL refus de dropper un base parce qu'il reste une connexion ouverte
+Parfois postgreSQL refuse de dropper une base parce qu'il reste une connexion ouverte
 sur cette base, pensez à déconnecter vos sessions pgadmin.
 </p></div>
 
@@ -2189,7 +2196,7 @@ Pour tester les requêtes ouvrez une des connexions, choisissez la base formatio
 
 <div class="action"><p>
 Essayez de deviner les raisons des comportements observés avant que le formateur
-ne les expliquent:
+ne les explique :
 </p></div>
 
 -----------------------------------------------------------------
