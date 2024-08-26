@@ -209,7 +209,7 @@ Si on mets les vrais noms de variables et des parenthèses on obtient:
 
     limite du vacuum = autovacuum_vacuum_threshold
                        + (autovacuum_vacuum_scale_factor * nb lignes)
-    limite du analyze = autovacuum_analyze_thresold
+    limite du analyze = autovacuum_analyze_threshold
                        + (autovacuum_analyze_scale_factor * nb lignes)
 
 * **autovacuum_vacuum_threshold** : Après que ce nombre de lignes mortes dans la
@@ -230,7 +230,7 @@ le nombre d'<b>inserts</b> n'est utile qu'à l'analyse, pas au ménage.
 ### autovacuum
 
 Les `*_scale_factor` sont des pourcentages appliqués à la taille de la table et
-vont ajouter des valeurs au « thresold » (seuil) original. **Donc une grosse table
+vont ajouter des valeurs au « threshold » (seuil) original. **Donc une grosse table
 (2 millions de lignes) avec un scale factor de 0.1 (10%) va ajouter 200 000 au
 seuil**:
 
@@ -285,7 +285,7 @@ Pour les <b>grosses tables</b> (en nombre de lignes) qui subissent un <b>grand n
 Pour les <b>grosses tables</b> (en nombre de lignes) avec beaucoup de
  <b>mouvements (delete, update, insert)</b> vous devriez <b>réduire le
   autovacuum_vacuum_scale_factor</b> pour avoir plus souvent des opérations de
-  vacuum. Vous pouvez aussi décider de monter le <b>autovacuum_vacuum_thresold</b>
+  vacuum. Vous pouvez aussi décider de monter le <b>autovacuum_vacuum_threshold</b>
   à un chiffre élevé (comme 1000 ou 5000) et mettre <b>0 au
   autovacuum_vacuum_scale_factor</b>.
 </p></div>
@@ -302,15 +302,15 @@ votre espace disque occupé est raisonnable
 <div class="warning"><p>
 Sur une <b>grosse table</b> avec <b>beaucoup de mises à jour</b> (chose assez
 peu fréquente en fait) un moyen simple d'obtenir un vacuum plus <b>prévisible</b>
-est de <b>diminuer le factor</b> et de mettre dans le <b>thresold une valeure
+est de <b>diminuer le factor</b> et de mettre dans le <b>threshold une valeure
 basse du nombre d'opérations par jour</b>.
 </p></div>
 <div class="warning"><p>
 Pour une table qui reçoit des mises à jour en <b>mode batch</b>, par exemple
 elle reçoit <b>10 000</b> nouvelles lignes chaque nuit graĉe à un cron; mettez
-le <b>thresold d'analyze à 10000 et le factor à 0</b>, ainsi seul le nombre
+le <b>threshold d'analyze à 10000 et le factor à 0</b>, ainsi seul le nombre
 d'insertions va déterminer le lancement du vacuum. S'il ne s'agit pas que
-d'insertions mais aussi de mises à jour et de suppressions modifiez le thresold
+d'insertions mais aussi de mises à jour et de suppressions modifiez le threshold
 et le factor du vacuum de la même façon.
 </p></div>
 <div class="warning"><p>
@@ -444,6 +444,11 @@ On conseille souvent d'utiliser au départ un quart de la mémoire du serveur
 (**25%**, donc 500MB sur un serveur qui dispose de 2Go de RAM). En mode 32bit
 la limite est de 2GB. Surveillez la statistique **cache_miss** pour voir si
 votre paramètre est trop petit.
+.fx: wide
+
+--------------------------------------------------------------------------------
+
+### Mémoire
 
 **ATTENTION:** sur Windows ne jamais utiliser plus de 512MB en shared_buffers.
 Les performances s'effondrent une fois ce seuil dépassé. Il faudra jouer sur
@@ -597,7 +602,7 @@ lieu de parcours séquentiels lors de l'exécution des requêtes.
 
 Il y a de nombreux paramètres liés aux journaux dans le fichier `postgresql.conf`.
 
-On peut par exemple décider de loger au format **CSV**, de tracer toutes les
+On peut par exemple décider de logger au format **CSV**, de tracer toutes les
 requêtes, ou bien aucune, ou bien seulement celles qui modifient la structure
 de la base (ddl). On peut associer un explain avec les requêtes tracées,
 garder une trace du temps d'exécution, des connections, etc.
@@ -771,7 +776,7 @@ Les checkpoints peuvent se produire à plusieurs moments:
 ### wal & checkpoint
 
 On peut alors imaginer que l'opération de CHECKPOINT est une **opération coûteuse**
- pour l'OS, toutes les écritures sont reportés à un moment ultime, quand ce
+ pour l'OS, toutes les écritures sont reportées à un moment ultime, quand ce
 moment intervient un grand nombre d'écritures doivent se faire.
 
 Heureusement on peut répartir ces écritures entre deux checkpoints grâce au
@@ -781,6 +786,10 @@ par défaut pour effectuer les écritures réelles. En le fixant à `0.9` on per
 un lissage plus fort encore de ces écritures. Mais vous pouvez aussi repousser
 `checkpoint_timeout` et utiliser une valeur assez basse pour
  `checkpoint_completion_target`.
+
+--------------------------------------------------------------------------------
+
+### wal & checkpoint
 
 <div class="warning"><p>
 Remarquez le paramètre <b>checkpoint_warning</b> à <b>30s</b> par défaut.
@@ -954,7 +963,7 @@ Il faut ensuite configurer quelques paramètres comme indiqué dans cet extrait 
 
     # Ceci est la méthode qui est utilisée pour s'assurer que le fichier
     # WAL est synchronisé sur le disque
-    #"fsync" ou "fsync_writethrough" : Force écriture réèlle sur le disque
+    #"fsync" ou "fsync_writethrough" : Force écriture réelle sur le disque
     # sans que l'OS puisse utiliser son cache disque
     # "open_datasync" : valeur par défaut pour windows
     # "fsync" apelle fsync() à chaque commit,"fsync_writethrough" aussi
@@ -998,8 +1007,8 @@ La commande peut être un script complexe ou une simple ligne de
 commande, le résultat est pour PostgreSQL **la certitude que ce WAL a été
 recopié à un endroit où il ne craint plus un arrêt brutal du serveur**.
 
-Examinons la paramètres de temps sur la génération de segments et les checkpoints.
-Avec un **checkpoint_timeout de 15 minutes **et une base inactive on obtient sur
+Examinons les paramètres de temps sur la génération de segments et les checkpoints.
+Avec un **checkpoint_timeout de 15 minutes** et une base inactive on obtient sur
 une frise chronologique:
 
     C: Checkpoint
@@ -1025,7 +1034,7 @@ autre système. Vous pouvez utiliser rsync, ou une simple copie sur un disque
 réseau, voir sur un disque dédié à cette tâche.
 
 Les fichiers WAL font **16MB**, avec une base inactive et un WAL tous les quarts
- d'heures cela représente `96*16=1.5Go` de donnes minimales à archiver par jour.
+ d'heures cela représente `96*16=1.5Go` de données minimales à archiver par jour.
 
 N'hésitez donc pas **à compresser ces fichiers** lors de l'utilisation de
 l'**archive_command**, vous pourrez gagner plus de 90% d'espace disque sur le
@@ -1631,7 +1640,7 @@ ce fonctionnement. Cf [exemple](https://www.xf.is/convert-postgresql-cluster-to-
 ## 20.10. Exemple de Politique de backups
 
 <small>Nous présentons ici une politique de backups. Il peut en exister
-d'autres. Par exemple en n'activant ll'archivage des journaux de transactions
+d'autres. Par exemple en n'activant l'archivage des journaux de transactions
 qu'au moment des backups.</small>
 
 .fx: title2
@@ -1682,7 +1691,7 @@ Les dumps permettent une récupération plus simple que les solutions basées su
 les WAL et peuvent prendre le relais en cas de corruption du système de backup
 des WAL.
 
-Lors du dump tous les indexs sont parcourus et des « page faults » peuvent être
+Lors du dump tous les index sont parcourus et des « page faults » peuvent être
  détectées et faire échouer le dump.
 
 En parallèle des dumps des différentes bases de données un `pg_dumpall` devrait
