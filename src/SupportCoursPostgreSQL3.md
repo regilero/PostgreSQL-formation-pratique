@@ -123,9 +123,9 @@ ou les lignes impactées. Essayez de mettre à jour d'autres colonnes.
 
 <div class="action"><p>
 Essayez (en tant qu'utilisateur ultrogothe) d'ajouter dans la vue <b>vue_drh_service</b>
- la colonne <b>ser_code avant la colonne ser_parent</b> en utilisant la commande
- <b>CREATE OR REPLACE VIEW</b> qui est listée dans le Panneau SQL.<br/>
- Essayez ensuite d'ajouter cette colonne <b>après la colonne ser_parent</b>.
+ la colonne <b>ser_code</b> à la suite de la colonne <b>ser_parent</b> en utilisant la commande SQL
+ <b>CREATE OR REPLACE VIEW</b>.<br/>
+ Essayez ensuite d'ajouter la colonne <b>ser_points</b> mais essayez de placer cette colonne <b>AVANT</b> la colonne ser_parent (vous devriez obtenir un message d'erreur).
 </p></div>
 
 <div class="action"><p>
@@ -882,7 +882,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
 </p></div>
 
 * [ACIDRAIN, attaques de sites ecommerce](http://www.bailis.org/papers/acidrain-sigmod2017.pdf)
-* [Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog](https://makina-corpus.com/blog/metier/2015/bien-debuter-avec-les-transactions-sql)
+* [Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog](https://makina-corpus.com/devops/bien-debuter-avec-les-transactions-sql)
 
 --------------------------------------------------------------------------------
 
@@ -1039,7 +1039,7 @@ Quelques points à noter:
   de triggers.
 
 <div class="warning"><p>
-Si vous utilisez un trigger pour pqr exemple recalculer des résultats
+Si vous utilisez un trigger pour par exemple recalculer des résultats
 (comme une requête GROUP BY) et les stocker dans une table statistique,
 travaillez <b>au niveau requête</b> et pas au niveau <b>ROW</b>.
 <b>Sinon une requête qui mets à jour 10 000 lignes lancera 10 000 fois le calcul
@@ -1052,9 +1052,9 @@ au lieu de le faire une seule fois à la fin</b>.
 
 Le premier lien de documentation fournit un exemple de trigger en **C**.
 
-Le langage le plus utilisé est le **pl/pgSQL**. Mais vous pouvez aussi utiliser d'autres langages, comme le [pl/Perl](http://docs.postgresqlfr.org/13/plperl.html),
-le [pl/Python](http://docs.postgresqlfr.org/13/plpython.html),
-le [pl/Tcl](http://docs.postgresqlfr.org/13/pltcl.html)...
+Le langage le plus utilisé est le **pl/pgSQL**. Mais vous pouvez aussi utiliser d'autres langages, comme le [pl/Perl](https://doc.postgresql.fr/16/plperl.html),
+le [pl/Python](https://doc.postgresql.fr/16/plpython.html),
+le [pl/Tcl](https://doc.postgresql.fr/16/pltcl.html)...
 
 **Un déclencheur ne fait qu'associer une fonction particulière (qui doit renvoyer
 des valeurs particulières) à un évènement particulier**. Mais on peut aussi
@@ -1087,7 +1087,7 @@ du **schéma app uniquement**.
 
 Remarquez l'option **« Nombre de processus/threads »** cette option peut vous
 sauver la vie sur une restauration d'un gros fichier de backup en passant la
-procédure de 10 heures à 1 heures – ce qui peut vous ramener dans un fenêtre de
+procédure de 10 heures à 1 heure – ce qui peut vous ramener dans un fenêtre de
 tir raisonnable. C'est une option nouvelle (postgresql 9) qui va permettre de
 paralléliser les restaurations qui peuvent l'être sur plusieurs processeurs,
 il faut donc déjà disposer d'une machine à processeurs multiples.
@@ -1525,7 +1525,7 @@ et index:
 * [http://www.postgresql.org/docs/13/interactive/disk-usage.html](http://www.postgresql.org/docs/13/interactive/disk-usage.html)
 * [http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE](http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE)
 
-Visualisons la taille des indexs et tables :
+Visualisons la taille des index et tables :
 
     SELECT relname, relpages,
         pg_relation_filepath(oid),
@@ -1584,12 +1584,12 @@ Maintenant examinons cette requête:
       date_part('month',com_date) as "mois",
       round(sum(com_total_ht),2) as "total mensuel"
     FROM app.commandes
-    WHERE date_part('year',com_date)=2017
+    WHERE date_part('year',com_date)=2023
       AND date_part('month',com_date) BETWEEN 1 AND 5
     GROUP BY date_part('month',com_date)
     ORDER BY date_part('month',com_date) ASC;
 
-Il s'agit d'afficher pour chaque mois de l'année 2017 le total commandé de
+Il s'agit d'afficher pour chaque mois de l'année 2023 le total commandé de
 janvier à mai.
 
     "GroupAggregate  (cost=428.96..428.99 rows=1 width=16)"
@@ -1598,9 +1598,9 @@ janvier à mai.
     "        ->  Seq Scan on commandes  (cost=0.00..428.95 rows=1 width=16)"
     "              Filter: ((date_part('month'::text, com_date) >= 1::double precision)
                     AND (date_part('month'::text, com_date) <= 5::double precision)
-                    AND (date_part('year'::text, com_date) = 2017::double precision))"
+                    AND (date_part('year'::text, com_date) = 2023::double precision))"
 
-On, imagine que le moteur doit effectuer des calculs à partir de la **date**
+On imagine que le moteur doit effectuer des calculs à partir de la **date**
 pour en **extraire l'année et le mois, pour chaque commande**.
 
 Si on lui donne un nouvel index sur la colonne date cela ne changera rien. Il
@@ -1628,7 +1628,7 @@ On refait le explain. Le résultat est déjà meilleur (cost).
     "        ->  Bitmap Heap Scan on commandes  (cost=4.76..116.20 rows=1 width=16)"
     "              Recheck Cond: ((date_part('month'::text, com_date) >= 1::double  precision)
                                   AND (date_part('month'::text, com_date) <= 5::double precision))"
-    "              Filter: (date_part('year'::text, com_date) = 2017::double precision)"
+    "              Filter: (date_part('year'::text, com_date) = 2023::double precision)"
     "              ->  Bitmap Index Scan on idx_commande_index_month  (cost=0.00..4.76
                                                                       rows=50 width=0)"
     "                    Index Cond: ((date_part('month'::text, com_date) >= 1::double precision)
@@ -1664,7 +1664,7 @@ dans un index**.
 Si nous avions un index sur ces commandes qui devenait un peu trop gros, et
 que nous savons que 80% des données contenues dans la table datent d'avant 2010
 et que par ailleurs personne ne fait jamais, quasiment, de requêtes sur des
-périodes remontant à plus de 5 ans. On peut reduire la taille de l'index:
+périodes aussi anciennes. On peut reduire la taille de l'index:
 
     CREATE INDEX idx_commande_index_year_month
       ON app.commandes
@@ -1719,8 +1719,8 @@ utilisée en production:
 <div class="warning"><p>
 Il n'est pas rare d'avoir 4/5 de l'espace utilisé par une base occupé par les
 indexs. C'est plutôt normal.</br>
-Il n'est pas non plus rare de trouver des indexs qui font double usages, jamais
-utilisés, etc. Supprimer ces indexs est important.
+Il n'est pas non plus rare de trouver des index qui font double usages, jamais
+utilisés, etc. Supprimer ces index est important.
 </p></div>
 
 --------------------------------------------------------------------------------
@@ -1738,16 +1738,16 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
   * **LISTEN/NOTIFY** : ces instructions permettent la mise en place de programmes
   persistants en  écoute de certains messages (imaginez par exemple un programme
   externe qui doit effectuer des tâches quand une nouvelle transaction
-  commerciale est enregistrée) [http://docs.postgresqlfr.org/13/sql-listen.html](http://docs.postgresqlfr.org/13/sql-listen.html) [http://docs.postgresqlfr.org/13/sql-notify.html](http://docs.postgresqlfr.org/13/sql-notify.html).
+  commerciale est enregistrée) [https://doc.postgresql.fr/16/sql-listen.html](https://doc.postgresql.fr/16/sql-listen.html) [https://doc.postgresql.fr/16/sql-notify.html](https://doc.postgresql.fr/16/sql-notify.html).
   il s'agit de queues de messages.
 
-* **Recherche Plein Texte** : [http://docs.postgresqlfr.org/13/textsearch.html](http://docs.postgresqlfr.org/13/textsearch.html)
+* **Recherche Plein Texte** : [https://doc.postgresql.fr/16/textsearch.html](https://doc.postgresql.fr/16/textsearch.html)
 * **postgis** : [http://www.postgis.org](http://www.postgis.org) (extension de **Système d'Information Géographique**)
-* **types composites** : [http://docs.postgresqlfr.org/13/rowtypes.html](http://docs.postgresqlfr.org/13/rowtypes.html)
-* **DO** : [http://docs.postgresqlfr.org/13/sql-do.html](http://docs.postgresqlfr.org/13/sql-do.html) envie de tester une fonction
+* **types composites** : [https://doc.postgresql.fr/16/rowtypes.html](https://doc.postgresql.fr/16/rowtypes.html)
+* **DO** : [https://doc.postgresql.fr/16/sql-do.html](https://doc.postgresql.fr/16/sql-do.html) envie de tester une fonction
  sans l'enregistrer? **Do** permet de **définir à la volée** une fonction pour
  l'utiliser immédiatement.
-* **Create Aggregate** : [http://docs.postgresqlfr.org/13/sql-createaggregate.html](http://docs.postgresqlfr.org/13/sql-createaggregate.html)
+* **Create Aggregate** : [https://doc.postgresql.fr/16/sql-createaggregate.html](https://doc.postgresql.fr/16/sql-createaggregate.html)
 * **Vues materialisées** (> 9.3): la vue est cachée comme une table réèlle,
  elle peut être recalculée à la volée `REFRESH MATERIALIZED VIEW nom;`. Gain de
  temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).
@@ -1756,7 +1756,7 @@ Nous ne pouvons pas couvrir l'ensemble des outils mis à disposition dans une ba
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14
+## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16
 
 Il a de nombreux éléments nouveaux dans les version 10 et 11:
 
@@ -1769,13 +1769,15 @@ Mais s'il fallait ne retenir que quelques éléments nous citerions:
 * un gros travail sur le parallélisme dans l'exécution des requêtes (qui là aussi se poursuit à chaque release depuis)
 * des améliorations sur les index de type HASH
 * des solutions nouvelles en administration et en réplication, comme la réplication logique (qui arive en 11, puis s'ouvre aux tables partitionnées en 12), mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)
-* les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle. [Parcours d'index seul et index couvrants](https://docs.postgresql.fr/14/indexes-index-only-scans.html).
-* les colonnes **identity**, qui sont l'équivalent des `serial`, sans les bizarreries liées à la transformation de serial en `int+sequence`.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14
+## 18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16
+
+* les **index couvrants** (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle. [Parcours d'index seul et index couvrants](https://docs.postgresql.fr/14/indexes-index-only-scans.html).
+* les colonnes **identity**, qui sont l'équivalent des `serial`, sans les bizarreries liées à la transformation de serial en `int+sequence`.
+
 
 Rappelez vous d'utiliser la [Feature Matrix](https://www.postgresql.org/about/featurematrix/)
 
@@ -1784,14 +1786,14 @@ Vous pourriez y découvrir des éléments nouveaux.
 Par exemple cette feature [STORED GENERATED COLUMNS](https://www.postgresql.org/docs/current/ddl-generated-columns.html).
 Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans `app`, qui utilisait des triggers pour calculer automatiquement ces valeurs, pourrait depuis la version 12 s'écrire automatiquement, **sans triggers**.
 
-Ou encore le support natif du type **UUID** avec postgreSQL **13** (extension **uuid-ossp** avant cela).
+Ou encore le support natif du type **UUID** avec postgreSQL **13** (extension **uuid-ossp** avant cela) ou le support de nouveaux formats de nombres (`1_000_000`, `0b10`, `0xFF`) avec PostgreSQL **16**.
 
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.3 pg_upgrade, migration 9.x vers 11
+## 18.3 pg_upgrade, migration 9.x vers 11 (ou plus)
 
-Avant de tester le partionnement sur un PostgreSQL 11, si votre base est installée sur une version 9.x, nous pouvonsla migrer automatiquement vers une version 11.
+Avant de tester le partitionnement sur un PostgreSQL 11 (ou supérieur), si votre base est installée sur une version 9.x, nous pouvons la migrer automatiquement vers une version 11.
 
 On suppose que vous avez une version de postgresql 11 installée (via un `apt-get install postgresql-11`). Elle tourne donc
 sur votre machine, sur un port différent (par exemple **5435**). Vérifiez le fichier `pg_hba.conf` de cette instance.
@@ -1862,13 +1864,17 @@ Vous pouvez dorénavant manipuler la base formation sur PostgreSQL11 (notez qu'u
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.4 Exemple de partionnement avec PostgreSQL11
+## 18.4 Exemple de partitionnement avec PostgreSQL11
 
 Pour visualiser un exemple de partitionnement, nous allons mettre en place une table d'audit des mouvements observés sur la table commande (vous pourrez par exemple générer du mouvement avec les scripts PHP).
 
 Les développeurs de `app` nous fournissent un script SQL qui permet la mise en place de cette table d'audit, et ils ont eu la bonne idée de partitionner cette table.
 
-Un vrai partionement utile aurait été basé sur le temps (par exemple une sous table par année-mois), mais pour visualiser les effets en formation on part plutôt sur un partitionnement par type d'opération (`'D'`/`'I'`/`'U'`).
+Un vrai partionement utile aurait été basé sur le temps (par exemple une sous table par année-mois), mais pour visualiser les effets en formation on part plutôt sur un partitionnement par type d'opération (`'D'`/`'I'`/`'U'`)..fx: wide
+
+--------------------------------------------------------------------------------
+## 18.4 Exemple de partitionnement
+
 
     CREATE TABLE app.commande_audit(
         operation         char(1)   NOT NULL,
@@ -1887,7 +1893,7 @@ Un vrai partionement utile aurait été basé sur le temps (par exemple une sous
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.4 Exemple de partionnement avec PostgreSQL11
+## 18.4 Exemple de partitionnement
 
 On continue avec la mise en place du trigger d'audit :
 
@@ -1915,30 +1921,34 @@ On continue avec la mise en place du trigger d'audit :
 .fx: wide
 
 --------------------------------------------------------------------------------
-## 18.4 Exemple de partionnement avec PostgreSQL11
+## 18.4 Exemple de partitionnement
 
 Vous pouvez remarquer que les index ont été créés automatiquement sur la sous-tables.
 
 Si vous générez de l'activité, vous verrez que les sous tables se remplissent.
-Et si vous altérez à la main la colonne `operation` d'un des enregsitrements de l'audit
-vous verrez qu'il change de table de parti onnement.
+Et si vous altérez à la main la colonne `operation` d'un des enregistrements de l'audit
+vous verrez qu'il change de table de partitionnement.
 
     SELECT count(1),tableoid::regclass FROM commande_audit GROUP by 2 order by 2;
 
+.fx: wide
+
 --------------------------------------------------------------------------------
-## 18.4 Exemple de partionnement avec PostgreSQL11
+## 18.4 Exemple de partitionnement avec PostgreSQL11
 
 
 <div class="warning"><p>
-<b>Attention</b> le partionnement n'est pas une opération transparente.
+<b>Attention</b> le partitionnement n'est pas une opération transparente.
 </p></div>
 
 * une table existante ne peut devenir automatiquement partionnée, il faut surement passer par des migrations de données
 * il y a un grand nombre de limites (par exemple les types de foreign keys supportés, les champs utilisés dans les Primary Key, les types de triggers supportés, de la partition par défaut, des création sde sous tables à l'avance).
 * il y a de fortes différences entre les version 10,11 et 12 de PostgreSQL sur les éléments supportés
-* il faut prendre le temps de bien valider tous les développements (tests unitaires), les indexs, et les choix de partionnements.
+* il faut prendre le temps de bien valider tous les développements (tests unitaires), les index, et les choix de partitionnements.
 
 Bref, évitez d'intervenir **après-coup** sur une table qui devient trop grosse.
+
+.fx: wide
 
 --------------------------------------------------------------------------------
 # 19. Questions subsidiaires?
