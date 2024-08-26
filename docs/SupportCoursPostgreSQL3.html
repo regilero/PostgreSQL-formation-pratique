@@ -58,7 +58,7 @@
             
 
             <aside class="page_number">
-              1/96
+              1/97
             </aside>
           </footer>
         </div>
@@ -94,7 +94,7 @@
             
 
             <aside class="page_number">
-              2/96
+              2/97
             </aside>
           </footer>
         </div>
@@ -132,7 +132,7 @@
             
 
             <aside class="page_number">
-              3/96
+              3/97
             </aside>
           </footer>
         </div>
@@ -170,7 +170,7 @@
             
 
             <aside class="page_number">
-              4/96
+              4/97
             </aside>
           </footer>
         </div>
@@ -221,7 +221,7 @@ puis aller chercher le fichier. On voit que la commande tapée est:</p>
             
 
             <aside class="page_number">
-              5/96
+              5/97
             </aside>
           </footer>
         </div>
@@ -262,7 +262,7 @@ la nécessité de bien scinder la base en schémas.</p>
             
 
             <aside class="page_number">
-              6/96
+              6/97
             </aside>
           </footer>
         </div>
@@ -305,7 +305,7 @@ tables du schéma drh.</p>
             
 
             <aside class="page_number">
-              7/96
+              7/97
             </aside>
           </footer>
         </div>
@@ -343,7 +343,7 @@ tables du schéma drh.</p>
             
 
             <aside class="page_number">
-              8/96
+              8/97
             </aside>
           </footer>
         </div>
@@ -391,7 +391,7 @@ tables du schéma drh.</p>
             
 
             <aside class="page_number">
-              9/96
+              9/97
             </aside>
           </footer>
         </div>
@@ -433,7 +433,7 @@ tables du schéma drh.</p>
             
 
             <aside class="page_number">
-              10/96
+              10/97
             </aside>
           </footer>
         </div>
@@ -463,9 +463,9 @@ ou les lignes impactées. Essayez de mettre à jour d'autres colonnes.
 
 <div class="action"><p>
 Essayez (en tant qu'utilisateur ultrogothe) d'ajouter dans la vue <b>vue_drh_service</b>
- la colonne <b>ser_code avant la colonne ser_parent</b> en utilisant la commande
- <b>CREATE OR REPLACE VIEW</b> qui est listée dans le Panneau SQL.<br/>
- Essayez ensuite d'ajouter cette colonne <b>après la colonne ser_parent</b>.
+ la colonne <b>ser_code</b> à la suite de la colonne <b>ser_parent</b> en utilisant la commande SQL
+ <b>CREATE OR REPLACE VIEW</b>.<br/>
+ Essayez ensuite d'ajouter la colonne <b>ser_points</b> mais essayez de placer cette colonne <b>AVANT</b> la colonne ser_parent (vous devriez obtenir un message d'erreur).
 </p></div>
 
 <div class="action"><p>
@@ -495,7 +495,7 @@ et admirez le résultat.
             
 
             <aside class="page_number">
-              11/96
+              11/97
             </aside>
           </footer>
         </div>
@@ -533,7 +533,7 @@ et admirez le résultat.
             
 
             <aside class="page_number">
-              12/96
+              12/97
             </aside>
           </footer>
         </div>
@@ -576,7 +576,7 @@ de pgadmin nous montrent les objets <strong>FTS</strong>.</p>
             
 
             <aside class="page_number">
-              13/96
+              13/97
             </aside>
           </footer>
         </div>
@@ -614,7 +614,7 @@ de pgadmin nous montrent les objets <strong>FTS</strong>.</p>
             
 
             <aside class="page_number">
-              14/96
+              14/97
             </aside>
           </footer>
         </div>
@@ -630,19 +630,19 @@ de pgadmin nous montrent les objets <strong>FTS</strong>.</p>
               
               
                 <p>Les requêtes qui permettent de modifier la base en SQL sont assez peu nombreuses.
-<a href="http://docs.postgresqlfr.org/13/dml.html">http://docs.postgresqlfr.org/13/dml.html</a></p>
+<a href="https://doc.postgresql.fr/16/dml.html">https://doc.postgresql.fr/16/dml.html</a></p>
 <p>Il y a :</p>
 <ul>
-<li><strong>INSERT</strong> : <a href="http://docs.postgresqlfr.org/13/sql-insert.html">http://docs.postgresqlfr.org/13/sql-insert.html</a>,
+<li><strong>INSERT</strong> : <a href="https://doc.postgresql.fr/16/sql-insert.html">https://doc.postgresql.fr/16/sql-insert.html</a>,
   insertion d'une ligne dans une table.
   Notez que le mots clef <strong>RETURNING</strong> permet de spécifier que vous voulez avoir
   en retour de la commande <strong>l'identifiant créé</strong> ou tout autre information. Remarquez aussi le <strong>INSERT INTO ... SELECT ...</strong>;</li>
-<li><strong>UPDATE</strong> : <a href="http://docs.postgresqlfr.org/13/dml-update.html">http://docs.postgresqlfr.org/13/dml-update.html</a>,
+<li><strong>UPDATE</strong> : <a href="https://doc.postgresql.fr/16/dml-update.html">https://doc.postgresql.fr/16/dml-update.html</a>,
   mise à jour d'une ou plusieurs lignes, notez que cette commande aussi supporte
   le mot clef RETURNING.</li>
-<li><strong>DELETE</strong> : <a href="http://docs.postgresqlfr.org/13/dml-delete.html">http://docs.postgresqlfr.org/13/dml-delete.html</a>,
+<li><strong>DELETE</strong> : <a href="https://doc.postgresql.fr/16/dml-delete.html">https://doc.postgresql.fr/16/dml-delete.html</a>,
   suppression d'une ou plusieurs lignes.</li>
-<li><strong>TRUNCATE</strong> :  <a href="http://docs.postgresqlfr.org/13/sql-truncate.html">http://docs.postgresqlfr.org/13/sql-truncate.html</a>,
+<li><strong>TRUNCATE</strong> :  <a href="https://doc.postgresql.fr/16/sql-truncate.html">https://doc.postgresql.fr/16/sql-truncate.html</a>,
   un delete « amélioré » qui vide toute la table en une seule opération</li>
 </ul>
               
@@ -666,7 +666,7 @@ de pgadmin nous montrent les objets <strong>FTS</strong>.</p>
             
 
             <aside class="page_number">
-              15/96
+              15/97
             </aside>
           </footer>
         </div>
@@ -711,7 +711,7 @@ transaction</b>
             
 
             <aside class="page_number">
-              16/96
+              16/97
             </aside>
           </footer>
         </div>
@@ -760,7 +760,7 @@ ce qu'on trouve souvent documenté comme un <em>merge</em>.</p>
             
 
             <aside class="page_number">
-              17/96
+              17/97
             </aside>
           </footer>
         </div>
@@ -813,7 +813,7 @@ page mémoire aurait suffit.</p>
             
 
             <aside class="page_number">
-              18/96
+              18/97
             </aside>
           </footer>
         </div>
@@ -863,7 +863,7 @@ par les mises à jour).</p>
             
 
             <aside class="page_number">
-              19/96
+              19/97
             </aside>
           </footer>
         </div>
@@ -908,7 +908,7 @@ ralentit fortement les écritures).</p>
             
 
             <aside class="page_number">
-              20/96
+              20/97
             </aside>
           </footer>
         </div>
@@ -957,7 +957,7 @@ aussi remis à jour. Dans un premier temps retenez qu'<strong>il est important q
             
 
             <aside class="page_number">
-              21/96
+              21/97
             </aside>
           </footer>
         </div>
@@ -973,7 +973,7 @@ aussi remis à jour. Dans un premier temps retenez qu'<strong>il est important q
               
               
                 <p>Signalons aussi l'existence de la commande SQL <strong>CLUSTER</strong></p>
-<p><a href="http://docs.postgresqlfr.org/13/sql-cluster.html">http://docs.postgresqlfr.org/13/sql-cluster.html</a>
+<p><a href="https://doc.postgresql.fr/16/sql-cluster.html">https://doc.postgresql.fr/16/sql-cluster.html</a>
 qui <strong>réordonne les données d'une table sur un index de cette table</strong>.</p>
 <p>Ceci peut éviter des opérations de pages sur des grosses tables souvent
 utilisées sur un même index.</p>
@@ -1005,7 +1005,7 @@ peu accédées, car le Cluster pose quelques problèmes de locks).</p>
             
 
             <aside class="page_number">
-              22/96
+              22/97
             </aside>
           </footer>
         </div>
@@ -1061,7 +1061,7 @@ peu accédées, car le Cluster pose quelques problèmes de locks).</p>
             
 
             <aside class="page_number">
-              23/96
+              23/97
             </aside>
           </footer>
         </div>
@@ -1106,7 +1106,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
             
 
             <aside class="page_number">
-              24/96
+              24/97
             </aside>
           </footer>
         </div>
@@ -1122,7 +1122,7 @@ Une fois les données stockées sur disque PostgreSQL <b>ne vérifie plus l'int�
               
               
                 <p>Le <strong>principal problème est donc l'isolation des transactions</strong>.</p>
-<p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="http://docs.postgresqlfr.org/13/mvcc.html">http://docs.postgresqlfr.org/13/mvcc.html</a>,
+<p>La référence en la matière est la page de documentation du modèle MVCC de PostgreSQL: <a href="https://doc.postgresql.fr/16/mvcc.html">https://doc.postgresql.fr/16/mvcc.html</a>,
  <strong>MVCC</strong> signifie <strong>MutliVersion Concurrency Control</strong>.</p>
 <p>Cette page explique bien le problème et les différentes « <em>anomalies</em> » que l'on
  peut rencontrer. Nous ajouterons donc simplement quelques compléments.</p>
@@ -1150,7 +1150,7 @@ transaction n'est pas du tout obligée d'être la première à se terminer.</p>
             
 
             <aside class="page_number">
-              25/96
+              25/97
             </aside>
           </footer>
         </div>
@@ -1203,7 +1203,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
             
 
             <aside class="page_number">
-              26/96
+              26/97
             </aside>
           </footer>
         </div>
@@ -1218,7 +1218,7 @@ d'isolation peuvent survenir pour les transactions qui tournent encore (pour les
                 <h3>Niveaux d'isolation</h3>
               
               
-                <p>Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page <a href="http://docs.postgresqlfr.org/13/transaction-iso.html">http://docs.postgresqlfr.org/13/transaction-iso.html</a>,
+                <p>Par défaut nous sommes dans le deuxième niveau parmi les 4 définis sur la page <a href="https://doc.postgresql.fr/16/transaction-iso.html">https://doc.postgresql.fr/16/transaction-iso.html</a>,
 ce niveau <strong>Commited Read</strong> autorise, après les X indiqués sur le schémas,
 deux types de problèmes:</p>
 <ul>
@@ -1251,7 +1251,7 @@ la session.</p>
             
 
             <aside class="page_number">
-              27/96
+              27/97
             </aside>
           </footer>
         </div>
@@ -1265,11 +1265,10 @@ la session.</p>
               
               
                 <div class="warning"><p>
- <b>Règle #1</> : </b>refaites toutes vos opérations de lecture</b> après le début
+ <b>Règle #1 : </b>refaites toutes vos opérations de lecture</b> après le début
  de la transaction, tout ce que votre programme a pu lire dans la base <b>AVANT
  le BEGIN a peut-être déjà été modifié</b>.
 </p></div>
-
 <div class="warning"><p>
  <b>Règle #2</b> : Une transaction <b>sans locks</b> est quasi assurée de provoquer
  des erreurs fonctionnelles. C'est une règle beaucoup trop ignorée (Au point que
@@ -1277,13 +1276,11 @@ la session.</p>
  transactions MySQL-- ne cherchez pas ce qui se passe dans MySQL 5.0, c'est
  instable).
 </p></div>
-
 <div class="warning"><p>
  <b>Règles #3</b>: Attendez vous à ce qu'une transaction puisse <b>être annulée
  par le moteur</b>. Pour des problèmes d'isolation ou de deadlock. Votre
  programme devrait peut-être <b>essayer de jouer les transactions plusieurs fois.</b>
 </p></div>
-
 <div class="warning"><p>
  <b>Règles #4</b>: Même avec le niveau d'isolation maximum des problèmes peuvent
  survenir, réfléchissez bien à ces problèmes, faites des tests.
@@ -1311,7 +1308,7 @@ la session.</p>
             
 
             <aside class="page_number">
-              28/96
+              28/97
             </aside>
           </footer>
         </div>
@@ -1340,7 +1337,7 @@ retrouvera des <strong>Deadlock Exception</strong> par exemple.</p>
 <p>Notez qu'il existe en interne de nombreux niveaux de verrouillages correspondants
 à diverses opérations, il est par exemple impossible de modifier une table
 qu'une opération de maintenance est en train de réorganiser sur le disque.</p>
-<p>La référence complète en la matière est ici: <a href="http://docs.postgresqlfr.org/13/explicit-locking.html">http://docs.postgresqlfr.org/13/explicit-locking.html</a>.</p>
+<p>La référence complète en la matière est ici: <a href="https://doc.postgresql.fr/16/explicit-locking.html">https://doc.postgresql.fr/16/explicit-locking.html</a>.</p>
 <p>Remarquez le <strong>pg_advisory_lock(id)</strong> qui permet de poser <strong>un verrou applicatif</strong>.
 PostgreSQL devient alors un moyen de stockage de <strong>sémaphores</strong> pour votre application.</p>
 
@@ -1365,7 +1362,7 @@ PostgreSQL devient alors un moyen de stockage de <strong>sémaphores</strong> po
             
 
             <aside class="page_number">
-              29/96
+              29/97
             </aside>
           </footer>
         </div>
@@ -1411,7 +1408,7 @@ impossible...</p>
             
 
             <aside class="page_number">
-              30/96
+              30/97
             </aside>
           </footer>
         </div>
@@ -1462,7 +1459,7 @@ les deux vous avez deux transactions concurrentes...</p>
             
 
             <aside class="page_number">
-              31/96
+              31/97
             </aside>
           </footer>
         </div>
@@ -1562,7 +1559,7 @@ Ici on ne fait rien, pendant que les 2 requêtes update se font à côté ce pro
             
 
             <aside class="page_number">
-              32/96
+              32/97
             </aside>
           </footer>
         </div>
@@ -1670,7 +1667,7 @@ COMMIT; -- ou ROLLBACK;
             
 
             <aside class="page_number">
-              33/96
+              33/97
             </aside>
           </footer>
         </div>
@@ -1685,7 +1682,7 @@ COMMIT; -- ou ROLLBACK;
                 <h3>utilisation de locks (for update)</h3>
               
               
-                <p>Testons la mise en places de LOCKS avec le mot clef FOR UPDATE (<a href="http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share">http://docs.postgresqlfr.org/13/sql-select.html#sql-for-update-share</a>):</p>
+                <p>Testons la mise en places de LOCKS avec le mot clef FOR UPDATE (<a href="https://doc.postgresql.fr/16/sql-select.html#sql-for-update-share">https://doc.postgresql.fr/16/sql-select.html#sql-for-update-share</a>):</p>
 <table style="font-size: 16px; width=100%;"><tr>
 <td style="width:50%;"><!-- col1 -->
 <b>Fenêtre 1</b>
@@ -1771,7 +1768,7 @@ ces lignes qui vient d'être posé par la requête de gauche.
             
 
             <aside class="page_number">
-              34/96
+              34/97
             </aside>
           </footer>
         </div>
@@ -1853,7 +1850,7 @@ COMMIT; -- ou ROLLBACK;
             
 
             <aside class="page_number">
-              35/96
+              35/97
             </aside>
           </footer>
         </div>
@@ -1958,7 +1955,7 @@ Ce qui nous fait un <b>Rollback automatique.</b>
             
 
             <aside class="page_number">
-              36/96
+              36/97
             </aside>
           </footer>
         </div>
@@ -2001,7 +1998,7 @@ Utilisez des requêtes en lecture sur les éléments qui devraient rester intact
             
 
             <aside class="page_number">
-              37/96
+              37/97
             </aside>
           </footer>
         </div>
@@ -2025,7 +2022,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
 
 <ul>
 <li><a href="http://www.bailis.org/papers/acidrain-sigmod2017.pdf">ACIDRAIN, attaques de sites ecommerce</a></li>
-<li><a href="https://makina-corpus.com/blog/metier/2015/bien-debuter-avec-les-transactions-sql">Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog</a></li>
+<li><a href="https://makina-corpus.com/devops/bien-debuter-avec-les-transactions-sql">Retrouvez d'autres détails sur les niveaux d'isolation et les transactions sur ce blog</a></li>
 </ul>
               
             </div>
@@ -2048,7 +2045,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
             
 
             <aside class="page_number">
-              38/96
+              38/97
             </aside>
           </footer>
         </div>
@@ -2083,7 +2080,7 @@ C'est un comportement normal, que le développeur devrait intégrer dans la conc
             
 
             <aside class="page_number">
-              39/96
+              39/97
             </aside>
           </footer>
         </div>
@@ -2140,7 +2137,7 @@ $BODY$
             
 
             <aside class="page_number">
-              40/96
+              40/97
             </aside>
           </footer>
         </div>
@@ -2188,7 +2185,7 @@ table <code>employes</code> de cette façon:</p>
             
 
             <aside class="page_number">
-              41/96
+              41/97
             </aside>
           </footer>
         </div>
@@ -2238,7 +2235,7 @@ qu'elle peut être <strong>lancée à des moments différents</strong>:</p>
             
 
             <aside class="page_number">
-              42/96
+              42/97
             </aside>
           </footer>
         </div>
@@ -2301,7 +2298,7 @@ $BODY$
             
 
             <aside class="page_number">
-              43/96
+              43/97
             </aside>
           </footer>
         </div>
@@ -2355,7 +2352,7 @@ modification en cours</strong>.</p>
             
 
             <aside class="page_number">
-              44/96
+              44/97
             </aside>
           </footer>
         </div>
@@ -2371,7 +2368,7 @@ modification en cours</strong>.</p>
                 <p>Les déclencheurs sont documentés ici :</p>
 <ul>
 <li><a href="http://docs.postgresql.fr/13/triggers.html">http://docs.postgresql.fr/13/triggers.html</a>,</li>
-<li><a href="http://docs.postgresqlfr.org/13/sql-createtrigger.html">http://docs.postgresqlfr.org/13/sql-createtrigger.html</a></li>
+<li><a href="https://doc.postgresql.fr/16/sql-createtrigger.html">https://doc.postgresql.fr/16/sql-createtrigger.html</a></li>
 <li><a href="http://docs.postgresql.fr/13/plpgsql-trigger.html">http://docs.postgresql.fr/13/plpgsql-trigger.html</a></li>
 </ul>
 <p>Quelques points à noter:</p>
@@ -2389,7 +2386,7 @@ modification en cours</strong>.</p>
   de triggers.</li>
 </ul>
 <div class="warning"><p>
-Si vous utilisez un trigger pour pqr exemple recalculer des résultats
+Si vous utilisez un trigger pour par exemple recalculer des résultats
 (comme une requête GROUP BY) et les stocker dans une table statistique,
 travaillez <b>au niveau requête</b> et pas au niveau <b>ROW</b>.
 <b>Sinon une requête qui mets à jour 10 000 lignes lancera 10 000 fois le calcul
@@ -2418,7 +2415,7 @@ au lieu de le faire une seule fois à la fin</b>.
             
 
             <aside class="page_number">
-              45/96
+              45/97
             </aside>
           </footer>
         </div>
@@ -2432,9 +2429,9 @@ au lieu de le faire une seule fois à la fin</b>.
               
               
                 <p>Le premier lien de documentation fournit un exemple de trigger en <strong>C</strong>.</p>
-<p>Le langage le plus utilisé est le <strong>pl/pgSQL</strong>. Mais vous pouvez aussi utiliser d'autres langages, comme le <a href="http://docs.postgresqlfr.org/13/plperl.html">pl/Perl</a>,
-le <a href="http://docs.postgresqlfr.org/13/plpython.html">pl/Python</a>,
-le <a href="http://docs.postgresqlfr.org/13/pltcl.html">pl/Tcl</a>...</p>
+<p>Le langage le plus utilisé est le <strong>pl/pgSQL</strong>. Mais vous pouvez aussi utiliser d'autres langages, comme le <a href="https://doc.postgresql.fr/16/plperl.html">pl/Perl</a>,
+le <a href="https://doc.postgresql.fr/16/plpython.html">pl/Python</a>,
+le <a href="https://doc.postgresql.fr/16/pltcl.html">pl/Tcl</a>...</p>
 <p><strong>Un déclencheur ne fait qu'associer une fonction particulière (qui doit renvoyer
 des valeurs particulières) à un évènement particulier</strong>. Mais on peut aussi
 écrire <strong>des fonctions qui ne soient pas des triggers</strong>.</p>
@@ -2462,7 +2459,7 @@ des valeurs particulières) à un évènement particulier</strong>. Mais on peut
             
 
             <aside class="page_number">
-              46/96
+              46/97
             </aside>
           </footer>
         </div>
@@ -2497,7 +2494,7 @@ des valeurs particulières) à un évènement particulier</strong>. Mais on peut
             
 
             <aside class="page_number">
-              47/96
+              47/97
             </aside>
           </footer>
         </div>
@@ -2523,7 +2520,7 @@ du <strong>schéma app uniquement</strong>.</p>
 
 <p>Remarquez l'option <strong>« Nombre de processus/threads »</strong> cette option peut vous
 sauver la vie sur une restauration d'un gros fichier de backup en passant la
-procédure de 10 heures à 1 heures – ce qui peut vous ramener dans un fenêtre de
+procédure de 10 heures à 1 heure – ce qui peut vous ramener dans un fenêtre de
 tir raisonnable. C'est une option nouvelle (postgresql 9) qui va permettre de
 paralléliser les restaurations qui peuvent l'être sur plusieurs processeurs,
 il faut donc déjà disposer d'une machine à processeurs multiples.</p>
@@ -2549,7 +2546,7 @@ il faut donc déjà disposer d'une machine à processeurs multiples.</p>
             
 
             <aside class="page_number">
-              48/96
+              48/97
             </aside>
           </footer>
         </div>
@@ -2590,7 +2587,7 @@ elle n'est pas nécessaire.
             
 
             <aside class="page_number">
-              49/96
+              49/97
             </aside>
           </footer>
         </div>
@@ -2609,14 +2606,12 @@ ligne de commande pour une commande existante, quelles sont les informations
 minimales que vous avez besoin d'entrer dans une ligne de commande (champs
 requis) ?
 </p></div>
-
 <div class="action"><p>
 <b>Q2 :</b> Examinez la fonction <b>points_from_amount(numeric)</b>. Quel est
 son <b>langage</b>? Que fait elle? Essayez de l'utiliser dans une requête.
 Essayez un nombre <b>négatif</b>. <b>Corrigez</b> la fonction pour qu'un montant
 négatif ne renvoit pas de points.
 </p></div>
-
 <div class="action"><p>
 <b>Q3 :</b> Regardez la fonction <b>app.update_commande_amounts(numeric,integer)</b>, Essayez de l'utiliser dans une requête.
 </p></div>
@@ -2641,7 +2636,7 @@ négatif ne renvoit pas de points.
             
 
             <aside class="page_number">
-              50/96
+              50/97
             </aside>
           </footer>
         </div>
@@ -2658,13 +2653,11 @@ négatif ne renvoit pas de points.
 <b>Q4 :</b> Modifiez la fonction SQL <b>app.update_commande_amounts(numeric,integer)</b> pour que son utilisation renvoie un résultat si on l'utilise avec un
 <b>SELECT</b>.
 </p></div>
-
 <div class="action"><p>
 <b>Q5 :</b> Écrivez une fonction SQL qui prend <b>deux chaînes</b> en paramètre
 et qui renvoie la concaténation des trois premiers caractères de chacune de ces
 chaînes.
 </p></div>
-
 <div class="action"><p>
 <b>Q6 :</b> Question subsidiaire pour ceux qui avancent très vite. Créez une
 table <b>statistiques_commandes</b> dans laquelle vous stockerez par personnel
@@ -2693,7 +2686,7 @@ ou de TRUNCATE sur la table commandes.
             
 
             <aside class="page_number">
-              51/96
+              51/97
             </aside>
           </footer>
         </div>
@@ -2749,7 +2742,7 @@ fonction et on corrige <code>$1=0</code> en <code>$1&lt;=0</code> :</p>
             
 
             <aside class="page_number">
-              52/96
+              52/97
             </aside>
           </footer>
         </div>
@@ -2803,7 +2796,7 @@ pas les données et qui ne dépendent pas des données autres que leurs paramèt
             
 
             <aside class="page_number">
-              53/96
+              53/97
             </aside>
           </footer>
         </div>
@@ -2866,7 +2859,7 @@ pas les données et qui ne dépendent pas des données autres que leurs paramèt
             
 
             <aside class="page_number">
-              54/96
+              54/97
             </aside>
           </footer>
         </div>
@@ -2920,7 +2913,7 @@ pas les données et qui ne dépendent pas des données autres que leurs paramèt
             
 
             <aside class="page_number">
-              55/96
+              55/97
             </aside>
           </footer>
         </div>
@@ -2971,7 +2964,7 @@ $BODY$
             
 
             <aside class="page_number">
-              56/96
+              56/97
             </aside>
           </footer>
         </div>
@@ -2985,7 +2978,8 @@ $BODY$
               
               
                 <ul>
-<li><strong>Q5</strong> :
+<li><strong>Q5</strong> :</li>
+</ul>
 <pre><code>
 CREATE OR REPLACE FUNCTION app.monsubstrconcat(character varying, character varying)
   RETURNS character varying AS
@@ -2994,8 +2988,8 @@ $BODY$
     || coalesce(substring($2,1,3),'');
 $BODY$
   LANGUAGE sql IMMUTABLE;
-</code></pre></li>
-</ul>
+</code></pre>
+
 <p>Tests:</p>
 <pre><code>select app.monsubstrconcat('abcdef','ghijk') as t1,
        app.monsubstrconcat('ab','ghijk') as t2,
@@ -3028,7 +3022,7 @@ $BODY$
             
 
             <aside class="page_number">
-              57/96
+              57/97
             </aside>
           </footer>
         </div>
@@ -3066,7 +3060,7 @@ $BODY$
             
 
             <aside class="page_number">
-              58/96
+              58/97
             </aside>
           </footer>
         </div>
@@ -3107,7 +3101,7 @@ $BODY$
             
 
             <aside class="page_number">
-              59/96
+              59/97
             </aside>
           </footer>
         </div>
@@ -3159,7 +3153,7 @@ simplement d'utiliser le bouton explain de pgadmin. Nous obtenons ce schéma:</p
             
 
             <aside class="page_number">
-              60/96
+              60/97
             </aside>
           </footer>
         </div>
@@ -3206,7 +3200,7 @@ qu'il va aller très vite.</p>
             
 
             <aside class="page_number">
-              61/96
+              61/97
             </aside>
           </footer>
         </div>
@@ -3253,7 +3247,7 @@ filtrer la table lignes_commande.</strong></p>
             
 
             <aside class="page_number">
-              62/96
+              62/97
             </aside>
           </footer>
         </div>
@@ -3297,7 +3291,7 @@ alimentée en données, sous une forme réaliste.</b>
             
 
             <aside class="page_number">
-              63/96
+              63/97
             </aside>
           </footer>
         </div>
@@ -3351,7 +3345,7 @@ des modes de generate_series dédiés aux dates).</p>
             
 
             <aside class="page_number">
-              64/96
+              64/97
             </aside>
           </footer>
         </div>
@@ -3393,7 +3387,7 @@ une machine bien chargée et sans optimisations du serveur PostgreSQL.</p>
             
 
             <aside class="page_number">
-              65/96
+              65/97
             </aside>
           </footer>
         </div>
@@ -3448,7 +3442,7 @@ la personne. Enfin vous recherchez le prénom. Et vous trouvez en face l'adresse
             
 
             <aside class="page_number">
-              66/96
+              66/97
             </aside>
           </footer>
         </div>
@@ -3501,7 +3495,7 @@ ne lui permet de commencer par filtrer sur les prénoms.</p>
             
 
             <aside class="page_number">
-              67/96
+              67/97
             </aside>
           </footer>
         </div>
@@ -3559,7 +3553,7 @@ de données json complexes.</p>
             
 
             <aside class="page_number">
-              68/96
+              68/97
             </aside>
           </footer>
         </div>
@@ -3580,7 +3574,7 @@ et index:</p>
 <li><a href="http://www.postgresql.org/docs/13/interactive/disk-usage.html">http://www.postgresql.org/docs/13/interactive/disk-usage.html</a></li>
 <li><a href="http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE">http://www.postgresql.org/docs/13/interactive/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE</a></li>
 </ul>
-<p>Visualisons la taille des indexs et tables :</p>
+<p>Visualisons la taille des index et tables :</p>
 <pre><code>SELECT relname, relpages,
     pg_relation_filepath(oid),
     pg_size_pretty(pg_table_size(oid)) as "table size",
@@ -3617,7 +3611,7 @@ mais ils ont <strong>un coût non négligeable en terme d'espace disque</strong>
             
 
             <aside class="page_number">
-              69/96
+              69/97
             </aside>
           </footer>
         </div>
@@ -3676,7 +3670,7 @@ Notons tout de suite que l'enfer en terme d'indexation est un programme qui affi
             
 
             <aside class="page_number">
-              70/96
+              70/97
             </aside>
           </footer>
         </div>
@@ -3694,12 +3688,12 @@ Notons tout de suite que l'enfer en terme d'indexation est un programme qui affi
   date_part('month',com_date) as "mois",
   round(sum(com_total_ht),2) as "total mensuel"
 FROM app.commandes
-WHERE date_part('year',com_date)=2017
+WHERE date_part('year',com_date)=2023
   AND date_part('month',com_date) BETWEEN 1 AND 5
 GROUP BY date_part('month',com_date)
 ORDER BY date_part('month',com_date) ASC;
 </code></pre>
-<p>Il s'agit d'afficher pour chaque mois de l'année 2017 le total commandé de
+<p>Il s'agit d'afficher pour chaque mois de l'année 2023 le total commandé de
 janvier à mai.</p>
 <pre><code>"GroupAggregate  (cost=428.96..428.99 rows=1 width=16)"
 "  -&gt;  Sort  (cost=428.96..428.97 rows=1 width=16)"
@@ -3707,9 +3701,9 @@ janvier à mai.</p>
 "        -&gt;  Seq Scan on commandes  (cost=0.00..428.95 rows=1 width=16)"
 "              Filter: ((date_part('month'::text, com_date) &gt;= 1::double precision)
                 AND (date_part('month'::text, com_date) &lt;= 5::double precision)
-                AND (date_part('year'::text, com_date) = 2017::double precision))"
+                AND (date_part('year'::text, com_date) = 2023::double precision))"
 </code></pre>
-<p>On, imagine que le moteur doit effectuer des calculs à partir de la <strong>date</strong>
+<p>On imagine que le moteur doit effectuer des calculs à partir de la <strong>date</strong>
 pour en <strong>extraire l'année et le mois, pour chaque commande</strong>.</p>
 <p>Si on lui donne un nouvel index sur la colonne date cela ne changera rien. Il
 faudra toujours extraire l'année et le mois pour chaque ligne.</p>
@@ -3735,7 +3729,7 @@ faudra toujours extraire l'année et le mois pour chaque ligne.</p>
             
 
             <aside class="page_number">
-              71/96
+              71/97
             </aside>
           </footer>
         </div>
@@ -3763,7 +3757,7 @@ faudra toujours extraire l'année et le mois pour chaque ligne.</p>
 "        -&gt;  Bitmap Heap Scan on commandes  (cost=4.76..116.20 rows=1 width=16)"
 "              Recheck Cond: ((date_part('month'::text, com_date) &gt;= 1::double  precision)
                               AND (date_part('month'::text, com_date) &lt;= 5::double precision))"
-"              Filter: (date_part('year'::text, com_date) = 2017::double precision)"
+"              Filter: (date_part('year'::text, com_date) = 2023::double precision)"
 "              -&gt;  Bitmap Index Scan on idx_commande_index_month  (cost=0.00..4.76
                                                                   rows=50 width=0)"
 "                    Index Cond: ((date_part('month'::text, com_date) &gt;= 1::double precision)
@@ -3790,7 +3784,7 @@ faudra toujours extraire l'année et le mois pour chaque ligne.</p>
             
 
             <aside class="page_number">
-              72/96
+              72/97
             </aside>
           </footer>
         </div>
@@ -3840,7 +3834,7 @@ mixer les mois de plusieurs années n'aurait pas de sens fonctionnellement
             
 
             <aside class="page_number">
-              73/96
+              73/97
             </aside>
           </footer>
         </div>
@@ -3859,7 +3853,7 @@ dans un index</strong>.</p>
 <p>Si nous avions un index sur ces commandes qui devenait un peu trop gros, et
 que nous savons que 80% des données contenues dans la table datent d'avant 2010
 et que par ailleurs personne ne fait jamais, quasiment, de requêtes sur des
-périodes remontant à plus de 5 ans. On peut reduire la taille de l'index:</p>
+périodes aussi anciennes. On peut reduire la taille de l'index:</p>
 <pre><code>CREATE INDEX idx_commande_index_year_month
   ON app.commandes
   USING btree
@@ -3889,7 +3883,7 @@ dit si la ligne est active, etc.</p>
             
 
             <aside class="page_number">
-              74/96
+              74/97
             </aside>
           </footer>
         </div>
@@ -3931,7 +3925,7 @@ mais dans l'immense majorité des cas il faudra partir des requêtes réelles.</
             
 
             <aside class="page_number">
-              75/96
+              75/97
             </aside>
           </footer>
         </div>
@@ -3975,7 +3969,7 @@ s'exécuter. Ce sera une bonne piste de départ.</p>
             
 
             <aside class="page_number">
-              76/96
+              76/97
             </aside>
           </footer>
         </div>
@@ -4001,8 +3995,8 @@ utilisée en production:</p>
 <div class="warning"><p>
 Il n'est pas rare d'avoir 4/5 de l'espace utilisé par une base occupé par les
 indexs. C'est plutôt normal.</br>
-Il n'est pas non plus rare de trouver des indexs qui font double usages, jamais
-utilisés, etc. Supprimer ces indexs est important.
+Il n'est pas non plus rare de trouver des index qui font double usages, jamais
+utilisés, etc. Supprimer ces index est important.
 </p></div>
               
             </div>
@@ -4025,7 +4019,7 @@ utilisés, etc. Supprimer ces indexs est important.
             
 
             <aside class="page_number">
-              77/96
+              77/97
             </aside>
           </footer>
         </div>
@@ -4063,7 +4057,7 @@ utilisés, etc. Supprimer ces indexs est important.
             
 
             <aside class="page_number">
-              78/96
+              78/97
             </aside>
           </footer>
         </div>
@@ -4084,18 +4078,18 @@ utilisés, etc. Supprimer ces indexs est important.
 <p><strong>LISTEN/NOTIFY</strong> : ces instructions permettent la mise en place de programmes
   persistants en  écoute de certains messages (imaginez par exemple un programme
   externe qui doit effectuer des tâches quand une nouvelle transaction
-  commerciale est enregistrée) <a href="http://docs.postgresqlfr.org/13/sql-listen.html">http://docs.postgresqlfr.org/13/sql-listen.html</a> <a href="http://docs.postgresqlfr.org/13/sql-notify.html">http://docs.postgresqlfr.org/13/sql-notify.html</a>.
+  commerciale est enregistrée) <a href="https://doc.postgresql.fr/16/sql-listen.html">https://doc.postgresql.fr/16/sql-listen.html</a> <a href="https://doc.postgresql.fr/16/sql-notify.html">https://doc.postgresql.fr/16/sql-notify.html</a>.
   il s'agit de queues de messages.</p>
 </li>
 <li>
-<p><strong>Recherche Plein Texte</strong> : <a href="http://docs.postgresqlfr.org/13/textsearch.html">http://docs.postgresqlfr.org/13/textsearch.html</a></p>
+<p><strong>Recherche Plein Texte</strong> : <a href="https://doc.postgresql.fr/16/textsearch.html">https://doc.postgresql.fr/16/textsearch.html</a></p>
 </li>
 <li><strong>postgis</strong> : <a href="http://www.postgis.org">http://www.postgis.org</a> (extension de <strong>Système d'Information Géographique</strong>)</li>
-<li><strong>types composites</strong> : <a href="http://docs.postgresqlfr.org/13/rowtypes.html">http://docs.postgresqlfr.org/13/rowtypes.html</a></li>
-<li><strong>DO</strong> : <a href="http://docs.postgresqlfr.org/13/sql-do.html">http://docs.postgresqlfr.org/13/sql-do.html</a> envie de tester une fonction
+<li><strong>types composites</strong> : <a href="https://doc.postgresql.fr/16/rowtypes.html">https://doc.postgresql.fr/16/rowtypes.html</a></li>
+<li><strong>DO</strong> : <a href="https://doc.postgresql.fr/16/sql-do.html">https://doc.postgresql.fr/16/sql-do.html</a> envie de tester une fonction
  sans l'enregistrer? <strong>Do</strong> permet de <strong>définir à la volée</strong> une fonction pour
  l'utiliser immédiatement.</li>
-<li><strong>Create Aggregate</strong> : <a href="http://docs.postgresqlfr.org/13/sql-createaggregate.html">http://docs.postgresqlfr.org/13/sql-createaggregate.html</a></li>
+<li><strong>Create Aggregate</strong> : <a href="https://doc.postgresql.fr/16/sql-createaggregate.html">https://doc.postgresql.fr/16/sql-createaggregate.html</a></li>
 <li><strong>Vues materialisées</strong> (&gt; 9.3): la vue est cachée comme une table réèlle,
  elle peut être recalculée à la volée <code>REFRESH MATERIALIZED VIEW nom;</code>. Gain de
  temps immense à l'usage (il ne s'agit d'une requête mais bien d'une table).</li>
@@ -4123,7 +4117,7 @@ utilisés, etc. Supprimer ces indexs est important.
             
 
             <aside class="page_number">
-              79/96
+              79/97
             </aside>
           </footer>
         </div>
@@ -4135,7 +4129,7 @@ utilisés, etc. Supprimer ces indexs est important.
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.2 Apports de PostgreSQL 10, 11, 12, 13, 14</h2>
+                <h2>18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16</h2>
               
               
                 <p>Il a de nombreux éléments nouveaux dans les version 10 et 11:</p>
@@ -4149,8 +4143,6 @@ utilisés, etc. Supprimer ces indexs est important.
 <li>un gros travail sur le parallélisme dans l'exécution des requêtes (qui là aussi se poursuit à chaque release depuis)</li>
 <li>des améliorations sur les index de type HASH</li>
 <li>des solutions nouvelles en administration et en réplication, comme la réplication logique (qui arive en 11, puis s'ouvre aux tables partitionnées en 12), mais aussi un certain nombre de renommages de dossiers ou d'instructions (donc attention aux versions des documentations)</li>
-<li>les <strong>index couvrants</strong> (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle. <a href="https://docs.postgresql.fr/14/indexes-index-only-scans.html">Parcours d'index seul et index couvrants</a>.</li>
-<li>les colonnes <strong>identity</strong>, qui sont l'équivalent des <code>serial</code>, sans les bizarreries liées à la transformation de serial en <code>int+sequence</code>.</li>
 </ul>
 
               
@@ -4174,7 +4166,7 @@ utilisés, etc. Supprimer ces indexs est important.
             
 
             <aside class="page_number">
-              80/96
+              80/97
             </aside>
           </footer>
         </div>
@@ -4186,14 +4178,18 @@ utilisés, etc. Supprimer ces indexs est important.
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.2 Apports de PostgreSQL 10, 11, 12, 13, 14</h2>
+                <h2>18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16</h2>
               
               
-                <p>Rappelez vous d'utiliser la <a href="https://www.postgresql.org/about/featurematrix/">Feature Matrix</a></p>
+                <ul>
+<li>les <strong>index couvrants</strong> (v11), pour preloader certaines colonnes dans un index et parfois éviter de charger la table réèlle. <a href="https://docs.postgresql.fr/14/indexes-index-only-scans.html">Parcours d'index seul et index couvrants</a>.</li>
+<li>les colonnes <strong>identity</strong>, qui sont l'équivalent des <code>serial</code>, sans les bizarreries liées à la transformation de serial en <code>int+sequence</code>.</li>
+</ul>
+<p>Rappelez vous d'utiliser la <a href="https://www.postgresql.org/about/featurematrix/">Feature Matrix</a></p>
 <p>Vous pourriez y découvrir des éléments nouveaux.</p>
 <p>Par exemple cette feature <a href="https://www.postgresql.org/docs/current/ddl-generated-columns.html">STORED GENERATED COLUMNS</a>.
 Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans <code>app</code>, qui utilisait des triggers pour calculer automatiquement ces valeurs, pourrait depuis la version 12 s'écrire automatiquement, <strong>sans triggers</strong>.</p>
-<p>Ou encore le support natif du type <strong>UUID</strong> avec postgreSQL <strong>13</strong> (extension <strong>uuid-ossp</strong> avant cela).</p>
+<p>Ou encore le support natif du type <strong>UUID</strong> avec postgreSQL <strong>13</strong> (extension <strong>uuid-ossp</strong> avant cela) ou le support de nouveaux formats de nombres (<code>1_000_000</code>, <code>0b10</code>, <code>0xFF</code>) avec PostgreSQL <strong>16</strong>.</p>
 
               
             </div>
@@ -4216,7 +4212,7 @@ Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans <code>ap
             
 
             <aside class="page_number">
-              81/96
+              81/97
             </aside>
           </footer>
         </div>
@@ -4228,10 +4224,10 @@ Notre exemple de calculs automatiques des valeurs Hors taxe et TTC dans <code>ap
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.3 pg_upgrade, migration 9.x vers 11</h2>
+                <h2>18.3 pg_upgrade, migration 9.x vers 11 (ou plus)</h2>
               
               
-                <p>Avant de tester le partionnement sur un PostgreSQL 11, si votre base est installée sur une version 9.x, nous pouvonsla migrer automatiquement vers une version 11.</p>
+                <p>Avant de tester le partitionnement sur un PostgreSQL 11 (ou supérieur), si votre base est installée sur une version 9.x, nous pouvons la migrer automatiquement vers une version 11.</p>
 <p>On suppose que vous avez une version de postgresql 11 installée (via un <code>apt-get install postgresql-11</code>). Elle tourne donc
 sur votre machine, sur un port différent (par exemple <strong>5435</strong>). Vérifiez le fichier <code>pg_hba.conf</code> de cette instance.</p>
 <ul>
@@ -4275,7 +4271,7 @@ service postgresql stop 11
             
 
             <aside class="page_number">
-              82/96
+              82/97
             </aside>
           </footer>
         </div>
@@ -4331,7 +4327,7 @@ service postgresql stop 9.5
             
 
             <aside class="page_number">
-              83/96
+              83/97
             </aside>
           </footer>
         </div>
@@ -4381,7 +4377,46 @@ service postgresql start 11
             
 
             <aside class="page_number">
-              84/96
+              84/97
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: src/SupportCoursPostgreSQL3.md -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner-wrapper">
+            <div class="inner">
+              
+                <h2>18.4 Exemple de partitionnement avec PostgreSQL11</h2>
+              
+              
+                <p>Pour visualiser un exemple de partitionnement, nous allons mettre en place une table d'audit des mouvements observés sur la table commande (vous pourrez par exemple générer du mouvement avec les scripts PHP).</p>
+<p>Les développeurs de <code>app</code> nous fournissent un script SQL qui permet la mise en place de cette table d'audit, et ils ont eu la bonne idée de partitionner cette table.</p>
+<p>Un vrai partionement utile aurait été basé sur le temps (par exemple une sous table par année-mois), mais pour visualiser les effets en formation on part plutôt sur un partitionnement par type d'opération (<code>'D'</code>/<code>'I'</code>/<code>'U'</code>)..fx: wide</p>
+              
+            </div>
+          </div>
+
+          <div class="presenter_notes">
+            <header>Notes</header>
+            <section>
+              
+            </section>
+          </div>
+
+          <footer>
+            
+
+            
+            <aside class="source">
+              Source: <a href="src/SupportCoursPostgreSQL3.md">src/SupportCoursPostgreSQL3.md</a>
+            </aside>
+            
+
+            <aside class="page_number">
+              85/97
             </aside>
           </footer>
         </div>
@@ -4393,13 +4428,10 @@ service postgresql start 11
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.4 Exemple de partionnement avec PostgreSQL11</h2>
+                <h2>18.4 Exemple de partitionnement</h2>
               
               
-                <p>Pour visualiser un exemple de partitionnement, nous allons mettre en place une table d'audit des mouvements observés sur la table commande (vous pourrez par exemple générer du mouvement avec les scripts PHP).</p>
-<p>Les développeurs de <code>app</code> nous fournissent un script SQL qui permet la mise en place de cette table d'audit, et ils ont eu la bonne idée de partitionner cette table.</p>
-<p>Un vrai partionement utile aurait été basé sur le temps (par exemple une sous table par année-mois), mais pour visualiser les effets en formation on part plutôt sur un partitionnement par type d'opération (<code>'D'</code>/<code>'I'</code>/<code>'U'</code>).</p>
-<pre><code>CREATE TABLE app.commande_audit(
+                <pre><code>CREATE TABLE app.commande_audit(
     operation         char(1)   NOT NULL,
     stamp             timestamp NOT NULL,
     userid            text      NOT NULL,
@@ -4435,7 +4467,7 @@ CREATE TABLE app.commande_insert PARTITION OF app.commande_audit FOR VALUES IN (
             
 
             <aside class="page_number">
-              85/96
+              86/97
             </aside>
           </footer>
         </div>
@@ -4447,7 +4479,7 @@ CREATE TABLE app.commande_insert PARTITION OF app.commande_audit FOR VALUES IN (
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.4 Exemple de partionnement avec PostgreSQL11</h2>
+                <h2>18.4 Exemple de partitionnement</h2>
               
               
                 <p>On continue avec la mise en place du trigger d'audit :</p>
@@ -4494,7 +4526,7 @@ AFTER INSERT OR UPDATE OR DELETE ON app.commandes
             
 
             <aside class="page_number">
-              86/96
+              87/97
             </aside>
           </footer>
         </div>
@@ -4502,19 +4534,20 @@ AFTER INSERT OR UPDATE OR DELETE ON app.commandes
       
       <!-- slide source: src/SupportCoursPostgreSQL3.md -->
       <div class="slide-wrapper">
-        <div class="slide">
+        <div class="slide wide">
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.4 Exemple de partionnement avec PostgreSQL11</h2>
+                <h2>18.4 Exemple de partitionnement</h2>
               
               
                 <p>Vous pouvez remarquer que les index ont été créés automatiquement sur la sous-tables.</p>
 <p>Si vous générez de l'activité, vous verrez que les sous tables se remplissent.
-Et si vous altérez à la main la colonne <code>operation</code> d'un des enregsitrements de l'audit
-vous verrez qu'il change de table de parti onnement.</p>
+Et si vous altérez à la main la colonne <code>operation</code> d'un des enregistrements de l'audit
+vous verrez qu'il change de table de partitionnement.</p>
 <pre><code>SELECT count(1),tableoid::regclass FROM commande_audit GROUP by 2 order by 2;
 </code></pre>
+
               
             </div>
           </div>
@@ -4536,7 +4569,7 @@ vous verrez qu'il change de table de parti onnement.</p>
             
 
             <aside class="page_number">
-              87/96
+              88/97
             </aside>
           </footer>
         </div>
@@ -4544,24 +4577,25 @@ vous verrez qu'il change de table de parti onnement.</p>
       
       <!-- slide source: src/SupportCoursPostgreSQL3.md -->
       <div class="slide-wrapper">
-        <div class="slide">
+        <div class="slide wide">
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h2>18.4 Exemple de partionnement avec PostgreSQL11</h2>
+                <h2>18.4 Exemple de partitionnement avec PostgreSQL11</h2>
               
               
                 <div class="warning"><p>
-<b>Attention</b> le partionnement n'est pas une opération transparente.
+<b>Attention</b> le partitionnement n'est pas une opération transparente.
 </p></div>
 
 <ul>
 <li>une table existante ne peut devenir automatiquement partionnée, il faut surement passer par des migrations de données</li>
 <li>il y a un grand nombre de limites (par exemple les types de foreign keys supportés, les champs utilisés dans les Primary Key, les types de triggers supportés, de la partition par défaut, des création sde sous tables à l'avance).</li>
 <li>il y a de fortes différences entre les version 10,11 et 12 de PostgreSQL sur les éléments supportés</li>
-<li>il faut prendre le temps de bien valider tous les développements (tests unitaires), les indexs, et les choix de partionnements.</li>
+<li>il faut prendre le temps de bien valider tous les développements (tests unitaires), les index, et les choix de partitionnements.</li>
 </ul>
 <p>Bref, évitez d'intervenir <strong>après-coup</strong> sur une table qui devient trop grosse.</p>
+
               
             </div>
           </div>
@@ -4583,7 +4617,7 @@ vous verrez qu'il change de table de parti onnement.</p>
             
 
             <aside class="page_number">
-              88/96
+              89/97
             </aside>
           </footer>
         </div>
@@ -4618,7 +4652,7 @@ vous verrez qu'il change de table de parti onnement.</p>
             
 
             <aside class="page_number">
-              89/96
+              90/97
             </aside>
           </footer>
         </div>
@@ -4674,7 +4708,7 @@ transaction et ne peut pas définir le niveau d'une transaction déjà démarré
             
 
             <aside class="page_number">
-              90/96
+              91/97
             </aside>
           </footer>
         </div>
@@ -4718,7 +4752,7 @@ fonctions de triggers à l'aide de boucles de ce type:</p>
             
 
             <aside class="page_number">
-              91/96
+              92/97
             </aside>
           </footer>
         </div>
@@ -4784,7 +4818,7 @@ $BODY$
             
 
             <aside class="page_number">
-              92/96
+              93/97
             </aside>
           </footer>
         </div>
@@ -4836,7 +4870,7 @@ GROUP BY co.com_id, co.com_total_ht;
             
 
             <aside class="page_number">
-              93/96
+              94/97
             </aside>
           </footer>
         </div>
@@ -4893,7 +4927,7 @@ GROUP BY co.com_id, co.com_total_ht;
             
 
             <aside class="page_number">
-              94/96
+              95/97
             </aside>
           </footer>
         </div>
@@ -4933,7 +4967,7 @@ que vous retombiez sur une égalité.</p>
             
 
             <aside class="page_number">
-              95/96
+              96/97
             </aside>
           </footer>
         </div>
@@ -4991,7 +5025,7 @@ lock plus fines. Mais c'est <b>un sujet complexe</b>
             
 
             <aside class="page_number">
-              96/96
+              97/97
             </aside>
           </footer>
         </div>
@@ -5022,7 +5056,7 @@ lock plus fines. Mais c'est <b>un sujet complexe</b>
             
 
             <aside class="page_number">
-              /96
+              /97
             </aside>
           </footer>
         </div>
@@ -5517,17 +5551,17 @@ lock plus fines. Mais c'est <b>un sujet complexe</b>
         </tr>
         
         <tr id="toc-row-80" class="sub">
-          <th><a href="#slide80">18.2 Apports de PostgreSQL 10, 11, 12, 13, 14</a></th>
+          <th><a href="#slide80">18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16</a></th>
           <td><a href="#slide80">80</a></td>
         </tr>
         
         <tr id="toc-row-81" class="sub">
-          <th><a href="#slide81">18.2 Apports de PostgreSQL 10, 11, 12, 13, 14</a></th>
+          <th><a href="#slide81">18.2 Apports de PostgreSQL 10, 11, 12, 13, 14, 15, 16</a></th>
           <td><a href="#slide81">81</a></td>
         </tr>
         
         <tr id="toc-row-82" class="sub">
-          <th><a href="#slide82">18.3 pg_upgrade, migration 9.x vers 11</a></th>
+          <th><a href="#slide82">18.3 pg_upgrade, migration 9.x vers 11 (ou plus)</a></th>
           <td><a href="#slide82">82</a></td>
         </tr>
         
@@ -5542,35 +5576,34 @@ lock plus fines. Mais c'est <b>un sujet complexe</b>
         </tr>
         
         <tr id="toc-row-85" class="sub">
-          <th><a href="#slide85">18.4 Exemple de partionnement avec PostgreSQL11</a></th>
+          <th><a href="#slide85">18.4 Exemple de partitionnement avec PostgreSQL11</a></th>
           <td><a href="#slide85">85</a></td>
         </tr>
         
         <tr id="toc-row-86" class="sub">
-          <th><a href="#slide86">18.4 Exemple de partionnement avec PostgreSQL11</a></th>
+          <th><a href="#slide86">18.4 Exemple de partitionnement</a></th>
           <td><a href="#slide86">86</a></td>
         </tr>
         
         <tr id="toc-row-87" class="sub">
-          <th><a href="#slide87">18.4 Exemple de partionnement avec PostgreSQL11</a></th>
+          <th><a href="#slide87">18.4 Exemple de partitionnement</a></th>
           <td><a href="#slide87">87</a></td>
         </tr>
         
         <tr id="toc-row-88" class="sub">
-          <th><a href="#slide88">18.4 Exemple de partionnement avec PostgreSQL11</a></th>
+          <th><a href="#slide88">18.4 Exemple de partitionnement</a></th>
           <td><a href="#slide88">88</a></td>
+        </tr>
+        
+        <tr id="toc-row-89" class="sub">
+          <th><a href="#slide89">18.4 Exemple de partitionnement avec PostgreSQL11</a></th>
+          <td><a href="#slide89">89</a></td>
         </tr>
         
       
       
-      <tr id="toc-row-89">
-        <th><a href="#slide89">19. Questions subsidiaires?</a></th>
-        <td><a href="#slide89">89</a></td>
-      </tr>
-      
-      
       <tr id="toc-row-90">
-        <th><a href="#slide90">-</a></th>
+        <th><a href="#slide90">19. Questions subsidiaires?</a></th>
         <td><a href="#slide90">90</a></td>
       </tr>
       
@@ -5608,6 +5641,12 @@ lock plus fines. Mais c'est <b>un sujet complexe</b>
       <tr id="toc-row-96">
         <th><a href="#slide96">-</a></th>
         <td><a href="#slide96">96</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-97">
+        <th><a href="#slide97">-</a></th>
+        <td><a href="#slide97">97</a></td>
       </tr>
       
       

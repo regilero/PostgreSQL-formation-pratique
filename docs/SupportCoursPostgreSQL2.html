@@ -58,7 +58,7 @@
             
 
             <aside class="page_number">
-              1/119
+              1/118
             </aside>
           </footer>
         </div>
@@ -71,7 +71,7 @@
             <div class="inner">
               
               
-                <p>copyright (c) 2012-2022 : <a href="http://www.makina-corpus.com">Makina Corpus</a> Creative Commons CC-BY-SA</p>
+                <p>copyright (c) 2012-2024 : <a href="http://www.makina-corpus.com">Makina Corpus</a> Creative Commons CC-BY-SA</p>
 
               
             </div>
@@ -94,7 +94,7 @@
             
 
             <aside class="page_number">
-              2/119
+              2/118
             </aside>
           </footer>
         </div>
@@ -132,7 +132,7 @@
             
 
             <aside class="page_number">
-              3/119
+              3/118
             </aside>
           </footer>
         </div>
@@ -176,7 +176,7 @@ reviendrons plus tard.</p>
             
 
             <aside class="page_number">
-              4/119
+              4/118
             </aside>
           </footer>
         </div>
@@ -214,7 +214,7 @@ reviendrons plus tard.</p>
             
 
             <aside class="page_number">
-              5/119
+              5/118
             </aside>
           </footer>
         </div>
@@ -263,7 +263,7 @@ problèmes de droits pour sauvegarder la base.</p>
             
 
             <aside class="page_number">
-              6/119
+              6/118
             </aside>
           </footer>
         </div>
@@ -316,7 +316,7 @@ problèmes de droits pour sauvegarder la base.</p>
             
 
             <aside class="page_number">
-              7/119
+              7/118
             </aside>
           </footer>
         </div>
@@ -364,7 +364,7 @@ remarquer plusieurs choses:</p>
             
 
             <aside class="page_number">
-              8/119
+              8/118
             </aside>
           </footer>
         </div>
@@ -378,14 +378,14 @@ remarquer plusieurs choses:</p>
               
               
                 <ul>
-<li><strong>formation_test2.sql</strong> ne contient aucune commande destinées à psql, c'est le
+<li><strong>formation_test2.sql</strong>: ne contient aucune commande destinées à psql, c'est le
    format idéal pour être rejoué dans pgadmin (fenêtre SQL). Il ne contient pas
    de commande de création de base de données mais supprime tous les objets et
    droits puis les recrée dans l'ordre. <strong>Notez que l'ordre de suppression et
    création des objets est très complexe</strong>, il est quasi impossible d'effectuer
-   à la main un script qui saurait organiser les suppressions et recréation en
-   tenant compte de toutes les dépendances entre objets <em>(remarquez au passage
-   l'onglet dépendances sur tous les objets dans pgAdmin)</em>. Notez que des
+   à la main un script qui saurait organiser les recréations en
+   tenant compte de toutes les dépendances entre objets (remarquez au passage
+   l'onglet dépendances sur tous les objets dans pgAdmin). Notez que des
    insertions sous forme de requêtes <code>INSERT</code> sont plus lentes qu'avec le premier
    fichier (<code>COPY</code>).</li>
 </ul>
@@ -415,7 +415,7 @@ dans l'assistant aurait du être nommée <b>"inclure DROP des objets de la base"
             
 
             <aside class="page_number">
-              9/119
+              9/118
             </aside>
           </footer>
         </div>
@@ -467,7 +467,7 @@ données ou bien une sauvegarde ne contenant qu'un seul schéma ou une seule tab
             
 
             <aside class="page_number">
-              10/119
+              10/118
             </aside>
           </footer>
         </div>
@@ -491,7 +491,6 @@ supplémentaires inclus dans le schéma seront supprimés.<br/>
 Ou bien utilisez un dump comme le quatrième, sans les suppressions, et supprimez
 votre base avant import (cf partie suivante sur les droits pour les GRANT d'accès)
 </p></div>
-
 <div class="warning"></p>
 N'oubliez pas qu'il n'y a pas que le <b>format PLAIN</b>, nous étudierons dans
 les parties administration les autres formats de backup, y compris ceux de
@@ -518,7 +517,7 @@ les parties administration les autres formats de backup, y compris ceux de
             
 
             <aside class="page_number">
-              11/119
+              11/118
             </aside>
           </footer>
         </div>
@@ -560,7 +559,7 @@ remplissage de tables à la fin de <code>formation_test3.sql</code> ou <code>for
             
 
             <aside class="page_number">
-              12/119
+              12/118
             </aside>
           </footer>
         </div>
@@ -598,7 +597,7 @@ remplissage de tables à la fin de <code>formation_test3.sql</code> ou <code>for
             
 
             <aside class="page_number">
-              13/119
+              13/118
             </aside>
           </footer>
         </div>
@@ -622,7 +621,7 @@ GRANT CONNECT ON DATABASE formation TO formation_lecture;
 </code></pre>
 <p>Il s'agit du contenu du premier onglet Droits sur la base de données elle-même
 (les droits sur les schémas font eux partie du dump).</p>
-<p>Ceci est du au fait que ces droits qui gère <strong>un premier niveau d'accès à la base</strong>
+<p>Ceci est du au fait que ces droits qui gèrent <strong>un premier niveau d'accès à la base</strong>
 (globalement le droit de s'y connecter) ne sont pas gérés au sein de la base
 elle-même mais <strong>au sein de la base postgres.</strong></p>
               
@@ -646,7 +645,7 @@ elle-même mais <strong>au sein de la base postgres.</strong></p>
             
 
             <aside class="page_number">
-              14/119
+              14/118
             </aside>
           </footer>
         </div>
@@ -692,7 +691,7 @@ de base de données, ces droits inclus.</p>
             
 
             <aside class="page_number">
-              15/119
+              15/118
             </aside>
           </footer>
         </div>
@@ -747,7 +746,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA app GRANT SELECT,INSERT,DEL
             
 
             <aside class="page_number">
-              16/119
+              16/118
             </aside>
           </footer>
         </div>
@@ -801,7 +800,7 @@ soit dans un fichier à part (par exemple un dump dédié à la gestion des droi
             
 
             <aside class="page_number">
-              17/119
+              17/118
             </aside>
           </footer>
         </div>
@@ -859,7 +858,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE formation_admin GRANT ALL ON TABLES  TO format
             
 
             <aside class="page_number">
-              18/119
+              18/118
             </aside>
           </footer>
         </div>
@@ -916,7 +915,7 @@ niveau de session.
             
 
             <aside class="page_number">
-              19/119
+              19/118
             </aside>
           </footer>
         </div>
@@ -964,7 +963,7 @@ nous modifierons la requête pour l'adapter à nos besoins.</p>
             
 
             <aside class="page_number">
-              20/119
+              20/118
             </aside>
           </footer>
         </div>
@@ -977,12 +976,12 @@ nous modifierons la requête pour l'adapter à nos besoins.</p>
             <div class="inner">
               
               
-                <p><img alt="variable alteration 1 &gt;" src="data:image/png;base64,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" />
+                <p><img alt="variable alteration 1 &gt;" src="data:image/png;base64,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" /></p>
 <div class="action"><p>
 On commence par aller sur l'onglet <b>Variables</b> sur l'écran de propriétés de la base (avec l'utilisateur postgres).<b>Sur cet écran il faut créer une variable bidon avec une valeur bidon</b><br/>
 Ou bien sur l'écran de gestion des utilisateurs, pour éditer l'utilisateur <b>ultrogothe</b>,
 sur cet écran <b>la variable role existe mais  ne prends qu'une valeur numérique</b>.
-</p></div></p>
+</p></div>
               
             </div>
           </div>
@@ -1004,7 +1003,7 @@ sur cet écran <b>la variable role existe mais  ne prends qu'une valeur numériq
             
 
             <aside class="page_number">
-              21/119
+              21/118
             </aside>
           </footer>
         </div>
@@ -1048,7 +1047,7 @@ soit une variable bidon avec une valeurbidon (si vous êtes sur les propriétés
             
 
             <aside class="page_number">
-              22/119
+              22/118
             </aside>
           </footer>
         </div>
@@ -1096,7 +1095,7 @@ un pg_dumpall --globals-only.
             
 
             <aside class="page_number">
-              23/119
+              23/118
             </aside>
           </footer>
         </div>
@@ -1147,7 +1146,7 @@ le dump pour mettre formation_admin en correspondance avec postgres.
             
 
             <aside class="page_number">
-              24/119
+              24/118
             </aside>
           </footer>
         </div>
@@ -1185,7 +1184,7 @@ le dump pour mettre formation_admin en correspondance avec postgres.
             
 
             <aside class="page_number">
-              25/119
+              25/118
             </aside>
           </footer>
         </div>
@@ -1226,7 +1225,6 @@ tels qu'ils pourraient être gérés dans un vrai projet.</p>
 <b>GRANT</b> CONNECT, TEMPORARY ON DATABASE formation TO formation_ecriture;
 <b>GRANT</b> CONNECT ON DATABASE formation TO formation_lecture;
 </pre>
-
 <p></code></p>
 
               
@@ -1250,7 +1248,7 @@ tels qu'ils pourraient être gérés dans un vrai projet.</p>
             
 
             <aside class="page_number">
-              26/119
+              26/118
             </aside>
           </footer>
         </div>
@@ -1300,7 +1298,7 @@ tels qu'ils pourraient être gérés dans un vrai projet.</p>
             
 
             <aside class="page_number">
-              27/119
+              27/118
             </aside>
           </footer>
         </div>
@@ -1319,15 +1317,12 @@ donc:</p>
 Utiliser une connexion administrateur, pas <b>ultrogothe</b> (qui pourrait avoir des
 problèmes de droit à la création de la base, au départ) ou <b>postgres</b>
 </p></div>
-
 <div class="action"><p>
 Supprimer notre base formation actuelle (clic droit dans pgAdmin pour faire un DROP DATABASE)
 </p></div>
-
 <div class="action"><p>
 Ouvrir la fenêtre SQL en cliquant d'abord sur la base Postgres (assurez-vous que la base formation est <b>déconnectée</b>).
 </p></div>
-
 <div class="action"><p>
 Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre. Si on tente de l'executer on obtient: <b>ERROR:  CREATE
  DATABASE cannot be executed from a function or multi-command string</b>, pour
@@ -1360,7 +1355,7 @@ Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre
             
 
             <aside class="page_number">
-              28/119
+              28/118
             </aside>
           </footer>
         </div>
@@ -1377,12 +1372,10 @@ Importer le contenu du fichier <b>formation_creation.sql</b> dans cette fenêtre
 Passons à l'initialisation des schémas et droits par défaut, sélectionnez la base
 <b>formation</b> qui a du être recréée (F5) puis ouvrez <b>un interpréteur SQL</b>.
 </p></div>
-
 <div class="action"><p>
 Ouvrez le fichier <b>formation_initialisation.sql</b> et exécutez le (normalement celui là).
 Vous verrez que ultrogothe pourrait avoir des problèmes de droits sur ce fichier là aussi.
 </p></div>
-
 <div class="action"><p>
 Nous pouvons alors passer au contenu du schéma drh. Ouvrez le fichier <b>formation_drh_public.sql</b> et exécutez-le. Vous devriez obtenir une erreur <b>ERROR:  schema "drh" already exists</b> commentez cette ligne <br>
 <b>CREATE SCHEMA drh;</b> avec deux tirets en début de ligne.
@@ -1408,7 +1401,7 @@ Nous pouvons alors passer au contenu du schéma drh. Ouvrez le fichier <b>format
             
 
             <aside class="page_number">
-              29/119
+              29/118
             </aside>
           </footer>
         </div>
@@ -1446,7 +1439,7 @@ Nous pouvons alors passer au contenu du schéma drh. Ouvrez le fichier <b>format
             
 
             <aside class="page_number">
-              30/119
+              30/118
             </aside>
           </footer>
         </div>
@@ -1483,7 +1476,7 @@ ou depuis l'interface de pgAdmin.</p>
             
 
             <aside class="page_number">
-              31/119
+              31/118
             </aside>
           </footer>
         </div>
@@ -1499,7 +1492,7 @@ ou depuis l'interface de pgAdmin.</p>
               
               
                 <p>Pour commencer vous pouvez observer les types utilisés sur les colonnes.</p>
-<p>De nombreux types sont disponibles <a href="http://docs.postgresqlfr.org/13/datatype.html">http://docs.postgresqlfr.org/13/datatype.html</a>
+<p>De nombreux types sont disponibles <a href="https://doc.postgresql.fr/16/datatype.html">https://doc.postgresql.fr/16/datatype.html</a>
 et une base de données bien conçue devrait toujours utiliser le bon type pour la
 bonne donnée.</p>
 <div class="action"><p>
@@ -1509,10 +1502,9 @@ Parcourez les différents types de données proposés par postgreSQL
 <div class="warning"><p>
 Pour les <b>montants</b> utilisez les types <b>numeric</b> et pas les <b>float</b>.<br/>
 Ou alors utilisez des <b>entiers</b>, et géréez des centimes.<br/>
-Le type <b>money</b> existe aussi, mais il est assez pauvres en <b>conversions de
+Le type <b>money</b> existe aussi, mais il est assez pauvre en <b>conversions de
  types</b> et vous devriez éviter de l'utiliser.
 </p></div>
-
 <div class="warning"><p>
 Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>text</b>.
 </p></div>
@@ -1539,7 +1531,7 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
             
 
             <aside class="page_number">
-              32/119
+              32/118
             </aside>
           </footer>
         </div>
@@ -1552,10 +1544,10 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
             <div class="inner">
               
               
-                <p><div class="warning"><p>
+                <div class="warning"><p>
 Pour les types binaires utilisez <b>binary</b>. La gestion des binaires de taille
-importante sera faite automatiquement avec les <b>TOAST </b> <a href="http://docs.postgresqlfr.org/13/storage-toast.html">http://docs.postgresqlfr.org/13/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
-Les binaires de taille importante (&gt;8Ko s on simplifie) seront stockés dans un
+importante sera faite automatiquement avec les <b>TOAST </b> <a href="https://doc.postgresql.fr/16/storage-toast.html">https://doc.postgresql.fr/16/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
+Les binaires de taille importante (>8Ko s on simplifie) seront stockés dans un
 espace physique secondaire de la table. Ceci permet à un champ sur une ligne de
 table, d'atteindre une taille de 1Go.
 </p></div>
@@ -1568,7 +1560,8 @@ pourront prendre <b>3 valeurs</b>, true, false ou Null.<br/>
 </p></div>
 <div class="warning"><p>
 Remarquez le type <b>ENUM</b><br/>
-</p></div></p>
+</p></div>
+
 
               
             </div>
@@ -1591,7 +1584,7 @@ Remarquez le type <b>ENUM</b><br/>
             
 
             <aside class="page_number">
-              33/119
+              33/118
             </aside>
           </footer>
         </div>
@@ -1604,11 +1597,11 @@ Remarquez le type <b>ENUM</b><br/>
             <div class="inner">
               
               
-                <p><div class="warning"><p>
+                <div class="warning"><p>
 Remarquez qu'il est possible de créer <b>ses propre types</b>, d'y associer des
 contraintes (<b>DOMAINES</b>), de créer des types composés (comme les structures
 en C), de gérer des <b>arrays</b>.
-</p></div></p>
+</p></div>
               
             </div>
           </div>
@@ -1630,7 +1623,7 @@ en C), de gérer des <b>arrays</b>.
             
 
             <aside class="page_number">
-              34/119
+              34/118
             </aside>
           </footer>
         </div>
@@ -1689,7 +1682,7 @@ index sont <b>propres à chaque table</b>, la définition de contraintes
             
 
             <aside class="page_number">
-              35/119
+              35/118
             </aside>
           </footer>
         </div>
@@ -1750,7 +1743,7 @@ ALTER TABLE ONLY employes
             
 
             <aside class="page_number">
-              36/119
+              36/118
             </aside>
           </footer>
         </div>
@@ -1767,7 +1760,7 @@ ALTER TABLE ONLY employes
               
                 <p>Sur le schéma <strong>drh</strong> des <strong>triggers</strong> existent, nous verrons plus en détail
 l'écriture et le fonctionnement des triggers, mais sachez que ce schéma se sert
-des ces triggers pour <strong>mettre à jour la date de modification</strong> de certaines
+de ces triggers pour <strong>mettre à jour la date de modification</strong> de certaines
 tables, ou pour <strong>calculer le code d'un employé</strong>.</p>
               
             </div>
@@ -1790,7 +1783,7 @@ tables, ou pour <strong>calculer le code d'un employé</strong>.</p>
             
 
             <aside class="page_number">
-              37/119
+              37/118
             </aside>
           </footer>
         </div>
@@ -1807,7 +1800,7 @@ tables, ou pour <strong>calculer le code d'un employé</strong>.</p>
               
                 <p>Plus important <strong>des contraintes supplémentaires ont été ajoutées</strong>.</p>
 <p>Examinez par exemple toutes les contraintes exprimées sur la table <code>employes</code>.</p>
-<p>Ces contraintes que l'on nomme des <strong>CHECKS</strong> sont importants pour
+<p>Ces contraintes que l'on nomme des <strong>CHECKS</strong> sont importantes pour
 l'administrateur de données. <strong>Elles permettent de s'assurer qu'une base de
 données alimentée par plusieurs programmes possède ses propres règles de
 validation des données et que ces règles seront toujours respectées</strong>, quelque
@@ -1837,7 +1830,7 @@ au niveau de la base.</p>
             
 
             <aside class="page_number">
-              38/119
+              38/118
             </aside>
           </footer>
         </div>
@@ -1887,7 +1880,7 @@ table pour tous les utilisateurs.</p>
             
 
             <aside class="page_number">
-              39/119
+              39/118
             </aside>
           </footer>
         </div>
@@ -1928,7 +1921,7 @@ requête sous-jacente.</p>
             
 
             <aside class="page_number">
-              40/119
+              40/118
             </aside>
           </footer>
         </div>
@@ -1975,7 +1968,7 @@ de requêtes.<br/>
             
 
             <aside class="page_number">
-              41/119
+              41/118
             </aside>
           </footer>
         </div>
@@ -1995,13 +1988,11 @@ de requêtes.<br/>
 Que s'est-il passé sur la table des employés? Que s'est-il passé sur la table services?<br/>
 Pourquoi?
 </p></div>
-
 <div class="action"></p>
 <b>Q2:</b> Modifiez maintenant le code du service Finance qui a l'identifiant 200 en « FXXX1 ».<br/> Que s'est-il passé sur la table des employés (faites des rafraichissements si vous affichiez déjà la table)?
 </p></div>
-
 <div class="action"></p>
-<b>Q3:</b> Supprimez le service Finance avec identifiant 200 et rafraîchissez la table. Que s'est-il passé sur la table service et dans la table « employes ».<br/>
+<b>Q3:</b> Supprimez le service Finance avec identifiant 200 et rafraîchissez la table. Que s'est-il passé sur la table service et dans la table « employes »?<br/>
 Pour rétablir la situation indiquez l'identifiant du service Finance nouvellement créé aux utilisateurs qui étaient dans ce service sur la table « employes ». Puis indiquez cet identifiant aux services dépendants du service Finance (Comptabilité et Trading).
 </p></div>
 
@@ -2027,7 +2018,7 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
             
 
             <aside class="page_number">
-              42/119
+              42/118
             </aside>
           </footer>
         </div>
@@ -2085,7 +2076,7 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
             
 
             <aside class="page_number">
-              43/119
+              43/118
             </aside>
           </footer>
         </div>
@@ -2123,7 +2114,7 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
             
 
             <aside class="page_number">
-              44/119
+              44/118
             </aside>
           </footer>
         </div>
@@ -2158,7 +2149,7 @@ Pour rétablir la situation indiquez l'identifiant du service Finance nouvelleme
             
 
             <aside class="page_number">
-              45/119
+              45/118
             </aside>
           </footer>
         </div>
@@ -2199,7 +2190,7 @@ SELECT distinct(per_nom) FROM drh.employes;
             
 
             <aside class="page_number">
-              46/119
+              46/118
             </aside>
           </footer>
         </div>
@@ -2246,7 +2237,7 @@ essayez de trouver <strong>deux</strong> syntaxes différentes qui permettent de
             
 
             <aside class="page_number">
-              47/119
+              47/118
             </aside>
           </footer>
         </div>
@@ -2299,7 +2290,7 @@ sont gérés.</p>
             
 
             <aside class="page_number">
-              48/119
+              48/118
             </aside>
           </footer>
         </div>
@@ -2331,7 +2322,7 @@ ORDER BY
 <div class="warning"><p>
 Notez dès à présent que la gestion de ces ordres ascendants/descendants et des
 nulls peut avoir des impacts non négligeables sur le temps d'éxecution d'une
-requête mal indexée (on retrouve ces mêmes précisions dans les indexs).
+requête mal indexée (on retrouve ces mêmes précisions dans les index).
 </p></div>
               
             </div>
@@ -2354,7 +2345,7 @@ requête mal indexée (on retrouve ces mêmes précisions dans les indexs).
             
 
             <aside class="page_number">
-              49/119
+              49/118
             </aside>
           </footer>
         </div>
@@ -2392,7 +2383,7 @@ requête mal indexée (on retrouve ces mêmes précisions dans les indexs).
             
 
             <aside class="page_number">
-              50/119
+              50/118
             </aside>
           </footer>
         </div>
@@ -2443,7 +2434,7 @@ Essayez d'expliquer ce que recherche cette requête, le débat est ouvert.
             
 
             <aside class="page_number">
-              51/119
+              51/118
             </aside>
           </footer>
         </div>
@@ -2481,7 +2472,7 @@ Essayez d'expliquer ce que recherche cette requête, le débat est ouvert.
             
 
             <aside class="page_number">
-              52/119
+              52/118
             </aside>
           </footer>
         </div>
@@ -2526,7 +2517,7 @@ SELECT 'toto' || NULL;
             
 
             <aside class="page_number">
-              53/119
+              53/118
             </aside>
           </footer>
         </div>
@@ -2540,7 +2531,7 @@ SELECT 'toto' || NULL;
               
               
                 <p>Un complément, trouvé sur
-<a href="https://medium.com/statuscode/the-many-faces-of-distinct-in-postgresql-c52490de5954">un article de Haki Benita</a>,
+<a href="https://hakibenita.com/the-many-faces-of-distinct-in-postgre-sql">un article de Haki Benita</a>,
 avec une syntaxe SQL un peu avancée, si vous ne comprenez pas encore la
 syntaxe avancée de la requête ne regardez que le résultat:</p>
 <pre><code>WITH t AS (
@@ -2551,17 +2542,17 @@ syntaxe avancée de la requête ne regardez que le résultat:</p>
 )
 SELECT
     a,
-   b,
-   a = b as equal
-FROM
-   t;
+    b,
+    a = b as equal
+  FROM
+    t;
 
- a   |  b   | equal 
+  a   |  b   | equal 
 ------+------+-------
-   1 |    1 | t
-   1 |    2 | f
-NULL |    1 | NULL
-NULL | NULL | NULL
+    1 |    1 | t
+    1 |    2 | f
+ NULL |    1 | NULL
+ NULL | NULL | NULL
 </code></pre>
               
             </div>
@@ -2584,7 +2575,7 @@ NULL | NULL | NULL
             
 
             <aside class="page_number">
-              54/119
+              54/118
             </aside>
           </footer>
         </div>
@@ -2641,7 +2632,7 @@ FROM
             
 
             <aside class="page_number">
-              55/119
+              55/118
             </aside>
           </footer>
         </div>
@@ -2679,7 +2670,7 @@ FROM
             
 
             <aside class="page_number">
-              56/119
+              56/118
             </aside>
           </footer>
         </div>
@@ -2697,7 +2688,7 @@ FROM
 en liste plus de deux mille éléments...</p>
 <p>La documentation en ligne est plus utile, les fonctions y sont classées:</p>
 <ul>
-<li><a href="http://docs.postgresqlfr.org/13/functions.html">http://docs.postgresqlfr.org/13/functions.html</a></li>
+<li><a href="https://doc.postgresql.fr/16/functions.html">https://doc.postgresql.fr/16/functions.html</a></li>
 </ul>
 <p>Nous allons regarder un tout petit sous-ensemble des ces fonctions utiles.</p>
               
@@ -2721,7 +2712,7 @@ en liste plus de deux mille éléments...</p>
             
 
             <aside class="page_number">
-              57/119
+              57/118
             </aside>
           </footer>
         </div>
@@ -2777,7 +2768,7 @@ AND per_prenom LIKE 'Jo__'
             
 
             <aside class="page_number">
-              58/119
+              58/118
             </aside>
           </footer>
         </div>
@@ -2821,7 +2812,7 @@ doubles <code>"</code></strong> (quote anglaise sous MySQL <strong>`</strong>).<
             
 
             <aside class="page_number">
-              59/119
+              59/118
             </aside>
           </footer>
         </div>
@@ -2864,7 +2855,7 @@ Pourtant on dirait que ce n'est pas suffisant:</p>
             
 
             <aside class="page_number">
-              60/119
+              60/118
             </aside>
           </footer>
         </div>
@@ -2903,7 +2894,7 @@ select E'\tDemain dès l\'aube \n\tà l\'heure où blanchit la campagne.\n\n';
             
 
             <aside class="page_number">
-              61/119
+              61/118
             </aside>
           </footer>
         </div>
@@ -2951,7 +2942,7 @@ $DenseCourtesiesIntensifyGuiltily$;
             
 
             <aside class="page_number">
-              62/119
+              62/118
             </aside>
           </footer>
         </div>
@@ -2994,7 +2985,7 @@ notons:</p>
             
 
             <aside class="page_number">
-              63/119
+              63/118
             </aside>
           </footer>
         </div>
@@ -3039,7 +3030,7 @@ d'opérations d'agrégation (<code>GROUP BY</code>, que nous verrons plus loin).
             
 
             <aside class="page_number">
-              64/119
+              64/118
             </aside>
           </footer>
         </div>
@@ -3091,7 +3082,7 @@ from drh.employes;
             
 
             <aside class="page_number">
-              65/119
+              65/118
             </aside>
           </footer>
         </div>
@@ -3145,7 +3136,7 @@ from drh.employes;
             
 
             <aside class="page_number">
-              66/119
+              66/118
             </aside>
           </footer>
         </div>
@@ -3160,7 +3151,7 @@ from drh.employes;
                 <h3>14.5.5. Travailler avec les dates</h3>
               
               
-                <p>Je ne saurais trop vous conseiller la lecture complète de <a href="http://docs.postgresqlfr.org/13/functions-datetime.html">http://docs.postgresqlfr.org/13/functions-datetime.html</a> où vous trouverez de
+                <p>Je ne saurais trop vous conseiller la lecture complète de <a href="https://doc.postgresql.fr/16/functions-datetime.html">https://doc.postgresql.fr/16/functions-datetime.html</a> où vous trouverez de
 nombreuses fonctions très utiles comme <strong>age()</strong>, ainsi que des opérateurs
 miraculeux comme <code>OVERLAP</code>.</p>
 <p>Signalons ici quelques fonctions de base pour le travail avec les dates, et plus
@@ -3197,7 +3188,7 @@ justify_interval(current_timestamp - '2001-10-19');
             
 
             <aside class="page_number">
-              67/119
+              67/118
             </aside>
           </footer>
         </div>
@@ -3217,7 +3208,7 @@ des problèmes d'indexation, sauf à créer des index spécifiques qui forcent l
 timezone.</p>
 <p><strong>Préférez un stockage avec la timezone</strong>.</p>
 <p>Quand vous travaillez avec les dates et que vous avez besoin d'indexation (donc, quasiment toujours),
-pensez à utiliser les fonctions sur les indexs (que nous verrons plus loin).
+pensez à utiliser les fonctions sur les index (que nous verrons plus loin).
 Mais je le redis ici, par exemple si vous faites des stats par jour, créez un index qui extraie à l'avance
 le jour de la date. Si vous faites des sélections, des deletes ou des aggrégations par mois, faites
 un index sur le mois de la date, etc.</p>
@@ -3242,7 +3233,7 @@ un index sur le mois de la date, etc.</p>
             
 
             <aside class="page_number">
-              68/119
+              68/118
             </aside>
           </footer>
         </div>
@@ -3261,48 +3252,12 @@ un index sur le mois de la date, etc.</p>
 en voici quelques autres:</p>
 <ul>
 <li><strong>string_agg()</strong> : l'équivalent de group_concat sous MySQL</li>
-<li><strong>coalesce(a;b;c;d)</strong> : renvoie la première valeur non Nulle de la liste.</li>
-</ul>
-<p>Renvoyer la première valeur non nulle d'un liste cela peut aussi s'exprimer d'une autre
-façon :</p>
-              
-            </div>
-          </div>
-
-          <div class="presenter_notes">
-            <header>Notes</header>
-            <section>
-              
-            </section>
-          </div>
-
-          <footer>
-            
-
-            
-            <aside class="source">
-              Source: <a href="src/SupportCoursPostgreSQL2.md">src/SupportCoursPostgreSQL2.md</a>
-            </aside>
-            
-
-            <aside class="page_number">
-              69/119
-            </aside>
-          </footer>
-        </div>
-      </div>
-      
-      <!-- slide source: src/SupportCoursPostgreSQL2.md -->
-      <div class="slide-wrapper">
-        <div class="slide">
-          <div class="inner-wrapper">
-            <div class="inner">
-              
-              
-                <p>Fournir une valeur par défaut :</p>
-<pre><code>SELECT coalesce(emp_code_pays, 'CODE PAYS MANQUANT!!!')
-from drh.employes;
+<li><strong>coalesce(a, b, c, d)</strong> : renvoie la première valeur non Nulle de la liste:<pre><code>SELECT
+  coalesce(emp_code_pays, 'CODE PAYS MANQUANT!!!')
+FROM drh.employes;
 </code></pre>
+</li>
+</ul>
               
             </div>
           </div>
@@ -3324,7 +3279,7 @@ from drh.employes;
             
 
             <aside class="page_number">
-              70/119
+              69/118
             </aside>
           </footer>
         </div>
@@ -3390,7 +3345,7 @@ FROM drh.employes;</code></pre>
             
 
             <aside class="page_number">
-              71/119
+              70/118
             </aside>
           </footer>
         </div>
@@ -3403,7 +3358,7 @@ FROM drh.employes;</code></pre>
             <div class="inner">
               
               
-                <p><table>
+                <table>
 <tr>
 <th>Questions</th>
 <th>Requêtes</th>
@@ -3436,7 +3391,8 @@ WHERE emp_code_pays IS NOT NULL;</code></pre>
 SELECT count(distinct emp_code_pays)
 FROM drh.employes;</code></pre>
 </td></tr>
-</table></p>
+</table>
+
 
               
             </div>
@@ -3459,7 +3415,7 @@ FROM drh.employes;</code></pre>
             
 
             <aside class="page_number">
-              72/119
+              71/118
             </aside>
           </footer>
         </div>
@@ -3472,7 +3428,7 @@ FROM drh.employes;</code></pre>
             <div class="inner">
               
               
-                <p><table>
+                <table>
 <tr>
 <th>Questions</th>
 <th>Requêtes</th>
@@ -3500,7 +3456,7 @@ WHERE per_prenom LIKE '%im%';</code></pre>
 SELECT count(emp_code_pays)
 FROM drh.employes;</code></pre>
 </td></tr>
-</table></p>
+</table>
               
             </div>
           </div>
@@ -3522,7 +3478,7 @@ FROM drh.employes;</code></pre>
             
 
             <aside class="page_number">
-              73/119
+              72/118
             </aside>
           </footer>
         </div>
@@ -3571,7 +3527,7 @@ FROM drh.employes;</code></pre>
             
 
             <aside class="page_number">
-              74/119
+              73/118
             </aside>
           </footer>
         </div>
@@ -3606,7 +3562,7 @@ FROM drh.employes;</code></pre>
             
 
             <aside class="page_number">
-              75/119
+              74/118
             </aside>
           </footer>
         </div>
@@ -3636,10 +3592,10 @@ Que fait cette requête?
 <pre><code>SELECT per_nom,per_prenom,emp_code_pays, extract(year from age(emp_naissance)) as age
 FROM drh.employes
 WHERE
-(emp_code_pays IN ('US','CA')
-AND age(emp_naissance) &gt;= '50 year'::interval )
-OR (emp_code_pays IN ('FR','UK')
-AND age(emp_naissance) &gt;= '40 year'::interval );
+  (emp_code_pays IN ('US','CA') AND age(emp_naissance) &gt;= '50 year'::interval )
+OR (
+  emp_code_pays IN ('FR','UK') AND age(emp_naissance) &gt;= '40 year'::interval
+);
 </code></pre>
               
             </div>
@@ -3662,7 +3618,7 @@ AND age(emp_naissance) &gt;= '40 year'::interval );
             
 
             <aside class="page_number">
-              76/119
+              75/118
             </aside>
           </footer>
         </div>
@@ -3677,9 +3633,9 @@ AND age(emp_naissance) &gt;= '40 year'::interval );
                 <h3>Réponse:</h3>
               
               
-                <p>Elle liste les noms,prénoms et ages des employés qui sont aux états-unis ou au
-canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume Unis
-et qui ont plus de 40 ans. Remarquez qu'on utilise pas <code>extract</code> dans les clauses
+                <p>Elle liste les noms, prénoms et ages des employés qui sont aux États-Unis ou au
+Canada et qui ont plus de 50 ans, ou bien qui sont en France ou au Royaume-Unis
+et qui ont plus de 40 ans. Remarquez qu'on n'utilise pas <code>extract</code> dans les clauses
 WHERE, ce traitement n'est utile que pour l'affichage final.</p>
               
             </div>
@@ -3702,7 +3658,7 @@ WHERE, ce traitement n'est utile que pour l'affichage final.</p>
             
 
             <aside class="page_number">
-              77/119
+              76/118
             </aside>
           </footer>
         </div>
@@ -3717,7 +3673,7 @@ WHERE, ce traitement n'est utile que pour l'affichage final.</p>
                 <h2>14.7. LIMIT et OFFSET</h2>
               
               
-                <p><a href="http://docs.postgresqlfr.org/13/queries-limit.html">http://docs.postgresqlfr.org/13/queries-limit.html</a></p>
+                <p><a href="https://doc.postgresql.fr/16/queries-limit.html">https://doc.postgresql.fr/16/queries-limit.html</a></p>
 <p>Le dernier mot clef d'une requête SQL peut être <strong>LIMIT</strong>.</p>
 <p>Cette instruction permet de limiter le nombre de résultats renvoyés par la requête.</p>
 <p>Si votre requête ne nécessite pas trop d'instructions complexes (comme un tri
@@ -3747,7 +3703,7 @@ rapatrier les 45 256 dernières news pour afficher uniquement les 10 dernières!
             
 
             <aside class="page_number">
-              78/119
+              77/118
             </aside>
           </footer>
         </div>
@@ -3798,7 +3754,7 @@ LIMIT 25 OFFSET 50
             
 
             <aside class="page_number">
-              79/119
+              78/118
             </aside>
           </footer>
         </div>
@@ -3836,7 +3792,7 @@ LIMIT 25 OFFSET 50
             
 
             <aside class="page_number">
-              80/119
+              79/118
             </aside>
           </footer>
         </div>
@@ -3894,7 +3850,7 @@ complètement exécutée, <strong>dès qu'une ligne est bonne la sous-requête p
             
 
             <aside class="page_number">
-              81/119
+              80/118
             </aside>
           </footer>
         </div>
@@ -3951,7 +3907,7 @@ SELECT emp_code_pays FROM drh.employes WHERE emp_code_pays IS NULL);
             
 
             <aside class="page_number">
-              82/119
+              81/118
             </aside>
           </footer>
         </div>
@@ -4016,7 +3972,7 @@ Q4: Que fait cette version?
             
 
             <aside class="page_number">
-              83/119
+              82/118
             </aside>
           </footer>
         </div>
@@ -4077,7 +4033,7 @@ Q6: Que se passerait-il si nous changions ALL en ANY comme dans la requête ci d
             
 
             <aside class="page_number">
-              84/119
+              83/118
             </aside>
           </footer>
         </div>
@@ -4143,7 +4099,7 @@ comparées, il ne renvoit plus faux. La requête correcte est donc <strong>R4</s
             
 
             <aside class="page_number">
-              85/119
+              84/118
             </aside>
           </footer>
         </div>
@@ -4194,7 +4150,7 @@ comparées, il ne renvoit plus faux. La requête correcte est donc <strong>R4</s
             
 
             <aside class="page_number">
-              86/119
+              85/118
             </aside>
           </footer>
         </div>
@@ -4255,7 +4211,7 @@ est assez dangereux, on en reparlera):</p>
             
 
             <aside class="page_number">
-              87/119
+              86/118
             </aside>
           </footer>
         </div>
@@ -4302,7 +4258,7 @@ sous-requêtes en dernier recours, et non l'inverse.</b>
             
 
             <aside class="page_number">
-              88/119
+              87/118
             </aside>
           </footer>
         </div>
@@ -4310,21 +4266,21 @@ sous-requêtes en dernier recours, et non l'inverse.</b>
       
       <!-- slide source: src/SupportCoursPostgreSQL2.md -->
       <div class="slide-wrapper">
-        <div class="slide">
+        <div class="slide wide">
           <div class="inner-wrapper">
             <div class="inner">
               
-                <h3>14.7.3. Sous requêtes Corrélées</h3>
+                <h3>14.8.3. Sous requêtes corrélées</h3>
               
               
                 <p>Une sous-requête corrélée est une sous-requête qui comporte <strong>une référence à
 une des tables de sa requête parente</strong>. Schématiquement:</p>
-<pre><code>Select a.*
+<pre><code>SELECT a.*
   FROM tableA a
   WHERE a.foo = (
     SELECT foo
       FROM tableB b
-      WHERE b.bar =a.bar  – ici la corrélation avec la requête parente
+      WHERE b.bar = a.bar  -- ici la corrélation avec la requête parente
     );
 </code></pre>
 <p>A partir du moment où une requête est corrélée le résultat de son exécution
@@ -4335,6 +4291,7 @@ une seule puis comparé à chaque ligne de la requête parente à un mode ou <st
 chaque ligne parente on va devoir recalculer la sous-requête</strong>.</p>
 <p>Cela peut avoir un impact <strong>non négligeable</strong> en terme de performances de la
 requête.</p>
+
               
             </div>
           </div>
@@ -4356,7 +4313,7 @@ requête.</p>
             
 
             <aside class="page_number">
-              89/119
+              88/118
             </aside>
           </footer>
         </div>
@@ -4408,7 +4365,7 @@ lignes de la table.</p>
             
 
             <aside class="page_number">
-              90/119
+              89/118
             </aside>
           </footer>
         </div>
@@ -4446,7 +4403,7 @@ lignes de la table.</p>
             
 
             <aside class="page_number">
-              91/119
+              90/118
             </aside>
           </footer>
         </div>
@@ -4497,7 +4454,7 @@ première. C'est ce qu'on appelle <strong>une jointure</strong>.</p>
             
 
             <aside class="page_number">
-              92/119
+              91/118
             </aside>
           </footer>
         </div>
@@ -4547,7 +4504,7 @@ le <strong>EXPLAIN</strong> de la requête pour vous en assurer.</p>
             
 
             <aside class="page_number">
-              93/119
+              92/118
             </aside>
           </footer>
         </div>
@@ -4593,7 +4550,7 @@ nombre important de tables.</p>
             
 
             <aside class="page_number">
-              94/119
+              93/118
             </aside>
           </footer>
         </div>
@@ -4650,7 +4607,7 @@ d'après des relations connues entre les objets.</p>
             
 
             <aside class="page_number">
-              95/119
+              94/118
             </aside>
           </footer>
         </div>
@@ -4698,7 +4655,7 @@ le fait que le booléen active est à true sur la table tableE).</p>
             
 
             <aside class="page_number">
-              96/119
+              95/118
             </aside>
           </footer>
         </div>
@@ -4724,7 +4681,7 @@ bases d'exemple cela peut fonctionner, mais on voit que <strong>la requête elle
 n'exprime pas clairement la relation de jointure</strong>. Ce n'est pas explicite à la
 lecture.</p>
 <p>C'est dangereux si l'on reprend un des principes de programmation qui est
-<strong>« Makes Wrong Code Looks Wrong »</strong>. Le code de la requête ici est dur à
+<strong>« Makes Wrong Code Look Wrong »</strong>. Le code de la requête ici est dur à
 comprendre sans disposer du schéma des tables, ce qui n'est pas le cas pour les
 autres jointures.</p>
               
@@ -4748,7 +4705,7 @@ autres jointures.</p>
             
 
             <aside class="page_number">
-              97/119
+              96/118
             </aside>
           </footer>
         </div>
@@ -4801,7 +4758,7 @@ des lignes de A n'ont pas de lien vers B elles disparaissent aussi.</p>
             
 
             <aside class="page_number">
-              98/119
+              97/118
             </aside>
           </footer>
         </div>
@@ -4834,7 +4791,7 @@ lister les deux tables dans le FROM.</p>
    de la nouvelle table seront gardées, les champs de la table d'origine qui
    n'ont pas de concordance avec cette nouvelle table seront affichés avec des
    valeurs NULL)</li>
-<li><strong>FULL JOIN: FULL OUTER JOIN</strong>: jointure externe *<em>bilatérale</em>, il s'agit
+<li><strong>FULL JOIN: FULL OUTER JOIN</strong>: jointure externe <em>bilatérale</em>, il s'agit
   d'un <code>LEFT JOIN</code> plus un <code>RIGHT JOIN</code> (contrairement au INNER JOIN où on a
   aucun NULL on a donc aussi les champs NULL à droite et à gauche). Jamais vu
   un cas d'utilisation :-)</li>
@@ -4861,7 +4818,7 @@ lister les deux tables dans le FROM.</p>
             
 
             <aside class="page_number">
-              99/119
+              98/118
             </aside>
           </footer>
         </div>
@@ -4879,19 +4836,15 @@ lister les deux tables dans le FROM.</p>
                 <div class="action"><p>
 Q1: Affichez tous les employés avec éventuellement le nom de leur service
 </p></div>
-
 <div class="action"><p>
 Q2: Affichez tous les employés avec éventuellement la liste des projets auxquels ils ont participé
 </p></div>
-
 <div class="action"><p>
 Q3: Affichez tous les employés ayant participé au projet « Séminaire 2010 »
 </p></div>
-
 <div class="action"><p>
 Q4: Affichez tous les employés ayant participé à un séminaire, donnez aussi le nom du séminaire, quitte à avoir plusieurs lignes par employé, triez par nom de projet
 </p></div>
-
 <div class="action"><p>
 Q5: que se passe-t-il si on utilise que des LEFT JOIN pour la requête précédente?
 </p></div>
@@ -4918,7 +4871,7 @@ Q5: que se passe-t-il si on utilise que des LEFT JOIN pour la requête précéde
             
 
             <aside class="page_number">
-              100/119
+              99/118
             </aside>
           </footer>
         </div>
@@ -4975,7 +4928,7 @@ WHERE pr.pro_nom='Séminaire 2010';
             
 
             <aside class="page_number">
-              101/119
+              100/118
             </aside>
           </footer>
         </div>
@@ -5028,7 +4981,7 @@ pour les champs de <code>employes</code></p>
             
 
             <aside class="page_number">
-              102/119
+              101/118
             </aside>
           </footer>
         </div>
@@ -5066,7 +5019,7 @@ pour les champs de <code>employes</code></p>
             
 
             <aside class="page_number">
-              103/119
+              102/118
             </aside>
           </footer>
         </div>
@@ -5101,9 +5054,6 @@ un nouvel élément peut s'insérer, <strong>le GROUP BY, les conditions d'agré
  non listés) des opérations d'agrégation vont pouvoir être effectuées (des
  <strong>sommes, moyennes, min, max</strong>).</li>
 </ul>
-<p>Cela permet d'obtenir des <code>min()</code>, <code>max()</code>, <code>avg()</code>, <code>sum()</code>, <code>count()</code> qui
-renverront <strong>plusieurs lignes de résultats</strong> (sinon on a pas besoin du GROUp BY**).</p>
-<p>Voyons un exemple:</p>
 
               
             </div>
@@ -5126,7 +5076,7 @@ renverront <strong>plusieurs lignes de résultats</strong> (sinon on a pas besoi
             
 
             <aside class="page_number">
-              104/119
+              103/118
             </aside>
           </footer>
         </div>
@@ -5139,7 +5089,10 @@ renverront <strong>plusieurs lignes de résultats</strong> (sinon on a pas besoi
             <div class="inner">
               
               
-                <p>Nous avions un comptage des employés</p>
+                <p>Cela permet d'obtenir des <code>min()</code>, <code>max()</code>, <code>avg()</code>, <code>sum()</code>, <code>count()</code> qui
+renverront <strong>plusieurs lignes de résultats</strong> (sinon on a pas besoin du GROUP BY**).</p>
+<p>Voyons un exemple:</p>
+<p>Nous avions un comptage des employés :</p>
 <pre><code>SELECT count(distinct(per_nom))
   FROM drh.employes;
 </code></pre>
@@ -5174,7 +5127,7 @@ sont PAS des opérations d'agrégation.</b>
             
 
             <aside class="page_number">
-              105/119
+              104/118
             </aside>
           </footer>
         </div>
@@ -5224,7 +5177,7 @@ dans la ligne <strong>SELECT</strong> qui <strong>ne sont PAS des opérations d'
             
 
             <aside class="page_number">
-              106/119
+              105/118
             </aside>
           </footer>
         </div>
@@ -5254,7 +5207,7 @@ ORDER BY emp_code_pays, ser_nom, nb;
 au moins tous les champs qui ne sont pas des agrégats.</p>
 <p>Les agrégats sont le <strong>count(nom)</strong> et le <strong>avg(salaire)</strong>.</p>
 <p>Remarquez que le <strong>GROUP BY</strong> n'est pas obligé d'appliquer toutes les
-<strong>transformations</strong> qui sont effectuées en sortie, <strong>s'il les utilisaient cela
+<strong>transformations</strong> qui sont effectuées en sortie, <strong>s'il les utilisait cela
 aurait un sens au moment du regroupement</strong> (deux services qui auraient les 4
 mêmes premières lettres seraient regroupés).</p>
               
@@ -5278,7 +5231,7 @@ mêmes premières lettres seraient regroupés).</p>
             
 
             <aside class="page_number">
-              107/119
+              106/118
             </aside>
           </footer>
         </div>
@@ -5323,7 +5276,7 @@ GROUP BY emp_code_pays;
             
 
             <aside class="page_number">
-              108/119
+              107/118
             </aside>
           </footer>
         </div>
@@ -5379,7 +5332,7 @@ ORDER BY emp_code_pays, ser_nom, "moyenne salaire", nb;
             
 
             <aside class="page_number">
-              109/119
+              108/118
             </aside>
           </footer>
         </div>
@@ -5422,7 +5375,7 @@ des deux résultats, <strong>EXCEPT</strong> pour la soustraction d'ensembles...
             
 
             <aside class="page_number">
-              110/119
+              109/118
             </aside>
           </footer>
         </div>
@@ -5440,11 +5393,9 @@ des deux résultats, <strong>EXCEPT</strong> pour la soustraction d'ensembles...
                 <div class="action"><p>
 Q1: Affichez la moyenne des salaires par service.
 </p></div>
-
 <div class="action"><p>
 Q2: Affichez la moyenne des salaires mensuels des intérimaires (en basant un mois à 20 jours), par agence d'intérim, ajoutez le nombre d'intérimaires recensés pour ces agences
 </p></div>
-
 <div class="action"><p>
 Q3: Affichez le nom, prénom et code employé du ou des employés ayant le salaire minimum
 </p></div>
@@ -5469,7 +5420,7 @@ Q3: Affichez le nom, prénom et code employé du ou des employés ayant le salai
             
 
             <aside class="page_number">
-              111/119
+              110/118
             </aside>
           </footer>
         </div>
@@ -5523,7 +5474,7 @@ ORDER BY 2 DESC;
             
 
             <aside class="page_number">
-              112/119
+              111/118
             </aside>
           </footer>
         </div>
@@ -5567,7 +5518,7 @@ Remarquez que nous obtenons <strong>deux personnes</strong>.</p>
             
 
             <aside class="page_number">
-              113/119
+              112/118
             </aside>
           </footer>
         </div>
@@ -5587,14 +5538,14 @@ Remarquez que nous obtenons <strong>deux personnes</strong>.</p>
 <li><a href="http://docs.postgresql.fr/13/sql-createtable.html">http://docs.postgresql.fr/13/sql-createtable.html</a></li>
 </ul>
 <p>Les <strong>tables temporaires</strong> et les <strong>curseurs</strong> sont des objets qui sont
-utilisées par les programmes utilisant la base.</p>
+utilisés par les programmes utilisant la base.</p>
 <p>Ces objets permettent de <strong>stocker temporairement le résultat d'une requête pour
 travailler avec</strong>.</p>
-<p>On utilisera les curseurs pour par exemple paginer la lecture des résultats
+<p>On utilisera <a href="https://makina-corpus.com/python/les-curseurs-postgresql">les curseurs</a> pour par exemple paginer la lecture des résultats
 d'une requête importante. Le curseur sera détruit à la fin de la transaction
 (que nous verrons un peu plus tard).</p>
 <p>La table temporaire est par contre <strong>une table</strong>, visible uniquement depuis la
-session qui créé cette table, et qui disparaîtra avec la session ou la transaction.</p>
+session qui crée cette table, et qui disparaîtra avec la session ou la transaction.</p>
 <p>Si elle porte le même nom qu'une vraie table elle <strong>masquera</strong> cette vraie table.</p>
 <p>L'avantage d'une table temporaire est que l'on peut s'en servir pour y ajouter
 <strong>des index</strong> (qui seront eux aussi temporaires), ou pour faire tourner
@@ -5623,7 +5574,7 @@ pour créer une table et la manipuler puis la destiner à un export CSV <a href=
             
 
             <aside class="page_number">
-              114/119
+              113/118
             </aside>
           </footer>
         </div>
@@ -5639,8 +5590,8 @@ pour créer une table et la manipuler puis la destiner à un export CSV <a href=
               
               
                 <p>Les <strong>fonctions window</strong> sont des opérations avancées sur les agrégats.</p>
-<p>La documentation en ligne fournis de bonnes explications
-<a href="http://docs.postgresqlfr.org/13/tutorial-window.html">http://docs.postgresqlfr.org/13/tutorial-window.html</a>, en la matière un bon
+<p>La documentation en ligne fournit de bonnes explications
+<a href="https://doc.postgresql.fr/16/tutorial-window.html">https://doc.postgresql.fr/16/tutorial-window.html</a>, en la matière un bon
 exemple vaut de très longues explications :</p>
 <pre><code>SELECT per_nom,
        per_prenom,
@@ -5677,7 +5628,7 @@ ORDER BY 4;
             
 
             <aside class="page_number">
-              115/119
+              114/118
             </aside>
           </footer>
         </div>
@@ -5725,7 +5676,7 @@ ORDER BY 4;
             
 
             <aside class="page_number">
-              116/119
+              115/118
             </aside>
           </footer>
         </div>
@@ -5784,7 +5735,7 @@ la comprendre.</p>
             
 
             <aside class="page_number">
-              117/119
+              116/118
             </aside>
           </footer>
         </div>
@@ -5854,7 +5805,7 @@ ORDER BY rectable.rflatpath LIMIT 100;
             
 
             <aside class="page_number">
-              118/119
+              117/118
             </aside>
           </footer>
         </div>
@@ -5869,16 +5820,15 @@ ORDER BY rectable.rflatpath LIMIT 100;
               
                 <ul>
 <li>Que se passe-t-il si on enlève le <strong>AND ser_id&lt;&gt;1</strong>?</li>
-<li>
-<p>Que se passe-t-il si on inverse <strong>WHERE orig.ser_parent=rec.ser_id en WHERE orig.ser_id=rec.ser_parent?</strong>
+<li>Que se passe-t-il si on inverse <strong>WHERE orig.ser_parent=rec.ser_id en WHERE orig.ser_id=rec.ser_parent?</strong></li>
+</ul>
 <div class="warning"><p>
 N'enlevez jamais le LIMIT 100 tant que vous êtes en test sur une requête
 récursive.
-</p></div></p>
-</li>
-<li>
-<p>Essayez de faire partir la requête depuis un sous arbre</p>
-</li>
+</p></div>
+
+<ul>
+<li>Essayez de faire partir la requête depuis un sous arbre</li>
 <li>Essayez de créer <strong>un cycle</strong>, que peut on faire pour arrêter la requête en cas de détection de cycle?</li>
 </ul>
 <div class="action"><p>
@@ -5910,7 +5860,7 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
             
 
             <aside class="page_number">
-              119/119
+              118/118
             </aside>
           </footer>
         </div>
@@ -5941,7 +5891,7 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
             
 
             <aside class="page_number">
-              /119
+              /118
             </aside>
           </footer>
         </div>
@@ -6397,18 +6347,18 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
         <td><a href="#slide73">73</a></td>
       </tr>
       
-      
-      <tr id="toc-row-74">
-        <th><a href="#slide74">-</a></th>
-        <td><a href="#slide74">74</a></td>
-      </tr>
-      
         
-        <tr id="toc-row-75" class="sub">
-          <th><a href="#slide75">14.6. Filtrage avec WHERE</a></th>
-          <td><a href="#slide75">75</a></td>
+        <tr id="toc-row-74" class="sub">
+          <th><a href="#slide74">14.6. Filtrage avec WHERE</a></th>
+          <td><a href="#slide74">74</a></td>
         </tr>
         
+      
+      
+      <tr id="toc-row-75">
+        <th><a href="#slide75">-</a></th>
+        <td><a href="#slide75">75</a></td>
+      </tr>
       
       
       <tr id="toc-row-76">
@@ -6416,31 +6366,31 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
         <td><a href="#slide76">76</a></td>
       </tr>
       
-      
-      <tr id="toc-row-77">
-        <th><a href="#slide77">-</a></th>
-        <td><a href="#slide77">77</a></td>
-      </tr>
-      
         
-        <tr id="toc-row-78" class="sub">
-          <th><a href="#slide78">14.7. LIMIT et OFFSET</a></th>
-          <td><a href="#slide78">78</a></td>
+        <tr id="toc-row-77" class="sub">
+          <th><a href="#slide77">14.7. LIMIT et OFFSET</a></th>
+          <td><a href="#slide77">77</a></td>
         </tr>
         
       
       
-      <tr id="toc-row-79">
-        <th><a href="#slide79">-</a></th>
-        <td><a href="#slide79">79</a></td>
+      <tr id="toc-row-78">
+        <th><a href="#slide78">-</a></th>
+        <td><a href="#slide78">78</a></td>
       </tr>
       
         
-        <tr id="toc-row-80" class="sub">
-          <th><a href="#slide80">14.8. Sous Requêtes</a></th>
-          <td><a href="#slide80">80</a></td>
+        <tr id="toc-row-79" class="sub">
+          <th><a href="#slide79">14.8. Sous Requêtes</a></th>
+          <td><a href="#slide79">79</a></td>
         </tr>
         
+      
+      
+      <tr id="toc-row-80">
+        <th><a href="#slide80">-</a></th>
+        <td><a href="#slide80">80</a></td>
+      </tr>
       
       
       <tr id="toc-row-81">
@@ -6496,18 +6446,18 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
         <td><a href="#slide89">89</a></td>
       </tr>
       
-      
-      <tr id="toc-row-90">
-        <th><a href="#slide90">-</a></th>
-        <td><a href="#slide90">90</a></td>
-      </tr>
-      
         
-        <tr id="toc-row-91" class="sub">
-          <th><a href="#slide91">14.9 Les Jointures</a></th>
-          <td><a href="#slide91">91</a></td>
+        <tr id="toc-row-90" class="sub">
+          <th><a href="#slide90">14.9 Les Jointures</a></th>
+          <td><a href="#slide90">90</a></td>
         </tr>
         
+      
+      
+      <tr id="toc-row-91">
+        <th><a href="#slide91">-</a></th>
+        <td><a href="#slide91">91</a></td>
+      </tr>
       
       
       <tr id="toc-row-92">
@@ -6569,18 +6519,18 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
         <td><a href="#slide101">101</a></td>
       </tr>
       
-      
-      <tr id="toc-row-102">
-        <th><a href="#slide102">-</a></th>
-        <td><a href="#slide102">102</a></td>
-      </tr>
-      
         
-        <tr id="toc-row-103" class="sub">
-          <th><a href="#slide103">14.10. Requêtes avancées</a></th>
-          <td><a href="#slide103">103</a></td>
+        <tr id="toc-row-102" class="sub">
+          <th><a href="#slide102">14.10. Requêtes avancées</a></th>
+          <td><a href="#slide102">102</a></td>
         </tr>
         
+      
+      
+      <tr id="toc-row-103">
+        <th><a href="#slide103">-</a></th>
+        <td><a href="#slide103">103</a></td>
+      </tr>
       
       
       <tr id="toc-row-104">
@@ -6670,12 +6620,6 @@ ou bien utilisez les modèles documentés sur Internet <b>« Adjacency List Mod
       <tr id="toc-row-118">
         <th><a href="#slide118">-</a></th>
         <td><a href="#slide118">118</a></td>
-      </tr>
-      
-      
-      <tr id="toc-row-119">
-        <th><a href="#slide119">-</a></th>
-        <td><a href="#slide119">119</a></td>
       </tr>
       
       
