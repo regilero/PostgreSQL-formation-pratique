@@ -316,7 +316,7 @@ Ceci peut éviter des opérations de pages sur des grosses tables souvent
 utilisées sur un même index.
 
 Attention rapellez-vous qu'une requête **sans ORDER BY** renvoie les lignes dans
-un **ordre non déterminé**, utiliser CLUSTER pour forcer cet ordre **par défaut**
+un **ordre non déterminé**, utilisez CLUSTER pour forcer cet ordre **par défaut**
 n'est **pas une garantie d'ordre**.
 
 Certaines requêtes sur des tables importantes peuvent par contre bénéficier de
