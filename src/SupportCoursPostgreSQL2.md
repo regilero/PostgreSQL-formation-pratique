@@ -540,12 +540,12 @@ Dans les types textes, remarquez en plus du <b>character varying</b> le type <b>
 
 --------------------------------------------------------------------------------
 <div class="warning"><p>
-Pour les types binaires utilisez <b>binary</b>. La gestion des binaires de taille
-importante sera faite automatiquement avec les <b>TOAST </b> <a href="https://doc.postgresql.fr/16/storage-toast.html">https://doc.postgresql.fr/16/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
-Les binaires de taille importante (>8Ko s on simplifie) seront stockés dans un
-espace physique secondaire de la table. Ceci permet à un champ sur une ligne de
-table, d'atteindre une taille de 1Go.
-</p></div>
+Pour les types binaires utilisez <b>binary</b>.
+</div>
+
+La gestion des binaires de taille
+importante sera faite automatiquement avec les <b>TOAST</b>, dont nous reparlons plus tard.
+
 <div class="warning"><p>
 Attention avec les <b>booléens</b>, si vous ne mettez pas <b>NON NULL</b> ceux-ci
 pourront prendre <b>3 valeurs</b>, true, false ou Null.<br/>

@@ -279,7 +279,7 @@ Nous travaillerons sur des bases d'exemples dont les fichiers SQL doivent être 
 Pour installer PostgreSQL, le point de départ est [http://www.postgresql.org/download/](http://www.postgresql.org/download/), il y a principalement 3 solutions:
 
 - **1)** **compiler** sois-même un serveur PostgreSQL. Les sources sont disponibles sur le site [http://www.postgresql.org/ftp/source/](http://www.postgresql.org/ftp/source/). De nombreuses documentations sont disponibles sur Internet. Il s'agit d'une **méthode ardue** mais qui peut permettre d'obtenir des performances meilleures pour un matériel spécifique, à condition cependant d'être un expert en matière de compilation, ce qui ne peut pas raisonnablement être présenté dans le cadre d'une formation.
-- **2)** Utiliser les **assistants d'installation** fournis par EnterpriseDB, nommés « Postgres Plus » [http://www.enterprisedb.com/products-services-training/postgres-plus/download](http://www.enterprisedb.com/products-services-training/postgres-plus/download). Il s'agit sans doute de la meilleure option pour une installation su un serveur Windows. On obtient un serveur PostgreSQL en 32 ou 64 bits, fournit avec des modules de contributions utiles et le client lourd d'administration pgAdmin III.
+- **2)** Utiliser les **assistants d'installation** fournis par EnterpriseDB, nommés « Postgres Plus » [http://www.enterprisedb.com/products-services-training/postgres-plus/download](http://www.enterprisedb.com/products-services-training/postgres-plus/download). Il s'agit sans doute de la meilleure option pour une installation su un serveur Windows. On obtient un serveur PostgreSQL en 32 ou 64 bits, fournit avec des modules de contributions utiles et le client lourd d'administration pgAdmin IV.
 
 --------------------------------------------------------------------------------
 ## Installer PostgreSQL
@@ -1157,7 +1157,7 @@ Un cluster nouvellement instancié contient **3 bases**:
 - **template0**: est une copie de template1 faite à l'initialisation, il s'agit donc du modèle « propre et intact », ne modifiez jamais ce modèle, c'est une sauvegarde au cas où vous endommagez template1.
 
 ---------------------------------------------------------------------
-## 10.4. Créer une connexion administrateur avec pgAdminIII
+## 10.4. Créer une connexion administrateur avec pgAdmin IV
 <small>Avec un code couleur.</small>
 
 .fx: title2
@@ -1349,7 +1349,7 @@ Ce qui donne par rôle:
 .fx: wide
 
 -----------------------------------------------------------------
-## 12.2. Créer des connexions utilisateur avec PgAdminIII
+## 12.2. Créer des connexions utilisateur avec PgAdmin IV
 <small>Avec plein de couleurs</small>
 
 .fx: title2

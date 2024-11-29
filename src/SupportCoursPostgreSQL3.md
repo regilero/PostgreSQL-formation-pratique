@@ -221,54 +221,88 @@ En l'occurence un exemple vaut plus qu'un long discours :
 * [Exemples sur le wiki de PostgreSQL](https://wiki.postgresql.org/wiki/What's_new_in_PostgreSQL_9.5#INSERT_..._ON_CONFLICT_DO_NOTHING.2FUPDATE_.28.22UPSERT.22.29)
 
 --------------------------------------------------------------------------------
-### 15.4.2. FillFactor, Vacuum, HOT
+### 15.4.2. FillFactor, Vacuum, HOT, TOAST
 
 Au niveau du stockage physique des tables, certains concepts peuvent nous aider
 à mieux comprendre ce qu'il se passe lors des opérations d'écriture.
 
-Chaque ligne enregistrée dans la table peut être vue comme une ligne dans un tableau Excel.
 
-Quand vous modifiez une ligne une copie de cette ligne est ajoutée, par défaut
-en bas de la table.
-
-Quand votre modification sera terminée l'ancienne sera invalidée et la nouvelle
-deviendra la ligne officielle. Nous verrons qu'avec les transactions **il est
-possible que plusieurs versions de la ligne existent pour différentes
-transactions en cours.**
-
-Ceci entraîne une répartition des lignes dans la table physique qui peut devenir
-très éloignée de leur ordre d'insertion initial.
-
-Après chaque mise à jour la ligne se retrouve en bas.
-
-La conséquence de ceci pourrait se faire sentir si vous effectuez des requêtes
-pour lesquelles **plusieurs pages mémoire différentes de la table devront être
-chargées** alors qu'avec un ordre plus proche de l'ordre d'insertion une seule
-page mémoire aurait suffit.
+![schéma table 1](./images/postgresql_tables-Départ.drawio.png)
 
 .fx: wide
+
+--------------------------------------------------------------------------------
+
+Le problème des blocs mémoire est un problème important. Les journaux de transactions peuvent par exemple contenir des copies de blocs mémoire, la mémoire partagée (shared memory) de PostgreSQL manipule des blocs, le cache disque de l'OS manipule des blocs.
+
+Avoir en mémoire un bloc avec des données utiles, et ne pas avoir besoin de charger trop de blocs différents sur le disque à des effets important sur les performances des requêtes.
+
+-------------------------------------------------------------------------------
+
+#### TOAST
+
+<a href="https://doc.postgresql.fr/16/storage-toast.html">https://doc.postgresql.fr/16/storage-toast.html</a>. The <b>Oversized-Attribute Storage Technique</b>.<br/>
+
+![schéma toast 1](./images/postgresql_tables-TOAST.1.png)
+
+
+-------------------------------------------------------------------------------
+
+![schéma toast 2](./images/postgresql_tables-TOAST.2.png)
+
+
+-------------------------------------------------------------------------------
+
+![schéma toast 3](./images/postgresql_tables-TOAST.3.png)
+
+-------------------------------------------------------------------------------
+
+#### Lignes mortes
+
+
+![schéma dead 1](./images/postgresql_tables-DeadRows.1.png)
+
+--------------------------------------------------------------------------------
+
+![schéma dead 2](./images/postgresql_tables-DeadRows.2.png)
+
+--------------------------------------------------------------------------------
+
+![schéma dead 3](./images/postgresql_tables-DeadRows.3.png)
+
+--------------------------------------------------------------------------------
+
+![schéma dead 4](./images/postgresql_tables-DeadRows.4.png)
+
+--------------------------------------------------------------------------------
+
+![schéma dead 5](./images/postgresql_tables-DeadRows.5.png)
 
 --------------------------------------------------------------------------------
 #### FILLFACTOR
 
 C'est ici qu'intervient le **FillFactor** (**facteur de remplissage**).
 
+![schéma fillfactor 1](./images/postgresql_tables-FILLFACTOR.1.png)
+
+--------------------------------------------------------------------------------
+
+![schéma fillfactor 2](./images/postgresql_tables-FILLFACTOR.2.png)
+
+--------------------------------------------------------------------------------
+
 **Donner un FillFactor à 100% pour un index ou une table signifie que vous ne laissez aucune ligne vide entre chaque ligne.**
 
 Si vous diminuez ce fillfactor (facteur de remplissage) à 50% vous indiquez à
 PostgreSQL de laisser 50% d'espace vide dans la page mémoire (des lignes vides
-dans le tableau). Lors des mises à jour les lignes vides de la page mémoire de
-la ligne originale seront utilisées en priorité, plutôt que d'ajouter ces
-nouvelles lignes à la fin de la table.
+dans le tableau).
 
 <div class="warning"><p>
 Le Fillfactor est par défaut à 100% (pas de perte d'espace).
 </p></div>
 
 Si vous savez qu'une table subira **un grand nombre de mises à jour** n'hésitez pas
-à modifier son fillfactor ainsi que celui de ses **index** (s'ils sont impactés
-par les mises à jour).
-
+à modifier son fillfactor ainsi que celui de ses **index** (s'ils sont impactés par les mises à jour).
 
 --------------------------------------------------------------------------------
 #### HOT
@@ -285,13 +319,19 @@ quand on modifie une ligne. **Sans cela toute opération d'écriture devrait
 mettre à jour les index** qui pointaient vers l'adresse de la ligne (Ce qui
 ralentit fortement les écritures).
 
-
 --------------------------------------------------------------------------------
 #### VACUUM
 
 Enfin les opérations de **VACUUM** sont des opérations **de maintenance**, qui
 aujourd'hui sont gérées par un processus de PostgreSQL (l'**auto-vacuum**).
 
+![schéma cluster 1](./images/postgresql_tables-VACUUM.1.png)
+
+--------------------------------------------------------------------------------
+
+![schéma cluster 1](./images/postgresql_tables-VACUUM.2.png)
+
+--------------------------------------------------------------------------------
 Lors de ces opérations plusieurs choses peuvent intervenir :
 
 * Les données sont réorganisées dans la table,
@@ -312,17 +352,17 @@ Signalons aussi l'existence de la commande SQL **CLUSTER**
 [https://doc.postgresql.fr/16/sql-cluster.html](https://doc.postgresql.fr/16/sql-cluster.html)
 qui **réordonne les données d'une table sur un index de cette table**.
 
-Ceci peut éviter des opérations de pages sur des grosses tables souvent
-utilisées sur un même index.
+![schéma cluster 1](./images/postgresql_tables-CLUSTER.1.png)
 
-Attention rapellez-vous qu'une requête **sans ORDER BY** renvoie les lignes dans
-un **ordre non déterminé**, utiliser CLUSTER pour forcer cet ordre **par défaut**
-n'est **pas une garantie d'ordre**.
 
-Certaines requêtes sur des tables importantes peuvent par contre bénéficier de
-gains de temps non négligeables si une opération de CLUSTER sur l'index qui va
-être utilisé sont passées juste avant (utile sur des batchs, avec des tables
-peu accédées, car le Cluster pose quelques problèmes de locks).
+--------------------------------------------------------------------------------
+
+![schéma cluster 2](./images/postgresql_tables-CLUSTER.2.png)
+
+
+--------------------------------------------------------------------------------
+
+Ceci peut éviter des opérations de pages (lenteurs) sur des grosses tables souvent utilisées sur un même index. Souvent pour des tables traitées uniquement en batchs (moins de problèmes d'accès concurrents).
 
 --------------------------------------------------------------------------------
 ### 15.4.3 ACID, MVCC et les transactions
