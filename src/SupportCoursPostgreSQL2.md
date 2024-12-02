@@ -1773,6 +1773,7 @@ comprendre sans disposer du schéma des tables, ce qui n'est pas le cas pour les
 autres jointures.
 
 --------------------------------------------------------------------------------
+
 #### inner join
 
 La seconde jointure est un **INNER JOIN**, il signifie qu'**il ne faut garder
@@ -1826,6 +1827,134 @@ Les noms des jointures sont parfois exprimés différemment:
   un cas d'utilisation :-)
 
 .fx: wide
+
+--------------------------------------------------------------------------------
+
+#### Tester les jointures
+
+Créons des tables pour tester
+
+    CREATE TABLE T1
+    (
+        id serial PRIMARY KEY,
+        value1 text NOT NULL
+    );
+    CREATE TABLE T2
+    (
+        id serial PRIMARY KEY,
+        id_t1 int,
+        value2 text NOT NULL,
+        CONSTRAINT "T2_REFENCE_T1_FK"FOREIGN KEY (id_t1)
+            REFERENCES T1 (id)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
+    );
+
+--------------------------------------------------------------------------------
+
+Et ajoutons un peu de contenu
+
+    INSERT INTO T1 (value1)
+      select 'VAL1-' || generate_series(1,7);
+
+    INSERT INTO T2 (id_t1, value2) VALUES
+      (3, 'VAL2-FOO'),
+      (2, 'VAL2-BAR'),
+      (5, 'VAL2-TOTO')
+      ;
+
+
+--------------------------------------------------------------------------------
+
+On obtient:
+
+    => select * from T1;
+    id | value1  
+    ----+---------
+      1 | VAL1-1
+      2 | VAL1-2
+      3 | VAL1-3
+      4 | VAL1-4
+      5 | VAL1-5
+      6 | VAL1-6
+      7 | VAL1-7
+    (10 rows)
+
+    => select * from T2;
+    id | id_t1 |  value2   
+    ----+-------+-----------
+      1 |     3 | VAL2-FOO
+      2 |     2 | VAL2-BAR
+      3 |     5 | VAL2-TOTO
+    (3 rows)
+
+--------------------------------------------------------------------------------
+
+<div class="action"><p>
+Essayez de retrouver les requêtes de jointure qui donnent ces résultats:
+</p></div>
+
+    -- REQUETE 1
+    id | value1 | id | id_t1 |  value2   
+    ----+--------+----+-------+-----------
+      3 | VAL1-3 |  1 |     3 | VAL2-FOO
+      2 | VAL1-2 |  2 |     2 | VAL2-BAR
+      5 | VAL1-5 |  3 |     5 | VAL2-TOTO
+    ----+--------+----+-------+-----------
+
+    -- REQUETE 2                            -- REQUETE 3
+    id | value1 | id | id_t1 | value2        id | value1 | id | id_t1 |  value2   
+    ----+--------+----+-------+--------     ----+--------+----+-------+-----------
+      1 | VAL1-1 |    |       |               1 | VAL1-1 |    |       | 
+      4 | VAL1-4 |    |       |               2 | VAL1-2 |  2 |     2 | VAL2-BAR
+      6 | VAL1-6 |    |       |               3 | VAL1-3 |  1 |     3 | VAL2-FOO
+      7 | VAL1-7 |    |       |               4 | VAL1-4 |    |       | 
+    ----+--------+----+-------+--------       5 | VAL1-5 |  3 |     5 | VAL2-TOTO
+                                              6 | VAL1-6 |    |       | 
+                                              7 | VAL1-7 |    |       | 
+                                            ----+--------+----+-------+-----------
+    -- REQUETE 4
+    id | id_t1 |  value2   | id | value1 
+    ----+-------+-----------+----+--------
+        |       |           |  1 | VAL1-1
+      2 |     2 | VAL2-BAR  |  2 | VAL1-2
+      1 |     3 | VAL2-FOO  |  3 | VAL1-3
+        |       |           |  4 | VAL1-4
+      3 |     5 | VAL2-TOTO |  5 | VAL1-5
+        |       |           |  6 | VAL1-6
+        |       |           |  7 | VAL1-7
+    ----+-------+-----------+----+--------
+
+.fx: wide
+
+--------------------------------------------------------------------------------
+
+#### Solutions
+
+
+    -- REQUETE 1
+      SELECT *
+      FROM T1
+        JOIN T2 ON T2.id_t1 = T1.id
+
+    -- REQUETE 2
+      SELECT *
+      FROM T1 
+        LEFT JOIN T2 ON T2.id_t1 = T1.id
+      WHERE T2.id IS NULL
+      ORDER BY 1;
+
+    -- REQUETE 3
+      SELECT *
+      FROM T1 
+        LEFT JOIN T2 ON T2.id_t1 = T1.id
+      ORDER BY 1;
+
+    -- REQUETE 4
+      SELECT *
+      FROM T2 
+        RIGHT JOIN T1 ON T2.id_t1 = T1.id
+      ORDER BY T1.id;
 
 --------------------------------------------------------------------------------
 ### 14.8.3. Quelques exercices
