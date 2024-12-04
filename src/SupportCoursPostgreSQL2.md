@@ -1914,12 +1914,9 @@ Essayez de retrouver les requêtes de jointure qui donnent ces résultats:
       7 | VAL1-7 |    |       |               3 | VAL1-3 |  1 |     3 | VAL2-FOO 
     ----+--------+----+-------+--------       4 | VAL1-4 |    |       |
                                               5 | VAL1-5 |  4 |     5 | VAL2-TOTO
-                                              6 | VAL1-6 |    |       |
-                                              7 | VAL1-7 |    |       |
-                                            ----+--------+----+-------+-----------
-    -- REQUETE 4
-    id | id_t1 |  value2   | id | value1 
-    ----+-------+-----------+----+--------
+     -- REQUETE 4                             6 | VAL1-6 |    |       |
+     id | id_t1 |  value2   | id | value1     7 | VAL1-7 |    |       |
+    ----+-------+-----------+----+--------  ----+--------+----+-------+-----------
         |       |           |  1 | VAL1-1
       2 |     2 | VAL2-BAR  |  2 | VAL1-2
       3 |     2 | VAL2-ZORG |  2 | VAL1-2
