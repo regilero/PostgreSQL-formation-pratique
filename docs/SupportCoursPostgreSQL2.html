@@ -4890,6 +4890,7 @@ CREATE TABLE T2
 INSERT INTO T2 (id_t1, value2) VALUES
   (3, 'VAL2-FOO'),
   (2, 'VAL2-BAR'),
+  (2, 'VAL2-ZORG'),
   (5, 'VAL2-TOTO')
   ;
 </code></pre>
@@ -4945,7 +4946,8 @@ id | id_t1 |  value2
 ----+-------+-----------
   1 |     3 | VAL2-FOO
   2 |     2 | VAL2-BAR
-  3 |     5 | VAL2-TOTO
+  3 |     2 | VAL2-ZORG
+  4 |     5 | VAL2-TOTO
 (3 rows)
 </code></pre>
               
@@ -4987,32 +4989,35 @@ Essayez de retrouver les requêtes de jointure qui donnent ces résultats:
 </p></div>
 
 <pre><code>-- REQUETE 1
-id | value1 | id | id_t1 |  value2   
+id | value1 | id | id_t1 |  value2
 ----+--------+----+-------+-----------
-  3 | VAL1-3 |  1 |     3 | VAL2-FOO
   2 | VAL1-2 |  2 |     2 | VAL2-BAR
-  5 | VAL1-5 |  3 |     5 | VAL2-TOTO
+  2 | VAL1-2 |  3 |     2 | VAL2-ZORG
+  3 | VAL1-3 |  1 |     5 | VAL2-FOO
+  5 | VAL1-5 |  4 |     5 | VAL2-TOTO
 ----+--------+----+-------+-----------
 
 -- REQUETE 2                            -- REQUETE 3
-id | value1 | id | id_t1 | value2        id | value1 | id | id_t1 |  value2   
+id | value1 | id | id_t1 | value2        id | value1 | id | id_t1 |  value2
 ----+--------+----+-------+--------     ----+--------+----+-------+-----------
-  1 | VAL1-1 |    |       |               1 | VAL1-1 |    |       | 
+  1 | VAL1-1 |    |       |               1 | VAL1-1 |    |       |
   4 | VAL1-4 |    |       |               2 | VAL1-2 |  2 |     2 | VAL2-BAR
-  6 | VAL1-6 |    |       |               3 | VAL1-3 |  1 |     3 | VAL2-FOO
-  7 | VAL1-7 |    |       |               4 | VAL1-4 |    |       | 
-----+--------+----+-------+--------       5 | VAL1-5 |  3 |     5 | VAL2-TOTO
-                                          6 | VAL1-6 |    |       | 
-                                          7 | VAL1-7 |    |       | 
+  6 | VAL1-6 |    |       |               2 | VAL1-2 |  3 |     3 | VAL2-BAR
+  7 | VAL1-7 |    |       |               3 | VAL1-3 |  1 |     3 | VAL2-FOO 
+----+--------+----+-------+--------       4 | VAL1-4 |    |       |
+                                          5 | VAL1-5 |  4 |     5 | VAL2-TOTO
+                                          6 | VAL1-6 |    |       |
+                                          7 | VAL1-7 |    |       |
                                         ----+--------+----+-------+-----------
 -- REQUETE 4
 id | id_t1 |  value2   | id | value1 
 ----+-------+-----------+----+--------
     |       |           |  1 | VAL1-1
   2 |     2 | VAL2-BAR  |  2 | VAL1-2
+  3 |     2 | VAL2-ZORG |  2 | VAL1-2
   1 |     3 | VAL2-FOO  |  3 | VAL1-3
     |       |           |  4 | VAL1-4
-  3 |     5 | VAL2-TOTO |  5 | VAL1-5
+  4 |     5 | VAL2-TOTO |  5 | VAL1-5
     |       |           |  6 | VAL1-6
     |       |           |  7 | VAL1-7
 ----+-------+-----------+----+--------
@@ -5058,6 +5063,7 @@ id | id_t1 |  value2   | id | value1
   SELECT *
   FROM T1
     JOIN T2 ON T2.id_t1 = T1.id
+  ORDER BY T1.id;
 
 -- REQUETE 2
   SELECT *
