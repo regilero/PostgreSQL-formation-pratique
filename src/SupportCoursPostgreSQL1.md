@@ -1152,7 +1152,7 @@ D'autres langages peuvent être ajoutés, comme le `pl/Perl`, ou le `pl/Python`.
 
 Un cluster nouvellement instancié contient **3 bases**:
 
-- **postgres**: la base qui contient toutes les informations système permettant de gérer et d'interroger le cluster. C'est ici que sont stockés les utilisateurs et groupes de connexion ainsi que les tables du catalogue
+- **postgres**: la base crée par défaut, qui pourrait être utilisée comme base projet, mais il est préférable de nommer vos bases projets différement. Il ne **s'agit pas** de la base qui contient toutes les informations système permettant de gérer et d'interroger le cluster. Cette base *système* est le catalogue, que l'on ne voit pas en tant que base (mais qui existe).
 - **template1**: quand vous aller créer un base de données elle sera en fait une copie de cette base. Toutes les tables, tous les types, langages, et toutes les données déjà installés dans cette base seront donc recopiés dans la nouvelle.
 - **template0**: est une copie de template1 faite à l'initialisation, il s'agit donc du modèle « propre et intact », ne modifiez jamais ce modèle, c'est une sauvegarde au cas où vous endommagez template1.
 
@@ -1541,7 +1541,7 @@ On constate que le SQL généré est:
 
 PS: Si vous utilisez pgAdmin4 on ne retrouve pas le groupe formation_admin, pensez à vous déconnecter du serveur et à vous reconnecter.
 
------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 On peut donc utiliser une commande SQL pour générer le second schéma (app) sur lequel on garde formation_admin en propriétaire (remarquez la double apostrophe dans le commentaire):
 
@@ -1555,8 +1555,660 @@ Pour taper du SQL utilisez le bouton SQL de pgadmin dans la barre d'outil, la co
 
 Rafraichissez les données de pgadmin avec la touche **F5** ou le bouton rafraîchir (ou un clic droit).
 
-Nous allons dans la partie suivante altérer les propriétaires du schéma public afin
+Nous allons plus tard altérer les propriétaires du schéma public afin
 qu'il s'agisse bien de **formation_admin** et non de **ultrogothe** ou **postgres**.
+
+--------------------------------------------------------------------------------
+
+# Annexe 1. Compléments sur les droits
+
+<small>Pour aller plus loin.</small>
+
+.fx: title1  title1-3
+
+-----------------------------------------------------------------
+
+Nous allons sortir quelques instants des rôles et groupes de la formation pour tester des droits plus avancés.
+
+-----------------------------------------------------------------
+
+### héritage de rôles?
+
+Les rôles peuvent être **hérités** ou pas.
+
+Mais ici **ATTENTION** on ne parle pas d'héritage au sens **code objet**.
+
+Si j'ai le droit d'hériter du rôle **ROLE-A** cela signifie que j'ai le **droit de devenir ROLE-A**.
+
+On fait une sorte d'**élévation de privilèges**.
+
+Cela peut s'apparenter au fait d'appartenir au groupe ROLE-A. Mais c'est un peu différent.
+
+-----------------------------------------------------------------
+
+<pre><code>
+CREATE ROLE "role-groupe-A" WITH
+  NOLOGIN INHERIT;
+CREATE ROLE "role-login-1" WITH
+  LOGIN INHERIT PASSWORD 'role-login-1';
+GRANT "role-groupe-A" TO "role-login-1";
+</code></pre>
+
+Après connexion avec le user role-login1
+
+<pre><code>
+postgres=> select current_user, session_user;
+ current_user | session_user
+--------------+--------------
+ role-login-1 | role-login-1
+
+postgres=> set role="role-groupe-A";
+SET
+
+postgres=> select current_user, session_user;
+ current_user  | session_user
+---------------+--------------
+ role-groupe-A | role-login-1
+</code></pre>
+
+Nous **pouvons** devenir le rôle groupe.
+
+-----------------------------------------------------------------
+
+## current_user
+
+Une fois que `current_user` est modifié, les droits associés à la session sont ceux de ce nouveau rôle.
+
+## variables ?
+
+`current_user` ressemble à un **paramètre de runtime**, que l'on nomme parfois **variable**, mais n'en est pas une, c'est une fonction d'information système. Il en existe d'autres, mais notez que `session_user` existe et permet de retrouver le rôle utilisé pour la connexion.
+
+Cela peut être important, par exemple, si vous voulez enregistrer des logs, des traces d'audit.
+
+-----------------------------------------------------------------
+
+## variables
+
+On peut manipuler les variables avec **SET** et **SHOW** (alors que SHOW ne marche pas sur `current_user` par exemple).
+
+<pre><code>
+=> SHOW ALL;
+(...plusieurs centaines de résultats...)
+postgres=> SHOW application_name;
+    application_name
+-------------------------
+ pgAdmin 4 - DB:postgres
+
+postgres=> SHOW client_encoding;
+ client_encoding
+-----------------
+ UTF8
+
+postgres=> SHOW search_path;
+   search_path
+-----------------
+ "$user", public
+</code></pre>
+
+-----------------------------------------------------------------
+
+### La variable search_path
+
+C'est un **PATH**, donc une suite de **chemins** à rechercher.
+
+Si je suis le user role-login-1, que mon search path vaut `"$user", public` et que je tape:
+
+<pre><code>
+SELECT * FROM "zorglub";
+</code></pre>
+
+PostgreSQL va rechercher d'abord une table nommée: `"$user"."zorglub"`, donc `"role-login-1"."zorglub"`.
+PostgreSQL recherche donc d'abord dans un **schéma** qui porte mon nom de rôle.
+
+Si la table n'existe pas, PostgreSQL recherchera ensuite une table `public."zorglub"`.
+
+-----------------------------------------------------------------
+
+### La variable search_path
+
+`search_path` permet donc d'éviter de saisir le nom du schéma devant le nom de la table.
+
+Mais si je décide d'indiquer un nom de schéma, comme dans:
+
+<pre><code>
+SELECT * FROM "axaxzar"."zorglub";
+</code></pre>
+
+search_path ne sera pas utilisé, et la table ne sera recherchée que dans le schéma axaxzar.
+
+
+**Attention:** `search_path` n'est **pas** liée à la sécurité, c'est une variable de **confort**.
+
+-----------------------------------------------------------------
+
+## Modifier une variable pour un rôle dans une base
+
+On a vu qu'on peut utiliser l'instruction SET pour modifier des paramètres de la session SQL en cours, et c'est ce que font la plupart des librairies de connexion à des bases de données.
+
+Mais on peut modifier aussi un rôle, pour que certaines variables soient automatiquement réglées:
+
+<pre><code>
+ALTER ROLE "role-login-1" IN DATABASE postgres SET role TO 'role-groupe-A';
+ALTER ROLE "role-login-1" IN DATABASE postgres SET search_path
+   TO "zozios 2", "zozios 1", catalogue, public;
+</code></pre>
+
+Quand il se connectera à la base postgres (et ici uniquement pour celle-ci).
+L'utilisateur deviendra toujours son *rôle groupe*, et son search_path sera réglé pour rechercher les tables, fonctions et autres objets métiers dans les schémas "zozios 2" puis "zozios 1" puis catalogue et enfin public.
+
+-----------------------------------------------------------------
+
+# Les droits d'accès dans PostgreSQL
+
+Comme expliqué auparavant les mots clé sont **GRANT** et **REVOKE**.
+
+* [documentation: GRANT](https://www.postgresql.org/docs/current/sql-grant.html)
+* [documentation des privilèges](https://www.postgresql.org/docs/current/ddl-priv.html)
+
+Nous allons donner des droits à un rôle groupe
+
+- parce que si j'ai des rôles groupes c'est pour y associer plusieurs utilisateurs
+- donc donner les droits au groupe devrait m'éviter de refaire le travail pour chaque rôle `login`
+
+-----------------------------------------------------------------
+
+<pre><code>
+GRANT ALL ON DATABASE postgres TO "role-groupe-A";
+-- same as:
+GRANT CREATE, TEMPORARY, CONNECT ON DATABASE postgres TO "role-groupe-A";
+</code></pre>
+
+* **CONNECT**: Avoir le droit de se connecter à cette base (doublon avec pg_hba.conf)
+* **CREATE**: autorise la création de schémas, d'extensions et de *publications* (en rapport avec la réplication fonctionnelle).
+* **TEMPORARY**: Autorise la création de tables temporaires
+
+-----------------------------------------------------------------
+
+## droits sur la base
+
+![](images/pg_rights_db.png)
+
+-----------------------------------------------------------------
+
+Par défaut, sur une base de données, un rôle spécial 'PUBLIC' autorise **CONNECT** et **TEMPORARY** pour tous. Mais vous pouvez faire un **REVOKE** de ces droits par défaut.
+
+PUBLIC possède aussi le droit EXECUTE sur les fonctions, et USAGE sur les types crées.
+
+-----------------------------------------------------------------
+
+## droits sur le schéma
+
+Dans cette base nous avons au moins un schéma. Le schéma par défaut "public".
+
+Et il existe déjà des droits sur ce schéma (qui n'existe pas sur les autres schémas futurs):
+
+<pre><code>
+GRANT USAGE ON SCHEMA public TO PUBLIC;
+GRANT ALL ON SCHEMA public TO pg_database_owner;
+</code></pre>
+
+* Droit d'usage de ce schéma public pour tous
+* Tous les droits pour `le propriétaire de la base`
+
+
+-----------------------------------------------------------------
+
+### Le propriétaire
+
+Toutes les bases de données possèdent un propriétaire (ainsi que tous les objets de la base). Propriétaire qui possède par défaut l'ensemble des droits sur la base.
+
+* Réservez ce rôle à un **super administrateur** technique de la base.
+* Les politiques d'accès simplifiées s'arrêtent à cette étape (un rôle de connexion administrateur d'une base, utilisé par une application, point final)
+
+<pre><code>
+ALTER DATABASE foo OWNER TO foo_admin;
+-- or
+CREATE DATABASE foo
+      WITH OWNER = foo_admin
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'fr_FR.UTF-8'
+       LC_CTYPE = 'fr_FR.UTF-8'
+       CONNECTION LIMIT = -1;
+</code></pre>
+
+-----------------------------------------------------------------
+
+## droits sur le schéma
+
+![](images/pg_rights_schema.png)
+
+-----------------------------------------------------------------
+
+## droits sur le schéma
+
+<pre><code>
+GRANT ALL ON SCHEMA public TO "role-groupe-A";
+-- same as
+GRANT USAGE, CREATE ON SCHEMA public TO "role-groupe-A";
+</code></pre>
+
+* **USAGE**: Autorise l'accès aux objets dans le schéma
+* **CREATE**: Autorise la création d'objets dans le schéma (tables, vues, fonctions, etc.). Notez que le droit de renommage d'un objet suppose aussi d'en être propriétaire.
+
+-----------------------------------------------------------------
+
+## Attention au catalogue
+
+Tout le monde **peut** lister l'ensemble des objets d'un schéma (les noms de tables, de colonnes, les noms de fonctions, etc.).
+
+La catalogue de PostgreSQL (`pg_catalog` et `information_schema` pour sa partie standardisée) affichent l'intégralité des objets.
+
+Oracle dispose d'un mode 'catalogue restreint à vos droits' mais pas PostgreSQL.
+
+* Donc les noms d'objets ne doivent **jamais** contenir de secrets.
+* Par exemple dans un système SAAS multi-client ne pas créer un schéma **dassault** si Dassault est un des clients et que cette information est secrète. Idem pour une table.
+
+-----------------------------------------------------------------
+
+Continuons la descente. Créons avec le user postgres un objet simple, une table.
+
+<pre><code>
+    CREATE TABLE public.matable (
+        id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        name text NOT NULL DEFAULT 'missing',
+        valeur int NOT NULL DEFAULT 0
+    );
+
+   INSERT INTO public.matable (name)
+     select 'NAME-' || generate_series(1,10);
+
+    select * from matable;
+ id |  name   | valeur 
+----+---------+--------
+  1 | NAME-1  |      0
+  2 | NAME-2  |      0
+  3 | NAME-3  |      0
+  4 | NAME-4  |      0
+  5 | NAME-5  |      0
+  6 | NAME-6  |      0
+  7 | NAME-7  |      0
+  8 | NAME-8  |      0
+  9 | NAME-9  |      0
+ 10 | NAME-10 |      0
+</code></pre>
+
+-----------------------------------------------------------------
+
+Et regardons quels droits donner à cette table:
+
+<pre><code>
+-- same as GRANT ALL
+GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE,
+      REFERENCES, TRIGGER, MAINTAIN
+ON TABLE public.matable TO "role-groupe-A";
+</code></pre>
+
+* **SELECT**: comme son nom l'indique, permet de lire le contenu, notez que des requêtes comme UPDATE, DELETE qui auraient besoin de lire des valuers nécéssitent aussi ce droit
+* **INSERT/UPDATE/DELETE**: sans commentaire
+* **TRUNCATE**: droit de vider la table
+* **REFERENCES**: Autorise la création d'une **FOREIGN KEY**.
+* **TRIGGER**: autorise la création d'un trigger
+* **MAINTAIN**: autorise les tâches de maintenance (VACUUM, ANALYZE, CLUSTER, Refresh metrialized view, reindex, lock table)
+
+-----------------------------------------------------------------
+
+## droits sur la table
+
+![](images/pg_rights_table.png)
+
+-----------------------------------------------------------------
+
+Si nous tentons une lecture de cette table avec une connection du user `user-login-1` cela fonctionne.
+
+```sql
+postgres=> select * from matable;
+```
+
+Et c'est **normal** puisque nous avons modifié ce rôle pour devenir le groupe quand il se connecte.
+Est-ce que si nous redevenons le user cela marche encore (oui)?
+
+<pre><code>
+postgres=> select current_user, session_user;
+ current_user  | session_user 
+---------------+--------------
+ role-groupe-A | role-login-1
+ postgres=> set role="role-login-1";
+postgres=> select * from matable;
+ id |  name   | valeur 
+----+---------+--------
+  1 | NAME-1  |      0
+  2 | NAME-2  |      0
+  (...)
+ 10 | NAME-10 |      0
+postgres=> select current_user, session_user;
+ current_user | session_user 
+--------------+--------------
+ role-login-1 | role-login-1
+</code></pre>
+
+-----------------------------------------------------------------
+
+Nous avons donné les droits au groupe, et non aux membres du groupe.
+Mais le user "role-login-1" possède le droit **INHERIT**, il hérite donc par défaut des droits du groupe (mais pas des paramètres définis sur le groupe, comme un search_path).
+
+.fx: wide
+
+-----------------------------------------------------------------
+
+## Droits sur les colonnes
+
+PostgreSQL permet de donner des droits au niveau des colonnes.
+Je vais changer les droits sur la table:
+
+- retirer tous les droit SELECT au niveau de la table
+- donner les droit SELECT/INSERT/UPDATE uniquement sur la colonne name
+
+<pre><code>
+-- same as GRANT ALL
+REVOKE INSERT, SELECT, UPDATE, DELETE, TRUNCATE,
+      REFERENCES, TRIGGER, MAINTAIN
+ON TABLE public.matable FROM "role-groupe-A";
+
+GRANT SELECT(name), INSERT(name), UPDATE(name)
+ON public.matable TO "role-groupe-A";
+</code></pre>
+
+-----------------------------------------------------------------
+
+Sur ma session utilisateur je vois maintenant beaucoup moins de choses
+
+<pre><code>
+postgres=> select * from public.matable;
+ERREUR:  droit refusé pour la table matable
+postgres=> select name from public.matable;
+  name   
+---------
+ NAME-1
+ NAME-2
+ NAME-3
+ NAME-4
+ NAME-5
+ NAME-6
+ NAME-7
+ NAME-8
+ NAME-9
+ NAME-10
+</code></pre>
+
+ Que se passe-t-il se je redonne `SELECT` sur la table?
+
+-----------------------------------------------------------------
+
+Avec postgres:
+
+<pre><code>
+GRANT SELECT
+  ON TABLE public.matable TO "role-groupe-A";
+</code></pre>
+
+Avec user-login-1:
+
+<pre><code>
+postgres=> select * from public.matable;
+ id |  name   | valeur 
+----+---------+--------
+  1 | NAME-1  |      0
+  2 | NAME-2  |      0
+  3 | NAME-3  |      0
+  4 | NAME-4  |      0
+  5 | NAME-5  |      0
+  6 | NAME-6  |      0
+  7 | NAME-7  |      0
+  8 | NAME-8  |      0
+  9 | NAME-9  |      0
+ 10 | NAME-10 |      0
+</code></pre>
+
+Zut, on a redonné trop de droits.
+
+.fx: wide
+
+-----------------------------------------------------------------
+
+
+Pour gérer des droits au niveau **colonne** il ne faut pas que l'utilisateur ciblé possède des droits supérieurs au niveau **table**.
+
+-----------------------------------------------------------------
+
+## Masquer des colonnes
+
+La possibilité de masquer des colonnes est intéressante.
+
+Il existe une deuxième technique utilisée pour ne présenter que des données partielles à certains utilisateurs.
+
+Quelle est elle?
+
+-----------------------------------------------------------------
+
+Réponse: Les **vues**.
+
+Vous pouvez *facilement* manipuler des vues pour n'extraire qu'une partie des informations.
+
+Par exemple vous pouvez faire une requête dans un schéma "A", bloquer l'accès à ce schéma "A" à une partie des utilisateurs, et sauver cette requête sous forme de vue dans un schéma "B".
+
+Pour cela il faut que l'utilisateur qui créé la vue possède les droits sur "A" et "B".
+
+Les utilisateurs restreints au schéma "B" ne verront de "A" que ce que cette vue aura décidée d'extraire.
+
+Les schémas sont très souvent utilisés comme pivots dans une politique de droits (plus souvent que les colonnes et tables).
+
+.fx: wide
+
+-----------------------------------------------------------------
+
+## Droits sur les lignes
+
+PostgreSQL peut descendre plus bas que les colonnes avec des politiques de droits au niveau ligne (ce qui se nomme Private Database dans le monde Oracle).
+
+Le filtrage des lignes se fait d'habitude dans les requêtes des applications utilisatrices (conditions WHERE). L'idée est aussi d'automatiser une partie de ces filtrages pour éviter qu'une requête ayant oublié le filtrage ne fasse fuiter l'information (ou aussi pour appliquer ces filtrages sur des utilisateurs possédant des connexions directes à la base).
+
+Ces filtrages automatiques se gèrent dans des **POLICY**. On sort donc du système de GRANT/REVOKE.
+
+* [documentation: la commande Create policy](https://www.postgresql.org/docs/current/sql-createpolicy.html)
+* [documentation: plus d'infos](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+
+-----------------------------------------------------------------
+
+## Exemple de policy
+
+Tiré de la documentation:
+
+<pre><code>
+CREATE TABLE accounts (manager text, company text, contact_email text);
+
+ALTER TABLE accounts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY account_managers ON accounts TO managers
+    USING (manager = current_user);
+</code></pre>
+-----------------------------------------------------------------
+
+Deuxième exemple, on veut rendre visible toutes les lignes en lecture mais n'autoriser que les modifications sur les lignes de l'utilisateur lui-même:
+
+<pre><code>
+CREATE POLICY user_sel_policy ON users
+    FOR SELECT
+    USING (true);
+CREATE POLICY user_mod_policy ON users
+    USING (user_name = current_user);
+</code></pre>
+
+Ceci fonctionne car les deux politiques s'appliquent avec un **OR**, donc quand on fait un **select** la première est toujours vraie. Pour les autres requêtes la première policy ne s'appliquera jamais.
+
+-----------------------------------------------------------------
+
+## Impact des policy
+
+* Il faut pouvoir remonter la policy à un paramètre de la session (current_user, session_user)
+* Essayer d'aller lire des données dans des tables externes (avec des sous-select) peut poser des problèmes (race conditions), préférez donc une politique qui ne travaille qu'à partir de colonnes présentes dans la table.
+* pg_dump, qui effectue des backups, altère le paramètre row_security et le met à `off`, ce qui provoquera des erreurs si une tentative de lecture de données bloque pg_dump pendant la sauvegarde. Mettre le paramètre à off ne permet pas de voir les lignes filtrées mais bien de générer ce mode "erreur".
+
+-----------------------------------------------------------------
+
+## Attention il n'y a pas que les tables
+
+Il y a d'autres objets dans la base, comme par exemple les vues (pour lesquelles les droits sont proches de ceux des tables).
+mais aussi:
+
+- les **séquences** : avec les droits 'USAGE' (autorise les fonctions `curval` et `nextval`), 'SELECT' (nécessaire pour `curval`) et 'UPDATE'
+- les **fonctions** : avec le droit **EXECUTE**
+- les **types** : avec le droit **USAGE**
+
+-----------------------------------------------------------------
+
+## Privilèges par défaut
+
+Repasser sur chaque objet créé pour lui appliquer les bons droits est hasardeux, et ne gère pas les **nouveaux** objets créés.
+
+On établit donc le plus souvent la politique de droits non pas sur les objets créés mais sur les règles de **Default Privileges**.
+
+-----------------------------------------------------------------
+
+
+**Attention**: les **Default Privileges** **ne sont pas** des droits qui s'appliquent aux objets qui n'ont pas de politique de droits (privilèges par défaut au sens classique)... 
+
+ **mais** des droits qui **s'appliqueront par défaut lors de la création des objets**.
+
+.fx: alternate
+
+-----------------------------------------------------------------
+
+Soit les copies d'écrans suivantes:
+
+![](images/pg_default_priv_tables.png)
+
+-----------------------------------------------------------------
+
+![](images/pg_default_priv_functions.png)
+
+-----------------------------------------------------------------
+
+![](images/pg_default_priv_sequences.png)
+
+-----------------------------------------------------------------
+
+![](images/pg_default_priv_types.png)
+
+-----------------------------------------------------------------
+
+Ce qui donne en SQL:
+
+<pre><code>
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT EXECUTE ON FUNCTIONS TO "role-groupe-A";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT ALL ON TABLES TO "role-groupe-A";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT ALL ON SEQUENCES TO "role-groupe-A";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT USAGE ON TYPES TO "role-groupe-A";
+</code></pre>
+
+-----------------------------------------------------------------
+
+Ces privilèges par défaut peuvent être appliqués au niveau de la base, mais aussi au niveau des schémas (ce qui est souvent mieux).
+
+.fx: alternate
+
+-----------------------------------------------------------------
+
+
+<pre><code>
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres
+GRANT EXECUTE ON FUNCTIONS TO "role-groupe-A";
+</code></pre>
+
+Faites *très* attention au mot clef "FOR ROLE postgres" dans le SQL précédent:
+
+- Ces droits par défauts ne seront appliqués **que si le user qui créé les objets est l'utilisateur postgres**
+- Si n'importe quel autre utilisateur qui possède le droit de créer un objet créé un objet... il n'y aura aucun privilège par défaut attribué (sinon les droits par défaut du propriétaire de l'objet)
+- Si un utilisateur en particulier est destiné à gérer le DDL, les privilèges par défaut doivent lui être assignés.
+
+-----------------------------------------------------------------
+
+## GRANT sur Création de rôles
+
+Faites **très** attention si vous autorisez un utilisateur à créer d'autre utilisateurs.
+
+**Un 'DROP CASCADE' sur ce rôle irait alors supprimer les rôles et autorisations crées par ce rôle dans le passé.**
+
+Remarquez que la base garde une trace de qui à donné un droit à qui.
+
+.fx: alternate
+
+-----------------------------------------------------------------
+## Politique de droits
+
+En fonction de l'usage de la base on peut imaginer de nombreuses politiques de droits.
+De la plus simple (utilisateur unique avec tous les droits) à la plus complexe (schémas avec des droits différents, droits par groupes, droits par colonnes, etc.).
+
+Quelles sont donc les questions à se poser?
+
+-----------------------------------------------------------------
+
+- N'oubliez pas que pg_hba.conf applique une première passe de filtres
+- S'il n'y a pas que des applications qui se connectent à la base il y a sans doute des droits à réfléchir en fonction des rôles des utilisateurs qui se connectent.
+- S'il ny a que des applications qui utilisent la base il faut analyser ces applications
+- Les application web ont le gros défaut (de paresse) de fonctioner classiquement avec un propriétaire ayant tous les droits
+- Une application un peu mieux architecturée pourra prévoir 3 rôles:
+  - un rôle associé au DDL (création de schéma et droits)
+  - un rôle associé à la lecture seule
+  - un rôle associé à la lecture-écriture
+- Des besoins métiers peuvent faire apparaître ensuite d'autres rôles et limitations
+- Si plusieurs applications partagent la même base de données il est fortement utile de ne pas rester sur une politique d'accès par propriétaire.
+
+.fx: wide
+
+-----------------------------------------------------------------
+
+- Les applications qui prévoient des modes lecture-seule le font souvent pour bénéficier d'une meilleure répartition de charge sur des serveurs Réplica
+- Cela vient avec un atout en terme de sécurité: toute faille d'injection SQL dans ces blocs applicatifs aura des conséquences moindres (sécurité en profondeur)
+
+.fx: alternate
+
+-----------------------------------------------------------------
+
+# Attention, ça n'est pas DANS la base
+
+Si on regarde le panneau "SQL" de pgadmin4 qui traduit chaque objet en SQL, au niveau d'une base de données. On retrouve:
+
+- l'instruction de création de la base `CREATE DATABASE...`
+- les altérations de paramètres par rôle sur cette base
+- les premiers niveaux de droits (sur la base), donc les droits CONNECT, USAGE et TEMPORARY
+- toutes les définitions de **Default Pirivleges** affectés au niveau de la base
+
+Le fait que ces instructions soient ici est en fait **TRES IMPORTANT**.
+
+Ces paramétrages sont situés **EN DEHORS DE LA BASE**.
+
+-----------------------------------------------------------------
+
+# Attention, ça n'est pas DANS la base
+
+Les grants et privilèges par défaut définis dans les schémas sont dans la base. Mais tout ce premier niveau de droits n'y est pas.
+
+- De la même façon la définition des utilisateurs est en dehors de la base.
+- Ainsi que les réglages pg_hba.conf bien sur
+
+- **Donc un dump de la base pourrait ne pas contenir ces droits**
+
+La commande pg_dump_all effectue le backup de ces réglages et possède aussi un mode `--globals-only` qui ne sauvegarde que ces éléments.
+
+Mais retenez que ces éléments sont en dehors de la base. Donc en terme "projet" les sauvegarder dans un fichier d'instruction SQL fait sens. De façon générale un ou plusieurs scripts SQL dédiés à la gestion des droits fait sens.
 
 
 -----------------------------------------------------------------
